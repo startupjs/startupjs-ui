@@ -1,13 +1,18 @@
 import { View, ScrollView } from 'react-native'
 import { pug, styl, observer } from 'startupjs'
-import { Slot, Link, usePathname } from 'expo-router'
+import { Slot, Link, usePathname, Stack, useGlobalSearchParams } from 'expo-router'
 import * as DOC_COMPONENTS from '../../clientHelpers/docComponents'
 
 const DOC_COMPONENT_NAMES = Object.keys(DOC_COMPONENTS)
 
 export default observer(({ children }) => {
+  const { component } = useGlobalSearchParams()
+
   return pug`
     View.root
+      Stack.Screen(
+        options={ title: 'Docs' + (component ? ' / ' + component : '') }
+      )
       ScrollView.sidebar
         each component in DOC_COMPONENT_NAMES
           Item(key=component)= component
