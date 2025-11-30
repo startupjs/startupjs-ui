@@ -4504,7 +4504,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@startupjs-ui/core@workspace:packages/core":
+"@startupjs-ui/core@npm:^0.1.1, @startupjs-ui/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/core@workspace:packages/core"
   dependencies:
@@ -4513,6 +4513,18 @@ __metadata:
     lodash: "npm:^4.17.20"
   peerDependencies:
     lodash: ^4.17.20
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
+"@startupjs-ui/span@workspace:packages/span":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/span@workspace:packages/span"
+  dependencies:
+    "@startupjs-ui/core": "npm:^0.1.1"
+  peerDependencies:
     react: "*"
     react-native: "*"
     startupjs: "*"
@@ -4652,6 +4664,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@startupjs/docs@npm:^0.60.0-canary.0":
+  version: 0.60.0-canary.9
+  resolution: "@startupjs/docs@npm:0.60.0-canary.9"
+  dependencies:
+    "@fortawesome/free-solid-svg-icons": "npm:^5.12.0"
+    "@startupjs/mdx": "npm:^0.60.0-canary.9"
+    "@startupjs/scrollable-anchors": "npm:^0.60.0-canary.7"
+  peerDependencies:
+    "@startupjs/ui": "*"
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  checksum: 10c0/f3d1631303831ef7fbf575d61bfe7344e63ccb6184b891f435e2f46e28cd90c494ad7647b5dd4d287c7b67934e39abc8e1d99bccb10f4a679858b788a0496ce0
+  languageName: node
+  linkType: hard
+
 "@startupjs/eslint-plugin-react-pug@npm:^0.8.3-3":
   version: 0.8.3-3
   resolution: "@startupjs/eslint-plugin-react-pug@npm:0.8.3-3"
@@ -4698,7 +4726,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@startupjs/mdx@npm:^0.60.0-canary.0":
+"@startupjs/mdx@npm:^0.60.0-canary.0, @startupjs/mdx@npm:^0.60.0-canary.9":
   version: 0.60.0-canary.9
   resolution: "@startupjs/mdx@npm:0.60.0-canary.9"
   dependencies:
@@ -9029,6 +9057,7 @@ __metadata:
     "@react-navigation/bottom-tabs": "npm:^7.4.0"
     "@react-navigation/elements": "npm:^2.6.3"
     "@react-navigation/native": "npm:^7.1.8"
+    "@startupjs/docs": "npm:^0.60.0-canary.0"
     "@startupjs/mdx": "npm:^0.60.0-canary.0"
     "@startupjs/router": "npm:^0.60.0-canary.7"
     "@startupjs/ui": "npm:^0.60.0-canary.9"

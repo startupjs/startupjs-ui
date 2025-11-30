@@ -1,0 +1,57 @@
+import { useState } from 'react'
+import { pug } from 'startupjs'
+import Span, { _PropsJsonSchema as SpanPropsJsonSchema } from './index'
+import { Sandbox } from '@startupjs/docs'
+
+# Span
+
+The base component of typography is `Span`, which is used for plain text.
+
+```jsx
+import { Span } from '@startupjs/ui'
+```
+
+## Simple example
+
+```jsx example
+<Span>Lorem ipsum dolor sit amet, consectetur adipisicing elit</Span>
+```
+
+## Headers
+
+Use `h1` - `h6` props to create headers.
+
+```jsx example
+<Span h1>H1 Heading</Span>
+<Span h2>H2 Heading</Span>
+<Span h3>H3 Heading</Span>
+<Span h4>H4 Heading</Span>
+<Span h5>H5 Heading</Span>
+<Span h6>H6 Heading</Span>
+```
+
+## Bold and Italic
+
+```jsx example
+<Span bold>Bold text</Span>
+<Span italic>Italic text</Span>
+<Span bold italic>Bold and Italic text</Span>
+```
+
+## Description
+
+Use `description` prop for secondary text.
+
+```jsx example
+<Span description>Description text</Span>
+```
+
+## Sandbox
+
+<Sandbox
+  Component={Span}
+  propsJsonSchema={SpanPropsJsonSchema}
+  props={{
+    children: 'Test text'
+  }}
+/>

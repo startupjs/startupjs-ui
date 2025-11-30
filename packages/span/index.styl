@@ -1,0 +1,45 @@
+// ----- CONFIG: $UI.Span
+
+$this = merge({
+  color: var(--color-text-main),
+  descriptionColor: var(--color-text-description)
+}, $UI.Span, true)
+
+// ----- COMPONENT
+
+_tags = ('h1' 'h2' 'h3' 'h4' 'h5' 'h6')
+
+.root
+  color: $this.color
+  fontFamily('normal')
+  font()
+
+  for tag in _tags
+    &.{tag}
+      fontFamily('heading')
+      font(tag)
+
+  &.bold
+    fontFamily('normal', $UI.fontWeights.normalBold)
+
+  &.italic
+    fontFamily('normal', $UI.fontWeights.normal, italic)
+
+  &.bold.italic
+    fontFamily('normal', $UI.fontWeights.normalBold, italic)
+
+  &.description
+    color: $this.descriptionColor
+
+  &.full
+    flex: 1
+
+  // Overrides for headers when bold/italic
+  for tag in _tags
+    &.{tag}
+      &.bold
+        fontFamily('heading', $UI.fontWeights.headingBold)
+      &.italic
+        fontFamily('heading', $UI.fontWeights.heading, italic)
+      &.bold.italic
+        fontFamily('heading', $UI.fontWeights.headingBold, italic)

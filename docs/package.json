@@ -22,6 +22,7 @@
     "@react-navigation/bottom-tabs": "^7.4.0",
     "@react-navigation/elements": "^2.6.3",
     "@react-navigation/native": "^7.1.8",
+    "@startupjs/docs": "^0.60.0-canary.0",
     "@startupjs/mdx": "^0.60.0-canary.0",
     "@startupjs/router": "^0.60.0-canary.7",
     "@startupjs/ui": "^0.60.0-canary.9",
