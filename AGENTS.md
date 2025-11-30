@@ -34,13 +34,13 @@ The goal is to decouple components and introduce TypeScript interfaces for props
     - Ensure `themed` is imported from `@startupjs-ui/core`.
 
 ### 3. Update Documentation
-- Move `Component.en.mdx` to the new package.
+- Move `Component.en.mdx` to the new package and rename it to `README.mdx`.
 - Update imports to point to the new component.
 - Ensure the `Sandbox` component is used and linked to the component and its schema.
 
 ### 4. Register in Docs App
 - Edit `docs/clientHelpers/docComponents.js`.
-- Export the component's MDX file: `export { default as Component } from '../../packages/<component>/Component.en.mdx'`.
+- Export the component's MDX file: `export { default as Component } from '../../packages/<component>/README.mdx'`.
 
 ## Key Requirements
 
