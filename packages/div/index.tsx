@@ -226,16 +226,17 @@ function Div ({
     extraStyle = hoverStyle ?? getDefaultStyle(style, 'hover', variant)
   }
 
-  async function maybeWrapToClickable (children: React.ReactNode) {
+  // eslint-disable-next-line @typescript-eslint/promise-function-async
+  function maybeWrapToClickable (children: React.ReactNode) {
     if (isClickable) {
       const role = accessible !== false ? accessibilityRole ?? 'button' : undefined
       const touchableProps = pick(props, PRESSABLE_PROPS)
-      return await pug`
+      return pug`
         TouchableWithoutFeedback(focusable=accessible accessibilityRole=role ...touchableProps)
           = children
       `
     } else {
-      return await children
+      return children
     }
   }
 
