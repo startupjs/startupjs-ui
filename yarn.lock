@@ -4519,6 +4519,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@startupjs-ui/div@workspace:packages/div":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/div@workspace:packages/div"
+  dependencies:
+    "@startupjs-ui/core": "npm:^0.1.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
 "@startupjs-ui/span@workspace:packages/span":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/span@workspace:packages/span"
@@ -4606,18 +4618,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@startupjs/babel-plugin-ts-to-json-schema@npm:^0.60.0-canary.9":
-  version: 0.60.0-canary.9
-  resolution: "@startupjs/babel-plugin-ts-to-json-schema@npm:0.60.0-canary.9"
+"@startupjs/babel-plugin-ts-to-json-schema@npm:^0.60.0-canary.11":
+  version: 0.60.0-canary.11
+  resolution: "@startupjs/babel-plugin-ts-to-json-schema@npm:0.60.0-canary.11"
   dependencies:
     ts-json-schema-generator: "npm:2.0.0"
-  checksum: 10c0/2d36a075c53abc9755a52bd6bed7b369a3392cda97b8e367415f44fec803caac9a497d2975b0124e82824ff6d622129f6c604ae63a0ee41d67350739864793b5
+  checksum: 10c0/a6d1b0ca14c0e2b9be191d7d6ef0966246e1a42904b031bee01b51bd3edff14342fac5570d38ffb765dd605e192aca10ef1fd9bdefcf1766f1d5c5f83a33ef42
   languageName: node
   linkType: hard
 
-"@startupjs/bundler@npm:^0.60.0-canary.9":
-  version: 0.60.0-canary.9
-  resolution: "@startupjs/bundler@npm:0.60.0-canary.9"
+"@startupjs/bundler@npm:^0.60.0-canary.11":
+  version: 0.60.0-canary.11
+  resolution: "@startupjs/bundler@npm:0.60.0-canary.11"
   dependencies:
     "@babel/core": "npm:^7.9.0"
     "@babel/plugin-syntax-jsx": "npm:^7.0.0"
@@ -4628,14 +4640,14 @@ __metadata:
     "@svgr/core": "npm:^8.1.0"
     "@svgr/plugin-jsx": "npm:^8.1.0"
     "@svgr/plugin-svgo": "npm:^8.1.0"
-    babel-preset-startupjs: "npm:^0.60.0-canary.9"
+    babel-preset-startupjs: "npm:^0.60.0-canary.11"
     connect: "npm:^3.7.0"
     lodash: "npm:^4.17.20"
     remark-gfm: "npm:4.0.1"
   peerDependencies:
     cssxjs: "*"
     react-native-svg: "*"
-  checksum: 10c0/26ce4d6c325fb9b4b32a1ababb6a50fa863df337c67f75695bdd26dccc4242afa6886b48d9531cdb69d7dddf2ab8714397af2e101a2f2b017b55a8dbd3bf1107
+  checksum: 10c0/7ef9e0781be41a2c3edc08911ce61dbf812bbcf8c06d61c268f32ed16907708ef55254d9826b9ae370205583635219833c4e1ac608148dbe403ec33a0de29e65
   languageName: node
   linkType: hard
 
@@ -4664,9 +4676,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@startupjs/docs@npm:^0.60.0-canary.0":
-  version: 0.60.0-canary.9
-  resolution: "@startupjs/docs@npm:0.60.0-canary.9"
+"@startupjs/docs@npm:^0.60.0-canary.11":
+  version: 0.60.0-canary.11
+  resolution: "@startupjs/docs@npm:0.60.0-canary.11"
   dependencies:
     "@fortawesome/free-solid-svg-icons": "npm:^5.12.0"
     "@startupjs/mdx": "npm:^0.60.0-canary.9"
@@ -4676,7 +4688,7 @@ __metadata:
     react: "*"
     react-native: "*"
     startupjs: "*"
-  checksum: 10c0/f3d1631303831ef7fbf575d61bfe7344e63ccb6184b891f435e2f46e28cd90c494ad7647b5dd4d287c7b67934e39abc8e1d99bccb10f4a679858b788a0496ce0
+  checksum: 10c0/b27f02e0f6e871cfcdb89903364be1a6aadce7fbaecdea0e9d73c3c0d5c69aa778f373e4ddb3195a0e87a2033794f30bada997fe37a092d85c7927c95f652b79
   languageName: node
   linkType: hard
 
@@ -4878,9 +4890,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@startupjs/ui@npm:^0.60.0-canary.9":
-  version: 0.60.0-canary.9
-  resolution: "@startupjs/ui@npm:0.60.0-canary.9"
+"@startupjs/ui@npm:^0.60.0-canary.11":
+  version: 0.60.0-canary.11
+  resolution: "@startupjs/ui@npm:0.60.0-canary.11"
   dependencies:
     "@fortawesome/fontawesome-svg-core": "npm:^1.2.26"
     "@fortawesome/free-solid-svg-icons": "npm:^5.12.0"
@@ -4927,7 +4939,7 @@ __metadata:
       optional: true
     react-router:
       optional: true
-  checksum: 10c0/61da6e960388940f4b4460b85034b952fedf4b3059bf41dfca32584504021861e802185d40c9c1b25a12b1094a515ff226f4c09bcaa52be13c9027e91e687201
+  checksum: 10c0/4772a911e8a5bb69a50805b35af22e215a21ceacba67e0273dce36bc854be7bea874d17fcc7720f81b6a35bf4dab09922f8ef061ab6c4cc6d17c9417064bd35b
   languageName: node
   linkType: hard
 
@@ -7019,9 +7031,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-preset-startupjs@npm:^0.60.0-canary.9":
-  version: 0.60.0-canary.9
-  resolution: "babel-preset-startupjs@npm:0.60.0-canary.9"
+"babel-preset-startupjs@npm:^0.60.0-canary.11":
+  version: 0.60.0-canary.11
+  resolution: "babel-preset-startupjs@npm:0.60.0-canary.11"
   dependencies:
     "@babel/core": "npm:^7.9.0"
     "@babel/plugin-syntax-jsx": "npm:^7.0.0"
@@ -7031,10 +7043,10 @@ __metadata:
     "@startupjs/babel-plugin-startupjs": "npm:^0.60.0-canary.7"
     "@startupjs/babel-plugin-startupjs-debug": "npm:^0.60.0-canary.7"
     "@startupjs/babel-plugin-startupjs-plugins": "npm:^0.60.0-canary.0"
-    "@startupjs/babel-plugin-ts-to-json-schema": "npm:^0.60.0-canary.9"
+    "@startupjs/babel-plugin-ts-to-json-schema": "npm:^0.60.0-canary.11"
   peerDependencies:
     cssxjs: "*"
-  checksum: 10c0/12453bc8b6d50d7d97dd3a90875c5f43b07a61ff90b81e9ccf86559011616c19589717edf91cefcf6528e43386255bd92943a07e2a5323961fcc17e3788a4c62
+  checksum: 10c0/27dc94310fce7995165089410b190864bd481b00b6b17e983717406e0fac388b13a95c285374104af5b28a0a9e7da7c6e0ddacc4942837db05a981a3ba972fe9
   languageName: node
   linkType: hard
 
@@ -9057,10 +9069,10 @@ __metadata:
     "@react-navigation/bottom-tabs": "npm:^7.4.0"
     "@react-navigation/elements": "npm:^2.6.3"
     "@react-navigation/native": "npm:^7.1.8"
-    "@startupjs/docs": "npm:^0.60.0-canary.0"
+    "@startupjs/docs": "npm:^0.60.0-canary.11"
     "@startupjs/mdx": "npm:^0.60.0-canary.0"
     "@startupjs/router": "npm:^0.60.0-canary.7"
-    "@startupjs/ui": "npm:^0.60.0-canary.9"
+    "@startupjs/ui": "npm:^0.60.0-canary.11"
     "@types/react": "npm:~19.1.0"
     eslint: "npm:^8.56.0"
     eslint-config-cssxjs: "npm:^0.2.0"
@@ -9092,7 +9104,7 @@ __metadata:
     react-native-svg: "npm:15.12.1"
     react-native-web: "npm:~0.21.0"
     react-native-worklets: "npm:0.5.1"
-    startupjs: "npm:^0.60.0-canary.10"
+    startupjs: "npm:^0.60.0-canary.11"
     typescript: "npm:~5.9.2"
   languageName: unknown
   linkType: soft
@@ -20026,19 +20038,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"startupjs@npm:^0.60.0-canary.10":
-  version: 0.60.0-canary.10
-  resolution: "startupjs@npm:0.60.0-canary.10"
+"startupjs@npm:^0.60.0-canary.11":
+  version: 0.60.0-canary.11
+  resolution: "startupjs@npm:0.60.0-canary.11"
   dependencies:
     "@startupjs/auth": "npm:^0.60.0-canary.8"
-    "@startupjs/bundler": "npm:^0.60.0-canary.9"
+    "@startupjs/bundler": "npm:^0.60.0-canary.11"
     "@startupjs/cli": "npm:^0.60.0-canary.7"
     "@startupjs/hooks": "npm:^0.60.0-canary.7"
     "@startupjs/isomorphic-helpers": "npm:^0.60.0-canary.7"
     "@startupjs/registry": "npm:^0.60.0-canary.7"
     "@startupjs/server": "npm:^0.60.0-canary.7"
     "@startupjs/utils": "npm:^0.60.0-canary.7"
-    babel-preset-startupjs: "npm:^0.60.0-canary.9"
+    babel-preset-startupjs: "npm:^0.60.0-canary.11"
     cssxjs: "npm:^0.2.18"
     lodash: "npm:^4.17.20"
     teamplay: "npm:^0.3.26"
@@ -20053,7 +20065,7 @@ __metadata:
       optional: true
   bin:
     startupjs: cli.js
-  checksum: 10c0/a216711703d530306c51240c220c5fe791e296f4165ff120ad91bb4b6837292ba518536f061f0aac5b998db31eecff1e98335006d6adb4870b99d67d066f47be
+  checksum: 10c0/65ce73e41d059126f1520fb1921c372206a207ff5cb2ccc6c2b2d862b760d5250b3b7d09f0b3751b930db681f504b85e428b9228d22e6dc45d3e3176f490b2b4
   languageName: node
   linkType: hard
 

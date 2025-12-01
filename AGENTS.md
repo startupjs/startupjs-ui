@@ -24,19 +24,19 @@ The goal is to decouple components and introduce TypeScript interfaces for props
 ### 2. Migrate & Refactor Code
 - Move the component code from `ui/components/<Component>` to `packages/<component>/index.tsx`.
 - **TypeScript**:
-    - Convert the file to `.tsx`.
-    - **Do NOT** fully type the implementation. Keep it loose (use `any` if needed).
-    - **MUST** define a TypeScript interface for props (e.g., `SpanProps`).
+    - Convert the file to `.tsx` - just change the extension but do not do any actual refactoring of adding types. Do not change the actual JS code whatsoever.
+    - **Do NOT** fully type the implementation. Keep it loose and do NOT add any types besides what's needed to define the props interface itself (e.g., `SpanProps`).
+    - **MUST** define a single TypeScript interface for props (e.g., `SpanProps`).
     - **MUST** add JSDoc descriptions to each prop in the interface. This is used by the Sandbox to generate documentation tables.
     - Export `_PropsJsonSchema` for docs generation: `export const _PropsJsonSchema = {/* ComponentProps */}`.
 - **Styles**:
-    - Move `.styl` files.
+    - Do not change the styles, keep them as is.
     - Ensure `themed` is imported from `@startupjs-ui/core`.
 
 ### 3. Update Documentation
 - Move `Component.en.mdx` to the new package and rename it to `README.mdx`.
 - Update imports to point to the new component.
-- Ensure the `Sandbox` component is used and linked to the component and its schema.
+- Ensure the `Sandbox` component is used and linked to the component and its schema - import _PropsJsonSchema from the component and pass it to Sandbox as propsJsonSchema prop.
 
 ### 4. Register in Docs App
 - Edit `docs/clientHelpers/docComponents.js`.
@@ -67,7 +67,7 @@ Work through the components in the following order to ensure dependencies are re
 These components have no internal dependencies (or only depend on utils/core).
 
 - [x] **Span** (`packages/span`)
-- [ ] **Div**
+- [x] **Div** (`packages/div`)
 - [ ] **Icon**
 - [ ] **Loader**
 - [ ] **Br**

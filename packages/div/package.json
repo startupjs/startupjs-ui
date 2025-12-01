@@ -1,0 +1,14 @@
+{
+  "name": "@startupjs-ui/div",
+  "version": "0.1.0",
+  "main": "index.tsx",
+  "type": "module",
+  "dependencies": {
+    "@startupjs-ui/core": "^0.1.1"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "startupjs": "*"
+  }
+}
