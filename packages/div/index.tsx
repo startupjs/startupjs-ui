@@ -88,7 +88,8 @@ export interface DivProps extends ViewProps {
   /** Deprecated custom tooltip renderer */
   renderTooltip?: any // Deprecated
 }
-async function Div ({
+// eslint-disable-next-line @typescript-eslint/promise-function-async
+function Div ({
   style = [],
   children,
   variant = 'opacity',
@@ -275,7 +276,7 @@ async function Div ({
     )= children
   `)
 
-  return await pug`
+  return pug`
     = divElement
     // TODO: bring back tooltip after AbstractPopover is refactored
     // = tooltipElement

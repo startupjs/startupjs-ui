@@ -35,7 +35,8 @@ export interface SpanProps extends TextProps {
   h6?: boolean
 }
 
-async function Span ({
+// eslint-disable-next-line @typescript-eslint/promise-function-async
+function Span ({
   style,
   children,
   variant,
@@ -66,7 +67,7 @@ async function Span ({
     ? { accessibilityRole: 'header', accessibilityLevel: tag.replace(/^h/, '') }
     : {}
 
-  return await pug`
+  return pug`
     Text.root(
       style=style
       styleName=[
