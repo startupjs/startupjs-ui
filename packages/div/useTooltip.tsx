@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Platform, View } from 'react-native'
 import { pug, styl } from 'startupjs'
-// @ts-expect-error AbstractPopover not typed
 import Span from '@startupjs-ui/span'
+// @ts-expect-error AbstractPopover not typed
 import AbstractPopover from '../../ui/components/AbstractPopover'
 
 const isWeb = Platform.OS === 'web'
