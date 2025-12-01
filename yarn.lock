@@ -4676,9 +4676,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@startupjs/docs@npm:^0.60.0-canary.11":
-  version: 0.60.0-canary.11
-  resolution: "@startupjs/docs@npm:0.60.0-canary.11"
+"@startupjs/docs@npm:^0.60.0-canary.12":
+  version: 0.60.0-canary.12
+  resolution: "@startupjs/docs@npm:0.60.0-canary.12"
   dependencies:
     "@fortawesome/free-solid-svg-icons": "npm:^5.12.0"
     "@startupjs/mdx": "npm:^0.60.0-canary.9"
@@ -4688,7 +4688,7 @@ __metadata:
     react: "*"
     react-native: "*"
     startupjs: "*"
-  checksum: 10c0/b27f02e0f6e871cfcdb89903364be1a6aadce7fbaecdea0e9d73c3c0d5c69aa778f373e4ddb3195a0e87a2033794f30bada997fe37a092d85c7927c95f652b79
+  checksum: 10c0/16e2316bca5cb6ddc3ae2dab51e03967672c33e77a0aaa052f4fbd92679521c9078c86e97cad3867f929301efdf4f1cf9e5e21cbbaa4263312eec98259ff28c0
   languageName: node
   linkType: hard
 
@@ -9069,7 +9069,7 @@ __metadata:
     "@react-navigation/bottom-tabs": "npm:^7.4.0"
     "@react-navigation/elements": "npm:^2.6.3"
     "@react-navigation/native": "npm:^7.1.8"
-    "@startupjs/docs": "npm:^0.60.0-canary.11"
+    "@startupjs/docs": "npm:^0.60.0-canary.12"
     "@startupjs/mdx": "npm:^0.60.0-canary.0"
     "@startupjs/router": "npm:^0.60.0-canary.7"
     "@startupjs/ui": "npm:^0.60.0-canary.11"
