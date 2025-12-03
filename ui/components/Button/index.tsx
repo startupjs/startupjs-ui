@@ -48,7 +48,6 @@ export interface ButtonProps {
   /** onPress handler */
   onPress?: (event: any) => void | Promise<void>
 }
-// eslint-disable-next-line @typescript-eslint/promise-function-async
 function Button ({
   style,
   iconStyle,
@@ -65,7 +64,7 @@ function Button ({
   activeStyle,
   onPress,
   ...props
-}: ButtonProps) {
+}: ButtonProps): React.ReactNode {
   const isMountedRef = useIsMountedRef()
   const [asyncActive, setAsyncActive] = useState(false)
   const getColor = useColors()

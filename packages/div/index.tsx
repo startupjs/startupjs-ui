@@ -88,7 +88,6 @@ export interface DivProps extends ViewProps {
   /** Deprecated custom tooltip renderer */
   renderTooltip?: any // Deprecated
 }
-// eslint-disable-next-line @typescript-eslint/promise-function-async
 function Div ({
   style = [],
   children,
@@ -114,7 +113,7 @@ function Div ({
   tooltipStyle,
   renderTooltip,
   ...props
-}: DivProps, ref: any) {
+}: DivProps, ref: any): React.ReactNode {
   if (DEPRECATED_PUSHED_VALUES.includes(pushed as string)) {
     console.warn(`[@startupjs/ui] Div: variant='${pushed}' is DEPRECATED, use one of 's', 'm', 'l' instead.`)
   }
@@ -142,7 +141,7 @@ function Div ({
   const [hover, setHover] = useState(false)
   const [active, setActive] = useState(false)
 
-  const viewRef = useRef()
+  const viewRef = useRef(undefined)
 
   useImperativeHandle(ref, () => viewRef.current, [])
 
@@ -226,8 +225,7 @@ function Div ({
     extraStyle = hoverStyle ?? getDefaultStyle(style, 'hover', variant)
   }
 
-  // eslint-disable-next-line @typescript-eslint/promise-function-async
-  function maybeWrapToClickable (children: React.ReactNode) {
+  function maybeWrapToClickable (children: React.ReactNode): React.ReactNode {
     if (isClickable) {
       const role = accessible !== false ? accessibilityRole ?? 'button' : undefined
       const touchableProps = pick(props, PRESSABLE_PROPS)

@@ -35,7 +35,6 @@ export interface SpanProps extends TextProps {
   h6?: boolean
 }
 
-// eslint-disable-next-line @typescript-eslint/promise-function-async
 function Span ({
   style,
   children,
@@ -52,7 +51,7 @@ function Span ({
   h5,
   h6,
   ...props
-}: SpanProps) {
+}: SpanProps): React.ReactNode {
   if (variant && variant !== 'default') {
     if (variant === 'description') {
       console.warn("[@startupjs/ui] Span: variant='description' is DEPRECATED, use prop description instead.")
