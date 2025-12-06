@@ -14,6 +14,7 @@ The goal is to decouple components and introduce TypeScript interfaces for props
 
 ## Quickstart (per component)
 - Create `packages/<component>` with `package.json` copied from `packages/span`; name `@startupjs-ui/<component>`, deps `@startupjs-ui/core`, peers `react`, `react-native`, `startupjs`. See `packages/span` for a basic example and `ui/components/Button` for a complex one.
+- Update `package.json` dependencies to include every `@startupjs-ui/*` package the component actually import (e.g., Div/Icon/Span), not just `core`. Note that docs imports do not matter (since docs are managed by the monorepo itself) and should not be taken into account.
 - Copy styles: `index.styl` -> `index.cssx.styl` (and `index.mdx.styl` -> `index.mdx.cssx.styl` if present) without changes.
 - Port logic: move `ui/components/<Component>/index.*` to `packages/<component>/index.tsx`; add props interface with JSDoc, defaults in destructuring, remove `propTypes`/`defaultProps`, return `ReactNode`, export `_PropsJsonSchema`.
 - Docs: move `Component.en.mdx` -> `packages/<component>/README.mdx`, update imports to new packages; for not-yet-refactored components import from `@startupjs/ui` top-level.
@@ -98,7 +99,7 @@ These components have no internal dependencies (or only depend on utils/core).
 These depend only on Level 0 components.
 
 - [x] **Button** (depends on Div, Icon, Loader, Span) (`packages/button`)
-- [ ] **Badge** (depends on Div, Icon, Span)
+- [x] **Badge** (depends on Div, Icon, Span) (`packages/badge`)
 - [ ] **Avatar** (depends on Div, Icon, Span)
 - [ ] **Tag** (depends on Div, Icon, Span)
 - [ ] **Card** (depends on Div)
