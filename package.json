@@ -9,6 +9,8 @@
   ],
   "scripts": {
     "start": "yarn docs",
+    "build": "cd docs && yarn build",
+    "start-production": "cd docs && yarn start-production",
     "docs": "cd docs && yarn start",
     "test": "sh -c 'set -e; for dir in packages/*/; do echo \"Testing $dir\"; (cd \"$dir\" && yarn test) || { echo \"\\033[31mERROR: Tests failed for $dir\\033[0m\"; exit 1; }; done'",
     "generate-package-dts": "node scripts/generate-package-dts.mjs",

@@ -1,5 +1,6 @@
 # AUTO-GENERATED START (generate-package-dts)
 # DO NOT EDIT MANUALLY. Managed by scripts/generate-package-dts.mjs
+packages/avatar/index.d.ts
 packages/badge/index.d.ts
 packages/br/index.d.ts
 packages/button/index.d.ts
