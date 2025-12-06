@@ -4504,6 +4504,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@startupjs-ui/button@workspace:packages/button":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/button@workspace:packages/button"
+  dependencies:
+    "@startupjs-ui/core": "npm:^0.1.1"
+    "@startupjs-ui/div": "npm:^0.1.0"
+    "@startupjs-ui/icon": "npm:^0.1.0"
+    "@startupjs-ui/loader": "npm:^0.1.0"
+    "@startupjs-ui/span": "npm:^0.1.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
 "@startupjs-ui/core@npm:^0.1.1, @startupjs-ui/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/core@workspace:packages/core"
@@ -4519,7 +4535,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/div@workspace:packages/div":
+"@startupjs-ui/div@npm:^0.1.0, @startupjs-ui/div@workspace:packages/div":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/div@workspace:packages/div"
   dependencies:
@@ -4531,7 +4547,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/loader@workspace:packages/loader":
+"@startupjs-ui/icon@npm:^0.1.0, @startupjs-ui/icon@workspace:packages/icon":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/icon@workspace:packages/icon"
+  dependencies:
+    "@fortawesome/fontawesome-svg-core": "npm:^1.2.26"
+    "@fortawesome/free-solid-svg-icons": "npm:^5.12.0"
+    "@fortawesome/react-native-fontawesome": "npm:^0.3.0"
+    "@startupjs-ui/core": "npm:^0.1.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
+"@startupjs-ui/loader@npm:^0.1.0, @startupjs-ui/loader@workspace:packages/loader":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/loader@workspace:packages/loader"
   dependencies:
@@ -4543,7 +4574,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/span@workspace:packages/span":
+"@startupjs-ui/span@npm:^0.1.0, @startupjs-ui/span@workspace:packages/span":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/span@workspace:packages/span"
   dependencies:
