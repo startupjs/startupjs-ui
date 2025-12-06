@@ -1,6 +1,6 @@
 # Agent Guide: Component Refactoring
 
-This document serves as a guide for Agents refactoring components from the legacy `@startupjs/ui` library to the new `startupjs-ui` monorepo structure.
+This document serves as a guide for Agents refactoring components from the legacy `@startupjs/ui` library to the new `startupjs-ui` monorepo structure. Start with the next unchecked component in the Progress list, follow the Quickstart, and optionally run lint/ts checks.
 
 ## Objective
 
@@ -12,7 +12,14 @@ The goal is to decouple components and introduce TypeScript interfaces for props
 - **Span**: `packages/span` (Completed refactoring. Merged H1-H6 into Span).
 - **Button**: `ui/components/Button` (Reference for complex props and structure).
 
-## Refactoring Steps
+## Quickstart (per component)
+- Create `packages/<component>` with `package.json` copied from `packages/span`; name `@startupjs-ui/<component>`, deps `@startupjs-ui/core`, peers `react`, `react-native`, `startupjs`. See `packages/span` for a basic example and `ui/components/Button` for a complex one.
+- Copy styles: `index.styl` -> `index.cssx.styl` (and `index.mdx.styl` -> `index.mdx.cssx.styl` if present) without changes.
+- Port logic: move `ui/components/<Component>/index.*` to `packages/<component>/index.tsx`; add props interface with JSDoc, defaults in destructuring, remove `propTypes`/`defaultProps`, return `ReactNode`, export `_PropsJsonSchema`.
+- Docs: move `Component.en.mdx` -> `packages/<component>/README.mdx`, update imports to new packages; for not-yet-refactored components import from `@startupjs/ui` top-level.
+- Register docs page in `docs/clientHelpers/docComponents.js`.
+
+## Refactoring Steps & Tooling Notes
 
 ### 1. Create Package
 - Create a new directory: `packages/<component-name>` (e.g., `packages/span`).
@@ -24,6 +31,7 @@ The goal is to decouple components and introduce TypeScript interfaces for props
 ### 2. Migrate & Refactor Code
 - Move the component code from `ui/components/<Component>` to `packages/<component>/index.tsx`.
 - **TypeScript**:
+    - Keep runtime logic as-is; only add the minimal types/interface needed.
     - Convert the file to `.tsx` - just change the extension but do not do any actual refactoring of adding types. Do not change the actual JS code whatsoever.
     - **Do NOT** fully type the implementation. Keep it loose and do NOT add any types besides what's needed to define the props interface itself (e.g., `SpanProps`).
     - **MUST** define a single TypeScript interface for props (e.g., `SpanProps`).
@@ -32,12 +40,15 @@ The goal is to decouple components and introduce TypeScript interfaces for props
     - Remove the Component.propTypes (the interface handles it now).
     - Specify the return type of the component function to be `ReactNode` (import { type ReactNode } from 'react').
     - Export `_PropsJsonSchema` for docs generation: `export const _PropsJsonSchema = {/* ComponentProps */}`.
+    - Babel handles `part="..."` attributes: it auto-injects the corresponding style prop into destructuring and passes it down (e.g., `part='root'` adds `style`, `part='title'` adds `titleStyle`). You generally do not need to manually add `style` to the JSX unless you actually transform it, but you should declare the prop in the interface when relevant.
+    - Minimal TS typing beyond the props interface is fine when needed to satisfy `tsc`/ESLint; keep the implementation otherwise unchanged.
     - `index.d.ts` file will be generated automatically by the build system, don't create it yourself.
     - Don't change anything in the original `ui/` components folder - they are only there for a reference, they are not used, and will be completely removed after we finish refactoring all components.
-    - If you have to use a component in `.mdx` docs which was not refactored yet, import it from `@startupjs/ui` (the old ui library).
+    - If you have to use a component in `.mdx` docs which was not refactored yet, import it from `@startupjs/ui` (old library) via top-level named exports, e.g., `import { NumberInput } from '@startupjs/ui'`.
 - **Styles**:
     - Do not change the styles, keep them as is.
     - Ensure `themed` is imported from `@startupjs-ui/core`.
+    - Stylus files keep the same content but use `.cssx.styl` extension in packages.
 
 ### 3. Update Documentation
 - Move `Component.en.mdx` to the new package and rename it to `README.mdx`.
@@ -54,6 +65,7 @@ The goal is to decouple components and introduce TypeScript interfaces for props
 - **One Package Per Component**: Each component gets its own folder in `packages/`.
 - **Props Interface**: The main goal is to have a clean TS interface for props with JSDoc comments.
 - **Core Helpers**: Use `@startupjs-ui/core` for shared helpers (re-export them from core if missing).
+- **TS Config**: `ui/**` is excluded from `tsconfig.json`; do not move or fix legacy files there.
 
 ## Verification
 
@@ -65,6 +77,7 @@ The goal is to decouple components and introduce TypeScript interfaces for props
     - The page loads.
     - The Sandbox section appears at the bottom.
     - The props table in Sandbox shows the correct types and **descriptions**.
+6.  Optional quick checks: `yarn eslint packages/<component>/index.tsx` and `yarn tsc --noEmit --skipLibCheck`.
 
 ## Refactoring Order & Progress
 
@@ -77,9 +90,9 @@ These components have no internal dependencies (or only depend on utils/core).
 - [x] **Div** (`packages/div`)
 - [x] **Icon** (`packages/icon`)
 - [x] **Loader** (`packages/loader`)
-- [ ] **Br**
-- [ ] **Portal**
-- [ ] **Layout**
+- [x] **Br** (`packages/br`)
+- [x] **Portal** (`packages/portal`)
+- [x] **Layout** (`packages/layout`)
 
 ### Level 1: Base Components
 These depend only on Level 0 components.
