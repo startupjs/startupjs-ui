@@ -3,6 +3,8 @@
 
 import { type ComponentType, type JSXElementConstructor, type ReactNode } from 'react';
 import { type GestureResponderEvent, type StyleProp, type TextStyle, type ViewStyle } from 'react-native';
+declare const _default: ComponentType<ButtonProps>;
+export default _default;
 export declare const _PropsJsonSchema: {};
 export interface ButtonProps {
     /** color name @default 'secondary' */
@@ -34,5 +36,3 @@ export interface ButtonProps {
     /** onPress handler */
     onPress?: (event: GestureResponderEvent) => void | Promise<void>;
 }
-declare const _default: ComponentType<ButtonProps>;
-export default _default;

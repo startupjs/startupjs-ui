@@ -84,7 +84,7 @@ These components have no internal dependencies (or only depend on utils/core).
 ### Level 1: Base Components
 These depend only on Level 0 components.
 
-- [ ] **Button** (depends on Div, Icon, Loader, Span)
+- [x] **Button** (depends on Div, Icon, Loader, Span) (`packages/button`)
 - [ ] **Badge** (depends on Div, Icon, Span)
 - [ ] **Avatar** (depends on Div, Icon, Span)
 - [ ] **Tag** (depends on Div, Icon, Span)

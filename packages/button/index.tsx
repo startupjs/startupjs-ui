@@ -14,6 +14,8 @@ const {
   }
 } = STYLES
 
+export default observer(themed('Button', Button))
+
 export const _PropsJsonSchema = {/* ButtonProps */} // used in docs generation
 export interface ButtonProps {
   /** color name @default 'secondary' */
@@ -193,5 +195,3 @@ function Button ({
         )= children
   `
 }
-
-export default observer(themed('Button', Button))
