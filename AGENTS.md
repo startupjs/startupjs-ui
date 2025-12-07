@@ -116,7 +116,7 @@ These depend only on Level 0 components.
 ### Level 2: Intermediate Components
 These depend on Level 1 components.
 
-- [ ] **Link** (depends on Button, Div, Span)
+- [x] **Link** (depends on Button, Div, Span) (`packages/link`)
 - [ ] **Pagination** (depends on Button, Div, Icon, Span)
 - [ ] **User** (depends on Avatar)
 - [ ] **Modal** (depends on Portal, Layout, Button)

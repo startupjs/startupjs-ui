@@ -10,6 +10,7 @@ packages/content/index.d.ts
 packages/div/index.d.ts
 packages/icon/index.d.ts
 packages/layout/index.d.ts
+packages/link/index.d.ts
 packages/loader/index.d.ts
 packages/portal/index.d.ts
 packages/span/index.d.ts

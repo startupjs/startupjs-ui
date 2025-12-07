@@ -4561,7 +4561,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/button@workspace:packages/button":
+"@startupjs-ui/button@npm:^0.1.0, @startupjs-ui/button@workspace:packages/button":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/button@workspace:packages/button"
   dependencies:
@@ -4650,6 +4650,21 @@ __metadata:
   resolution: "@startupjs-ui/layout@workspace:packages/layout"
   dependencies:
     "@startupjs-ui/core": "npm:^0.1.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
+"@startupjs-ui/link@workspace:packages/link":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/link@workspace:packages/link"
+  dependencies:
+    "@startupjs-ui/button": "npm:^0.1.0"
+    "@startupjs-ui/core": "npm:^0.1.1"
+    "@startupjs-ui/div": "npm:^0.1.0"
+    "@startupjs-ui/span": "npm:^0.1.0"
   peerDependencies:
     react: "*"
     react-native: "*"

@@ -1,0 +1,148 @@
+import Link, { _PropsJsonSchema as LinkPropsJsonSchema } from './index'
+import Br from '@startupjs-ui/br'
+import Button from '@startupjs-ui/button'
+import Div from '@startupjs-ui/div'
+import { Rating } from '@startupjs/ui'
+import { u } from 'startupjs'
+import { Sandbox } from '@startupjs/docs'
+
+# Link
+
+Link allows to navigate of the app and customize anchors.
+
+```jsx
+import { Link } from 'startupjs-ui'
+```
+
+## Simple example
+
+```jsx example
+return (
+  <Link to='/docs/Card'>
+    Card
+  </Link>
+)
+```
+
+## Different display
+
+There are two options `inline` and `block` of the `display` property. It is detected automatically based on the type of `children`, if not specified. When type of `children` is string it `inline` and `block` otherwise. Depending on the `display` property, component has a different appearance.
+
+```jsx example
+return (
+  <Div>
+    <Link to='/docs/Card'>
+      Card
+    </Link>
+    <Br />
+    <Link to='/docs/Rating'>
+      <Rating value={4.5} readonly />
+    </Link>
+  </Div>
+)
+```
+
+## Colors
+
+To change link color pass the property `color` (works only when `display` value is `inline`).
+
+```jsx example
+return (
+  <Link
+    to='/docs/Card'
+    color='primary'
+  >
+    Card
+  </Link>
+)
+```
+
+## Bold link
+
+To make link text bold pass the property `bold` to component.
+
+```jsx example
+return (
+  <Link to='/docs/Card' bold>
+    Card
+  </Link>
+)
+```
+
+## Italic link
+
+To make link text italic pass the property `italic` to component.
+
+```jsx example
+return (
+  <Link to='/docs/Card' italic>
+    Card
+  </Link>
+)
+```
+
+## Hover style
+
+You can change hover style like in [Div component](/docs/Div) by passing `variant='highlight'` (works only when `display` value is `block`).
+
+```jsx example
+const style = {
+  height: u(10),
+  backgroundColor: 'white',
+  alignItems: 'center',
+  justifyContent: 'center'
+}
+return (
+  <Link
+    style={style}
+    to='/docs/Rating'
+    variant='highlight'
+  >
+    <Rating value={4.5} readonly />
+  </Link>
+)
+```
+
+## Button as link
+
+Sometimes you want to make button as link. The example below illustrates how to do this correctly.
+
+```jsx example
+return (
+  <Link
+    to='/docs/Card'
+  >
+    <Button color='primary' variant='flat'>Card</Button>
+  </Link>
+)
+```
+
+## Actions
+
+By passing `onPress` handler to component you can run some logic before redirecting.
+
+```jsx example
+function onPress (event) {
+  console.log('Go to alert docs')
+}
+return (
+  <Link
+    color='primary'
+    to='/docs/Alert'
+    onPress={onPress}
+  >
+    Alert docs
+  </Link>
+)
+```
+
+## Sandbox
+
+<Sandbox
+  Component={Link}
+  propsJsonSchema={LinkPropsJsonSchema}
+  props={{
+    to: '#',
+    children: 'StartupJS'
+  }}
+/>
