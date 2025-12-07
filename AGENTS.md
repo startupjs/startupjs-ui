@@ -128,7 +128,7 @@ These depend on Level 1 components.
 ### Level 3: Complex Components
 These have deep dependency chains.
 
-- [ ] **Item** (depends on Link)
+- [x] **Item** (depends on Link) (`packages/item`)
 - [ ] **SmartSidebar** (depends on Sidebar, DrawerSidebar)
 - [ ] **AutoSuggest**
 - [ ] **Select**

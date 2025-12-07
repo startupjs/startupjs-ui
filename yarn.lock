@@ -4661,6 +4661,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@startupjs-ui/item@workspace:packages/item":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/item@workspace:packages/item"
+  dependencies:
+    "@startupjs-ui/core": "npm:^0.1.1"
+    "@startupjs-ui/div": "npm:^0.1.0"
+    "@startupjs-ui/icon": "npm:^0.1.0"
+    "@startupjs-ui/link": "npm:^0.1.0"
+    "@startupjs-ui/span": "npm:^0.1.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
 "@startupjs-ui/layout@workspace:packages/layout":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/layout@workspace:packages/layout"
