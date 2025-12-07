@@ -107,7 +107,7 @@ These depend only on Level 0 components.
 - [x] **Alert** (depends on Div, Icon) (`packages/alert`)
 - [x] **Content** (depends on Div) (`packages/content`)
 - [ ] **Row** (depends on Div)
-- [ ] **Breadcrumbs** (depends on Div, Icon, Span)
+- [x] **Breadcrumbs** (depends on Div, Icon, Span) (`packages/breadcrumbs`)
 - [ ] **Menu** (depends on Div, Icon, Span)
 - [ ] **Progress** (depends on Div, Span)
 - [ ] **Rating** (depends on Div, Icon)

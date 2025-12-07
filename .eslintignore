@@ -4,6 +4,7 @@ packages/alert/index.d.ts
 packages/avatar/index.d.ts
 packages/badge/index.d.ts
 packages/br/index.d.ts
+packages/breadcrumbs/index.d.ts
 packages/button/index.d.ts
 packages/card/index.d.ts
 packages/content/index.d.ts

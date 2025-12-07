@@ -4561,6 +4561,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@startupjs-ui/breadcrumbs@workspace:packages/breadcrumbs":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/breadcrumbs@workspace:packages/breadcrumbs"
+  dependencies:
+    "@startupjs-ui/core": "npm:^0.1.1"
+    "@startupjs-ui/div": "npm:^0.1.0"
+    "@startupjs-ui/icon": "npm:^0.1.0"
+    "@startupjs-ui/link": "npm:^0.1.0"
+    "@startupjs-ui/span": "npm:^0.1.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
 "@startupjs-ui/button@npm:^0.1.0, @startupjs-ui/button@workspace:packages/button":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/button@workspace:packages/button"
@@ -4657,7 +4673,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/link@workspace:packages/link":
+"@startupjs-ui/link@npm:^0.1.0, @startupjs-ui/link@workspace:packages/link":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/link@workspace:packages/link"
   dependencies:
