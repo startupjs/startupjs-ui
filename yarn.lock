@@ -4504,6 +4504,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@startupjs-ui/alert@workspace:packages/alert":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/alert@workspace:packages/alert"
+  dependencies:
+    "@startupjs-ui/core": "npm:^0.1.1"
+    "@startupjs-ui/div": "npm:^0.1.0"
+    "@startupjs-ui/icon": "npm:^0.1.0"
+    "@startupjs-ui/span": "npm:^0.1.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
 "@startupjs-ui/avatar@workspace:packages/avatar":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/avatar@workspace:packages/avatar"
