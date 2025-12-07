@@ -4652,6 +4652,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@startupjs-ui/tag@workspace:packages/tag":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/tag@workspace:packages/tag"
+  dependencies:
+    "@startupjs-ui/core": "npm:^0.1.1"
+    "@startupjs-ui/div": "npm:^0.1.0"
+    "@startupjs-ui/icon": "npm:^0.1.0"
+    "@startupjs-ui/span": "npm:^0.1.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
 "@startupjs/auth@npm:^0.60.0-canary.8":
   version: 0.60.0-canary.8
   resolution: "@startupjs/auth@npm:0.60.0-canary.8"
@@ -4727,18 +4742,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@startupjs/babel-plugin-ts-to-json-schema@npm:^0.60.0-canary.11":
-  version: 0.60.0-canary.11
-  resolution: "@startupjs/babel-plugin-ts-to-json-schema@npm:0.60.0-canary.11"
+"@startupjs/babel-plugin-ts-to-json-schema@npm:^0.60.0-canary.18":
+  version: 0.60.0-canary.18
+  resolution: "@startupjs/babel-plugin-ts-to-json-schema@npm:0.60.0-canary.18"
   dependencies:
     ts-json-schema-generator: "npm:2.0.0"
-  checksum: 10c0/a6d1b0ca14c0e2b9be191d7d6ef0966246e1a42904b031bee01b51bd3edff14342fac5570d38ffb765dd605e192aca10ef1fd9bdefcf1766f1d5c5f83a33ef42
+  checksum: 10c0/d8a49c7d459973e786254a6e8cc5a578e6cbea22234eefdd1f0d69931a091a86d72d55a318dacb8a8ed94bf61464ddb659300fd4f2ed5471141462054c6cd8e9
   languageName: node
   linkType: hard
 
-"@startupjs/bundler@npm:^0.60.0-canary.11":
-  version: 0.60.0-canary.11
-  resolution: "@startupjs/bundler@npm:0.60.0-canary.11"
+"@startupjs/bundler@npm:^0.60.0-canary.18":
+  version: 0.60.0-canary.18
+  resolution: "@startupjs/bundler@npm:0.60.0-canary.18"
   dependencies:
     "@babel/core": "npm:^7.9.0"
     "@babel/plugin-syntax-jsx": "npm:^7.0.0"
@@ -4749,14 +4764,14 @@ __metadata:
     "@svgr/core": "npm:^8.1.0"
     "@svgr/plugin-jsx": "npm:^8.1.0"
     "@svgr/plugin-svgo": "npm:^8.1.0"
-    babel-preset-startupjs: "npm:^0.60.0-canary.11"
+    babel-preset-startupjs: "npm:^0.60.0-canary.18"
     connect: "npm:^3.7.0"
     lodash: "npm:^4.17.20"
     remark-gfm: "npm:4.0.1"
   peerDependencies:
     cssxjs: "*"
     react-native-svg: "*"
-  checksum: 10c0/7ef9e0781be41a2c3edc08911ce61dbf812bbcf8c06d61c268f32ed16907708ef55254d9826b9ae370205583635219833c4e1ac608148dbe403ec33a0de29e65
+  checksum: 10c0/b46bec2de3345cd94bc221e4e35b67b21e3a340c99fbbda22ff62cde51494b827ccb9c7e59083a8c76882e6e63a3093ba3fb7046e54de363ed1f923a619d9e3e
   languageName: node
   linkType: hard
 
@@ -7147,9 +7162,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-preset-startupjs@npm:^0.60.0-canary.11":
-  version: 0.60.0-canary.11
-  resolution: "babel-preset-startupjs@npm:0.60.0-canary.11"
+"babel-preset-startupjs@npm:^0.60.0-canary.18":
+  version: 0.60.0-canary.18
+  resolution: "babel-preset-startupjs@npm:0.60.0-canary.18"
   dependencies:
     "@babel/core": "npm:^7.9.0"
     "@babel/plugin-syntax-jsx": "npm:^7.0.0"
@@ -7159,10 +7174,10 @@ __metadata:
     "@startupjs/babel-plugin-startupjs": "npm:^0.60.0-canary.7"
     "@startupjs/babel-plugin-startupjs-debug": "npm:^0.60.0-canary.7"
     "@startupjs/babel-plugin-startupjs-plugins": "npm:^0.60.0-canary.0"
-    "@startupjs/babel-plugin-ts-to-json-schema": "npm:^0.60.0-canary.11"
+    "@startupjs/babel-plugin-ts-to-json-schema": "npm:^0.60.0-canary.18"
   peerDependencies:
     cssxjs: "*"
-  checksum: 10c0/27dc94310fce7995165089410b190864bd481b00b6b17e983717406e0fac388b13a95c285374104af5b28a0a9e7da7c6e0ddacc4942837db05a981a3ba972fe9
+  checksum: 10c0/6c6ea45e7898d2f483496903584bba860341683aaba9420f42251d0c1c629bc13c01c2a58610f81706e69c3e2801fe5ce299d2428a1f84657ea01a155c9ae460
   languageName: node
   linkType: hard
 
@@ -9220,7 +9235,7 @@ __metadata:
     react-native-svg: "npm:15.12.1"
     react-native-web: "npm:~0.21.0"
     react-native-worklets: "npm:0.5.1"
-    startupjs: "npm:^0.60.0-canary.16"
+    startupjs: "npm:^0.60.0-canary.18"
     typescript: "npm:~5.9.2"
   languageName: unknown
   linkType: soft
@@ -20155,19 +20170,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"startupjs@npm:^0.60.0-canary.16":
-  version: 0.60.0-canary.16
-  resolution: "startupjs@npm:0.60.0-canary.16"
+"startupjs@npm:^0.60.0-canary.18":
+  version: 0.60.0-canary.18
+  resolution: "startupjs@npm:0.60.0-canary.18"
   dependencies:
     "@startupjs/auth": "npm:^0.60.0-canary.8"
-    "@startupjs/bundler": "npm:^0.60.0-canary.11"
+    "@startupjs/bundler": "npm:^0.60.0-canary.18"
     "@startupjs/cli": "npm:^0.60.0-canary.7"
     "@startupjs/hooks": "npm:^0.60.0-canary.7"
     "@startupjs/isomorphic-helpers": "npm:^0.60.0-canary.7"
     "@startupjs/registry": "npm:^0.60.0-canary.7"
     "@startupjs/server": "npm:^0.60.0-canary.7"
     "@startupjs/utils": "npm:^0.60.0-canary.7"
-    babel-preset-startupjs: "npm:^0.60.0-canary.11"
+    babel-preset-startupjs: "npm:^0.60.0-canary.18"
     cssxjs: "npm:^0.2.19"
     lodash: "npm:^4.17.20"
     teamplay: "npm:^0.3.29"
@@ -20182,7 +20197,7 @@ __metadata:
       optional: true
   bin:
     startupjs: cli.js
-  checksum: 10c0/e4f953c013c9c0dddd09044ba504f76f99fc58cf4cdaa263ab891ca3e75d108d685593ebb29d31079a2488aa773cc38d5d5286680c93435c6604bc502ec1ae22
+  checksum: 10c0/fbcc835baa531300e6518174d671b6f7498d79e20e2753ea8a97bae7ded981e78b4d770a18d2d2c5320d97fdd27c381747bbd3423edbbd2c2d74441ea709f25d
   languageName: node
   linkType: hard
 

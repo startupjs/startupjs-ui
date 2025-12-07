@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react'
-import { ActivityIndicator } from 'react-native'
+import { ActivityIndicator, type ActivityIndicatorProps } from 'react-native'
 import { pug, observer } from 'startupjs'
 import { Colors, themed, useColors } from '@startupjs-ui/core'
 
@@ -9,7 +9,7 @@ export default observer(themed('Loader', Loader))
 
 export const _PropsJsonSchema = {/* LoaderProps */}
 
-export interface LoaderProps {
+export interface LoaderProps extends Omit<ActivityIndicatorProps, 'size' | 'color' | 'children'> {
   /** Color token defined in Colors @default 'text-description' */
   color?: string
   /** Component size @default 'm' */
@@ -18,7 +18,8 @@ export interface LoaderProps {
 
 function Loader ({
   color = Colors['text-description'],
-  size = 'm'
+  size = 'm',
+  ...props
 }: LoaderProps): ReactNode {
   const getColor = useColors()
   const _color = getColor(color)
@@ -28,6 +29,7 @@ function Loader ({
     ActivityIndicator(
       color=_color
       size=SIZES[size]
+      ...props
     )
   `
 }
