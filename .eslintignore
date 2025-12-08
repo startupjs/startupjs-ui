@@ -21,4 +21,5 @@ packages/rating/index.d.ts
 packages/span/index.d.ts
 packages/tabs/index.d.ts
 packages/tag/index.d.ts
+packages/user/index.d.ts
 # AUTO-GENERATED END

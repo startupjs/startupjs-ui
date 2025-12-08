@@ -10,7 +10,7 @@ The goal is to decouple components and introduce TypeScript interfaces for props
 ## Reference Implementations
 
 - **Span**: `packages/span` (Completed refactoring. Merged H1-H6 into Span).
-- **Button**: `ui/components/Button` (Reference for complex props and structure).
+- **Button**: `packages/button` (Reference for complex props and structure).
 
 ## Quickstart (per component)
 - Create `packages/<component>` with `package.json` copied from `packages/span`; name `@startupjs-ui/<component>`, deps `@startupjs-ui/core`, peers `react`, `react-native`, `startupjs`. See `packages/span` for a basic example and `ui/components/Button` for a complex one.
@@ -118,7 +118,7 @@ These depend only on Level 0 components.
 These depend on Level 1 components.
 
 - [x] **Link** (depends on Button, Div, Span) (`packages/link`)
-- [ ] **User** (depends on Avatar)
+- [x] **User** (depends on Avatar) (`packages/user`)
 - [ ] **Modal** (depends on Portal, Layout, Button)
 - [ ] **Sidebar**
 - [ ] **DrawerSidebar**
