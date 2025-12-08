@@ -15,6 +15,7 @@ packages/layout/index.d.ts
 packages/link/index.d.ts
 packages/loader/index.d.ts
 packages/menu/index.d.ts
+packages/pagination/index.d.ts
 packages/portal/index.d.ts
 packages/rating/index.d.ts
 packages/span/index.d.ts

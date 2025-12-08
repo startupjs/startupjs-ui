@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { $ } from 'startupjs'
-import Pagination from '../Pagination'
-import Div from '../Div'
 import { Sandbox } from '@startupjs/docs'
+import Div from '@startupjs-ui/div'
+import Pagination, { _PropsJsonSchema as PaginationPropsJsonSchema } from './index'
 
 # Pagination
 
 The Pagination component enables the user to select a specific page from a range of pages.
 
 ```jsx
-import { Pagination } from '@startupjs/ui'
+import { Pagination } from 'startupjs-ui'
 ```
 
 ## Simple example
@@ -156,6 +156,7 @@ return (
 
 <Sandbox
   Component={Pagination}
+  propsJsonSchema={PaginationPropsJsonSchema}
   props={{
     page: $.session.Props.Pagination.page.get(),
     onChangePage: page => $.session.Props.Pagination.page.set(page)
