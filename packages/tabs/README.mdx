@@ -1,0 +1,95 @@
+import { useState } from 'react'
+import Div from '@startupjs-ui/div'
+import Tabs, { _PropsJsonSchema as TabsPropsJsonSchema } from './index'
+import { Sandbox } from '@startupjs/docs'
+
+# Tabs
+
+Inherits [react-native-tab-view](https://github.com/satya164/react-native-tab-view) with some changes:
+
+- `navigationState` property is replaced to properties `routes` and `$value`, where:
+  - `routes` is have the same structure as `navigationState.routes`
+  - `$value` is the scoped model, to make tabs controlled (by omitting this property the tabs will be uncontrolled)
+- added property `initialKey` to set default tab
+- added property `onChange` that responds to tab change instead of `onIndexChange`
+- all props for [TabBar](https://github.com/satya164/react-native-tab-view#tabbar) can be assigned to `Tabs` component
+
+Tabs allow you to switch between different views.
+
+```jsx
+import { Tabs } from 'startupjs-ui'
+```
+
+## Tabs.Bar
+Use component `Tabs.Bar` in the `renderTabBar` function if you want to make a custom `TabBar`
+
+## Simple example
+
+```jsx example noscroll
+const [routes] = useState([
+  { key: 'first', title: 'First' },
+  { key: 'second', title: 'Second' },
+])
+
+const FirstRoute = () => (
+  <Div style={{ height: 250, backgroundColor: '#ff4081' }} />
+)
+
+const SecondRoute = () => (
+  <Div style={{ height: 250, backgroundColor: '#673ab7' }} />
+)
+
+function renderScene ({ route }) {
+  switch (route.key) {
+    case 'first':
+      return <FirstRoute />;
+    case 'second':
+      return <SecondRoute />;
+  }
+}
+
+return (
+  <Tabs
+    routes={routes}
+    renderScene={renderScene}
+  />
+)
+```
+
+## Sandbox
+
+<Sandbox
+  Component={Tabs}
+  propsJsonSchema={TabsPropsJsonSchema}
+  props={(() => {
+    const routes = [
+      { key: 'first', title: 'First' },
+      { key: 'second', title: 'Second' }
+    ]
+
+    const FirstRoute = () => (
+      <Div style={{ height: 100, backgroundColor: '#ff4081' }} />
+    )
+
+    const SecondRoute = () => (
+      <Div style={{ height: 100, backgroundColor: '#673ab7' }} />
+    )
+
+    function renderScene ({ route }) {
+      switch (route.key) {
+        case 'first':
+          return <FirstRoute />
+        case 'second':
+          return <SecondRoute />
+        default:
+          return null
+      }
+    }
+
+    return {
+      routes,
+      renderScene
+    }
+  })()}
+  noScroll
+/>

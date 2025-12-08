@@ -1,0 +1,17 @@
+{
+  "name": "@startupjs-ui/tabs",
+  "version": "0.1.0",
+  "main": "index.tsx",
+  "types": "index.d.ts",
+  "type": "module",
+  "dependencies": {
+    "@startupjs-ui/core": "^0.1.1",
+    "react-native-tab-view": "^4.1.2"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-pager-view": "*",
+    "startupjs": "*"
+  }
+}
