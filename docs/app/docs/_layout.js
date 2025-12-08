@@ -3,7 +3,7 @@ import { pug, styl, observer } from 'startupjs'
 import { Slot, Link, usePathname, Stack, useGlobalSearchParams } from 'expo-router'
 import * as DOC_COMPONENTS from '../../clientHelpers/docComponents'
 
-const DOC_COMPONENT_NAMES = Object.keys(DOC_COMPONENTS)
+const DOC_COMPONENT_NAMES = Object.keys(DOC_COMPONENTS).sort()
 
 export default observer(({ children }) => {
   const { component } = useGlobalSearchParams()
