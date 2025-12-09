@@ -1,0 +1,19 @@
+{
+  "name": "@startupjs-ui/collapse",
+  "version": "0.1.0",
+  "main": "index.tsx",
+  "types": "index.d.ts",
+  "type": "module",
+  "dependencies": {
+    "@startupjs-ui/core": "^0.1.1",
+    "@startupjs-ui/div": "^0.1.0",
+    "@startupjs-ui/icon": "^0.1.0",
+    "@startupjs-ui/span": "^0.1.0",
+    "react-native-collapsible": "^1.6.2"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "startupjs": "*"
+  }
+}

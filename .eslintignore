@@ -7,6 +7,7 @@ packages/br/index.d.ts
 packages/breadcrumbs/index.d.ts
 packages/button/index.d.ts
 packages/card/index.d.ts
+packages/collapse/index.d.ts
 packages/content/index.d.ts
 packages/div/index.d.ts
 packages/drawer-sidebar/index.d.ts

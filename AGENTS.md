@@ -123,7 +123,7 @@ These depend on Level 1 components.
 - [x] **Modal** (depends on Portal, Layout, Button) (`packages/modal`)
 - [x] **Sidebar** (`packages/sidebar`)
 - [x] **DrawerSidebar** (`packages/drawer-sidebar`)
-- [ ] **Collapse**
+- [x] **Collapse** (`packages/collapse`)
 - [ ] **Carousel**
 
 ### Level 3: Complex Components
