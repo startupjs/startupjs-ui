@@ -1,0 +1,270 @@
+import SmartSidebar, { _PropsJsonSchema as SmartSidebarPropsJsonSchema } from './index'
+import Div from '@startupjs-ui/div'
+import Menu from '@startupjs-ui/menu'
+import Button from '@startupjs-ui/button'
+import Br from '@startupjs-ui/br'
+import Content from '@startupjs-ui/content'
+import Span from '@startupjs-ui/span'
+import { pug, $ } from 'startupjs'
+import { Sandbox } from '@startupjs/docs'
+import './index.mdx.cssx.styl'
+
+# SmartSidebar
+
+SmartSidebar is typically used for navigation. It provides a desktop-mobile friendly interface. Based on a fixed layout breakpoint, it decides to stay as a [sidebar](/docs/components/Sidebar) or to turn into an [drawer sidebar](/docs/components/DrawerSidebar). By default it not visible on the screen.
+
+```jsx
+import { SmartSidebar } from 'startupjs-ui'
+```
+
+## Simple Example
+
+```jsx example
+const $open = $()
+
+return (
+  <Div style={{overflow: 'hidden'}}>
+    <SmartSidebar
+      $open={$open}
+      renderContent={() => (
+        <Span>SmartSidebar</Span>
+      )}
+    >
+      <Button onPress={() => $open.set(!$open.get())}>Toggle Sidebar</Button>
+    </SmartSidebar>
+  </Div>
+)
+```
+
+## Fixed Layout Breakpoint
+
+The `fixedLayoutBreakpoint` property specifies the screen width breakpoint below which the [sidebar](/docs/components/Sidebar) switches to a [drawer sidebar](/docs/components/DrawerSidebar). `fixedLayoutBreakpoint` is a number type with a default value of `1024`.
+
+```jsx example noscroll
+const $open = $()
+return (
+  <Div style={{overflow: 'hidden'}}>
+    <SmartSidebar
+      $open={$open}
+      renderContent={() => (
+        <Menu>
+          <Menu.Item onPress={() => null}>Nav-1</Menu.Item>
+          <Menu.Item onPress={() => null}>Nav-2</Menu.Item>
+          <Menu.Item onPress={() => null}>Nav-3</Menu.Item>
+        </Menu>
+      )}
+      fixedLayoutBreakpoint={10000}
+    >
+      <Content
+        padding
+        width='full'
+        style={{ backgroundColor: 'white' }}
+      >
+        <Div row>
+          <Button onPress={() => $open.set(!$open.get())}>Toggle</Button>
+        </Div>
+        <Br />
+        <Span>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
+        </Span>
+      </Content>
+    </SmartSidebar>
+  </Div>
+)
+```
+
+## Position
+
+The `position` property specifies the side of the window from which the sidebar will show. Possible values of `position` property are `left` (default) and `right`.
+
+```jsx example noscroll
+const $open = $()
+return (
+  <Div style={{overflow: 'hidden'}}>
+    <SmartSidebar
+      $open={$open}
+      renderContent={() => (
+        <Div>
+          <Br />
+          <Menu>
+            <Menu.Item onPress={() => null}>Nav-1</Menu.Item>
+            <Menu.Item onPress={() => null}>Nav-2</Menu.Item>
+            <Menu.Item onPress={() => null}>Nav-3</Menu.Item>
+          </Menu>
+        </Div>
+      )}
+      position={'right'}
+    >
+      <Content
+        padding
+        width='full'
+        style={{ backgroundColor: 'white' }}
+      >
+        <Div row>
+          <Button onPress={() => $open.set(!$open.get())}>Toggle right sidebar</Button>
+        </Div>
+        <Br />
+        <Span>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
+        </Span>
+      </Content>
+    </SmartSidebar>
+  </Div>
+)
+```
+
+## Default visibility (desktop only)
+
+To control default visibility use `defaultOpen` property.
+
+```jsx example
+const $open = $()
+return (
+  <Div style={{overflow: 'hidden'}}>
+    <SmartSidebar
+      $open={$open}
+      renderContent={() => (
+        <Div>
+          <Br />
+          <Menu>
+            <Menu.Item onPress={() => null}>Nav-1</Menu.Item>
+            <Menu.Item onPress={() => null}>Nav-2</Menu.Item>
+            <Menu.Item onPress={() => null}>Nav-3</Menu.Item>
+          </Menu>
+        </Div>
+      )}
+      defaultOpen
+    >
+      <Content
+        padding
+        width='full'
+        style={{ backgroundColor: 'white' }}
+      >
+        <Div row>
+          <Button onPress={() => $open.set(!$open.get())}>Toggle</Button>
+        </Div>
+      </Content>
+    </SmartSidebar>
+  </Div>
+)
+```
+
+## Locked SmartSidebar
+
+Specifying `disabled` property will keep the sidebar closed and it won't respond to `open` property.
+
+```jsx example
+const $open = $()
+return (
+  <Div style={{overflow: 'hidden'}}>
+    <SmartSidebar
+      $open={$open}
+      renderContent={() => (
+        <Div>
+          <Br />
+          <Menu>
+            <Menu.Item onPress={() => null}>Nav-1</Menu.Item>
+            <Menu.Item onPress={() => null}>Nav-2</Menu.Item>
+            <Menu.Item onPress={() => null}>Nav-3</Menu.Item>
+          </Menu>
+        </Div>
+      )}
+      disabled
+    >
+      <Content
+        padding
+        width='full'
+        style={{ backgroundColor: 'white' }}
+      >
+        <Div row>
+          <Button onPress={() => $open.set(!$open.get())}>Toggle</Button>
+        </Div>
+      </Content>
+    </SmartSidebar>
+  </Div>
+)
+```
+
+## Lazy rendering
+
+By default the smart sidebar content are not destroyed when it is closed. To change this behavior pass `lazy=true`.
+
+```jsx example
+const $open = $()
+
+return (
+  <Div style={{overflow: 'hidden'}}>
+    <SmartSidebar
+      $open={$open}
+      renderContent={() => (
+        <Span>Lazy SmartSidebar</Span>
+      )}
+      lazy
+    >
+      <Button onPress={() => $open.set(!$open.get())}>Toggle Sidebar</Button>
+    </SmartSidebar>
+  </Div>
+)
+```
+
+## Complex example
+
+```jsx example noscroll
+const $open = $()
+return (
+  <Div style={{overflow: 'hidden'}}>
+    <SmartSidebar
+      $open={$open}
+      renderContent={() => (
+        <Menu>
+          <Menu.Item onPress={() => null}>Nav-1</Menu.Item>
+          <Menu.Item onPress={() => null}>Nav-2</Menu.Item>
+          <Menu.Item onPress={() => null}>Nav-3</Menu.Item>
+        </Menu>
+      )}
+    >
+      <Content
+        padding
+        width='full'
+        style={{ backgroundColor: 'white' }}
+      >
+        <Div row>
+          <Button onPress={() => $open.set(!$open.get())}>Toggle</Button>
+        </Div>
+        <Br />
+        <Span>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
+        </Span>
+      </Content>
+    </SmartSidebar>
+  </Div>
+)
+```
+
+## Sandbox
+
+<Sandbox Component={SmartSidebar}
+  props={{
+    $open: $.session.Sandbox.SmartSidebar,
+    renderContent: () => {
+      return pug`
+        Div.sidebar
+          Span Sidebar content
+      `
+    },
+    children: pug`
+      Div.content
+        Button.button(
+          onPress=() => {
+            const value = $.session.Sandbox.SmartSidebar.get()
+            $.session.Sandbox.SmartSidebar.set(!value)
+          }
+        ) Toggle
+        Br
+        Span Children content
+    `
+  }}
+  propsJsonSchema={SmartSidebarPropsJsonSchema}
+  rendererStyleName='renderer'
+  block
+/>

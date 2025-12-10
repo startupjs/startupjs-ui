@@ -130,7 +130,7 @@ These depend on Level 1 components.
 These have deep dependency chains.
 
 - [x] **Item** (depends on Link) (`packages/item`)
-- [ ] **SmartSidebar** (depends on Sidebar, DrawerSidebar)
+- [x] **SmartSidebar** (depends on Sidebar, DrawerSidebar) (`packages/smart-sidebar`)
 - [ ] **AutoSuggest**
 - [ ] **Select**
 - [ ] **Table**

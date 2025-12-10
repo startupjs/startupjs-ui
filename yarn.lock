@@ -4676,7 +4676,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/drawer-sidebar@workspace:packages/drawer-sidebar":
+"@startupjs-ui/drawer-sidebar@npm:^0.1.0, @startupjs-ui/drawer-sidebar@workspace:packages/drawer-sidebar":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/drawer-sidebar@workspace:packages/drawer-sidebar"
   dependencies:
@@ -4847,12 +4847,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/sidebar@workspace:packages/sidebar":
+"@startupjs-ui/sidebar@npm:^0.1.0, @startupjs-ui/sidebar@workspace:packages/sidebar":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/sidebar@workspace:packages/sidebar"
   dependencies:
     "@startupjs-ui/core": "npm:^0.1.1"
     "@startupjs-ui/div": "npm:^0.1.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
+"@startupjs-ui/smart-sidebar@workspace:packages/smart-sidebar":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/smart-sidebar@workspace:packages/smart-sidebar"
+  dependencies:
+    "@startupjs-ui/core": "npm:^0.1.1"
+    "@startupjs-ui/drawer-sidebar": "npm:^0.1.0"
+    "@startupjs-ui/sidebar": "npm:^0.1.0"
   peerDependencies:
     react: "*"
     react-native: "*"
