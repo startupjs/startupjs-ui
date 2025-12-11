@@ -132,7 +132,6 @@ These have deep dependency chains.
 - [x] **Item** (depends on Link) (`packages/item`)
 - [x] **SmartSidebar** (depends on Sidebar, DrawerSidebar) (`packages/smart-sidebar`)
 - [ ] **AutoSuggest**
-- [ ] **Select**
 - [ ] **Table**
 - [ ] **Dialogs**
 
@@ -140,6 +139,21 @@ These have deep dependency chains.
 Form components from ui/components/forms/*
 
 - [x] **TextInput** (`packages/text-input`)
+- [ ] **ArrayInput** (ui/components/forms/ArrayInput)
+- [ ] **Checkbox** (ui/components/forms/Checkbox)
+- [ ] **ColorPicker** (ui/components/forms/ColorPicker)
+- [ ] **DateTimePicker** (ui/components/forms/DateTimePicker)
+- [ ] **FileInput** (ui/components/forms/FileInput)
+- [ ] **Form** (ui/components/forms/Form)
+- [ ] **Input** (ui/components/forms/Input)
+- [ ] **Multiselect** (ui/components/forms/Multiselect)
+- [ ] **NumberInput** (ui/components/forms/NumberInput)
+- [ ] **ObjectInput** (ui/components/forms/ObjectInput)
+- [ ] **PasswordInput** (ui/components/forms/PasswordInput)
+- [ ] **Radio** (ui/components/forms/Radio)
+- [ ] **RangeInput** (ui/components/forms/RangeInput)
+- [ ] **Rank** (ui/components/forms/Rank)
+- [ ] **Select** (ui/components/forms/Select)
 
 ## Updating this Guide
 
