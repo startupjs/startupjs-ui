@@ -30,3 +30,4 @@ export { default as SmartSidebar } from '../../packages/smart-sidebar/README.mdx
 export { default as TextInput } from '../../packages/text-input/README.mdx'
 export { default as Checkbox } from '../../packages/checkbox/README.mdx'
 export { default as NumberInput } from '../../packages/number-input/README.mdx'
+export { default as PasswordInput } from '../../packages/password-input/README.mdx'

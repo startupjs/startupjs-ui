@@ -4839,6 +4839,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@startupjs-ui/password-input@workspace:packages/password-input":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/password-input@workspace:packages/password-input"
+  dependencies:
+    "@startupjs-ui/core": "npm:^0.1.1"
+    "@startupjs-ui/text-input": "npm:^0.1.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
 "@startupjs-ui/portal@npm:^0.1.0, @startupjs-ui/portal@workspace:packages/portal":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/portal@workspace:packages/portal"

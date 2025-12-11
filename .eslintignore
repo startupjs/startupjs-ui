@@ -22,6 +22,7 @@ packages/menu/index.d.ts
 packages/modal/index.d.ts
 packages/number-input/index.d.ts
 packages/pagination/index.d.ts
+packages/password-input/index.d.ts
 packages/portal/index.d.ts
 packages/rating/index.d.ts
 packages/scroll-view/index.d.ts
