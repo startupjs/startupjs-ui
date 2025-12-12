@@ -6,7 +6,11 @@ export default function RootLayout () {
   return (
     <StartupjsProvider>
       <Portal.Provider>
-        <Stack />
+        <Stack
+          screenOptions={{
+            contentStyle: { backgroundColor: 'white' }
+          }}
+        />
       </Portal.Provider>
     </StartupjsProvider>
   )

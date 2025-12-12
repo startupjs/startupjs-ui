@@ -3676,6 +3676,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ptomasroos/react-native-multi-slider@github:ptomasroos/react-native-multi-slider#368a0e8a67a595a84f411ea394b471a43ad8e7a4":
+  version: 2.2.2
+  resolution: "@ptomasroos/react-native-multi-slider@https://github.com/ptomasroos/react-native-multi-slider.git#commit=368a0e8a67a595a84f411ea394b471a43ad8e7a4"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/dca748213bd39588e86a0f7016d4c86ccb79cdbc22d5431b6a0465ad777dd96f4ca84c9fd825f4ebccdfd79987b683e337d65c3a62b9253f042d42930398333c
+  languageName: node
+  linkType: hard
+
 "@radix-ui/primitive@npm:1.1.3":
   version: 1.1.3
   resolution: "@radix-ui/primitive@npm:1.1.3"
@@ -4868,6 +4878,21 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/radio@workspace:packages/radio"
   dependencies:
+    "@startupjs-ui/core": "npm:^0.1.1"
+    "@startupjs-ui/div": "npm:^0.1.0"
+    "@startupjs-ui/span": "npm:^0.1.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
+"@startupjs-ui/range-input@workspace:packages/range-input":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/range-input@workspace:packages/range-input"
+  dependencies:
+    "@ptomasroos/react-native-multi-slider": "github:ptomasroos/react-native-multi-slider#368a0e8a67a595a84f411ea394b471a43ad8e7a4"
     "@startupjs-ui/core": "npm:^0.1.1"
     "@startupjs-ui/div": "npm:^0.1.0"
     "@startupjs-ui/span": "npm:^0.1.0"
