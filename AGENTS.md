@@ -119,6 +119,7 @@ These depend only on Level 0 components.
 - [x] **Pagination** (depends on Button, Div, Icon, Span) (`packages/pagination`)
 - [x] **ScrollView** (`packages/scroll-view`)
 - [x] **Divider** (`packages/divider`)
+- [x] **Drawer** (`packages/drawer`)
 
 ### Level 2: Intermediate Components
 These depend on Level 1 components.

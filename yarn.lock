@@ -4754,6 +4754,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@startupjs-ui/drawer@workspace:packages/drawer":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/drawer@workspace:packages/drawer"
+  dependencies:
+    "@startupjs-ui/core": "npm:^0.1.1"
+    "@startupjs-ui/portal": "npm:^0.1.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
 "@startupjs-ui/icon@npm:^0.1.0, @startupjs-ui/icon@workspace:packages/icon":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/icon@workspace:packages/icon"
