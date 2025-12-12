@@ -131,7 +131,7 @@
   "peerDependencies": {
     "@azure/storage-blob": "*",
     "@react-native-community/datetimepicker": "*",
-    "@react-native-picker/picker": "*",
+    "@react-native-picker/picker": "^2.11.1",
     "expo-document-picker": "*",
     "expo-image-picker": "*",
     "expo-router": "*",

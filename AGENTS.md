@@ -152,7 +152,7 @@ Form components from ui/components/forms/*
 - [x] **Radio** (`packages/radio`)
 - [x] **RangeInput** (`packages/range-input`)
 - [ ] **Rank** (ui/components/forms/Rank)
-- [ ] **Select** (ui/components/forms/Select)
+- [x] **Select** (`packages/select`)
 
 ## Updating this Guide
 

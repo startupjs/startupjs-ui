@@ -1,0 +1,19 @@
+{
+  "name": "@startupjs-ui/select",
+  "version": "0.1.0",
+  "main": "index.tsx",
+  "types": "index.d.ts",
+  "type": "module",
+  "dependencies": {
+    "@react-native-picker/picker": "^2.11.1",
+    "@startupjs-ui/core": "^0.1.1",
+    "@startupjs-ui/div": "^0.1.0",
+    "@startupjs-ui/span": "^0.1.0",
+    "@startupjs-ui/text-input": "^0.1.0"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "startupjs": "*"
+  }
+}

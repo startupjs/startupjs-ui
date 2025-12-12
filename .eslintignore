@@ -28,6 +28,7 @@ packages/radio/index.d.ts
 packages/range-input/index.d.ts
 packages/rating/index.d.ts
 packages/scroll-view/index.d.ts
+packages/select/index.d.ts
 packages/sidebar/index.d.ts
 packages/smart-sidebar/index.d.ts
 packages/span/index.d.ts

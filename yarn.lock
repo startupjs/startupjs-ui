@@ -4129,6 +4129,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-picker/picker@npm:^2.11.1":
+  version: 2.11.4
+  resolution: "@react-native-picker/picker@npm:2.11.4"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/3c9947c1a3022ffa35008cc479b718585b106ff70a5fb0f24c4117bf2eaaf5f60795cba20271af50a01d3a878d5dc06661ea1c1315664898524e291e7412a18f
+  languageName: node
+  linkType: hard
+
 "@react-native/assets-registry@npm:0.81.5":
   version: 0.81.5
   resolution: "@react-native/assets-registry@npm:0.81.5"
@@ -4923,6 +4933,22 @@ __metadata:
   resolution: "@startupjs-ui/scroll-view@workspace:packages/scroll-view"
   dependencies:
     "@startupjs-ui/core": "npm:^0.1.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
+"@startupjs-ui/select@workspace:packages/select":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/select@workspace:packages/select"
+  dependencies:
+    "@react-native-picker/picker": "npm:^2.11.1"
+    "@startupjs-ui/core": "npm:^0.1.1"
+    "@startupjs-ui/div": "npm:^0.1.0"
+    "@startupjs-ui/span": "npm:^0.1.0"
+    "@startupjs-ui/text-input": "npm:^0.1.0"
   peerDependencies:
     react: "*"
     react-native: "*"
