@@ -4524,7 +4524,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@startupjs-ui/abstract-popover@workspace:packages/abstract-popover":
+"@startupjs-ui/abstract-popover@npm:^0.1.0, @startupjs-ui/abstract-popover@workspace:packages/abstract-popover":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/abstract-popover@workspace:packages/abstract-popover"
   dependencies:
@@ -4921,6 +4921,20 @@ __metadata:
   dependencies:
     "@startupjs-ui/core": "npm:^0.1.1"
     "@startupjs-ui/text-input": "npm:^0.1.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
+"@startupjs-ui/popover@workspace:packages/popover":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/popover@workspace:packages/popover"
+  dependencies:
+    "@startupjs-ui/abstract-popover": "npm:^0.1.0"
+    "@startupjs-ui/core": "npm:^0.1.1"
+    "@startupjs-ui/div": "npm:^0.1.0"
   peerDependencies:
     react: "*"
     react-native: "*"

@@ -27,6 +27,7 @@ packages/modal/index.d.ts
 packages/number-input/index.d.ts
 packages/pagination/index.d.ts
 packages/password-input/index.d.ts
+packages/popover/index.d.ts
 packages/portal/index.d.ts
 packages/radio/index.d.ts
 packages/range-input/index.d.ts

@@ -1,0 +1,127 @@
+import { useState } from 'react'
+import { Sandbox } from '@startupjs/docs'
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import Popover, { _PropsJsonSchema as PopoverPropsJsonSchema } from './index'
+import Icon from '@startupjs-ui/icon'
+import Button from '@startupjs-ui/button'
+import Div from '@startupjs-ui/div'
+import Span from '@startupjs-ui/span'
+
+# Popover
+
+Pop-up window for displaying hidden content, linked in some way to a specific element on the page and becomes visible when you click on this.
+
+```jsx
+import { Popover } from 'startupjs-ui'
+```
+
+## Initialization
+
+Before use you need to configure [Portal](/docs/components/Portal)
+
+## Simple example
+
+- `children` (ReactNode): anchor (visible part)
+- `renderContent` (function: ReactNode): function returns hidden part
+
+```jsx example
+const [visible, setVisible] = useState(false)
+
+function renderContent () {
+  return (
+    <Div style={{ padding: 10 }}>
+      <Span>Content</Span>
+    </Div>
+  )
+}
+
+return (
+  <Popover
+    visible={visible}
+    onChange={setVisible}
+    renderContent={renderContent}
+  >
+    <Icon icon={faUserCircle} size='xl' />
+  </Popover>
+)
+```
+
+## Position
+
+- `position` (string - 'top', 'bottom', 'left', 'right'): position relative to the visible part
+- `attachment` (string - 'start', 'center', 'end'): optional parameter for offset
+- `placements` (array): what positions can be used for auto-fix
+
+```jsx example
+const [visible, setVisible] = useState(false)
+
+function renderContent () {
+  return (
+    <Div style={{ padding: 10 }}>
+      <Span>Content</Span>
+    </Div>
+  )
+}
+
+return (
+  <Popover
+    visible={visible}
+    onChange={setVisible}
+    position='top'
+    attachment='center'
+    renderContent={renderContent}
+  >
+    <Button>Open</Button>
+  </Popover>
+)
+```
+
+## Stylization
+
+- `style`: styles for the anchor wrapper
+- `attachmentStyle`: styles for the popover container
+- `overlayStyle`: dismiss overlay styles
+- `arrow` (boolean): show an arrow
+- `matchAnchorWidth` (boolean): the width of the popover is equal to the width of the anchor
+
+```jsx example
+const [visible, setVisible] = useState(false)
+
+function renderContent () {
+  return (
+    <Span style={{ color: '#fff' }}>Content</Span>
+  )
+}
+
+return (
+  <Popover
+    visible={visible}
+    onChange={setVisible}
+    arrow
+    matchAnchorWidth
+    attachment='center'
+    renderContent={renderContent}
+    attachmentStyle={{ backgroundColor: '#333', padding: 10 }}
+  >
+    <Button>Open</Button>
+  </Popover>
+)
+```
+
+## Extra options
+
+- `durationOpen` (number): animation time on opening
+- `durationClose` (number): animation time on close
+
+## Sandbox
+
+<Sandbox
+  Component={Popover}
+  propsJsonSchema={PopoverPropsJsonSchema}
+  props={{
+    visible: false,
+    onChange: () => {},
+    renderContent: () => <Div style={{ padding: 10 }}><Span>Content</Span></Div>,
+    children: <Span>Anchor</Span>
+  }}
+/>

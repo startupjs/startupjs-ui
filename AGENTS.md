@@ -122,6 +122,7 @@ These depend only on Level 0 components.
 - [x] **Divider** (`packages/divider`)
 - [x] **Drawer** (`packages/drawer`)
 - [x] **AbstractPopover** (`packages/abstract-popover`)
+- [x] **Popover** (`packages/popover`)
 
 ### Level 2: Intermediate Components
 These depend on Level 1 components.
