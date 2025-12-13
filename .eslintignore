@@ -18,6 +18,7 @@ packages/divider/index.d.ts
 packages/drawer-sidebar/index.d.ts
 packages/drawer/index.d.ts
 packages/dropdown/index.d.ts
+packages/flat-list/index.d.ts
 packages/icon/index.d.ts
 packages/item/index.d.ts
 packages/layout/index.d.ts

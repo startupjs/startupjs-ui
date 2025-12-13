@@ -1,0 +1,15 @@
+{
+  "name": "@startupjs-ui/flat-list",
+  "version": "0.1.0",
+  "main": "index.tsx",
+  "types": "index.d.ts",
+  "type": "module",
+  "dependencies": {
+    "@startupjs-ui/core": "^0.1.1"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "startupjs": "*"
+  }
+}

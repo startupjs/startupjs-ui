@@ -99,6 +99,7 @@ These components have no internal dependencies (or only depend on utils/core).
 - [x] **Br** (`packages/br`)
 - [x] **Portal** (`packages/portal`)
 - [x] **Layout** (`packages/layout`)
+- [x] **FlatList** (`packages/flat-list`)
 
 ### Level 1: Base Components
 These depend only on Level 0 components.
