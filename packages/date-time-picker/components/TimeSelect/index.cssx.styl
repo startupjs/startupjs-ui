@@ -1,0 +1,23 @@
+.cell
+  height 5u
+  width 20u
+  align-items center
+  justify-content center
+  align-self center
+  &:part(hover)
+    background-color var(--color-bg-primary-transparent)
+
+  +from($UI.media.tablet)
+    width 12u
+
+  &.isActive
+    background-color var(--color-bg-primary)
+    &:part(hover)
+      background-color var(--color-bg-primary-subtle)
+
+.label
+  &.isActive
+    color var(--color-text-on-primary)
+
+:export
+  media: $UI.media

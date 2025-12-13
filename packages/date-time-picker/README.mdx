@@ -1,0 +1,87 @@
+import { useState } from 'react'
+import { $ } from 'startupjs'
+import DateTimePicker, { _PropsJsonSchema as DateTimePickerPropsJsonSchema } from './index'
+import { Sandbox } from '@startupjs/docs'
+
+# DateTimePicker
+
+DateTimePicker allows to display and change the date and time.
+
+```jsx
+import { DateTimePicker } from 'startupjs-ui'
+```
+
+## Simple example
+
+```jsx example
+const [date, setDate] = useState(+new Date())
+
+return (
+  <DateTimePicker
+    date={date}
+    onChangeDate={setDate}
+  />
+)
+```
+
+## Managing visibility
+
+There are three options for managing visiblity of a `DateTimePicker`:
+
+1. By passing the scoped model to the `$visible` property from the state of which visibility is controlled.
+
+```jsx example
+const $visible = $()
+const [date, setDate] = useState()
+
+return (
+  <DateTimePicker
+    date={date}
+    $visible={$visible}
+    onChangeDate={setDate}
+  />
+)
+```
+
+2. By passing the `visible`, `onRequestOpen` and `onRequestClose` properties that determines whether `DateTimePicker` is visible.
+
+```jsx example
+const $visible = $()
+const [date, setDate] = useState()
+const visible = $visible.get()
+
+return (
+  <DateTimePicker
+    date={date}
+    visible={visible}
+    onChangeDate={setDate}
+    onRequestOpen={() => $visible.set(true)}
+    onRequestClose={() => $visible.del()}
+  />
+)
+```
+
+3. Uncontrolled.
+
+```jsx example
+const [date, setDate] = useState()
+
+return (
+  <DateTimePicker
+    date={date}
+    onChangeDate={setDate}
+  />
+)
+```
+
+## Sandbox
+
+<Sandbox
+  Component={DateTimePicker}
+  propsJsonSchema={DateTimePickerPropsJsonSchema}
+  props={{
+    date: +new Date()
+  }}
+  block
+/>
+

@@ -4119,6 +4119,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-community/datetimepicker@npm:^8.4.4":
+  version: 8.5.1
+  resolution: "@react-native-community/datetimepicker@npm:8.5.1"
+  dependencies:
+    invariant: "npm:^2.2.4"
+  peerDependencies:
+    expo: ">=52.0.0"
+    react: "*"
+    react-native: "*"
+    react-native-windows: "*"
+  peerDependenciesMeta:
+    expo:
+      optional: true
+    react-native-windows:
+      optional: true
+  checksum: 10c0/3c9e5889b7616c4b611d280cdceaa9cca7b03fce44e1a9bdd34c5f710882ec5c5c1b085df7c4ed9d315678d3e6d2094cd8e1ce5876e82491db80421f62867d5d
+  languageName: node
+  linkType: hard
+
 "@react-native-picker/picker@npm:2.11.1":
   version: 2.11.1
   resolution: "@react-native-picker/picker@npm:2.11.1"
@@ -4730,6 +4749,32 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@startupjs-ui/date-time-picker@workspace:packages/date-time-picker":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/date-time-picker@workspace:packages/date-time-picker"
+  dependencies:
+    "@fortawesome/free-solid-svg-icons": "npm:^5.12.0"
+    "@react-native-community/datetimepicker": "npm:^8.4.4"
+    "@startupjs-ui/abstract-popover": "npm:^0.1.0"
+    "@startupjs-ui/button": "npm:^0.1.0"
+    "@startupjs-ui/core": "npm:^0.1.1"
+    "@startupjs-ui/div": "npm:^0.1.0"
+    "@startupjs-ui/divider": "npm:^0.1.0"
+    "@startupjs-ui/drawer": "npm:^0.1.0"
+    "@startupjs-ui/flat-list": "npm:^0.1.0"
+    "@startupjs-ui/icon": "npm:^0.1.0"
+    "@startupjs-ui/popover": "npm:^0.1.0"
+    "@startupjs-ui/span": "npm:^0.1.0"
+    "@startupjs-ui/text-input": "npm:^0.1.0"
+    moment-timezone: "npm:^0.5.31"
+    react-native-safe-area-context: "npm:^5.6.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
 "@startupjs-ui/div@npm:^0.1.0, @startupjs-ui/div@workspace:packages/div":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/div@workspace:packages/div"
@@ -4742,7 +4787,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/divider@workspace:packages/divider":
+"@startupjs-ui/divider@npm:^0.1.0, @startupjs-ui/divider@workspace:packages/divider":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/divider@workspace:packages/divider"
   dependencies:
@@ -4800,7 +4845,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/flat-list@workspace:packages/flat-list":
+"@startupjs-ui/flat-list@npm:^0.1.0, @startupjs-ui/flat-list@workspace:packages/flat-list":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/flat-list@workspace:packages/flat-list"
   dependencies:
@@ -18785,7 +18830,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-safe-area-context@npm:~5.6.0":
+"react-native-safe-area-context@npm:^5.6.0, react-native-safe-area-context@npm:~5.6.0":
   version: 5.6.2
   resolution: "react-native-safe-area-context@npm:5.6.2"
   peerDependencies:

@@ -153,7 +153,7 @@ Form components from ui/components/forms/*
 - [ ] **ArrayInput** (ui/components/forms/ArrayInput)
 - [x] **Checkbox** (ui/components/forms/Checkbox) (`packages/checkbox`)
 - [x] **ColorPicker** (ui/components/forms/ColorPicker) (`packages/color-picker`)
-- [ ] **DateTimePicker** (ui/components/forms/DateTimePicker)
+- [x] **DateTimePicker** (ui/components/forms/DateTimePicker) (`packages/date-time-picker`)
 - [ ] **FileInput** (ui/components/forms/FileInput)
 - [ ] **Form** (ui/components/forms/Form)
 - [ ] **Input** (ui/components/forms/Input)

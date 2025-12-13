@@ -28,6 +28,8 @@ export type GetColor = (color?: string, options?: GetColorOptions) => ColorValue
 
 export function useColors (): GetColor
 
+export function useMedia (): any
+
 export interface ThemedOptions {
   name?: string
 }
