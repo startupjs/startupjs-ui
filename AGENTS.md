@@ -165,7 +165,7 @@ Form components from ui/components/forms/*
 - [x] **PasswordInput** (`packages/password-input`)
 - [x] **Radio** (`packages/radio`)
 - [x] **RangeInput** (`packages/range-input`)
-- [ ] **Rank** (ui/components/forms/Rank)
+- [x] **Rank** (ui/components/forms/Rank) (`packages/rank`)
 - [x] **Select** (`packages/select`)
 
 ## Updating this Guide

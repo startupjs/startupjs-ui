@@ -4781,7 +4781,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/draggable@workspace:packages/draggable":
+"@startupjs-ui/draggable@npm:^0.1.0, @startupjs-ui/draggable@workspace:packages/draggable":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/draggable@workspace:packages/draggable"
   dependencies:
@@ -5056,6 +5056,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@startupjs-ui/rank@workspace:packages/rank":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/rank@workspace:packages/rank"
+  dependencies:
+    "@startupjs-ui/core": "npm:^0.1.1"
+    "@startupjs-ui/div": "npm:^0.1.0"
+    "@startupjs-ui/draggable": "npm:^0.1.0"
+    "@startupjs-ui/icon": "npm:^0.1.0"
+    "@startupjs-ui/select": "npm:^0.1.0"
+    "@startupjs-ui/span": "npm:^0.1.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
 "@startupjs-ui/rating@workspace:packages/rating":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/rating@workspace:packages/rating"
@@ -5083,7 +5100,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/select@workspace:packages/select":
+"@startupjs-ui/select@npm:^0.1.0, @startupjs-ui/select@workspace:packages/select":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/select@workspace:packages/select"
   dependencies:
