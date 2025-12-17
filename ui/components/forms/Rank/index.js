@@ -8,7 +8,7 @@ import Draggable from '../../draggable/Draggable'
 import Droppable from '../../draggable/Droppable'
 import Span from '../../typography/Span'
 import Icon from '../../Icon'
-import Input from '../Input'
+import Select from '../Select'
 import Div from '../../Div'
 import { useColors } from '../../../hooks'
 import { getOptionValue, getOptionLabel, stringifyValue, move } from './helpers'
@@ -82,11 +82,10 @@ const RankInput = observer(function ({
         onDragEnd=onDragEnd
       )
         Div(row)
-          Input(
+          Select(
             size='s'
             disabled=disabled
             showEmptyValue=false
-            type='select'
             options=selectOptions
             value=index
             onChange=newIndex => onMoveItem(index, newIndex)
