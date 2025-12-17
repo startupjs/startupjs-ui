@@ -55,6 +55,7 @@ The goal is to decouple components and introduce TypeScript interfaces for props
 - Move `Component.en.mdx` to the new package and rename it to `README.mdx`.
 - Update imports to point to the new component.
 - Ensure the `Sandbox` component is used and linked to the component and its schema - import _PropsJsonSchema from the component and pass it to Sandbox as propsJsonSchema prop.
+- If the component requires a provider/context to render, create a small wrapper component in `README.mdx` for the Sandbox `Component` prop, but still pass the target component's `_PropsJsonSchema` so the props table matches the real component.
 - In the docs on where to import the component from change it from '@startupjs/ui' to instead be 'startupjs-ui' (that's the new meta-library which will re-export all individual packages for each component).
 
 ### 4. Register in Docs App
@@ -125,6 +126,7 @@ These depend only on Level 0 components.
 - [x] **AbstractPopover** (`packages/abstract-popover`)
 - [x] **Popover** (`packages/popover`)
 - [x] **Dropdown** (`packages/dropdown`)
+- [x] **DragDropProvider**, **Droppable**, **Draggable** (`packages/draggable`)
 
 ### Level 2: Intermediate Components
 These depend on Level 1 components.

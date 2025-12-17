@@ -4781,6 +4781,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@startupjs-ui/draggable@workspace:packages/draggable":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/draggable@workspace:packages/draggable"
+  dependencies:
+    "@startupjs-ui/core": "npm:^0.1.1"
+    "@startupjs-ui/portal": "npm:^0.1.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-gesture-handler: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
 "@startupjs-ui/drawer-sidebar@npm:^0.1.0, @startupjs-ui/drawer-sidebar@workspace:packages/drawer-sidebar":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/drawer-sidebar@workspace:packages/drawer-sidebar"

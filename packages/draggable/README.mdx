@@ -1,0 +1,181 @@
+import { useState } from 'react'
+import { pug } from 'startupjs'
+import { Sandbox } from '@startupjs/docs'
+import {
+  Draggable,
+  DragDropProvider,
+  Droppable,
+  _PropsJsonSchema as DraggablePropsJsonSchema
+} from './index'
+import { _PropsJsonSchema as DragDropProviderPropsJsonSchema } from './DragDropProvider'
+import { _PropsJsonSchema as DroppablePropsJsonSchema } from './Droppable'
+import Span from '@startupjs-ui/span'
+import Div from '@startupjs-ui/div'
+import ScrollView from '@startupjs-ui/scroll-view'
+import {
+  DragDropProviderSandbox,
+  DroppableSandbox,
+  DraggableSandbox
+} from './README.helpers'
+import './index.mdx.cssx.styl'
+
+# Draggable
+
+`Draggable` provides simple building blocks for drag & drop on React Native / RN Web:
+
+- `DragDropProvider` stores drag/drop state and exposes it via context
+- `Droppable` marks a drop target and tracks the order of its children
+- `Draggable` handles gestures and renders the dragged item into a `Portal`
+
+```jsx
+import { DragDropProvider, Droppable, Draggable } from 'startupjs-ui'
+```
+
+## How it works
+
+1. Wrap the area with `DragDropProvider`.
+2. Inside it render one or more `Droppable`s with unique `dropId`.
+3. Render `Draggable`s inside each `Droppable`, each with a unique `dragId`.
+4. Update your own data in `onDragEnd` using `{ dragId, dropId, dropHoverId, hoverIndex }`.
+
+## Simple example (reorder in a single list)
+
+```jsx example
+const [items, setItems] = useState([
+  { id: 'a', text: 'First' },
+  { id: 'b', text: 'Second' },
+  { id: 'c', text: 'Third' }
+])
+
+function onDragEnd ({ dragId, dropId, dropHoverId, hoverIndex }) {
+  if (dropId !== dropHoverId) return
+  const fromIndex = items.findIndex(i => i.id === dragId)
+  if (fromIndex === -1) return
+
+  const next = [...items]
+  const [moved] = next.splice(fromIndex, 1)
+  const toIndex = hoverIndex > fromIndex ? hoverIndex - 1 : hoverIndex
+  next.splice(toIndex, 0, moved)
+  setItems(next)
+}
+
+return pug`
+  DragDropProvider
+    Droppable.droppable(dropId='list')
+      each item in items
+        Draggable.draggable(
+          key=item.id
+          dragId=item.id
+          onDragEnd=onDragEnd
+        )
+          Span= item.text
+`
+```
+
+## Multi-column example (move items between columns)
+
+This example implements a small kanban-like board:
+
+- each column is a `Droppable`
+- each card is a `Draggable`
+- `onDragEnd` moves the dragged card to the hovered column and index
+
+```jsx example
+const [data, setData] = useState([
+  {
+    id: '8c778cc6-c1dd-4dde-84a2-e3000fca8ffd',
+    title: 'Plan',
+    items: [
+      { id: '55bd3da0-bed0-451f-8ac3-3b9a19a699fb', text: 'Quarterly newsletter and other' },
+      { id: '8374e61f-0b95-4a4a-8282-48f9316f4157', text: 'Read a book' },
+      { id: '13febede-112d-4d53-8e6f-a83a184e229d', text: 'Buy a new gaming laptop' },
+      { id: '11aabadc-113d-4d53-8e6f-a83a184e229d', text: 'Buy a new gaming 2' },
+      { id: '12febadc-112d-4d53-8e6f-a83a184e229d', text: 'Buy a new gaming 3' }
+    ]
+  },
+  {
+    id: '2d503db0-c209-4f47-8b6a-96ef3ec6ade7',
+    title: 'WIP',
+    items: [
+      { id: '4174c327-eea0-4ec7-96fa-2dc319c40fd6', text: 'Interview John H.', style: {} },
+      { id: 'a2b3af0e-e482-468e-a681-3ab8303b208f', text: 'Sumbit updates to mobile storefronts', style: {} }
+    ]
+  },
+  {
+    id: 'be64729e-29d8-4399-88cd-f1ee3c48b0d8',
+    title: 'Complete',
+    items: [
+      { id: 'c539db23-77f3-49f8-93f0-2a10f1c1f1b7', text: 'Schedule meeting with Alex', style: {} },
+      { id: 'a0d82bf2-72f4-48ba-9294-b835862519ce', text: 'Homepage refresh', style: {} }
+    ]
+  }
+])
+
+const arrInsertEl = (arr, index, item) => arr.splice(index, 0, item)
+const arrRemoveEl = (arr, index) => arr.splice(index, 1)
+
+function onDragEnd ({
+  dragId,
+  dropId,
+  dropHoverId,
+  hoverIndex
+}) {
+  const dropIndex = data.findIndex(drop => drop.id === dropId)
+  const dropHoverIndex = data.findIndex(drop => drop.id === dropHoverId)
+  const dragIndex = data[dropIndex].items.findIndex(drag => drag.id === dragId)
+
+  const drag = data[dropIndex].items[dragIndex]
+
+  arrInsertEl(data[dropHoverIndex].items, hoverIndex, drag)
+  if (dropHoverId === dropId && hoverIndex < dragIndex) {
+    arrRemoveEl(data[dropIndex].items, dragIndex + 1)
+  } else {
+    arrRemoveEl(data[dropIndex].items, dragIndex)
+  }
+
+  setData([...data])
+}
+
+return pug`
+  DragDropProvider
+    ScrollView(horizontal=true)
+      Div(row)
+        each drop in data
+          Droppable.droppable(
+            key=drop.id
+            dropId=drop.id
+          )
+            each drag in drop.items
+              Draggable.draggable(
+                key=drag.id
+                dragId=drag.id
+                onDragEnd=onDragEnd
+              )
+                Span= drag.text
+`
+```
+
+## Sandbox
+
+### DragDropProvider
+
+<Sandbox
+  Component={DragDropProviderSandbox}
+  propsJsonSchema={DragDropProviderPropsJsonSchema}
+/>
+
+### Droppable
+
+<Sandbox
+  Component={DroppableSandbox}
+  props={{ dropId: 'sandbox-drop' }}
+  propsJsonSchema={DroppablePropsJsonSchema}
+/>
+
+### Draggable
+
+<Sandbox
+  Component={DraggableSandbox}
+  props={{ dragId: 'sandbox-drag' }}
+  propsJsonSchema={DraggablePropsJsonSchema}
+/>

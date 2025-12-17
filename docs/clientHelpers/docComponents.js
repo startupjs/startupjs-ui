@@ -42,3 +42,4 @@ export { default as AbstractPopover } from '../../packages/abstract-popover/READ
 export { default as Popover } from '../../packages/popover/README.mdx'
 export { default as Dropdown } from '../../packages/dropdown/README.mdx'
 export { default as FlatList } from '../../packages/flat-list/README.mdx'
+export { default as Draggable } from '../../packages/draggable/README.mdx'
