@@ -28,6 +28,7 @@ packages/link/index.d.ts
 packages/loader/index.d.ts
 packages/menu/index.d.ts
 packages/modal/index.d.ts
+packages/multi-select/index.d.ts
 packages/number-input/index.d.ts
 packages/pagination/index.d.ts
 packages/password-input/index.d.ts

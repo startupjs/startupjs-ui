@@ -4957,6 +4957,25 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@startupjs-ui/multi-select@workspace:packages/multi-select":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/multi-select@workspace:packages/multi-select"
+  dependencies:
+    "@startupjs-ui/core": "npm:^0.1.1"
+    "@startupjs-ui/div": "npm:^0.1.0"
+    "@startupjs-ui/drawer": "npm:^0.1.0"
+    "@startupjs-ui/icon": "npm:^0.1.0"
+    "@startupjs-ui/popover": "npm:^0.1.0"
+    "@startupjs-ui/scroll-view": "npm:^0.1.0"
+    "@startupjs-ui/span": "npm:^0.1.0"
+    "@startupjs-ui/tag": "npm:^0.1.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
 "@startupjs-ui/number-input@workspace:packages/number-input":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/number-input@workspace:packages/number-input"
@@ -5169,7 +5188,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/tag@workspace:packages/tag":
+"@startupjs-ui/tag@npm:^0.1.0, @startupjs-ui/tag@workspace:packages/tag":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/tag@workspace:packages/tag"
   dependencies:
@@ -9763,7 +9782,7 @@ __metadata:
     expo-image: "npm:~3.0.11"
     expo-image-picker: "npm:~17.0.10"
     expo-linking: "npm:~8.0.10"
-    expo-router: "npm:~6.0.19"
+    expo-router: "npm:~6.0.20"
     expo-splash-screen: "npm:~31.0.12"
     expo-status-bar: "npm:~3.0.9"
     expo-symbols: "npm:~1.0.8"
@@ -11121,9 +11140,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-router@npm:~6.0.19":
-  version: 6.0.19
-  resolution: "expo-router@npm:6.0.19"
+"expo-router@npm:~6.0.20":
+  version: 6.0.20
+  resolution: "expo-router@npm:6.0.20"
   dependencies:
     "@expo/metro-runtime": "npm:^6.1.2"
     "@expo/schema-utils": "npm:^0.1.8"
@@ -11179,7 +11198,7 @@ __metadata:
       optional: true
     react-server-dom-webpack:
       optional: true
-  checksum: 10c0/4ed4fca81564271c0bc40c04cbb2bc11e3c7da1325c5adbbef4bf1127ded4033b7238471903dfabb65c0c7064bf2499a13e96aac7b0286dac7558ac3ba15fb64
+  checksum: 10c0/b7f662fbb11d8574183e0ba2cdf5b9c673070ee536c5cdfe86db78b72926831b9cf2a697afca8ecd393f7f2d06b029c24c3adf4e4ed983451f0b9be65baab863
   languageName: node
   linkType: hard
 

@@ -1,0 +1,235 @@
+import { useState } from 'react'
+import { Sandbox } from '@startupjs/docs'
+import Br from '@startupjs-ui/br'
+import Div from '@startupjs-ui/div'
+import Span from '@startupjs-ui/span'
+import MultiSelect, { _PropsJsonSchema as MultiSelectPropsJsonSchema } from './index'
+
+# MultiSelect
+
+MultiSelect lets user pick multiple options.
+
+```jsx
+import { MultiSelect } from 'startupjs-ui'
+```
+
+## Initialization
+
+Before use you need to configure [Portal](/docs/components/Portal)
+
+## Simple example
+
+```jsx example
+const OPTIONS = [
+  { label: 'New York', value: 'ny' },
+  { label: 'Los Angeles', value: 'la' },
+  { label: 'Tokyo', value: 'tk' },
+]
+
+const [cities, setCities] = useState([])
+
+return (
+  <MultiSelect
+    value={cities}
+    onChange={setCities}
+    options={OPTIONS}
+  />
+)
+```
+
+## Options
+
+You can pass array of objects `{ label, value }` or primitives to `options`.
+
+```jsx example
+const OBJECT_OPTIONS_EXAMPLE = [
+  { label: 'New York', value: 'ny' },
+  { label: 'Los Angeles', value: 'la' },
+]
+const PRIMITIVIES_OPTIONS_EXAMPLE = [
+  'New York',
+  'Los Angeles',
+]
+
+const [cities, setCities] = useState([])
+const [citiesArray, setCitiesArray] = useState([])
+
+return (
+  <>
+    <MultiSelect
+      value={cities}
+      onChange={setCities}
+      options={OBJECT_OPTIONS_EXAMPLE}
+    />
+    <Br />
+    <MultiSelect
+      value={citiesArray}
+      onChange={setCitiesArray}
+      options={PRIMITIVIES_OPTIONS_EXAMPLE}
+    />
+  </>
+)
+```
+
+## Disabled
+
+```jsx example
+const OPTIONS = [
+  { label: 'New York', value: 'ny' },
+  { label: 'Los Angeles', value: 'la' },
+  { label: 'Tokyo', value: 'tk' },
+]
+const [cities, setCities] = useState(['ny'])
+
+return (
+  <MultiSelect
+    disabled
+    value={cities}
+    onChange={setCities}
+    options={OPTIONS}
+  />
+)
+```
+
+## Readonly
+
+```jsx example
+const OPTIONS = [
+  { label: 'New York', value: 'ny' },
+  { label: 'Los Angeles', value: 'la' },
+  { label: 'Tokyo', value: 'tk' },
+]
+const [cities, setCities] = useState(['ny'])
+
+return (
+  <MultiSelect
+    readonly
+    value={cities}
+    onChange={setCities}
+    options={OPTIONS}
+  />
+)
+```
+
+## Tag
+
+You can add a custom tag component.
+
+```jsx example
+const OPTIONS = [
+  { label: 'New York', value: 'ny' },
+  { label: 'Los Angeles', value: 'la' },
+  { label: 'Tokyo', value: 'tk' },
+]
+
+const [cities, setCities] = useState([])
+
+return (
+  <MultiSelect
+    value={cities}
+    TagComponent={({ record }) => <Span>✔ {record.label} &nbsp;&nbsp;&nbsp;&nbsp;</Span>}
+    onChange={setCities}
+    options={OPTIONS}
+  />
+)
+```
+
+## Input Component
+
+You can add a custom input component.
+
+```jsx example
+const OPTIONS = [
+  { label: 'New York', value: 'ny' },
+  { label: 'Los Angeles', value: 'la' },
+  { label: 'Tokyo', value: 'tk' },
+]
+
+const [cities, setCities] = useState([])
+
+return (
+  <MultiSelect
+    value={cities}
+    InputComponent={
+      ({ children, onOpen }) => {
+        return (
+          <Div
+            onPress={onOpen}
+            style={{
+              border: '1px dotted green',
+              padding: 8
+            }}
+          >
+            {children}
+          </Div>
+        )
+      }
+    }
+    TagComponent={({ record }) => <Span>✔ {record.label} &nbsp;&nbsp;&nbsp;&nbsp;</Span>}
+    onChange={setCities}
+    options={OPTIONS}
+  />
+)
+```
+
+## Tag limit
+
+You can limit the number of displayed tags by passing `tagLimit={number}`.
+
+```jsx example
+const OPTIONS = [
+  { label: 'New York', value: 'ny' },
+  { label: 'Los Angeles', value: 'la' },
+  { label: 'Tokyo', value: 'tk' },
+]
+
+const [cities, setCities] = useState([])
+
+return (
+  <MultiSelect
+    tagLimit={2}
+    value={cities}
+    onChange={setCities}
+    options={OPTIONS}
+  />
+)
+```
+
+## Limit the number of selected tags
+
+You can limit the number of selected tags by passing `maxTagCount={number}`.
+
+```jsx example
+const OPTIONS = [
+  { label: 'New York', value: 'ny' },
+  { label: 'Los Angeles', value: 'la' },
+  { label: 'Tokyo', value: 'tk' },
+]
+
+const [cities, setCities] = useState([])
+
+return (
+  <MultiSelect
+    maxTagCount={2}
+    value={cities}
+    onChange={setCities}
+    options={OPTIONS}
+  />
+)
+```
+
+## Sandbox
+
+<Sandbox
+  Component={MultiSelect}
+  propsJsonSchema={MultiSelectPropsJsonSchema}
+  props={{
+    value: ['New York'],
+    options: ['New York', 'Los Angeles', 'Tokyo'],
+    onChange: value => console.info('New value is ' + JSON.stringify(value)),
+    onSelect: value => console.info('Value \"' + value + '\" is selected'),
+    onRemove: value => console.info('Value \"' + value + '\" is removed'),
+  }}
+  block
+/>
+
