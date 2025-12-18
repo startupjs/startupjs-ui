@@ -1,11 +1,11 @@
 import React from 'react'
 import { pug, $ } from 'startupjs'
-import Input from '../forms/Input'
+import TextInput from '../forms/TextInput'
 import Br from '../Br'
 import Span from '../typography/Span'
 import { openDialog } from './helpers'
 
-const $prompt = $.session.__ui__.prompt
+const $prompt = $()
 
 export default async function prompt (options, defaultValue) {
   let title, message
@@ -33,9 +33,9 @@ export default async function prompt (options, defaultValue) {
       children: pug`
         Span= message
         Br(half)
-        Input(
-          type='text'
-          $value=$prompt
+        TextInput(
+          value=$prompt.get()
+          onChangeText=text => $prompt.set(text)
         )
       `,
       showCross: false,
