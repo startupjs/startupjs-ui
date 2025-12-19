@@ -1,0 +1,26 @@
+{
+  "name": "@startupjs-ui/dialogs",
+  "version": "0.1.0",
+  "main": "index.tsx",
+  "types": "index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": "./index.tsx",
+    "./DialogsProvider": "./DialogsProvider.tsx",
+    "./alert": "./alert.tsx",
+    "./confirm": "./confirm.tsx",
+    "./prompt": "./prompt.tsx"
+  },
+  "dependencies": {
+    "@startupjs-ui/br": "^0.1.0",
+    "@startupjs-ui/core": "^0.1.1",
+    "@startupjs-ui/modal": "^0.1.0",
+    "@startupjs-ui/span": "^0.1.0",
+    "@startupjs-ui/text-input": "^0.1.0"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "startupjs": "*"
+  }
+}

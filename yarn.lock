@@ -4583,7 +4583,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/br@workspace:packages/br":
+"@startupjs-ui/br@npm:^0.1.0, @startupjs-ui/br@workspace:packages/br":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/br@workspace:packages/br"
   dependencies:
@@ -4750,6 +4750,22 @@ __metadata:
     "@startupjs-ui/text-input": "npm:^0.1.0"
     moment-timezone: "npm:^0.5.31"
     react-native-safe-area-context: "npm:^5.6.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
+"@startupjs-ui/dialogs@workspace:packages/dialogs":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/dialogs@workspace:packages/dialogs"
+  dependencies:
+    "@startupjs-ui/br": "npm:^0.1.0"
+    "@startupjs-ui/core": "npm:^0.1.1"
+    "@startupjs-ui/modal": "npm:^0.1.0"
+    "@startupjs-ui/span": "npm:^0.1.0"
+    "@startupjs-ui/text-input": "npm:^0.1.0"
   peerDependencies:
     react: "*"
     react-native: "*"

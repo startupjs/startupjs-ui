@@ -1,0 +1,155 @@
+import { useState } from 'react'
+import { pug } from 'startupjs'
+import { Sandbox } from '@startupjs/docs'
+import Button from '@startupjs-ui/button'
+import Br from '@startupjs-ui/br'
+import Span from '@startupjs-ui/span'
+import { alert, confirm, prompt } from './index'
+import { _PropsJsonSchema as DialogsProviderPropsJsonSchema } from './DialogsProvider'
+import { _PropsJsonSchema as AlertOptionsPropsJsonSchema } from './alert'
+import { _PropsJsonSchema as ConfirmOptionsPropsJsonSchema } from './confirm'
+import { _PropsJsonSchema as PromptOptionsPropsJsonSchema } from './prompt'
+import {
+  DialogsProviderSandbox,
+  AlertSandbox,
+  ConfirmSandbox,
+  PromptSandbox
+} from './README.helpers'
+import './index.mdx.cssx.styl'
+
+# Dialogs
+
+There are three kinds of dialog boxes: `alert`, `confirm` and `prompt`.
+
+```js
+import { DialogsProvider, alert, confirm, prompt } from 'startupjs-ui'
+```
+
+## Installation
+
+Render `DialogsProvider` once (without children) as a sibling after your main app content.
+
+```jsx
+import { DialogsProvider, Portal } from 'startupjs-ui'
+import { Stack } from 'expo-router'
+
+export default function RootLayout () {
+  return (
+    <>
+      <Portal.Provider>
+        <Stack />
+      </Portal.Provider>
+      <DialogsProvider />
+    </>
+  )
+}
+```
+
+## Alert box
+
+An alert box is used if you want to display a message to the user that requires their attention.
+
+When an alert box pops up, the user will have to click `OK` to proceed.
+
+```js
+await alert(message | { title?, message })
+```
+
+```jsx example
+async function onPress () {
+  await alert('I am an alert box')
+}
+
+return pug`
+  Button(onPress=onPress) Show alert box
+`
+```
+
+## Confirm box
+
+A confirm box is used if you want to get user's permission for something.
+
+When a confirm box pops up, the user will have to click either `OK` or `Cancel` to proceed.
+
+If the user clicks `OK`, the function returns `true`. If the user clicks `Cancel`, the function returns `false`.
+
+```js
+const result = await confirm(message | { title?, message })
+```
+
+```jsx example
+const [pressedButtonText, setPressedButtonText] = useState()
+
+async function onPress () {
+  const isConfirmed = await confirm('Press a button')
+  setPressedButtonText(isConfirmed ? 'OK' : 'Cancel')
+}
+
+return pug`
+  Button(onPress=onPress) Show confirm box
+  if pressedButtonText
+    Br
+    Span= 'You pressed ' + pressedButtonText + '!'
+`
+```
+
+## Prompt box
+
+A prompt box is used if you want the user to input a value to do further actions.
+
+When a prompt box pops up, the user will have to click either `Cancel` or enter an input value and click `OK` to proceed.
+
+If the user clicks `OK` the function returns the input value. If the user clicks `Cancel` the function returns `null`.
+
+```js
+const result = await prompt(message | { title?, message, defaultValue? }, defaultValue?)
+```
+
+```jsx example
+const [name, setName] = useState()
+
+async function onPress () {
+  const name = await prompt('Please enter your name', 'Paha')
+  setName(name)
+}
+
+return pug`
+  Button(onPress=onPress) Show prompt box
+  if name
+    Br
+    Span= 'Hello ' + name + '.'
+`
+```
+
+## Sandbox
+
+### DialogsProvider
+
+<Sandbox
+  Component={DialogsProviderSandbox}
+  propsJsonSchema={DialogsProviderPropsJsonSchema}
+/>
+
+### alert
+
+<Sandbox
+  Component={AlertSandbox}
+  props={{ title: 'Alert', message: 'I am an alert box' }}
+  propsJsonSchema={AlertOptionsPropsJsonSchema}
+/>
+
+### confirm
+
+<Sandbox
+  Component={ConfirmSandbox}
+  props={{ title: 'Confirm', message: 'Press a button' }}
+  propsJsonSchema={ConfirmOptionsPropsJsonSchema}
+/>
+
+### prompt
+
+<Sandbox
+  Component={PromptSandbox}
+  props={{ title: 'Prompt', message: 'Please enter your name', defaultValue: 'Paha' }}
+  propsJsonSchema={PromptOptionsPropsJsonSchema}
+/>

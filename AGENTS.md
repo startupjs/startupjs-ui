@@ -56,6 +56,7 @@ The goal is to decouple components and introduce TypeScript interfaces for props
 - Update imports to point to the new component.
 - Ensure the `Sandbox` component is used and linked to the component and its schema - import _PropsJsonSchema from the component and pass it to Sandbox as propsJsonSchema prop.
 - If the component requires a provider/context to render, create a small wrapper component in `README.mdx` for the Sandbox `Component` prop, but still pass the target component's `_PropsJsonSchema` so the props table matches the real component.
+- Some providers are **singletons** (use module-level state, e.g. `dialogs`): mount **only one** instance in the app (and in docs `_layout`) and avoid rendering multiple providers on the same page, otherwise the last-mounted provider will "steal" all calls.
 - In the docs on where to import the component from change it from '@startupjs/ui' to instead be 'startupjs-ui' (that's the new meta-library which will re-export all individual packages for each component).
 
 ### 4. Register in Docs App
@@ -146,7 +147,7 @@ These have deep dependency chains.
 - [x] **SmartSidebar** (depends on Sidebar, DrawerSidebar) (`packages/smart-sidebar`)
 - [ ] **AutoSuggest**
 - [ ] **Table**
-- [ ] **Dialogs**
+- [x] **DialogsProvider**, **alert**, **confirm**, **prompt**  (`packages/dialogs`)
 
 ### Level 4: Forms
 Form components from ui/components/forms/*
