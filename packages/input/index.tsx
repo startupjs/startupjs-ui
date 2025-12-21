@@ -104,5 +104,5 @@ export default observer(Input)
 export { default as wrapInput, isWrapped, IS_WRAPPED } from './wrapInput'
 export { default as guessInput } from './helpers/guessInput'
 export { setCustomInputs, customInputs } from './globalCustomInputs'
-export { useInputMeta, ALL_INPUTS } from './inputs'
+export { useInputMeta } from './inputs'
 export { default as useCustomInputs, CustomInputsContext } from './useCustomInputs'

@@ -4780,6 +4780,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@startupjs-ui/array-input@npm:^0.1.0, @startupjs-ui/array-input@workspace:packages/array-input":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/array-input@workspace:packages/array-input"
+  dependencies:
+    "@startupjs-ui/button": "npm:^0.1.0"
+    "@startupjs-ui/core": "npm:^0.1.1"
+    "@startupjs-ui/div": "npm:^0.1.0"
+    "@startupjs-ui/input": "npm:^0.1.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
 "@startupjs-ui/avatar@npm:^0.1.0, @startupjs-ui/avatar@workspace:packages/avatar":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/avatar@workspace:packages/avatar"
@@ -5138,11 +5153,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/input@workspace:packages/input":
+"@startupjs-ui/input@npm:^0.1.0, @startupjs-ui/input@workspace:packages/input":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/input@workspace:packages/input"
   dependencies:
     "@fortawesome/free-solid-svg-icons": "npm:^5.12.0"
+    "@startupjs-ui/array-input": "npm:^0.1.0"
     "@startupjs-ui/card": "npm:^0.1.0"
     "@startupjs-ui/checkbox": "npm:^0.1.0"
     "@startupjs-ui/color-picker": "npm:^0.1.0"

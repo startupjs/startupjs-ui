@@ -1,6 +1,7 @@
 import { type ReactNode, type RefObject } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
 import { pug, useBind } from 'startupjs'
+import ArrayInput from '@startupjs-ui/array-input'
 import Card from '@startupjs-ui/card'
 import Checkbox from '@startupjs-ui/checkbox'
 import ColorPicker from '@startupjs-ui/color-picker'
@@ -15,9 +16,6 @@ import RangeInput from '@startupjs-ui/range-input'
 import Select from '@startupjs-ui/select'
 import TextInput from '@startupjs-ui/text-input'
 import wrapInput, { isWrapped } from './wrapInput'
-// TODO: replace with real import once ArrayInput is refactored.
-// import ArrayInput from '@startupjs-ui/array-input'
-import ArrayInput from './ArrayInput.mock'
 // TODO: replace with real import once ObjectInput is refactored.
 // import ObjectInput from '@startupjs-ui/object-input'
 import ObjectInput from './ObjectInput.mock'
@@ -257,162 +255,164 @@ function cardWrapper (style: StyleProp<ViewStyle> | undefined, children: ReactNo
   `
 }
 
-const WrappedArrayInput = wrapInput(
-  ArrayInput,
-  {
-    rows: { _renderWrapper: cardWrapper },
-    columns: { _renderWrapper: cardWrapper }
-  }
-)
-const WrappedCheckbox = wrapInput(
-  Checkbox,
-  {
-    rows: {
-      labelPosition: 'right',
-      descriptionPosition: 'bottom'
+// NOTE: lazy initialization is needed to prevent circular dependencies
+//       with 'wrapInput': ArrayInput and ObjectInput depend on Input (this file)
+let _defaultInputs: Record<string, InputComponentMeta>
+function getDefaultInputs () {
+  if (_defaultInputs) return _defaultInputs
+  const WrappedArrayInput = wrapInput(
+    ArrayInput,
+    {
+      rows: { _renderWrapper: cardWrapper },
+      columns: { _renderWrapper: cardWrapper }
     }
-  }
-)
-const WrappedColorPicker = wrapInput(
-  ColorPicker,
-  { rows: { descriptionPosition: 'bottom' } }
-)
-const WrappedDateTimePicker = wrapInput(
-  DateTimePicker,
-  {
-    rows: { descriptionPosition: 'bottom' },
-    isLabelColoredWhenFocusing: true
-  }
-)
-const WrappedMultiselect = wrapInput(
-  Multiselect,
-  {
-    isLabelColoredWhenFocusing: true
-  }
-)
-const WrappedNumberInput = wrapInput(
-  NumberInput,
-  {
-    rows: {
-      descriptionPosition: 'bottom'
-    },
-    isLabelColoredWhenFocusing: true
-  }
-)
-const WrappedObjectInput = wrapInput(
-  ObjectInput,
-  {
-    rows: { _renderWrapper: cardWrapper },
-    columns: { _renderWrapper: cardWrapper }
-  }
-)
+  )
+  const WrappedCheckbox = wrapInput(
+    Checkbox,
+    {
+      rows: {
+        labelPosition: 'right',
+        descriptionPosition: 'bottom'
+      }
+    }
+  )
+  const WrappedColorPicker = wrapInput(
+    ColorPicker,
+    { rows: { descriptionPosition: 'bottom' } }
+  )
+  const WrappedDateTimePicker = wrapInput(
+    DateTimePicker,
+    {
+      rows: { descriptionPosition: 'bottom' },
+      isLabelColoredWhenFocusing: true
+    }
+  )
+  const WrappedMultiselect = wrapInput(
+    Multiselect,
+    {
+      isLabelColoredWhenFocusing: true
+    }
+  )
+  const WrappedNumberInput = wrapInput(
+    NumberInput,
+    {
+      rows: {
+        descriptionPosition: 'bottom'
+      },
+      isLabelColoredWhenFocusing: true
+    }
+  )
+  const WrappedObjectInput = wrapInput(
+    ObjectInput,
+    {
+      rows: { _renderWrapper: cardWrapper },
+      columns: { _renderWrapper: cardWrapper }
+    }
+  )
 
-const WrappedPasswordInput = wrapInput(
-  PasswordInput,
-  {
-    rows: {
-      descriptionPosition: 'bottom'
-    },
-    isLabelColoredWhenFocusing: true
-  }
-)
-const WrappedFileInput = wrapInput(FileInput)
-const WrappedRank = wrapInput(Rank)
-const WrappedRadio = wrapInput(Radio)
-const WrappedSelect = wrapInput(
-  Select,
-  {
-    rows: {
-      descriptionPosition: 'bottom'
-    },
-    isLabelColoredWhenFocusing: true
-  }
-)
-const WrappedTextInput = wrapInput(
-  TextInput,
-  {
-    rows: {
-      descriptionPosition: 'bottom'
-    },
-    isLabelColoredWhenFocusing: true
-  }
-)
-const WrappedRange = wrapInput(RangeInput)
+  const WrappedPasswordInput = wrapInput(
+    PasswordInput,
+    {
+      rows: {
+        descriptionPosition: 'bottom'
+      },
+      isLabelColoredWhenFocusing: true
+    }
+  )
+  const WrappedFileInput = wrapInput(FileInput)
+  const WrappedRank = wrapInput(Rank)
+  const WrappedRadio = wrapInput(Radio)
+  const WrappedSelect = wrapInput(
+    Select,
+    {
+      rows: {
+        descriptionPosition: 'bottom'
+      },
+      isLabelColoredWhenFocusing: true
+    }
+  )
+  const WrappedTextInput = wrapInput(
+    TextInput,
+    {
+      rows: {
+        descriptionPosition: 'bottom'
+      },
+      isLabelColoredWhenFocusing: true
+    }
+  )
+  const WrappedRange = wrapInput(RangeInput)
 
-const inputs: Record<string, InputComponentMeta> = {
-  array: {
-    Component: WrappedArrayInput,
-    useProps: useArrayProps
-  },
-  checkbox: {
-    Component: WrappedCheckbox,
-    useProps: useCheckboxProps
-  },
-  color: {
-    Component: WrappedColorPicker,
-    useProps: useColorProps
-  },
-  date: {
-    Component: WrappedDateTimePicker,
-    useProps: useDateProps
-  },
-  datetime: {
-    Component: WrappedDateTimePicker,
-    useProps: useDateTimeProps
-  },
-  time: {
-    Component: WrappedDateTimePicker,
-    useProps: useTimeProps
-  },
-  multiselect: {
-    Component: WrappedMultiselect,
-    useProps: useMultiselectProps
-  },
-  number: {
-    Component: WrappedNumberInput,
-    useProps: useNumberProps
-  },
-  object: {
-    Component: WrappedObjectInput,
-    useProps: useObjectProps
-  },
-  password: {
-    Component: WrappedPasswordInput,
-    useProps: usePasswordProps
-  },
-  file: {
-    Component: WrappedFileInput,
-    useProps: useFileProps
-  },
-  rank: {
-    Component: WrappedRank,
-    useProps: useRankProps
-  },
-  radio: {
-    Component: WrappedRadio,
-    useProps: useRadioProps
-  },
-  range: {
-    Component: WrappedRange,
-    useProps: useRangeProps
-  },
-  select: {
-    Component: WrappedSelect,
-    useProps: useSelectProps
-  },
-  text: {
-    Component: WrappedTextInput,
-    useProps: useTextProps
+  _defaultInputs = {
+    array: {
+      Component: WrappedArrayInput,
+      useProps: useArrayProps
+    },
+    checkbox: {
+      Component: WrappedCheckbox,
+      useProps: useCheckboxProps
+    },
+    color: {
+      Component: WrappedColorPicker,
+      useProps: useColorProps
+    },
+    date: {
+      Component: WrappedDateTimePicker,
+      useProps: useDateProps
+    },
+    datetime: {
+      Component: WrappedDateTimePicker,
+      useProps: useDateTimeProps
+    },
+    time: {
+      Component: WrappedDateTimePicker,
+      useProps: useTimeProps
+    },
+    multiselect: {
+      Component: WrappedMultiselect,
+      useProps: useMultiselectProps
+    },
+    number: {
+      Component: WrappedNumberInput,
+      useProps: useNumberProps
+    },
+    object: {
+      Component: WrappedObjectInput,
+      useProps: useObjectProps
+    },
+    password: {
+      Component: WrappedPasswordInput,
+      useProps: usePasswordProps
+    },
+    file: {
+      Component: WrappedFileInput,
+      useProps: useFileProps
+    },
+    rank: {
+      Component: WrappedRank,
+      useProps: useRankProps
+    },
+    radio: {
+      Component: WrappedRadio,
+      useProps: useRadioProps
+    },
+    range: {
+      Component: WrappedRange,
+      useProps: useRangeProps
+    },
+    select: {
+      Component: WrappedSelect,
+      useProps: useSelectProps
+    },
+    text: {
+      Component: WrappedTextInput,
+      useProps: useTextProps
+    }
   }
 }
 
-export default inputs
-
-export const ALL_INPUTS = Object.keys(inputs)
-
 export function useInputMeta (input: string): { Component: any, useProps: InputUseProps } {
   const customInputsFromContext = useCustomInputs()
-  const componentMeta = customInputsFromContext[input] || customInputs[input] || inputs[input]
+  const componentMeta = customInputsFromContext[input] || customInputs[input] || getDefaultInputs()?.[input]
   if (!componentMeta) throw Error(ERRORS.inputNotFound(input))
   let Component
   let useProps: InputUseProps | undefined

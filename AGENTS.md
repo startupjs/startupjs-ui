@@ -154,7 +154,7 @@ These have deep dependency chains.
 Form components from ui/components/forms/*
 
 - [x] **TextInput** (`packages/text-input`)
-- [ ] **ArrayInput** (ui/components/forms/ArrayInput)
+- [x] **ArrayInput** (ui/components/forms/ArrayInput) (`packages/array-input`)
 - [x] **Checkbox** (ui/components/forms/Checkbox) (`packages/checkbox`)
 - [x] **ColorPicker** (ui/components/forms/ColorPicker) (`packages/color-picker`)
 - [x] **DateTimePicker** (ui/components/forms/DateTimePicker) (`packages/date-time-picker`)
