@@ -1,0 +1,20 @@
+{
+  "name": "@startupjs-ui/auto-suggest",
+  "version": "0.1.0",
+  "main": "index.tsx",
+  "types": "index.d.ts",
+  "type": "module",
+  "dependencies": {
+    "@startupjs-ui/abstract-popover": "^0.1.0",
+    "@startupjs-ui/core": "^0.1.1",
+    "@startupjs-ui/flat-list": "^0.1.0",
+    "@startupjs-ui/loader": "^0.1.0",
+    "@startupjs-ui/menu": "^0.1.0",
+    "@startupjs-ui/text-input": "^0.1.0"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "startupjs": "*"
+  }
+}

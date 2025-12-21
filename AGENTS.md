@@ -146,7 +146,7 @@ These have deep dependency chains.
 
 - [x] **Item** (depends on Link) (`packages/item`)
 - [x] **SmartSidebar** (depends on Sidebar, DrawerSidebar) (`packages/smart-sidebar`)
-- [ ] **AutoSuggest**
+- [x] **AutoSuggest** (`packages/auto-suggest`)
 - [ ] **Table**
 - [x] **DialogsProvider**, **alert**, **confirm**, **prompt**  (`packages/dialogs`)
 

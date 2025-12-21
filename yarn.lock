@@ -4795,6 +4795,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@startupjs-ui/auto-suggest@workspace:packages/auto-suggest":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/auto-suggest@workspace:packages/auto-suggest"
+  dependencies:
+    "@startupjs-ui/abstract-popover": "npm:^0.1.0"
+    "@startupjs-ui/core": "npm:^0.1.1"
+    "@startupjs-ui/flat-list": "npm:^0.1.0"
+    "@startupjs-ui/loader": "npm:^0.1.0"
+    "@startupjs-ui/menu": "npm:^0.1.0"
+    "@startupjs-ui/text-input": "npm:^0.1.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
 "@startupjs-ui/avatar@npm:^0.1.0, @startupjs-ui/avatar@workspace:packages/avatar":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/avatar@workspace:packages/avatar"
