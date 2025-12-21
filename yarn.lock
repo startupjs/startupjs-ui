@@ -5392,6 +5392,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@startupjs-ui/progress@workspace:packages/progress":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/progress@workspace:packages/progress"
+  dependencies:
+    "@startupjs-ui/core": "npm:^0.1.1"
+    "@startupjs-ui/div": "npm:^0.1.0"
+    "@startupjs-ui/span": "npm:^0.1.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
 "@startupjs-ui/radio@npm:^0.1.0, @startupjs-ui/radio@workspace:packages/radio":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/radio@workspace:packages/radio"
