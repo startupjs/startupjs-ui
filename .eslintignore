@@ -55,5 +55,6 @@ packages/table/index.d.ts
 packages/tabs/index.d.ts
 packages/tag/index.d.ts
 packages/text-input/index.d.ts
+packages/toast/index.d.ts
 packages/user/index.d.ts
 # AUTO-GENERATED END

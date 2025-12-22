@@ -112,10 +112,10 @@ These depend only on Level 0 components.
 - [x] **Avatar** (depends on Div, Icon, Span) (`packages/avatar`)
 - [x] **Tag** (depends on Div, Icon, Span) (`packages/tag`)
 - [x] **Card** (depends on Div) (`packages/card`)
-- [ ] **Tooltip** (depends on Div) - DEPRECATED, removed from new version
+- [ ] ~~**Tooltip**~~ (depends on Div) - DEPRECATED, removed from new version
 - [x] **Alert** (depends on Div, Icon) (`packages/alert`)
 - [x] **Content** (depends on Div) (`packages/content`)
-- [ ] **Row** (depends on Div) - DEPRECATED, removed from new version
+- [ ] ~~**Row**~~ (depends on Div) - DEPRECATED, removed from new version
 - [x] **Breadcrumbs** (depends on Div, Icon, Span) (`packages/breadcrumbs`)
 - [x] **Menu** (depends on Div, Icon, Span) (`packages/menu`)
 - [x] **Progress** (depends on Div, Span) (`packages/progress`)
@@ -149,6 +149,7 @@ These have deep dependency chains.
 - [x] **AutoSuggest** (`packages/auto-suggest`)
 - [x] **Table**, **Tbody**, **Thead**, **Tr**, **Th**, **Td** (`packages/table`)
 - [x] **DialogsProvider**, **alert**, **confirm**, **prompt**  (`packages/dialogs`)
+- [x] **toast**, **ToastProvider**, **Toast** (`packages/toast`)
 
 ### Level 4: Forms
 Form components from ui/components/forms/*

@@ -1,0 +1,79 @@
+import { pug } from 'startupjs'
+import { Sandbox } from '@startupjs/docs'
+import Button from '@startupjs-ui/button'
+import { toast } from './index'
+import { _PropsJsonSchema as ToastOptionsPropsJsonSchema } from './toast'
+import { _PropsJsonSchema as ToastPropsJsonSchema } from './ToastView'
+import { _PropsJsonSchema as ToastProviderPropsJsonSchema } from './ToastProvider'
+import {
+  ToastProviderSandbox,
+  ToastFunctionSandbox,
+  ToastComponentSandbox
+} from './README.helpers'
+import './index.mdx.cssx.styl'
+
+# Toast
+
+Toast provides brief non-blocking notifications that inform users of a process that an app has performed or will perform.
+
+```js
+import { ToastProvider, toast } from 'startupjs-ui'
+```
+
+## Installation
+
+Render `ToastProvider` once inside `Portal.Provider` before your page context (for example, `Stack`).
+
+```jsx
+import { Portal, ToastProvider, DialogsProvider } from 'startupjs-ui'
+import { Stack } from 'expo-router'
+
+export default function RootLayout () {
+  return (
+    <>
+      <Portal.Provider>
+        <ToastProvider />
+        <Stack />
+      </Portal.Provider>
+      <DialogsProvider />
+    </>
+  )
+}
+```
+
+## Simple example
+
+```jsx example
+function onPress () {
+  toast({ text: 'Note archived' })
+}
+
+return pug`
+  Button(onPress=onPress) Show toast
+`
+```
+
+## Sandbox
+
+### toast
+
+<Sandbox
+  Component={ToastFunctionSandbox}
+  props={{ title: 'Info', text: 'Note archived', type: 'info' }}
+  propsJsonSchema={ToastOptionsPropsJsonSchema}
+/>
+
+### ToastProvider
+
+<Sandbox
+  Component={ToastProviderSandbox}
+  propsJsonSchema={ToastProviderPropsJsonSchema}
+/>
+
+### Toast (internal component, usually you won't want to use it directly)
+
+<Sandbox
+  Component={ToastComponentSandbox}
+  props={{ title: 'Info', text: 'Note archived', type: 'info' }}
+  propsJsonSchema={ToastPropsJsonSchema}
+/>
