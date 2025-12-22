@@ -5036,6 +5036,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/div@workspace:packages/div"
   dependencies:
+    "@startupjs-ui/abstract-popover": "npm:^0.1.0"
     "@startupjs-ui/core": "npm:^0.1.1"
   peerDependencies:
     react: "*"
