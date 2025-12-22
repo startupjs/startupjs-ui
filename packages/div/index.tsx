@@ -150,20 +150,27 @@ function Div ({
     tooltip
   })
 
-  // TODO: fix typings
   const extraEventHandlerProps: TooltipEventHandlers = useMemo(() => {
     const res: TooltipEventHandlers = {}
-    for (const handlerName in tooltipEventHandlers) {
-      const divHandler = props[handlerName]
+    for (const handlerName of tooltipEventHandlersList) {
       const tooltipHandler = tooltipEventHandlers[handlerName]
+      if (!tooltipHandler) continue
+      const divHandler = (props as TooltipEventHandlers)[handlerName]
 
       res[handlerName] = divHandler
-        ? (...args: any) => { tooltipHandler(...args); divHandler(...args) }
+        ? (...args: any[]) => {
+            tooltipHandler(...args)
+            divHandler(...args)
+          }
         : tooltipHandler
     }
     return res
-  }, [tooltipEventHandlers, ...tooltipEventHandlersList.map(h => props[h])])
-  Object.assign(props, extraEventHandlerProps)
+  }, [ // eslint-disable-line react-hooks/exhaustive-deps
+    tooltipEventHandlers,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    ...tooltipEventHandlersList.map(handlerName => (props as TooltipEventHandlers)[handlerName])
+  ])
+  props = { ...props, ...extraEventHandlerProps }
 
   let pushedModifier
   if (pushed) {

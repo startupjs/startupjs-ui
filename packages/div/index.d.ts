@@ -45,7 +45,7 @@ export interface DivProps extends ViewProps {
     bleed?: boolean;
     /** Expand to take full available height (or width if 'row' is true) */
     full?: boolean;
-    /** Simple tooltip text (currently disabled) */
+    /** Simple tooltip text */
     tooltip?: string;
     /** Style overrides for tooltip element */
     tooltipStyle?: StyleProp<ViewStyle>;

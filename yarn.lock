@@ -5038,6 +5038,7 @@ __metadata:
   dependencies:
     "@startupjs-ui/abstract-popover": "npm:^0.1.0"
     "@startupjs-ui/core": "npm:^0.1.1"
+    "@startupjs-ui/span": "npm:^0.1.0"
   peerDependencies:
     react: "*"
     react-native: "*"
