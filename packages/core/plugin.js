@@ -1,9 +1,6 @@
-// TODO: this is not used atm. Needs to be refactored to move custom hooks into packages themselves
 import { createElement as el } from 'react'
 import { createPlugin, ROOT_MODULE as MODULE } from 'startupjs/registry'
-// TODO: move to Input/plugin
 import { setCustomInputs } from './components/forms/Input/globalCustomInputs'
-// TODO: move to Icon/plugin
 import { setCustomIcons } from './components/Icon/globalCustomIcons'
 import UiProvider from './UiProvider'
 
