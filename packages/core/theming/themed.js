@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { matcher } from 'startupjs'
 import memoize from 'lodash/memoize'
 import ThemeContext from './ThemeContext'
-import { useStyle } from '../StyleContext'
+import { useStyle } from './StyleContext'
 
 const memoizedMatcher = memoize(matcher, name => name)
 
