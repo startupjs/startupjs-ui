@@ -1205,7 +1205,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.18.6, @babel/runtime@npm:^7.20.0, @babel/runtime@npm:^7.21.0, @babel/runtime@npm:^7.25.0":
+"@babel/runtime@npm:^7.18.6, @babel/runtime@npm:^7.20.0, @babel/runtime@npm:^7.25.0":
   version: 7.28.4
   resolution: "@babel/runtime@npm:7.28.4"
   checksum: 10c0/792ce7af9750fb9b93879cc9d1db175701c4689da890e6ced242ea0207c9da411ccf16dc04e689cc01158b28d7898c40d75598f4559109f761c12ce01e959bf7
@@ -1371,7 +1371,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emnapi/runtime@npm:^1.1.0, @emnapi/runtime@npm:^1.2.0, @emnapi/runtime@npm:^1.4.3, @emnapi/runtime@npm:^1.7.0":
+"@emnapi/runtime@npm:^1.1.0, @emnapi/runtime@npm:^1.4.3, @emnapi/runtime@npm:^1.7.0":
   version: 1.7.1
   resolution: "@emnapi/runtime@npm:1.7.1"
   dependencies:
@@ -1971,18 +1971,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fortawesome/react-fontawesome@npm:^0.1.17":
-  version: 0.1.19
-  resolution: "@fortawesome/react-fontawesome@npm:0.1.19"
-  dependencies:
-    prop-types: "npm:^15.8.1"
-  peerDependencies:
-    "@fortawesome/fontawesome-svg-core": ~1 || ~6
-    react: ">=16.x"
-  checksum: 10c0/e0442e5f6bc4b7768f491504890192c1d78f1ee52587febaaefeedeba98f7c4906f81b4e10871bfb10eae3fafce3eecd27b5653312e846ce7373f0d5a81cf144
-  languageName: node
-  linkType: hard
-
 "@fortawesome/react-native-fontawesome@npm:^0.3.0":
   version: 0.3.2
   resolution: "@fortawesome/react-native-fontawesome@npm:0.3.2"
@@ -2060,35 +2048,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hypnosphi/create-react-context@npm:^0.3.1":
-  version: 0.3.1
-  resolution: "@hypnosphi/create-react-context@npm:0.3.1"
-  dependencies:
-    gud: "npm:^1.0.0"
-    warning: "npm:^4.0.3"
-  peerDependencies:
-    prop-types: ^15.0.0
-    react: ">=0.14.0"
-  checksum: 10c0/e8072221f9f9c2c47c3ebc5bc6079f9a71938e181d2b4aa3e1d3922707bc097336d5260dad088cf47c1d6e1ff34839fa21f2505a95bddda0d7548c5a955b5691
-  languageName: node
-  linkType: hard
-
 "@img/colour@npm:^1.0.0":
   version: 1.0.0
   resolution: "@img/colour@npm:1.0.0"
   checksum: 10c0/02261719c1e0d7aa5a2d585981954f2ac126f0c432400aa1a01b925aa2c41417b7695da8544ee04fd29eba7ecea8eaf9b8bef06f19dc8faba78f94eeac40667d
-  languageName: node
-  linkType: hard
-
-"@img/sharp-darwin-arm64@npm:0.33.5":
-  version: 0.33.5
-  resolution: "@img/sharp-darwin-arm64@npm:0.33.5"
-  dependencies:
-    "@img/sharp-libvips-darwin-arm64": "npm:1.0.4"
-  dependenciesMeta:
-    "@img/sharp-libvips-darwin-arm64":
-      optional: true
-  conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
@@ -2104,18 +2067,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@img/sharp-darwin-x64@npm:0.33.5":
-  version: 0.33.5
-  resolution: "@img/sharp-darwin-x64@npm:0.33.5"
-  dependencies:
-    "@img/sharp-libvips-darwin-x64": "npm:1.0.4"
-  dependenciesMeta:
-    "@img/sharp-libvips-darwin-x64":
-      optional: true
-  conditions: os=darwin & cpu=x64
-  languageName: node
-  linkType: hard
-
 "@img/sharp-darwin-x64@npm:0.34.5":
   version: 0.34.5
   resolution: "@img/sharp-darwin-x64@npm:0.34.5"
@@ -2128,24 +2079,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@img/sharp-libvips-darwin-arm64@npm:1.0.4":
-  version: 1.0.4
-  resolution: "@img/sharp-libvips-darwin-arm64@npm:1.0.4"
-  conditions: os=darwin & cpu=arm64
-  languageName: node
-  linkType: hard
-
 "@img/sharp-libvips-darwin-arm64@npm:1.2.4":
   version: 1.2.4
   resolution: "@img/sharp-libvips-darwin-arm64@npm:1.2.4"
   conditions: os=darwin & cpu=arm64
-  languageName: node
-  linkType: hard
-
-"@img/sharp-libvips-darwin-x64@npm:1.0.4":
-  version: 1.0.4
-  resolution: "@img/sharp-libvips-darwin-x64@npm:1.0.4"
-  conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
@@ -2156,24 +2093,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@img/sharp-libvips-linux-arm64@npm:1.0.4":
-  version: 1.0.4
-  resolution: "@img/sharp-libvips-linux-arm64@npm:1.0.4"
-  conditions: os=linux & cpu=arm64 & libc=glibc
-  languageName: node
-  linkType: hard
-
 "@img/sharp-libvips-linux-arm64@npm:1.2.4":
   version: 1.2.4
   resolution: "@img/sharp-libvips-linux-arm64@npm:1.2.4"
   conditions: os=linux & cpu=arm64 & libc=glibc
-  languageName: node
-  linkType: hard
-
-"@img/sharp-libvips-linux-arm@npm:1.0.5":
-  version: 1.0.5
-  resolution: "@img/sharp-libvips-linux-arm@npm:1.0.5"
-  conditions: os=linux & cpu=arm & libc=glibc
   languageName: node
   linkType: hard
 
@@ -2198,24 +2121,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@img/sharp-libvips-linux-s390x@npm:1.0.4":
-  version: 1.0.4
-  resolution: "@img/sharp-libvips-linux-s390x@npm:1.0.4"
-  conditions: os=linux & cpu=s390x & libc=glibc
-  languageName: node
-  linkType: hard
-
 "@img/sharp-libvips-linux-s390x@npm:1.2.4":
   version: 1.2.4
   resolution: "@img/sharp-libvips-linux-s390x@npm:1.2.4"
   conditions: os=linux & cpu=s390x & libc=glibc
-  languageName: node
-  linkType: hard
-
-"@img/sharp-libvips-linux-x64@npm:1.0.4":
-  version: 1.0.4
-  resolution: "@img/sharp-libvips-linux-x64@npm:1.0.4"
-  conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
@@ -2226,13 +2135,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@img/sharp-libvips-linuxmusl-arm64@npm:1.0.4":
-  version: 1.0.4
-  resolution: "@img/sharp-libvips-linuxmusl-arm64@npm:1.0.4"
-  conditions: os=linux & cpu=arm64 & libc=musl
-  languageName: node
-  linkType: hard
-
 "@img/sharp-libvips-linuxmusl-arm64@npm:1.2.4":
   version: 1.2.4
   resolution: "@img/sharp-libvips-linuxmusl-arm64@npm:1.2.4"
@@ -2240,29 +2142,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@img/sharp-libvips-linuxmusl-x64@npm:1.0.4":
-  version: 1.0.4
-  resolution: "@img/sharp-libvips-linuxmusl-x64@npm:1.0.4"
-  conditions: os=linux & cpu=x64 & libc=musl
-  languageName: node
-  linkType: hard
-
 "@img/sharp-libvips-linuxmusl-x64@npm:1.2.4":
   version: 1.2.4
   resolution: "@img/sharp-libvips-linuxmusl-x64@npm:1.2.4"
   conditions: os=linux & cpu=x64 & libc=musl
-  languageName: node
-  linkType: hard
-
-"@img/sharp-linux-arm64@npm:0.33.5":
-  version: 0.33.5
-  resolution: "@img/sharp-linux-arm64@npm:0.33.5"
-  dependencies:
-    "@img/sharp-libvips-linux-arm64": "npm:1.0.4"
-  dependenciesMeta:
-    "@img/sharp-libvips-linux-arm64":
-      optional: true
-  conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
@@ -2275,18 +2158,6 @@ __metadata:
     "@img/sharp-libvips-linux-arm64":
       optional: true
   conditions: os=linux & cpu=arm64 & libc=glibc
-  languageName: node
-  linkType: hard
-
-"@img/sharp-linux-arm@npm:0.33.5":
-  version: 0.33.5
-  resolution: "@img/sharp-linux-arm@npm:0.33.5"
-  dependencies:
-    "@img/sharp-libvips-linux-arm": "npm:1.0.5"
-  dependenciesMeta:
-    "@img/sharp-libvips-linux-arm":
-      optional: true
-  conditions: os=linux & cpu=arm & libc=glibc
   languageName: node
   linkType: hard
 
@@ -2326,18 +2197,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@img/sharp-linux-s390x@npm:0.33.5":
-  version: 0.33.5
-  resolution: "@img/sharp-linux-s390x@npm:0.33.5"
-  dependencies:
-    "@img/sharp-libvips-linux-s390x": "npm:1.0.4"
-  dependenciesMeta:
-    "@img/sharp-libvips-linux-s390x":
-      optional: true
-  conditions: os=linux & cpu=s390x & libc=glibc
-  languageName: node
-  linkType: hard
-
 "@img/sharp-linux-s390x@npm:0.34.5":
   version: 0.34.5
   resolution: "@img/sharp-linux-s390x@npm:0.34.5"
@@ -2347,18 +2206,6 @@ __metadata:
     "@img/sharp-libvips-linux-s390x":
       optional: true
   conditions: os=linux & cpu=s390x & libc=glibc
-  languageName: node
-  linkType: hard
-
-"@img/sharp-linux-x64@npm:0.33.5":
-  version: 0.33.5
-  resolution: "@img/sharp-linux-x64@npm:0.33.5"
-  dependencies:
-    "@img/sharp-libvips-linux-x64": "npm:1.0.4"
-  dependenciesMeta:
-    "@img/sharp-libvips-linux-x64":
-      optional: true
-  conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
@@ -2374,18 +2221,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@img/sharp-linuxmusl-arm64@npm:0.33.5":
-  version: 0.33.5
-  resolution: "@img/sharp-linuxmusl-arm64@npm:0.33.5"
-  dependencies:
-    "@img/sharp-libvips-linuxmusl-arm64": "npm:1.0.4"
-  dependenciesMeta:
-    "@img/sharp-libvips-linuxmusl-arm64":
-      optional: true
-  conditions: os=linux & cpu=arm64 & libc=musl
-  languageName: node
-  linkType: hard
-
 "@img/sharp-linuxmusl-arm64@npm:0.34.5":
   version: 0.34.5
   resolution: "@img/sharp-linuxmusl-arm64@npm:0.34.5"
@@ -2398,18 +2233,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@img/sharp-linuxmusl-x64@npm:0.33.5":
-  version: 0.33.5
-  resolution: "@img/sharp-linuxmusl-x64@npm:0.33.5"
-  dependencies:
-    "@img/sharp-libvips-linuxmusl-x64": "npm:1.0.4"
-  dependenciesMeta:
-    "@img/sharp-libvips-linuxmusl-x64":
-      optional: true
-  conditions: os=linux & cpu=x64 & libc=musl
-  languageName: node
-  linkType: hard
-
 "@img/sharp-linuxmusl-x64@npm:0.34.5":
   version: 0.34.5
   resolution: "@img/sharp-linuxmusl-x64@npm:0.34.5"
@@ -2419,15 +2242,6 @@ __metadata:
     "@img/sharp-libvips-linuxmusl-x64":
       optional: true
   conditions: os=linux & cpu=x64 & libc=musl
-  languageName: node
-  linkType: hard
-
-"@img/sharp-wasm32@npm:0.33.5":
-  version: 0.33.5
-  resolution: "@img/sharp-wasm32@npm:0.33.5"
-  dependencies:
-    "@emnapi/runtime": "npm:^1.2.0"
-  conditions: cpu=wasm32
   languageName: node
   linkType: hard
 
@@ -2447,24 +2261,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@img/sharp-win32-ia32@npm:0.33.5":
-  version: 0.33.5
-  resolution: "@img/sharp-win32-ia32@npm:0.33.5"
-  conditions: os=win32 & cpu=ia32
-  languageName: node
-  linkType: hard
-
 "@img/sharp-win32-ia32@npm:0.34.5":
   version: 0.34.5
   resolution: "@img/sharp-win32-ia32@npm:0.34.5"
   conditions: os=win32 & cpu=ia32
-  languageName: node
-  linkType: hard
-
-"@img/sharp-win32-x64@npm:0.33.5":
-  version: 0.33.5
-  resolution: "@img/sharp-win32-x64@npm:0.33.5"
-  conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
@@ -3875,16 +3675,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ptomasroos/react-native-multi-slider@github:ptomasroos/react-native-multi-slider":
-  version: 2.2.2
-  resolution: "@ptomasroos/react-native-multi-slider@https://github.com/ptomasroos/react-native-multi-slider.git#commit=ea229679c99e8b57f14b7df694e2de470e9a451b"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 10c0/897c770c8d2a1bf51f46481c154a07d8d7c5e08b6bae3d5b1bebe0b2f4e5a23ab7d78f839dd5d2f0712325acc8eb08796b2924f5b15076ed5c7c5d9b98f478db
-  languageName: node
-  linkType: hard
-
 "@ptomasroos/react-native-multi-slider@github:ptomasroos/react-native-multi-slider#368a0e8a67a595a84f411ea394b471a43ad8e7a4":
   version: 2.2.2
   resolution: "@ptomasroos/react-native-multi-slider@https://github.com/ptomasroos/react-native-multi-slider.git#commit=368a0e8a67a595a84f411ea394b471a43ad8e7a4"
@@ -4765,7 +4555,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/alert@workspace:packages/alert":
+"@startupjs-ui/alert@npm:^0.1.0, @startupjs-ui/alert@workspace:packages/alert":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/alert@workspace:packages/alert"
   dependencies:
@@ -4928,7 +4718,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/collapse@workspace:packages/collapse":
+"@startupjs-ui/collapse@npm:^0.1.0, @startupjs-ui/collapse@workspace:packages/collapse":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/collapse@workspace:packages/collapse"
   dependencies:
@@ -4975,7 +4765,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/core@npm:^0.1.1, @startupjs-ui/core@workspace:packages/core":
+"@startupjs-ui/core@npm:^0.1.0, @startupjs-ui/core@npm:^0.1.1, @startupjs-ui/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/core@workspace:packages/core"
   dependencies:
@@ -5051,6 +4841,28 @@ __metadata:
   resolution: "@startupjs-ui/divider@workspace:packages/divider"
   dependencies:
     "@startupjs-ui/core": "npm:^0.1.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
+"@startupjs-ui/docs@npm:^0.1.0, @startupjs-ui/docs@workspace:packages/docs":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/docs@workspace:packages/docs"
+  dependencies:
+    "@fortawesome/free-solid-svg-icons": "npm:^5.12.0"
+    "@startupjs-ui/alert": "npm:^0.1.0"
+    "@startupjs-ui/br": "npm:^0.1.0"
+    "@startupjs-ui/button": "npm:^0.1.0"
+    "@startupjs-ui/core": "npm:^0.1.0"
+    "@startupjs-ui/div": "npm:^0.1.0"
+    "@startupjs-ui/input": "npm:^0.1.0"
+    "@startupjs-ui/scroll-view": "npm:^0.1.0"
+    "@startupjs-ui/span": "npm:^0.1.0"
+    "@startupjs-ui/tag": "npm:^0.1.0"
+    lodash: "npm:^4.17.20"
   peerDependencies:
     react: "*"
     react-native: "*"
@@ -5268,6 +5080,31 @@ __metadata:
   dependencies:
     "@startupjs-ui/core": "npm:^0.1.1"
   peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
+"@startupjs-ui/mdx@npm:^0.1.0, @startupjs-ui/mdx@workspace:packages/mdx":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/mdx@workspace:packages/mdx"
+  dependencies:
+    "@fortawesome/free-solid-svg-icons": "npm:^5.12.0"
+    "@mdx-js/react": "npm:^3.0.0"
+    "@startupjs-ui/alert": "npm:^0.1.0"
+    "@startupjs-ui/br": "npm:^0.1.0"
+    "@startupjs-ui/collapse": "npm:^0.1.0"
+    "@startupjs-ui/div": "npm:^0.1.0"
+    "@startupjs-ui/divider": "npm:^0.1.0"
+    "@startupjs-ui/icon": "npm:^0.1.0"
+    "@startupjs-ui/link": "npm:^0.1.0"
+    "@startupjs-ui/scroll-view": "npm:^0.1.0"
+    "@startupjs-ui/span": "npm:^0.1.0"
+    "@startupjs-ui/table": "npm:^0.1.0"
+    refractor: "npm:^3.0.0"
+  peerDependencies:
+    "@react-native-clipboard/clipboard": "*"
     react: "*"
     react-native: "*"
     startupjs: "*"
@@ -5553,7 +5390,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/table@workspace:packages/table":
+"@startupjs-ui/table@npm:^0.1.0, @startupjs-ui/table@workspace:packages/table":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/table@workspace:packages/table"
   dependencies:
@@ -5727,9 +5564,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@startupjs/bundler@npm:^0.60.0-canary.18":
-  version: 0.60.0-canary.18
-  resolution: "@startupjs/bundler@npm:0.60.0-canary.18"
+"@startupjs/bundler@npm:^0.60.0-canary.25":
+  version: 0.60.0-canary.25
+  resolution: "@startupjs/bundler@npm:0.60.0-canary.25"
   dependencies:
     "@babel/core": "npm:^7.9.0"
     "@babel/plugin-syntax-jsx": "npm:^7.0.0"
@@ -5747,7 +5584,7 @@ __metadata:
   peerDependencies:
     cssxjs: "*"
     react-native-svg: "*"
-  checksum: 10c0/b46bec2de3345cd94bc221e4e35b67b21e3a340c99fbbda22ff62cde51494b827ccb9c7e59083a8c76882e6e63a3093ba3fb7046e54de363ed1f923a619d9e3e
+  checksum: 10c0/25a29d92a4d9a806243062da3d38657bcf8ed00f667615fc469a6e7a556e41565c29556ae723b386eddaa18aa310ff92f1a56de8bfe5896dc47b043325f6ead6
   languageName: node
   linkType: hard
 
@@ -5773,22 +5610,6 @@ __metadata:
     css: "npm:^3.0.0"
     css-mediaquery: "npm:^0.1.2"
   checksum: 10c0/8583a1f3201fd1621b74fa0330dde057351805fdb744f9c4aeb3dcf0202b736a275b3d887bc2acf689bb7bc011618337e85e8e866c27bdbd9d390e6b15e3f73b
-  languageName: node
-  linkType: hard
-
-"@startupjs/docs@npm:^0.60.0-canary.23":
-  version: 0.60.0-canary.23
-  resolution: "@startupjs/docs@npm:0.60.0-canary.23"
-  dependencies:
-    "@fortawesome/free-solid-svg-icons": "npm:^5.12.0"
-    "@startupjs/mdx": "npm:^0.60.0-canary.9"
-    "@startupjs/scrollable-anchors": "npm:^0.60.0-canary.7"
-  peerDependencies:
-    "@startupjs/ui": "*"
-    react: "*"
-    react-native: "*"
-    startupjs: "*"
-  checksum: 10c0/bb13520d09d97f6a93eaab40141facaedb9d89bf5517a0b4fea5e687c0f0312e72aafe387e578e881c9f94e034a47fcf1e6895cb6c913aa77bd43d454ce53713
   languageName: node
   linkType: hard
 
@@ -5835,22 +5656,6 @@ __metadata:
   version: 0.60.0-canary.7
   resolution: "@startupjs/isomorphic-helpers@npm:0.60.0-canary.7"
   checksum: 10c0/26c3c6c7ff5e8099c7f38064d11ce8e8d4080a4d755461f411bebdbc10da8b1db2d1888820b60cc58d22d270febb0e63419a150809b1db7e3fd97515eff5571e
-  languageName: node
-  linkType: hard
-
-"@startupjs/mdx@npm:^0.60.0-canary.0, @startupjs/mdx@npm:^0.60.0-canary.9":
-  version: 0.60.0-canary.9
-  resolution: "@startupjs/mdx@npm:0.60.0-canary.9"
-  dependencies:
-    "@mdx-js/react": "npm:^3.0.0"
-    "@startupjs/scrollable-anchors": "npm:^0.60.0-canary.7"
-    refractor: "npm:^3.0.0"
-  peerDependencies:
-    "@react-native-clipboard/clipboard": "*"
-    "@startupjs/ui": "*"
-    react: "*"
-    startupjs: "*"
-  checksum: 10c0/26192b533993280a62a024d55a248e4d3c0d57764708b4822c800f4a9e20f5774bd69f7e72439e029b5b58b3219a5fce18fbba5861985515eec23d6aa5ff1dd1
   languageName: node
   linkType: hard
 
@@ -5945,16 +5750,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@startupjs/scrollable-anchors@npm:^0.60.0-canary.7":
-  version: 0.60.0-canary.7
-  resolution: "@startupjs/scrollable-anchors@npm:0.60.0-canary.7"
-  peerDependencies:
-    "@startupjs/ui": "*"
-    startupjs: "*"
-  checksum: 10c0/94e647c8ab4771796bfa80c0d379c9df08e6dcefd9cea13dc3939d750a3048db325d4e4b0678b4593813f6f5cd08c6328ab5e6a771cff7e8f3cc932c6b94f861
-  languageName: node
-  linkType: hard
-
 "@startupjs/server@npm:^0.60.0-canary.7":
   version: 0.60.0-canary.7
   resolution: "@startupjs/server@npm:0.60.0-canary.7"
@@ -5987,59 +5782,6 @@ __metadata:
   peerDependencies:
     sharedb: ^1.0.0-beta || ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0
   checksum: 10c0/3fe4867dc28d92f401bbbc8411813293cf2381fb635fd4f52606adb7f5d4ca89c64401598b20fc540dcb3a17719c8e0d9d6f4764816ab021c9ed401797f7b1e1
-  languageName: node
-  linkType: hard
-
-"@startupjs/ui@npm:^0.60.0-canary.11":
-  version: 0.60.0-canary.11
-  resolution: "@startupjs/ui@npm:0.60.0-canary.11"
-  dependencies:
-    "@fortawesome/fontawesome-svg-core": "npm:^1.2.26"
-    "@fortawesome/free-solid-svg-icons": "npm:^5.12.0"
-    "@fortawesome/react-fontawesome": "npm:^0.1.17"
-    "@fortawesome/react-native-fontawesome": "npm:^0.3.0"
-    "@nx-js/observer-util": "npm:^4.1.3"
-    "@ptomasroos/react-native-multi-slider": "github:ptomasroos/react-native-multi-slider"
-    "@startupjs/utils": "npm:^0.60.0-canary.7"
-    busboy: "npm:^1.6.0"
-    color: "npm:^3.1.2"
-    date-fns: "npm:^2.0.1"
-    lodash: "npm:^4.17.20"
-    moment-timezone: "npm:^0.5.31"
-    prop-types: "npm:^15.7.2"
-    randomcolor: "npm:^0.5.4"
-    react-datepicker: "npm:^3.3.0"
-    react-native-collapsible: "npm:^1.6.1"
-    react-native-color-picker: "npm:^0.6.0"
-    react-native-drawer-layout-polyfill: "npm:^2.0.0"
-    react-native-tab-view: "npm:^3.0.0"
-    sharp: "npm:^0.33.2"
-  peerDependencies:
-    "@azure/storage-blob": "*"
-    "@react-native-community/datetimepicker": "*"
-    "@react-native-picker/picker": "*"
-    expo-document-picker: "*"
-    expo-image-picker: "*"
-    expo-router: "*"
-    mongodb: "*"
-    react: "*"
-    react-native: "*"
-    react-native-gesture-handler: "*"
-    react-native-pager-view: "*"
-    react-native-svg: "*"
-    startupjs: "*"
-  peerDependenciesMeta:
-    "@azure/storage-blob":
-      optional: true
-    expo-document-picker:
-      optional: true
-    expo-image-picker:
-      optional: true
-    mongodb:
-      optional: true
-    react-router:
-      optional: true
-  checksum: 10c0/4772a911e8a5bb69a50805b35af22e215a21ceacba67e0273dce36bc854be7bea874d17fcc7720f81b6a35bf4dab09922f8ef061ab6c4cc6d17c9417064bd35b
   languageName: node
   linkType: hard
 
@@ -8846,13 +8588,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:^2.2.6":
-  version: 2.5.1
-  resolution: "classnames@npm:2.5.1"
-  checksum: 10c0/afff4f77e62cea2d79c39962980bf316bacb0d7c49e13a21adaadb9221e1c6b9d3cdb829d8bb1b23c406f4e740507f37e1dcf506f7e3b7113d17c5bab787aa69
-  languageName: node
-  linkType: hard
-
 "clean-css@npm:^4.1.11":
   version: 4.2.4
   resolution: "clean-css@npm:4.2.4"
@@ -9859,15 +9594,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns@npm:^2.0.1":
-  version: 2.30.0
-  resolution: "date-fns@npm:2.30.0"
-  dependencies:
-    "@babel/runtime": "npm:^7.21.0"
-  checksum: 10c0/e4b521fbf22bc8c3db332bbfb7b094fd3e7627de0259a9d17c7551e2d2702608a7307a449206065916538e384f37b181565447ce2637ae09828427aed9cb5581
-  languageName: node
-  linkType: hard
-
 "dateformat@npm:^3.0.0, dateformat@npm:^3.0.3":
   version: 3.0.3
   resolution: "dateformat@npm:3.0.3"
@@ -9966,7 +9692,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deep-equal@npm:^1.0.1, deep-equal@npm:^1.1.1":
+"deep-equal@npm:^1.0.1":
   version: 1.1.2
   resolution: "deep-equal@npm:1.1.2"
   dependencies:
@@ -10176,10 +9902,9 @@ __metadata:
     "@react-navigation/bottom-tabs": "npm:^7.4.0"
     "@react-navigation/elements": "npm:^2.6.3"
     "@react-navigation/native": "npm:^7.1.8"
-    "@startupjs/docs": "npm:^0.60.0-canary.23"
-    "@startupjs/mdx": "npm:^0.60.0-canary.0"
+    "@startupjs-ui/docs": "npm:^0.1.0"
+    "@startupjs-ui/mdx": "npm:^0.1.0"
     "@startupjs/router": "npm:^0.60.0-canary.7"
-    "@startupjs/ui": "npm:^0.60.0-canary.11"
     "@types/react": "npm:~19.1.0"
     eslint: "npm:^8.56.0"
     eslint-config-cssxjs: "npm:^0.2.0"
@@ -10211,7 +9936,7 @@ __metadata:
     react-native-svg: "npm:15.12.1"
     react-native-web: "npm:~0.21.0"
     react-native-worklets: "npm:0.5.1"
-    startupjs: "npm:^0.60.0-canary.24"
+    startupjs: "npm:^0.60.0-canary.25"
     typescript: "npm:~5.9.2"
   languageName: unknown
   linkType: soft
@@ -12846,13 +12571,6 @@ __metadata:
   version: 1.4.0
   resolution: "graphemer@npm:1.4.0"
   checksum: 10c0/e951259d8cd2e0d196c72ec711add7115d42eb9a8146c8eeda5b8d3ac91e5dd816b9cd68920726d9fd4490368e7ed86e9c423f40db87e2d8dfafa00fa17c3a31
-  languageName: node
-  linkType: hard
-
-"gud@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "gud@npm:1.0.0"
-  checksum: 10c0/a4db6edc18e2c4e3a22dc9e639e40a4e5650d53dae9cf384a96d5380dfa17ddda376cf6b7797a5c30d140d2532e5a69d167bdb70c2c151dd673253bac6b027f3
   languageName: node
   linkType: hard
 
@@ -18624,13 +18342,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"popper.js@npm:^1.14.4":
-  version: 1.16.1
-  resolution: "popper.js@npm:1.16.1"
-  checksum: 10c0/1c1a826f757edb5b8c2049dfd7a9febf6ae1e9d0e51342fc715b49a0c1020fced250d26484619883651e097c5764bbcacd2f31496e3646027f079dd83e072681
-  languageName: node
-  linkType: hard
-
 "possible-typed-array-names@npm:^1.0.0":
   version: 1.1.0
   resolution: "possible-typed-array-names@npm:1.1.0"
@@ -18850,7 +18561,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.5.10, prop-types@npm:^15.6.1, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.5.10, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -19119,22 +18830,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-datepicker@npm:^3.3.0":
-  version: 3.8.0
-  resolution: "react-datepicker@npm:3.8.0"
-  dependencies:
-    classnames: "npm:^2.2.6"
-    date-fns: "npm:^2.0.1"
-    prop-types: "npm:^15.7.2"
-    react-onclickoutside: "npm:^6.10.0"
-    react-popper: "npm:^1.3.8"
-  peerDependencies:
-    react: ^16.9.0 || ^17
-    react-dom: ^16.9.0 || ^17
-  checksum: 10c0/4e78436229fe0031c3ebb26328def353a5bf483996eb2abd43462279d6bc6e82267e432f6c6a5916eaa3aa0ab4d490e8738e3e30d68e587caf39005cd59e5380
-  languageName: node
-  linkType: hard
-
 "react-devtools-core@npm:^6.1.5":
   version: 6.1.5
   resolution: "react-devtools-core@npm:6.1.5"
@@ -19193,7 +18888,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-collapsible@npm:^1.6.1, react-native-collapsible@npm:^1.6.2":
+"react-native-collapsible@npm:^1.6.2":
   version: 1.6.2
   resolution: "react-native-collapsible@npm:1.6.2"
   peerDependencies:
@@ -19321,19 +19016,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-tab-view@npm:^3.0.0":
-  version: 3.5.2
-  resolution: "react-native-tab-view@npm:3.5.2"
-  dependencies:
-    use-latest-callback: "npm:^0.1.5"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-    react-native-pager-view: "*"
-  checksum: 10c0/f243afcb1ee49642f6d13039725634cd3cc4205cef611b27fc305d99a0064566fbaabeea8ef12367fbf4c13095f5b48e20b517ad3885ced3827fd57c6190e3e4
-  languageName: node
-  linkType: hard
-
 "react-native-tab-view@npm:^4.1.2":
   version: 4.2.0
   resolution: "react-native-tab-view@npm:4.2.0"
@@ -19436,33 +19118,6 @@ __metadata:
   bin:
     react-native: cli.js
   checksum: 10c0/59b861b461e47a476dfe546b305f1b68b5248bedf2174f32c8aa02b0d1da8dc44fe8d0d60b426532353ff2b61d06d40a32a01dcc53043a3425e29b346065d159
-  languageName: node
-  linkType: hard
-
-"react-onclickoutside@npm:^6.10.0":
-  version: 6.13.2
-  resolution: "react-onclickoutside@npm:6.13.2"
-  peerDependencies:
-    react: ^15.5.x || ^16.x || ^17.x || ^18.x
-    react-dom: ^15.5.x || ^16.x || ^17.x || ^18.x
-  checksum: 10c0/fafe6fd036729d7e8f6b5d59046aa0dbc7b547269e167f3c7ab3fa30508ce768133ad46654014449bc1a697d1473bad78a1b869071bd81256c89f225c7c4f2ed
-  languageName: node
-  linkType: hard
-
-"react-popper@npm:^1.3.8":
-  version: 1.3.11
-  resolution: "react-popper@npm:1.3.11"
-  dependencies:
-    "@babel/runtime": "npm:^7.1.2"
-    "@hypnosphi/create-react-context": "npm:^0.3.1"
-    deep-equal: "npm:^1.1.1"
-    popper.js: "npm:^1.14.4"
-    prop-types: "npm:^15.6.1"
-    typed-styles: "npm:^0.0.7"
-    warning: "npm:^4.0.2"
-  peerDependencies:
-    react: 0.14.x || ^15.0.0 || ^16.0.0 || ^17.0.0
-  checksum: 10c0/d5dd1d0d4b5a3407134681b42a079fce525c94bce892ad177515d54a8cf64203eecbc30231476367e916aaff91221f5b6abd5afc207a86c698f35b7254178488
   languageName: node
   linkType: hard
 
@@ -20570,75 +20225,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sharp@npm:^0.33.2":
-  version: 0.33.5
-  resolution: "sharp@npm:0.33.5"
-  dependencies:
-    "@img/sharp-darwin-arm64": "npm:0.33.5"
-    "@img/sharp-darwin-x64": "npm:0.33.5"
-    "@img/sharp-libvips-darwin-arm64": "npm:1.0.4"
-    "@img/sharp-libvips-darwin-x64": "npm:1.0.4"
-    "@img/sharp-libvips-linux-arm": "npm:1.0.5"
-    "@img/sharp-libvips-linux-arm64": "npm:1.0.4"
-    "@img/sharp-libvips-linux-s390x": "npm:1.0.4"
-    "@img/sharp-libvips-linux-x64": "npm:1.0.4"
-    "@img/sharp-libvips-linuxmusl-arm64": "npm:1.0.4"
-    "@img/sharp-libvips-linuxmusl-x64": "npm:1.0.4"
-    "@img/sharp-linux-arm": "npm:0.33.5"
-    "@img/sharp-linux-arm64": "npm:0.33.5"
-    "@img/sharp-linux-s390x": "npm:0.33.5"
-    "@img/sharp-linux-x64": "npm:0.33.5"
-    "@img/sharp-linuxmusl-arm64": "npm:0.33.5"
-    "@img/sharp-linuxmusl-x64": "npm:0.33.5"
-    "@img/sharp-wasm32": "npm:0.33.5"
-    "@img/sharp-win32-ia32": "npm:0.33.5"
-    "@img/sharp-win32-x64": "npm:0.33.5"
-    color: "npm:^4.2.3"
-    detect-libc: "npm:^2.0.3"
-    semver: "npm:^7.6.3"
-  dependenciesMeta:
-    "@img/sharp-darwin-arm64":
-      optional: true
-    "@img/sharp-darwin-x64":
-      optional: true
-    "@img/sharp-libvips-darwin-arm64":
-      optional: true
-    "@img/sharp-libvips-darwin-x64":
-      optional: true
-    "@img/sharp-libvips-linux-arm":
-      optional: true
-    "@img/sharp-libvips-linux-arm64":
-      optional: true
-    "@img/sharp-libvips-linux-s390x":
-      optional: true
-    "@img/sharp-libvips-linux-x64":
-      optional: true
-    "@img/sharp-libvips-linuxmusl-arm64":
-      optional: true
-    "@img/sharp-libvips-linuxmusl-x64":
-      optional: true
-    "@img/sharp-linux-arm":
-      optional: true
-    "@img/sharp-linux-arm64":
-      optional: true
-    "@img/sharp-linux-s390x":
-      optional: true
-    "@img/sharp-linux-x64":
-      optional: true
-    "@img/sharp-linuxmusl-arm64":
-      optional: true
-    "@img/sharp-linuxmusl-x64":
-      optional: true
-    "@img/sharp-wasm32":
-      optional: true
-    "@img/sharp-win32-ia32":
-      optional: true
-    "@img/sharp-win32-x64":
-      optional: true
-  checksum: 10c0/6b81421ddfe6ee524d8d77e325c5e147fef22884e1c7b1656dfd89a88d7025894115da02d5f984261bf2e6daa16f98cadd1721c4ba408b4212b1d2a60f233484
-  languageName: node
-  linkType: hard
-
 "sharp@npm:^0.34.5":
   version: 0.34.5
   resolution: "sharp@npm:0.34.5"
@@ -21265,12 +20851,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"startupjs@npm:^0.60.0-canary.24":
-  version: 0.60.0-canary.24
-  resolution: "startupjs@npm:0.60.0-canary.24"
+"startupjs@npm:^0.60.0-canary.25":
+  version: 0.60.0-canary.25
+  resolution: "startupjs@npm:0.60.0-canary.25"
   dependencies:
     "@startupjs/auth": "npm:^0.60.0-canary.8"
-    "@startupjs/bundler": "npm:^0.60.0-canary.18"
+    "@startupjs/bundler": "npm:^0.60.0-canary.25"
     "@startupjs/cli": "npm:^0.60.0-canary.7"
     "@startupjs/hooks": "npm:^0.60.0-canary.7"
     "@startupjs/isomorphic-helpers": "npm:^0.60.0-canary.7"
@@ -21292,7 +20878,7 @@ __metadata:
       optional: true
   bin:
     startupjs: cli.js
-  checksum: 10c0/38d49b6851ae333580239714fb5cd6fc8af09f09e37fe7576fcea4e6d191722e2107c7752cadca998de407ef7022d65d7331c902b75925e94ff733ee7ba21741
+  checksum: 10c0/991a8dd618c720cdc4205ab3d697f7509ae7de4ed87d04c731e4550fbd0729e05293eeea9684caccc9aec2a6b764c8a6dc696d4b98249cf538ee3953e2050f95
   languageName: node
   linkType: hard
 
@@ -22326,13 +21912,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typed-styles@npm:^0.0.7":
-  version: 0.0.7
-  resolution: "typed-styles@npm:0.0.7"
-  checksum: 10c0/ec159f0e538364750cf9b8f19136375df64ad364fda355e6f7a7216ebffc67f18b436722c5c6853c89f70e6507eb69e5061ceb9334fa1f54902c0f6be1b985fe
-  languageName: node
-  linkType: hard
-
 "typedarray@npm:^0.0.6":
   version: 0.0.6
   resolution: "typedarray@npm:0.0.6"
@@ -22782,15 +22361,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-latest-callback@npm:^0.1.5":
-  version: 0.1.11
-  resolution: "use-latest-callback@npm:0.1.11"
-  peerDependencies:
-    react: ">=16.8"
-  checksum: 10c0/8361ccd3e121552173a27fad67bd226e0cc8acf377073357a7ce83f516be3993b57111eb0e5a8748932543ff6bf4d202200de6e8ba6fa78ae111f44d05404128
-  languageName: node
-  linkType: hard
-
 "use-latest-callback@npm:^0.2.1, use-latest-callback@npm:^0.2.4":
   version: 0.2.6
   resolution: "use-latest-callback@npm:0.2.6"
@@ -23011,15 +22581,6 @@ __metadata:
   version: 0.1.1
   resolution: "warn-once@npm:0.1.1"
   checksum: 10c0/f531e7b2382124f51e6d8f97b8c865246db8ab6ff4e53257a2d274e0f02b97d7201eb35db481843dc155815e154ad7afb53b01c4d4db15fb5aa073562496aff7
-  languageName: node
-  linkType: hard
-
-"warning@npm:^4.0.2, warning@npm:^4.0.3":
-  version: 4.0.3
-  resolution: "warning@npm:4.0.3"
-  dependencies:
-    loose-envify: "npm:^1.0.0"
-  checksum: 10c0/aebab445129f3e104c271f1637fa38e55eb25f968593e3825bd2f7a12bd58dc3738bb70dc8ec85826621d80b4acfed5a29ebc9da17397c6125864d72301b937e
   languageName: node
   linkType: hard
 

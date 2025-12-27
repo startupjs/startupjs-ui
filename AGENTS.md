@@ -45,7 +45,7 @@ The goal is to decouple components and introduce TypeScript interfaces for props
     - Implement minimal TS typing beyond the props interface when needed to satisfy `tsc`/ESLint; keep the implementation otherwise as close to original JS code as possible.
     - `index.d.ts` file will be generated automatically by the build system, don't create it yourself.
     - Don't change anything in the original `ui/` components folder - they are only there for a reference, they are not used, and will be completely removed after we finish refactoring all components.
-    - If you have to use a component in `.mdx` docs which was not refactored yet, import it from `@startupjs/ui` (old library) via top-level named exports, e.g., `import { NumberInput } from '@startupjs/ui'`.
+    - Use already refactored components in `.mdx` docs (from @startupjs-ui/* packages).
 - **Styles**:
     - Do not change the styles, keep them as is.
     - Ensure `themed` is imported from `@startupjs-ui/core`.

@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { Image } from 'react-native'
 import { u } from 'startupjs'
-import { Sandbox } from '@startupjs/docs'
-import { H4, Collapse } from '@startupjs/ui'
+import { Sandbox } from '@startupjs-ui/docs'
+import Span from '@startupjs-ui/span'
+import Collapse from '@startupjs-ui/collapse'
 import Button from '@startupjs-ui/button'
 import Card, { _PropsJsonSchema as CardPropsJsonSchema } from './index'
 import Br from '@startupjs-ui/br'
 import Div from '@startupjs-ui/div'
-import Span from '@startupjs-ui/span'
 import { faShareAlt } from '@fortawesome/free-solid-svg-icons'
 
 # Card
@@ -26,7 +26,7 @@ Although cards can support multiple actions, UI controls, and an overflow menu, 
 ```jsx example
 return (
   <Card>
-    <H4>Card header</H4>
+    <Span h4>Card header</Span>
     <Br />
     <Span>Card body</Span>
   </Card>
@@ -40,7 +40,7 @@ Outlined cards offer an alternative style by passing `outlined` string on `varia
 ```jsx example
 return (
   <Card variant='outlined'>
-    <H4>Card header</H4>
+    <Span h4>Card header</Span>
     <Br />
     <Span>Card body</Span>
   </Card>
@@ -55,25 +55,25 @@ Card `level` prop determines different levels of emphasis, depending on its leve
 return (
   <Div>
     <Card>
-      <H4>Card Level - 1</H4>
+      <Span h4>Card Level - 1</Span>
       <Br />
       <Span>Card body</Span>
     </Card>
     <Br />
     <Card level={2}>
-      <H4>Card Level - 2</H4>
+      <Span h4>Card Level - 2</Span>
       <Br />
       <Span>Card body</Span>
     </Card>
     <Br />
     <Card level={3}>
-      <H4>Card Level - 3</H4>
+      <Span h4>Card Level - 3</Span>
       <Br />
       <Span>Card body</Span>
     </Card>
     <Br />
     <Card level={4}>
-      <H4>Card Level - 4</H4>
+      <Span h4>Card Level - 4</Span>
       <Br />
       <Span>Card body</Span>
     </Card>
@@ -96,7 +96,7 @@ return (
       style={imageStyle}
     />
     <Br />
-    <H4>Cat</H4>
+    <Span h4>Cat</Span>
     <Br />
     <Span>
       The cat (Felis catus) is a domestic species of small carnivorous mammal.
@@ -134,7 +134,7 @@ return (
   propsJsonSchema={CardPropsJsonSchema}
   props={{
     children: [
-      <H4 key='header'>Card header</H4>,
+      <Span h4 key='header'>Card header</Span>,
       <Br key='br'/>,
       <Span key='body'>Card body</Span>
     ],
