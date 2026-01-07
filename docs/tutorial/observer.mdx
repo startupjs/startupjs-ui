@@ -1,0 +1,37 @@
+# Observer pattern
+
+The observer pattern lets a component react to changes it subscribes to. In StartupJS, `observer` wraps a component and re-renders it when the data it reads changes.
+
+## `observer` in StartupJS
+
+`observer` is a higher-order function that makes components reactive. Any ShareDB data read during render becomes a dependency. When that data changes, the component re-renders.
+
+```jsx
+observer(FunctionalComponent, options)
+```
+
+Supported options:
+
+- `forwardRef`: wrap the component with `React.forwardRef`
+- `suspenseProps.fallback`: render a fallback while data is loading
+
+## Example
+
+```jsx
+import { observer, useDoc } from 'startupjs'
+
+export default observer(function User ({ userId }) {
+  const [user, $user] = useDoc('users', userId)
+
+  return (
+    <input
+      value={user.name}
+      onChange={e => $user.set('name', e.target.value)}
+    />
+  )
+})
+```
+
+This component re-renders automatically when `user.name` changes in the database.
+
+For a deeper explanation of the pattern itself, see: https://refactoring.guru/design-patterns/observer

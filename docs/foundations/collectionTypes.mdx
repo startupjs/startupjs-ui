@@ -1,0 +1,34 @@
+# Collection types
+
+StartupJS stores data in ShareDB collections. There are two kinds of collections you will use most often: **public** and **private**.
+
+## Public collections
+
+Public collections (for example `pokemons`) are synced with MongoDB in both directions. Any change made by one client is broadcast to all other subscribed clients.
+
+Public collections are persisted on the server. Access control is enforced by server rules (see the Security section).
+
+## Private collections
+
+Private collections are client-only and start with an underscore, for example `_session` or `_page`.
+
+- `_session` lives for the whole client session (until the tab/app is closed).
+- `_page` lives only while the current route is active. It resets when you navigate away.
+
+Use private collections for UI state, temporary data, and routing parameters.
+
+## Routing parameters
+
+Routes can be parameterized using a `:` prefix. Example: `/pokemon/:pokemonId`.
+
+To navigate and set the parameter:
+
+```js
+emit('url', '/pokemon/' + pokemon.id)
+```
+
+On the target page, read the param from `_render.params`:
+
+```js
+const pokemonId = model.get('_render.params.pokemonId')
+```

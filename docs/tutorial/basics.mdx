@@ -1,0 +1,201 @@
+# Build a TODO app
+
+In this chapter, you will build a simple TODO list to learn the basics of StartupJS UI and data hooks.
+
+## Start with a clean page
+
+Open `main/pages/PHome/index.jsx` and replace the `return` block:
+
+```jsx
+return (
+  <>
+    {/* Content goes here */}
+  </>
+)
+```
+
+## Add a wrapper
+
+StartupJS uses `Div` and `Content` instead of HTML `div`. `Content` adds layout constraints and optional padding.
+
+```jsx
+import { Content } from 'startupjs-ui'
+
+return (
+  <Content></Content>
+)
+```
+
+Now add a heading using `H1`:
+
+```jsx
+import { Content, H1 } from 'startupjs-ui'
+
+return (
+  <Content>
+    <H1>TODO List</H1>
+  </Content>
+)
+```
+
+### Add padding
+
+`Content` supports a `padding` prop. See the docs at `/docs/Content`.
+
+```jsx
+<Content padding>
+  <H1>TODO List</H1>
+</Content>
+```
+
+## Add styles with `styleName`
+
+Use `styleName` to connect a component to a Stylus class in `index.styl`.
+
+```jsx
+<H1 styleName='title'>TODO List</H1>
+```
+
+```styl
+.title
+  color purple
+```
+
+`styleName` can also take arrays or objects:
+
+```jsx
+const variant = 'primary'
+const color = 'warning'
+const disabled = true
+const active = false
+
+return (
+  <Button styleName={[variant, color, { disabled, active }]} />
+)
+```
+
+## Add a card
+
+`Card` is a container component. Text must be wrapped with `Span` (React Native does not allow raw text inside a `View`).
+
+```jsx
+import { Content, H1, Card, Span } from 'startupjs-ui'
+
+<Content padding>
+  <H1>TODO List</H1>
+  <Card>
+    <Span>Learn StartupJS</Span>
+  </Card>
+</Content>
+```
+
+## Fetch and render data
+
+Use `useQuery` to subscribe to a collection and render the list.
+
+```jsx
+import { useQuery } from 'startupjs'
+
+const [todos, $todos] = useQuery('todos', {})
+```
+
+```jsx
+<Content padding>
+  <H1>TODO List</H1>
+  {todos.map(todo => (
+    <Card key={todo.id}>
+      <Span>{todo.title}</Span>
+    </Card>
+  ))}
+</Content>
+```
+
+## Add checkbox and delete button
+
+We will use `Checkbox` and `Button`, and align the row with `Div`.
+
+```jsx
+import { Button, Card, Checkbox, Div, Span } from 'startupjs-ui'
+
+<Content padding>
+  <H1>TODO List</H1>
+  {todos.map(todo => (
+    <Card key={todo.id}>
+      <Div row align='between' vAlign='center'>
+        <Span>{todo.title}</Span>
+        <Div row align='between' vAlign='center'>
+          <Checkbox />
+          <Button />
+        </Div>
+      </Div>
+    </Card>
+  ))}
+</Content>
+```
+
+`align='between' vAlign='center'` are `Div` props similar to `justify-content: space-between` and `align-items: center`.
+
+## Connect the checkbox
+
+`Checkbox` accepts `value` and `onChange`:
+
+```jsx
+const changeStatus = (todoId, value) => $todos.at(todoId).set('completed', value)
+
+<Checkbox
+  value={todo.completed}
+  onChange={value => changeStatus(todo.id, value)}
+/>
+```
+
+## Delete tasks
+
+Add a delete button with an icon:
+
+```jsx
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
+
+<Button
+  icon={faTimes}
+  iconColor='error'
+  size='s'
+  onPress={() => $todos.at(todo.id).del()}
+/>
+```
+
+See `/docs/Button` for more props.
+
+## Add new tasks
+
+Use `TextInput` and a local state for the input value.
+
+```jsx
+import { useState } from 'react'
+import { Button, Div, TextInput } from 'startupjs-ui'
+
+const [inputValue, setInputValue] = useState('')
+
+<TextInput
+  value={inputValue}
+  onChangeText={setInputValue}
+/>
+```
+
+Submit on button press:
+
+```jsx
+const handleSubmit = async () => {
+  if (!inputValue) return
+  await $todos.add({
+    title: inputValue,
+    completed: false
+  })
+  setInputValue('')
+}
+
+<Button onPress={handleSubmit}>Add</Button>
+```
+
+## Done
+
+You now have a working TODO app with realtime data.

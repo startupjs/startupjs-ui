@@ -1,0 +1,50 @@
+import {
+  borderRadius,
+  borderRadiusMedium,
+  borderRadiusLarge,
+  borderRadiusCircle
+} from './borderRadius.styl'
+import { Div, Span } from 'startupjs-ui'
+
+# Border radius
+
+Consistent border radius values help the UI feel cohesive. Use the three tokens below unless you have a strong reason to introduce a custom value.
+
+## Medium (4px)
+
+Use for inputs, buttons, toasts, and small cards.
+
+<Div style={[borderRadius, borderRadiusMedium]}>
+  <Span>4 px</Span>
+</Div>
+
+```styl
+.element
+  radius(m)
+```
+
+## Large (8px)
+
+Use for large cards, tables, and modal dialogs.
+
+<Div style={[borderRadius, borderRadiusLarge]}>
+  <Span>8 px</Span>
+</Div>
+
+```styl
+.element
+  radius(l)
+```
+
+## Circle
+
+Use for avatars, badges, and notification dots.
+
+<Div style={[borderRadius, borderRadiusCircle]}>
+  <Span>Circle</Span>
+</Div>
+
+```styl
+.element
+  radius(circle)
+```

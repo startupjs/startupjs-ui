@@ -1,0 +1,158 @@
+import { useEffect } from 'react'
+import {
+  pug,
+  styl,
+  $root,
+  useDoc,
+  useModel,
+  useSession,
+  useValue
+} from 'startupjs'
+import { Div, Span, Button, TextInput } from 'startupjs-ui'
+
+# Editing patterns
+
+StartupJS is reactive by default: when you update a document, every subscribed client sees the change immediately. That is great for collaboration, but sometimes you want a local draft that only saves on demand.
+
+## Setup: create a demo document
+
+```jsx example
+const docId = 'a2205406-7de4-43a4-8b73-48ea23a8aaab'
+const [doc] = useDoc('temp', docId)
+
+useEffect(() => {
+  if (doc) return
+  $root.at('temp').add({ id: docId, title: 'Title', message: 'Message' })
+}, [doc])
+
+return pug`
+  Span This example creates a demo document once, if it does not exist.
+`
+```
+
+## Live editing (default behavior)
+
+Changes are written to the document immediately, so the UI stays in sync with the database.
+
+```jsx example
+const docId = 'a2205406-7de4-43a4-8b73-48ea23a8aaab'
+const [doc = {}, $doc] = useDoc('temp', docId)
+
+return pug`
+  Span= doc.title
+  TextInput.input(
+    placeholder='Title'
+    value=doc.title
+    onChangeText=t => $doc.set('title', t)
+  )
+`
+
+styl`
+  .input
+    margin-top 1u
+`
+```
+
+## Local draft (save on button click)
+
+If you want a "Save" button, keep a local copy and only write changes to the document when the user confirms.
+
+```jsx example
+const docId = 'a2205406-7de4-43a4-8b73-48ea23a8aaab'
+const [doc = {}, $doc] = useDoc('temp', docId)
+const [draft, $draft] = useValue({ ...doc })
+
+function onSubmit () {
+  $doc.setDiffDeep(draft)
+}
+
+return pug`
+  Div
+    Span= doc.title
+    Span.line= doc.message
+
+  Div
+    TextInput.line(
+      placeholder='Title'
+      value=draft.title
+      onChangeText=t => $draft.set('title', t)
+    )
+
+    TextInput.line(
+      placeholder='Message'
+      value=draft.message
+      onChangeText=t => $draft.set('message', t)
+    )
+
+    Button(
+      variant='flat'
+      onPress=onSubmit
+    ) Save
+`
+
+styl`
+  .line
+    margin-bottom 1u
+`
+```
+
+## Persistent draft (survives reloads)
+
+If the draft must survive page reloads, store it in a separate document. A common convention is:
+
+```
+draft__<userId>__<docId>
+```
+
+```jsx example
+const userId = useSession('userId')
+const docId = 'a2205406-7de4-43a4-8b73-48ea23a8aaab'
+const draftId = `draft__${userId}__${docId}`
+
+const [doc, $doc] = useDoc('temp', docId)
+const [draft, $draft] = useDoc('temp', draftId)
+const $temp = useModel('temp')
+
+useEffect(() => {
+  if (draft || !doc) return
+  $temp.add({ ...doc, id: draftId })
+}, [draft, doc, draftId])
+
+function onSubmit () {
+  $doc.setDiffDeep(draft)
+}
+
+if (!draft) return null
+return pug`
+  Div
+    Span= doc.title
+    Span.line= doc.message
+
+  Div
+    TextInput.line(
+      placeholder='Title'
+      value=draft.title
+      onChangeText=t => $draft.set('title', t)
+    )
+
+    TextInput.line(
+      placeholder='Message'
+      value=draft.message
+      onChangeText=t => $draft.set('message', t)
+    )
+
+    Button(
+      variant='flat'
+      onPress=onSubmit
+    ) Save
+`
+
+styl`
+  .line
+    margin-bottom 1u
+`
+```
+
+## Why `setDiffDeep`
+
+Use `setDiffDeep(draft)` instead of `set({ ...draft })`. It generates only the minimal ShareDB ops and avoids re-rendering components that do not depend on changed fields.

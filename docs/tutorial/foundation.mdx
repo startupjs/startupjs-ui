@@ -1,0 +1,75 @@
+# Quickstart
+
+StartupJS is a cross-platform full-stack framework for reactive, collaborative apps. You can prototype complex real-time products quickly without assembling a large custom stack.
+
+## Prerequisites
+
+StartupJS requires a few system dependencies. Below are common macOS commands using Homebrew. For other OSes, follow each tool's official install guide.
+
+1. Node.js
+
+```
+brew install node
+```
+
+2. MongoDB
+
+```
+brew tap mongodb/brew
+brew install mongodb-community
+brew services start mongodb-community
+```
+
+3. Redis
+
+```
+brew install redis
+brew services start redis
+```
+
+4. Yarn
+
+```
+brew install yarn
+```
+
+## Create a project
+
+```bash
+npx startupjs init myapp
+cd myapp
+npm start
+```
+
+Then open http://localhost:3000 and edit `main/pages/PHome/index.jsx` to see live updates.
+
+If Cocoapods fails during setup, you can ignore it unless you are targeting iOS immediately.
+
+## Why StartupJS
+
+- Cross-platform UI built on React Native (Web, iOS, Android).
+- Realtime data sync and collaboration via ShareDB.
+- Built-in ORM and reactive data hooks.
+- Scalable server and pub/sub architecture.
+- A full UI component library designed for cross-platform use.
+
+## How to use this tutorial
+
+Each chapter builds on the previous one. Type the code yourself to learn faster and experiment with changes.
+
+## Component structure
+
+StartupJS apps are component-based. A component is a reusable unit that bundles markup, styles, and behavior.
+
+```jsx
+import { observer } from 'startupjs'
+import { H1 } from 'startupjs-ui'
+
+export default observer(function FirstExample () {
+  return (
+    <H1>Hello, world!</H1>
+  )
+})
+```
+
+Continue to the next chapter to build a TODO app step by step.

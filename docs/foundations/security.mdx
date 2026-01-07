@@ -1,0 +1,189 @@
+# Security
+
+StartupJS uses ShareDB for realtime data sync. By default, ShareDB allows full read/write/delete access to every document. You must define access rules to protect your data.
+
+## Document access control (`@startupjs/sharedb-access`)
+
+This package adds per-document permission checks for create/read/update/delete.
+
+Enable it in `server/index.js`:
+
+```js
+startupjsServer({
+  accessControl: true
+})
+```
+
+Example model:
+
+```js
+export default class NewsModel extends basePermissions(BaseModel) {
+  static access = {
+    create: async (model, collection, docId, doc, session) => {
+      return hasPermission('global.admin', model, collection, docId, session)
+    },
+    read: async () => true,
+    update: async (model, collection, docId, oldDoc, session, ops, newDoc) => {
+      return hasPermission('global.admin', model, collection, docId, session)
+    },
+    delete: async (model, collection, docId, doc, session) => {
+      return hasPermission('global.admin', model, collection, docId, session)
+    }
+  }
+}
+```
+
+`hasPermission` is your application-specific permission check.
+
+## Schema validation (`@startupjs/sharedb-schema`)
+
+This package enforces JSON schema rules for documents.
+
+Enable it in `server/index.js`:
+
+```js
+startupjsServer({
+  validateSchema: true
+})
+```
+
+Example schema:
+
+```js
+import { BaseModel } from 'startupjs/orm'
+
+export default class UserModel extends BaseModel {
+  static schema = {
+    type: 'object',
+    properties: {
+      username: {
+        type: 'string',
+        minLength: 1,
+        maxLength: 10
+      },
+      email: {
+        type: 'string',
+        format: 'email'
+      },
+      age: {
+        description: 'Age in years',
+        type: 'integer',
+        minimum: 1
+      },
+      roleId: { type: 'string' },
+      hobbies: {
+        type: 'array',
+        maxItems: 3,
+        items: { type: 'string' },
+        uniqueItems: true
+      }
+    }
+  }
+}
+```
+
+More details: https://github.com/startupjs/startupjs/tree/master/packages/sharedb-schema
+
+## Secure aggregations (`@startupjs/server-aggregate`)
+
+Aggregations are unrestricted by default. Use server-defined aggregation templates instead.
+
+Enable it in `server/index.js`:
+
+```js
+startupjsServer({
+  serverAggregate: true
+})
+```
+
+Define aggregation templates in the model:
+
+```js
+static aggregations = {
+  example: async (model, params, session) => {
+    const { status } = params
+    const availableStatuses = getAvailableStatuses(model, session.userId)
+
+    if (!availableStatuses.includes(status)) {
+      throw Error("403: Can't query docs with status " + status)
+    }
+
+    return [
+      { $match: { status } }
+    ]
+  }
+}
+```
+
+Use it in a query:
+
+```js
+model.query('events', {
+  $aggregationName: 'example',
+  $params: { status: 'published' }
+})
+```
+
+## Route guards (client + server)
+
+You can prevent navigation to protected pages by adding `filters` in `routes.js`. Filters run on both client and server transitions.
+
+```js
+export async function isAdmin (model, next, redirect) {
+  const userId = model.get('_session.userId')
+  const $user = model.scope(`users.${userId}`)
+  await $user.fetch()
+
+  const isAdmin = await $user.isSuperAdmin()
+  await $user.unfetch()
+
+  if (isAdmin) return next()
+  return redirect('/403')
+}
+
+export default (components = {}) => [
+  {
+    path: '/admin/users',
+    exact: true,
+    component: components.PUsers,
+    filters: [isAdmin]
+  }
+]
+```
+
+## REST API checks (server)
+
+Always validate access for REST endpoints. Express makes this simple with middleware.
+
+```js
+import express from 'express'
+import addAdminTask from './addAdminTask'
+import getAdminTasks from './getAdminTasks'
+
+async function isLoggedIn (req, res, next) {
+  const { model } = req
+  const loggedIn = model.get('_session.loggedIn')
+  if (!loggedIn) return res.sendStatus(403)
+  next()
+}
+
+async function isAdmin (req, res, next) {
+  const { model } = req
+  const userId = model.get('_session.userId')
+
+  const $user = model.scope(`users.${userId}`)
+  await $user.fetch()
+  const isAdmin = await $user.isSuperAdmin()
+  await $user.unfetch()
+
+  if (!isAdmin) return res.sendStatus(403)
+  next()
+}
+
+const adminRouter = express.Router()
+
+adminRouter.post('/api/add-admin-task', [isLoggedIn, isAdmin, addAdminTask])
+adminRouter.get('/api/get-admin-tasks', [isLoggedIn, isAdmin, getAdminTasks])
+
+export default adminRouter
+```

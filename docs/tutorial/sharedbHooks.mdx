@@ -1,0 +1,175 @@
+# ShareDB hooks
+
+StartupJS provides hooks that combine ShareDB subscriptions with React reactivity. Use them inside `observer` components to keep UI in sync with the database.
+
+## `useDoc(collection, docId)`
+
+Subscribe to a single document by id.
+
+**Arguments**
+
+- `collection` (string): collection name
+- `docId` (string): document id
+
+**Returns**
+
+- `doc` (object)
+- `$doc` (model)
+
+**Example**
+
+```jsx
+import { observer, useDoc } from 'startupjs'
+import { Card, Span, Button } from 'startupjs-ui'
+
+export default observer(function TodoCard ({ todoId }) {
+  const [todo, $todo] = useDoc('todos', todoId)
+
+  return (
+    <Card>
+      <Span>{todo.title}</Span>
+      <Button size='s' onPress={() => $todo.del()}>
+        Delete
+      </Button>
+    </Card>
+  )
+})
+```
+
+> MongoDB stores ids in `_id`, but StartupJS exposes them as `id` on the document object.
+
+## `useQuery(collection, query)`
+
+Subscribe to a query result.
+
+**Arguments**
+
+- `collection` (string)
+- `query` (object)
+
+**Returns**
+
+- `docs` (array)
+- `$docs` (model)
+
+**Example**
+
+```js
+const [todos, $todos] = useQuery('todos', { completed: false })
+```
+
+`$docs` points to the collection, so you can access a document directly:
+
+```js
+for (const todo of todos) {
+  $todos.at(todo.id).setEach({
+    completed: true,
+    updatedAt: Date.now()
+  })
+}
+```
+
+## `useQueryIds(collection, ids, options)`
+
+Subscribe to a list of documents by id.
+
+**Arguments**
+
+- `collection` (string)
+- `ids` (array)
+- `options.reverse` (boolean): reverse the result order
+
+**Returns**
+
+- `docs` (array)
+- `$docs` (model)
+
+**Example**
+
+```jsx
+export default observer(function TodosList ({ todoIds }) {
+  const [todos] = useQueryIds('todos', todoIds)
+
+  return <Div>{todos.map(t => t.title).join(', ')}</Div>
+})
+```
+
+## `useQueryDoc(collection, query)`
+
+Subscribe to the newest document matching a query. This hook automatically adds `$limit: 1` and `$sort: { createdAt: -1 }` unless you override them.
+
+**Returns**
+
+- `doc` (object)
+- `$doc` (model)
+
+**Example**
+
+```jsx
+export default observer(function LatestTodo ({ userId }) {
+  const [latestTodo] = useQueryDoc('todos', { userId })
+  if (!latestTodo) return null
+
+  return <Div>Your latest todo: {latestTodo.title}</Div>
+})
+```
+
+## `useLocal(path)`
+
+Subscribe to data already present in the local model (often `_page` or `_session`).
+
+**Example**
+
+```jsx
+const SIDEBAR_OPENED = '_page.sidebar.opened'
+
+const Topbar = observer(() => {
+  const [opened, $opened] = useLocal(SIDEBAR_OPENED)
+  return (
+    <Button onPress={() => $opened.set(!opened)}>Toggle</Button>
+  )
+})
+
+const Sidebar = observer(() => {
+  const [opened] = useLocal(SIDEBAR_OPENED)
+  return opened ? <Div>Sidebar</Div> : null
+})
+```
+
+## `useSession(path)`
+
+Shortcut for `_session`:
+
+```js
+const [userId] = useSession('userId')
+```
+
+## `usePage(path)`
+
+Shortcut for `_page`:
+
+```js
+const [game, $game] = usePage('game')
+```
+
+## `useValue(defaultValue)`
+
+An observable alternative to `useState`:
+
+```jsx
+const [inputValue, $inputValue] = useValue('')
+
+<TextInput
+  value={inputValue}
+  onChangeText={value => $inputValue.set(value)}
+/>
+```
+
+## `useModel(path)`
+
+Get a model at a specific path without subscribing:
+
+```jsx
+const $showSidebar = useModel('_page.sidebar.show')
+$showSidebar.set(true)
+```

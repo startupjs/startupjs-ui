@@ -33,7 +33,11 @@ export default observer(({ children }) => {
         )
         ScrollView.items
           Category(name='Tutorial')
+            each item in DOC_TUTORIAL_ITEMS
+              Item(key=item.path path=item.path)= item.title
           Category(name='Foundations')
+            each item in DOC_FOUNDATION_ITEMS
+              Item(key=item.path path=item.path)= item.title
           Category(name='Components' defaultOpen=true)
             each component in filteredComponents
               Item(key=component path=component)= component
@@ -204,4 +208,29 @@ const DOC_COMPONENT_NAMES = [
   'TextInput',
   'Toast',
   'User'
+]
+
+const DOC_TUTORIAL_ITEMS = [
+  { title: 'Quickstart', path: 'tutorial/foundation' },
+  { title: 'To-Do app', path: 'tutorial/basics' },
+  { title: 'Observer pattern', path: 'tutorial/observer' },
+  { title: 'ShareDB hooks', path: 'tutorial/sharedbHooks' },
+  { title: 'Racer model', path: 'tutorial/racerModel' },
+  { title: 'File structure', path: 'tutorial/fileStructure' },
+  { title: 'Pug', path: 'tutorial/pug' },
+  { title: 'Stylus', path: 'tutorial/stylus' },
+  { title: 'Tricks with styles', path: 'tutorial/tricksWithStyles' }
+]
+
+const DOC_FOUNDATION_ITEMS = [
+  { title: 'Border radius', path: 'foundations/borderRadius' },
+  { title: 'Collection types', path: 'foundations/collectionTypes' },
+  { title: 'Colors', path: 'foundations/colors' },
+  { title: 'Color customization', path: 'foundations/colorCustomization' },
+  { title: 'Editing patterns', path: 'foundations/editing' },
+  { title: 'Export CSS to JS', path: 'foundations/exportCSStoJS' },
+  { title: 'Caching node_modules', path: 'foundations/nodeModulesCache' },
+  { title: 'Security', path: 'foundations/security' },
+  { title: 'WebSocket', path: 'foundations/websocket' },
+  { title: 'E2E testing', path: 'foundations/e2e-tests' }
 ]
