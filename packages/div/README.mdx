@@ -187,6 +187,37 @@ styl`
 `
 ```
 
+## Animations
+
+Div automatically uses React Native Reanimated when a `transition` or `animation` property is detected in the style. This allows you to create smooth animations without any additional setup.
+
+**Note:** When using modifier classes to add transitions/animations dynamically, set `animation: none` in the base styles. This ensures Div uses the animated component from the start.
+
+```jsx example
+const [isGreen, setIsGreen] = useState(false)
+const boxStyle = {
+  width: 50,
+  height: 50,
+  backgroundColor: isGreen ? 'green' : 'red',
+  transitionProperty: 'backgroundColor',
+  transitionDuration: 1000
+}
+const buttonStyle = {
+  paddingVertical: 8,
+  paddingHorizontal: 16,
+  backgroundColor: '#2962FF',
+  borderRadius: 4
+}
+return (
+  <Div row align='left' vAlign='center' gap>
+    <Div style={boxStyle} />
+    <Div style={buttonStyle} onPress={() => setIsGreen(!isGreen)}>
+      <Span style={{ color: 'white' }}>Toggle Color</Span>
+    </Div>
+  </Div>
+)
+```
+
 ## Sandbox
 
 <Sandbox

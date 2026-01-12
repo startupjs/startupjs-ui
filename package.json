@@ -1,5 +1,8 @@
 {
   "private": true,
+  "//resolutions": {
+    "@cssxjs/css-to-react-native": "portal:../css-to-react-native"
+  },
   "engines": {
     "node": ">=22"
   },
