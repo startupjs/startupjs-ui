@@ -12,7 +12,6 @@ function ModalContent ({
   ContentComponent,
   ...props
 }) {
-
   const content = React.Children.map(children, (child, index) => {
     if (typeof child === 'string') {
       return pug`

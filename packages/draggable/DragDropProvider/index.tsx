@@ -1,4 +1,5 @@
 import React, { type ReactNode } from 'react'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { pug, $ } from 'startupjs'
 
 export const DragDropContext = React.createContext<any>({})
@@ -23,6 +24,7 @@ export default function DragDropProvider ({
 
   return pug`
     DragDropContext.Provider(value=$context)
-      = children
+      GestureHandlerRootView
+        = children
   `
 }

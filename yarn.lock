@@ -9438,6 +9438,7 @@ __metadata:
     eslint-config-cssxjs: "npm:^0.2.0"
     eslint-config-expo: "npm:~10.0.0"
     expo: "npm:~54.0.30"
+    expo-clipboard: "npm:~8.0.8"
     expo-constants: "npm:~18.0.12"
     expo-document-picker: "npm:~14.0.8"
     expo-font: "npm:~14.0.10"
@@ -10653,6 +10654,17 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 10c0/303b7e08126edbddd3235a6803ffa6ff98b1cc0fb7bfa019d1ad891560bbbe9a9b84db7275ced33011330a8f4f225175d3780f4771a925d8e1c3782a343b9796
+  languageName: node
+  linkType: hard
+
+"expo-clipboard@npm:~8.0.8":
+  version: 8.0.8
+  resolution: "expo-clipboard@npm:8.0.8"
+  peerDependencies:
+    expo: "*"
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/afd16183bee237c825ed594320dd4eccd1b8cbcdf6fa993b80c946a7dc26adcdd48a847bd57e7150f176866a6e351a898efe87188793ef0982382ba1e32fb6fb
   languageName: node
   linkType: hard
 
