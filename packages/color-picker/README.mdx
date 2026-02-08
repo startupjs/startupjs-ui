@@ -4,7 +4,9 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 # ColorPicker
 
-ColorPicker allows user to select a color from the color palette (works with colors in hexadecimal format).
+ColorPicker lets the user select a color from a color palette. It works with colors in hexadecimal format and displays a button showing the currently selected color.
+
+Use the `value` prop to set the current color (defaults to `'#fff'`) and the `onChangeColor` callback to receive the selected color. The component also accepts a `style` prop for custom styles, a `size` prop (`'s'`, `'m'`, or `'l'`, defaults to `'m'`) to control the button size, a `disabled` prop to prevent interaction, and a `ref` for imperative control of the picker.
 
 ## Import
 

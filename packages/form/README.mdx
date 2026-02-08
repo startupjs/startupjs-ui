@@ -5,7 +5,7 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 # Form
 
-Wrapper around ObjectInput which provides a way to add extra input types and saves its props into the context.
+Form renders a set of inputs based on a JSON Schema-compatible field definition. It wraps `ObjectInput` and adds support for custom input types, validation, and sharing props through context.
 
 ```jsx
 import { Form } from 'startupjs-ui'
@@ -42,11 +42,29 @@ return (
 )
 ```
 
+## Props
+
+- **$value** (required) -- a scoped model binding for form values
+- **fields** -- an object describing the form fields (JSON Schema-compatible)
+- **$fields** -- a reactive scoped model for fields (overrides `fields`)
+- **order** -- an array of field names that controls the rendering order
+- **row** -- when `true`, renders the inputs in a horizontal row
+- **validate** -- set to `true` for automatic validation, or pass a `useValidate()` hook instance for manual control
+- **errors** -- an explicit errors object to display
+- **$errors** -- a reactive scoped model for errors (managed by validation)
+- **customInputs** -- an object mapping custom input type keys to input components
+- **disabled** -- set to `true` to disable all form interactions
+- **readonly** -- set to `true` to render all fields as read-only
+- **style** -- custom styles for the outer wrapper
+- **inputStyle** -- custom styles for the inner input container
+
+Any additional props are passed through to custom inputs via the `useFormProps()` hook.
+
 ## Custom inputs
 
-Pass custom inputs to the `Form` using the `customInputs` prop.
+Pass custom inputs to the Form using the `customInputs` prop.
 
-Inside custom inputs you can access Form's props using the `useFormProps` hook.
+Inside custom inputs you can access the Form's extra props using the `useFormProps` hook.
 
 ```jsx
 import { observer } from 'startupjs'
@@ -85,9 +103,9 @@ const CustomAgeInput = observer(({ $value, ...props }) => {
 
 ### Adding custom inputs globally
 
-You can add custom inputs globally by creating a plugin which uses the client's `customFormInputs` hook.
+You can add custom inputs globally by creating a plugin that uses the client's `customFormInputs` hook.
 
-You should return an object with the custom inputs in this hook.
+Return an object with the custom inputs from this hook.
 
 ```jsx
 // startupjs.config.js
@@ -120,7 +138,7 @@ createPlugin({
 })
 ```
 
-Jxs will look like this:
+The JSX will then look like this:
 
 ```jsx
 import { observer } from 'startupjs'
@@ -135,7 +153,7 @@ function App () {
       fields={{
         age: {
           type: 'number',
-          input: 'age'
+          input: 'age',
           description: 'Your age (18+)'
         }
       }}
@@ -144,21 +162,21 @@ function App () {
 }
 ```
 
-We pass all necessary constants as options to the plugin (in our case, it's minAge).
-In the form we define the type according to its actual type (in our case, it will be number),
-and we also add an input property, which will have a custom type derived from the plugin (in our case, it's 'age').
+Pass all necessary constants as options to the plugin (in this case, `minAge`).
+In the form, define the `type` according to the actual data type (in this case, `number`),
+and add an `input` property with the custom type key from the plugin (in this case, `'age'`).
 
-## JSON-Schema compatilibily
+## JSON Schema compatibility
 
-`fields` prop is json-schema compatible.
+The `fields` prop is JSON Schema-compatible.
 
-If you want to specify both the json-schema type and the input type, you can use `input` prop in addition to the `type` prop.
+If you need to specify both the JSON Schema type and a custom input type, use the `input` property in addition to the `type` property within a field definition.
 
 ## Validation
 
-By default `Form` does not run any validation.
+By default, Form does not run any validation.
 
-By passing `validate={true}` it will use the `fields` (which is json-schema compatible) to always validate your form and reactively show any errors.
+Pass `validate={true}` to use the `fields` schema to automatically validate the form and reactively display any errors.
 
 ```jsx
 <Form validate={true} />
@@ -166,21 +184,21 @@ By passing `validate={true}` it will use the `fields` (which is json-schema comp
 
 ### `useValidate()`
 
-To trigger validation manually, use `useValidate()` hook.
+To trigger validation manually, use the `useValidate()` hook.
 
-It will return the `validate` function which you can call manually to run the validation. It will return `true` if validation has passed (there are NO errors).
+It returns a `validate` function that you can call to run validation. It returns `true` if validation passes (there are no errors).
 
-If there are errors, they will be available in `validate.hasErrors` (`true` or `false`) and `validate.errors` (errors themselves as an object of field names and an array of errors: `{ name: ['This field is required'], age: ['must be above 18'] }`)
+If there are errors, they are available on `validate.hasErrors` (`true` or `false`) and `validate.errors` (an object mapping field names to arrays of error messages: `{ name: ['This field is required'], age: ['must be above 18'] }`).
 
 ### `useValidate({ always: true })`
 
-By default, only after the first manual `validate()` call the `Form` will start showing errors and update them reactively (on each change to the form).
+By default, the Form only starts showing errors after the first manual `validate()` call, then updates them reactively on each change.
 
-If you want the `Form` to start showing errors right away and update them reactively as soon as it renders, pass an `always: true` option to the hook.
+If you want the Form to show errors right away and update them reactively as soon as it renders, pass `always: true` to the hook.
 
-This will effectively make the `Form` behave as if `validate={true}` was passed but also give you access to the `validate` function to manually call it when needed.
+This effectively makes the Form behave as if `validate={true}` was passed, but also gives you access to the `validate` function for manual calls when needed.
 
-### Example with errors validation
+### Example with validation
 
 ```jsx
 import { $ } from 'startupjs'
@@ -205,6 +223,17 @@ export default function App () {
     <Button disabled={validate.hasErrors} onPress={submit}>Submit</Button>
   ]
 }
+```
+
+## Hooks
+
+In addition to `useFormProps` and `useValidate` described above, Form also exports:
+
+- **useFormFields()** -- returns the current form fields
+- **useFormFields$()** -- returns a reactive scoped model for the form fields
+
+```jsx
+import { useFormProps, useValidate, useFormFields, useFormFields$ } from 'startupjs-ui'
 ```
 
 ## Sandbox

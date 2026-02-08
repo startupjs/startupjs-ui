@@ -11,13 +11,17 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 Inherits [Div props](/docs/components/Div).
 
-Menu displays a list of choices and also can be used for navigation.
+Menu displays a list of choices on screen. It can be used for navigation, selecting options, or organizing actions into a vertical or horizontal list.
+
+Each item in the menu is a `Menu.Item`. Items can be marked as active, display icons, act as navigation links, and be styled with custom colors.
 
 ```jsx
 import { Menu } from 'startupjs-ui'
 ```
 
 ## Simple example
+
+At its simplest, a Menu contains a set of `Menu.Item` children. Track which item is active using component state and the `active` prop.
 
 ```jsx example
 const [active, setActive] = useState('option-1')
@@ -41,7 +45,7 @@ return (
 
 ## Highlighted active item
 
-By default the active menu item is not highlighted. To highlight it use the `activeBorder` property.
+By default, the active menu item has no visible border highlight. Use the `activeBorder` prop on the `Menu` component to add a colored border to whichever item is currently active. Supported positions are `'top'`, `'bottom'`, `'left'`, and `'right'`.
 
 ```jsx example
 const [active, setActive] = useState('option-1')
@@ -71,7 +75,7 @@ return (
 
 ## Horizontal menu
 
-By default the menu shows vertically. To make it horizontal, you need pass the string `horizontal` to the `variant` property.
+By default, the menu is laid out vertically. Set `variant='horizontal'` to arrange items in a row instead.
 
 ```jsx example
 const [active, setActive] = useState('option-1')
@@ -101,7 +105,7 @@ return (
 
 ## Menu item icon
 
-To display icon in menu item pass the `icon` property to it. Position of icon can be changed by passing `iconPosition` to `Menu` component (`left` by default) and can be override in menu item.
+Pass the `icon` prop to a `Menu.Item` to display an icon alongside its label. The icon position defaults to `'left'` but can be changed by setting `iconPosition` on the `Menu` (which applies to all items) or on an individual `Menu.Item` (which overrides the parent setting).
 
 ```jsx example
 const [active, setActive] = useState('option-1')
@@ -134,7 +138,11 @@ return (
 
 ## Change color of active item
 
-By default, the active menu item has a `primary` color. Use the `activeColor` property to set the desired color for the active element. This property will also change the color of border and icon (if you passed an `activeBorder` property for a Menu or an `icon` for a Menu.Item). `activeColor` accepts color as a string which will be compatible with the CSS color property.(ex. `red`, `#fff`, `rgb(123, 23, 122)`)
+By default, the active menu item uses the `primary` theme color. Use the `activeColor` prop to apply a custom color to the active item's text, icon, and border. It accepts any valid CSS color value (e.g. `'red'`, `'#fff'`, `'rgb(123, 23, 122)'`).
+
+You can also use the `color` prop on individual `Menu.Item` components to override the default text and icon color for inactive items.
+
+To render item text in bold, pass the `bold` prop to `Menu.Item`.
 
 ```jsx example
 const [active, setActive] = useState('option-1')
@@ -171,7 +179,7 @@ return (
 
 ## Menu item as link
 
-Sometimes you want using menu item as link, for example in navigation menu. See below how you can do this.
+Use the `to` prop on `Menu.Item` to turn it into a navigation link. This is useful for building navigation menus where each item routes to a different page.
 
 ```jsx example
 const { usePathname } = useRouter()
@@ -195,7 +203,7 @@ return pug`
 
 ## Complex interaction (integration with other components)
 
-An example of a collapsible menu with submenus nested in.
+This example shows a collapsible menu with nested submenus, built by combining Menu with the Collapse component. You can pass custom `style` and `containerStyle` props to fine-tune the layout.
 
 ```jsx example
 const [showMenu, setShowMenu] = useState(true)

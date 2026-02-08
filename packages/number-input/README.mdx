@@ -6,7 +6,7 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 # NumberInput
 
-NumberInput allows user to enter or edit number.
+A numeric input field that lets users enter or edit a number. It supports increment/decrement buttons, min/max constraints, decimal precision via `step`, and unit labels. The `value` prop holds the current number, and `onChangeNumber` is called whenever it changes. You can also pass a `ref` to access the underlying TextInput, use `placeholder` for hint text, and set `returnKeyType` (defaults to `'done'`) for the keyboard return key.
 
 ```jsx
 import { NumberInput } from 'startupjs-ui'
@@ -26,6 +26,8 @@ return (
 
 ## Disabled
 
+Set `disabled` to `true` to prevent all interactions with the input.
+
 ```jsx example
 return (
   <NumberInput
@@ -36,6 +38,8 @@ return (
 ```
 
 ## Readonly
+
+Set `readonly` to `true` to display the value as non-editable text.
 
 ```jsx example
 return (
@@ -48,7 +52,7 @@ return (
 
 ## Step
 
-The step specifies how many decimal places can be entered, set by the numbers 1, 0.1, 0.01, etc. in the `step` property (1 by default).
+The `step` prop controls the increment/decrement amount and the number of allowed decimal places. For example, `step={0.001}` allows up to three decimal places. Defaults to `1`.
 
 ```jsx example
 const [value, setValue] = useState()
@@ -65,7 +69,7 @@ return (
 
 ## Minimum and maximum value
 
-The minimum and maximum values are set by the `min` and `max` properties
+Use the `min` and `max` props to constrain the allowed range.
 
 ```jsx example
 const [value, setValue] = useState()
@@ -83,7 +87,7 @@ return (
 
 ## Buttons mode
 
-Buttons allow user to change the number at the specified step. The position of the buttons can be changed by passing the `buttonsMode` property with the value `vertical` or `horizontal` (`vertical` by default) to the component or hidden by passing the `buttonsMode` property with the value `none` to the component.
+The `buttonsMode` prop controls the layout of the increment/decrement buttons. Available values are `'vertical'` (default), `'horizontal'`, and `'none'` (hides the buttons entirely).
 
 ```jsx example
 const [valueVertical, setValueVertical] = useState()
@@ -114,7 +118,7 @@ return (
 
 ## Sizes
 
-Size can be modified using the `size` prop. Default size is `'m'`.
+The `size` prop controls the input dimensions. Available values are `'s'`, `'m'` (default), and `'l'`.
 
 ```jsx example
 const [valueL, setValueL] = useState()
@@ -145,7 +149,7 @@ return (
 
 ## Units
 
-The `units` property displays the units of the input. By default, units are displayed to the left of the input. Use `unitsPosition='right'` to display the units on the right side of the input.
+The `units` prop displays a label next to the input (such as a currency symbol). By default, units appear on the left. Use `unitsPosition='right'` to place them on the right side.
 
 ```jsx example
 const [value, setValue] = useState()
@@ -158,13 +162,13 @@ return (
 )
 ```
 
-## Stylization
+## Styling
 
-For stylization can apply the properties:
+Use the following props to customize the appearance:
 
-- `style` - to style the root component
-- `inputStyle` - to style the input
-- `buttonStyle` - for styling buttons
+- `style` -- styles for the root wrapper
+- `inputStyle` -- styles for the text input element
+- `buttonStyle` -- styles for the increment/decrement buttons
 
 ```jsx example
 const [value, setValue] = useState()

@@ -6,7 +6,9 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 # Badge
 
-Badge is small state descriptors for UI elements.
+Badges are small status descriptors that attach to UI elements, such as icons or buttons. They are commonly used to display counts (like unread messages) or to indicate a change in state.
+
+The component supports a `style` prop for custom styles on the root wrapper and a `badgeStyle` prop for custom styles on the badge indicator itself.
 
 ```js
 import { Badge } from 'startupjs-ui'
@@ -24,7 +26,7 @@ return (
 
 ## Sizes
 
-Badges come in three different sizes: `s`, `m`, and `l`. The `m` size is the default and most frequently used. The other sizes should be used with care so as not to break the hierarchy of importance on the page.
+Badges come in three different sizes: `'s'`, `'m'`, and `'l'`. The default size is `'m'`.
 
 ```jsx example
 return (
@@ -44,7 +46,7 @@ return (
 
 ## Variants
 
-There are two types of Badges: `default` and `dot`. `default` it is the most frequently used and the default specified. `dot` turns the badge into a small dot, this can be used as a message that something has changed. If the property is `variant='dot'`, the `size` property will be ignored.
+There are two variants: `'default'` and `'dot'`. The `'default'` variant displays a label and is used by default. The `'dot'` variant renders the badge as a small dot, which is useful for indicating that something has changed without showing a specific count. When `variant='dot'` is set, the `size` prop is ignored.
 
 ```jsx example
 return (
@@ -61,7 +63,7 @@ return (
 
 ## Colors
 
-Color is `primary` by default. It can be changed by passing color name from the config colors to `color` property. Possible values of property can be found in the `Sandbox` section at the bottom of the page.
+The default color is `'primary'`. You can change it by passing a color name from the theme configuration to the `color` prop. See the Sandbox section at the bottom of the page for all available values.
 
 ```jsx example
 return (
@@ -73,7 +75,7 @@ return (
 
 ## Position
 
-Badge can be in two positions: `top` and `bottom`. **Default value:** `top`.
+The badge can be positioned at the `'top'` or `'bottom'` of its child element. The default position is `'top'`.
 
 ```jsx example
 return (
@@ -90,7 +92,7 @@ return (
 
 ## Icons
 
-Icon can be added using `icon` property.
+An icon can be displayed inside the badge using the `icon` prop.
 
 ```jsx example
 return (
@@ -102,7 +104,7 @@ return (
 
 ## Counter
 
-If `label` property takes a numeric value, then the `max` property can be used to limit the maximum displayed number in the label.
+When the `label` prop is a number, you can use the `max` prop to cap the displayed value. If `label` exceeds `max`, the badge shows the max value followed by a `+` sign.
 
 ```jsx example
 return (

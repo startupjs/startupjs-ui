@@ -8,7 +8,7 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 # FileInput
 
-FileInput lets users pick a file (or image) and upload it to your StartupJS backend. The `value` is a `fileId` pointing to a document in the `files` model.
+FileInput lets users pick a file (or image) and upload it to your StartupJS backend. The `value` is a `fileId` pointing to a document in the `files` model, and `onChange` is called with the new `fileId` after a successful upload.
 
 ```jsx
 import { FileInput } from 'startupjs-ui'
@@ -27,6 +27,8 @@ return (
 ```
 
 ## Image picker
+
+Set `image` to `true` to open an image picker instead of a document picker.
 
 ```jsx
 const $avatarFileId = $()
@@ -48,7 +50,28 @@ return (
 )
 ```
 
-**Note:** the trick with appending `?` and `updatedAt` timestamp to the URL is optional. It might be needed in some cases (like on the page of changing the profile picture of a user) to force reloading the image after it has been changed, otherwise the cached version may be shown in the browser.
+**Note:** Appending `?` and the `updatedAt` timestamp to the URL is optional. It forces the browser to reload the image after it has been changed, instead of showing a cached version. This is useful for profile picture editors and similar use cases.
+
+## Props
+
+- **value** -- the current `fileId` (stored in the `files` model on the server)
+- **onChange** -- called with the new `fileId` after a successful upload
+- **image** -- when `true`, opens an image picker instead of a document picker
+- **mimeTypes** -- a string or array of MIME types accepted by the picker
+- **uploadImmediately** -- upload the selected file right after picking (default `true`)
+- **beforeUpload** -- a hook called before the upload starts (can be async)
+- **afterUpload** -- a hook called after the upload finishes (can be async)
+- **render** -- a custom render function to replace the default Upload/Change/Delete buttons
+- **style** -- custom styles for the component
+- **ref** -- a ref object to access imperative methods (see below)
+
+## Imperative methods
+
+Pass a `ref` to access the following methods:
+
+- **pickFile()** -- opens the native picker and optionally uploads the selected file
+- **deleteFile()** -- deletes the currently selected file
+- **uploadFile(asset, fileId?)** -- uploads a picked asset to the server and returns the new `fileId`
 
 ## Storage providers
 

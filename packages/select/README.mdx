@@ -6,13 +6,17 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 Inherits [TextInput props](/docs/forms/TextInput).
 
-Select lets user pick one of multiple options. Works similar to HTML's `<select>` tag.
+Select lets the user pick one option from a list. It works similarly to the HTML `<select>` element.
+
+Options can be provided as simple strings, numbers, or objects with `{ value, label }` shape.
 
 ```jsx
 import { Select } from 'startupjs-ui'
 ```
 
 ## Simple example
+
+Pass an array of options and use `value` / `onChange` to control the selected item.
 
 ```jsx example
 const [color, setColor] = useState()
@@ -30,6 +34,8 @@ return (
 
 ## Disabled
 
+Set `disabled` to prevent all user interaction with the select. The component appears grayed out.
+
 ```jsx example
 return (
   <Select
@@ -45,6 +51,8 @@ return (
 
 ## Readonly
 
+Set `readonly` to display the current value as non-editable text. Unlike `disabled`, the value is still clearly visible.
+
 ```jsx example
 return (
   <Select
@@ -58,9 +66,9 @@ return (
 )
 ```
 
-## Showing Empty value
+## Showing empty value
 
-By default the empty value is shown. If you want to prevent users from being able to remove the value, pass `showEmptyValue={false}`.
+By default, the select includes an empty option that lets the user clear their selection. To prevent this, set `showEmptyValue={false}`.
 
 ```jsx example
 const [color, setColor] = useState('red')
@@ -76,7 +84,7 @@ return (
 
 ## Change empty value label
 
-You can change label of an empty value by using `emptyValueLabel` property.
+Use the `emptyValueLabel` prop to customize the label displayed for the empty option.
 
 ```jsx example
 const [color, setColor] = useState()
@@ -89,6 +97,26 @@ return (
   />
 )
 ```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `options` | `SelectOption[]` | `[]` | Available options -- strings, numbers, or `{ value, label }` objects |
+| `value` | `any` | | Currently selected value |
+| `showEmptyValue` | `boolean` | `true` | Whether to include an empty/none option in the list |
+| `emptyValueLabel` | `string \| number` | | Label displayed for the empty option |
+| `disabled` | `boolean` | `false` | Disables all interaction |
+| `readonly` | `boolean` | `false` | Renders the value as non-editable text |
+| `size` | `'l' \| 'm' \| 's'` | `'m'` | Size preset (inherited from TextInput) |
+| `placeholder` | `string \| number` | | Placeholder text when no value is selected |
+| `style` | `StyleProp<ViewStyle>` | | Custom styles for the wrapper element |
+| `inputStyle` | `StyleProp<TextStyle>` | | Custom styles for the input element |
+| `ref` | `RefObject` | | Ref forwarded to the underlying TextInput |
+| `testID` | `string` | | Test identifier passed to the wrapper |
+| `onChange` | `(value: any) => void` | | Called when the selected value changes |
+| `onFocus` | `(...args) => void` | | Called when the select receives focus |
+| `onBlur` | `(...args) => void` | | Called when the select loses focus |
 
 ## Sandbox
 

@@ -12,13 +12,15 @@ import './index.mdx.cssx.styl'
 
 # Sidebar
 
-Sidebar is typically used for nagivation. It initially not visible on the screen.
+A collapsible side panel typically used for navigation. It slides in from the left or right edge of its container and can be toggled open or closed via a two-way bound `$open` model.
 
 ```jsx
 import { Sidebar } from 'startupjs-ui'
 ```
 
 ## Simple example
+
+Use the `$open` prop to bind the sidebar's open state to an observable model, `width` to set the panel width, and `renderContent` to supply the sidebar's inner content. The main page content is passed as `children`.
 
 ```jsx example
 const media = useMedia()
@@ -43,7 +45,7 @@ return (
 
 ## Position
 
-The `position` property specifies the side of the window from which the sidebar will show. Possible values of `position` property are `left` (default) and `right`.
+The `position` prop controls which side the sidebar appears on. Possible values are `'left'` (default) and `'right'`.
 
 ```jsx example noscroll
 const media = useMedia()
@@ -91,7 +93,7 @@ return (
 
 ## Lazy rendering
 
-By default the sidebar content are not destroyed when it is closed. To change this behavior pass `lazy=true`.
+By default the sidebar content stays mounted even when the panel is closed. Set `lazy` to unmount the sidebar content when it is closed and only render it when opened. This can improve performance if the sidebar contains heavy content.
 
 ```jsx example
 const media = useMedia()
@@ -116,6 +118,8 @@ return (
 ```
 
 ## Complex example
+
+A more realistic layout combining a navigation menu inside the sidebar with main page content.
 
 ```jsx example noscroll
 const media = useMedia()
@@ -156,6 +160,14 @@ return (
   </Sidebar>
 )
 ```
+
+## Additional props
+
+- `style` -- custom styles applied to the root view
+- `sidebarStyle` -- custom styles applied to the sidebar panel container
+- `contentStyle` -- custom styles applied to the main content area
+- `width` -- sidebar width in density-independent pixels (default `264`)
+- `disabled` -- when `true`, forces the sidebar to stay closed regardless of the `$open` value (default `false`)
 
 ## Sandbox
 

@@ -8,7 +8,7 @@ import Icon from '@startupjs-ui/icon'
 
 # Div
 
-Div is a basic building block for layouts. It is a wrapper around `View` with some extra features.
+Div is a basic building block for layouts. It is a wrapper around `View` with extra features like press handling (`onPress`, `onLongPress`, `onPressIn`, `onPressOut`), layout helpers (`row`, `wrap`, `reverse`, `align`, `vAlign`, `gap`), shadows (`level`), corner shapes (`shape`), spacing (`pushed`, `bleed`), tooltips (`tooltip`, `tooltipStyle`), and built-in animation support. You can pass custom `style`, provide content as `children`, and use `ref` to access the underlying native view. Accessibility is supported via `accessible` and `accessibilityRole`, and `data-testid` can be used for testing.
 
 ```jsx
 import { Div } from 'startupjs-ui'
@@ -24,6 +24,8 @@ return (
 ```
 
 ## Clickable
+
+When an `onPress` or `onLongPress` handler is provided, Div automatically becomes a pressable element with visual feedback. The `feedback` prop (defaults to `true`) controls whether hover and active states are shown. You can override the default feedback styles using `hoverStyle` and `activeStyle`. Set `disabled` to `true` to prevent all interactions.
 
 ```jsx example
 const divStyle = {
@@ -47,14 +49,14 @@ return (
 
 ## Layout
 
-You can specify properties to manage layout:
+You can use the following props to manage layout:
 
-- `row` - aligns children from left to right (default: `false`)
-- `reverse` - aligns the children in reverse order depending on the direction (default: `false`)
-- `wrap` - controls the wrapping of children into multiple rows (default: `false`)
-- `align` - controls horizontal alignment (possible values: `left`, `center`, `right`)
-- `vAlign` - controls vertical alignment (possible values: `top`, `center`, `bottom`)
-- `gap` - defines the size of the gap between items in [units](/docs/tutorial/TricksWithStyles#units) or the value `true` is equivalent to `2`
+- `row` -- aligns children from left to right (default: `false`)
+- `reverse` -- reverses the children order depending on the direction (default: `false`)
+- `wrap` -- controls wrapping of children into multiple rows (default: `false`)
+- `align` -- controls horizontal alignment (values: `'left'`, `'center'`, `'right'`)
+- `vAlign` -- controls vertical alignment (values: `'top'`, `'center'`, `'bottom'`)
+- `gap` -- defines the spacing between items in [units](/docs/tutorial/TricksWithStyles#units); passing `true` is equivalent to `2`
 
 ```jsx example
 return (
@@ -72,9 +74,7 @@ return (
 
 ## Full width (or height)
 
-To make `Div` take all remaining space in the parent container (according to its `flex-direction`), pass the `full` property.
-
-This property just sets `flex: 1` to it.
+Pass the `full` prop to make Div take all remaining space in the parent container (according to its `flex-direction`). This sets `flex: 1` on the element.
 
 ```jsx example
 return (
@@ -89,9 +89,9 @@ return (
 
 ## Indentation between multiple Div
 
-When displaying multiple Div(s) in a line spacing between them can be adjusted using `pushed` prop to specify indent from the previous Div. Possible values of `pushed` prop can be found in the `Sandbox` section at the bottom of the page. The `true` value of prop is equivalent to `m` value.
+When displaying multiple Divs in a row, use the `pushed` prop to add spacing from the previous sibling. Accepted values are `'s'`, `'m'`, and `'l'`; passing `true` is equivalent to `'m'`. See the Sandbox section below for all available values.
 
-Though instead of pushing each individual Div, in most cases it is better to use `gap` prop on the parent Div to set spacing between all children at once.
+In most cases, it is better to use the `gap` prop on the parent Div to set uniform spacing between all children at once.
 
 ```jsx example
 const divStyle = {
@@ -121,11 +121,10 @@ return (
 
 ## Different clickable states
 
-There are two clickable variants of component, controlled by `variant` property.
+There are two clickable variants, controlled by the `variant` prop (defaults to `'opacity'`):
 
-`opacity` variant - on press down, opacity of the component is decreased.
-
-`highlight` variant - on press down, the opacity of the component background  is decreased.
+- `'opacity'` -- on press, the entire component's opacity is decreased.
+- `'highlight'` -- on press, the component's background opacity is decreased.
 
 ```jsx example
 const divStyle = {
@@ -149,8 +148,9 @@ return (
 
 ## Levels of emphasis
 
-Div `level` property determines different levels of emphasis by adding shadow to component. Possible values of `level` prop can be found in the `Sandbox` section at the bottom of the page.
-**IMPORTANT**: Shadow does not work without background color on mobile devices.
+The `level` prop adds a shadow to the Div for visual emphasis. Accepted values range from `0` (no shadow) to `5`. See the Sandbox section below for all options.
+
+**Important:** Shadows do not work without a background color on mobile devices.
 
 ```jsx example
 const divStyle = {
@@ -173,6 +173,8 @@ return (
 ```
 
 ## Tooltip
+
+Pass the `tooltip` prop to display a simple text tooltip on hover. Use `tooltipStyle` to customize the tooltip's appearance.
 
 ```jsx example
 return pug`

@@ -13,7 +13,7 @@ import { faShareAlt } from '@fortawesome/free-solid-svg-icons'
 # Card
 Inherits [Div props](/docs/components/Div).
 
-Cards contain content and actions about a single subject.
+Cards contain content and actions about a single subject. You can pass custom `style` to the root element and provide content as `children`. Since Card inherits from Div, it also supports `onPress` and other Div props.
 
 ```jsx
 import { Card } from 'startupjs-ui'
@@ -35,7 +35,7 @@ return (
 
 ## Outlined cards
 
-Outlined cards offer an alternative style by passing `outlined` string on `variant` property to component.
+Set the `variant` prop to `'outlined'` to render a card with a border instead of a shadow.
 
 ```jsx example
 return (
@@ -49,7 +49,7 @@ return (
 
 ## Levels of emphasis
 
-Card `level` prop determines different levels of emphasis, depending on its level of hierarchy. It only make sense when the `variant` is `elevated` (default).
+The `level` prop controls the shadow intensity (defaults to `1`), providing different levels of visual emphasis. It only applies when the `variant` is `'elevated'` (the default). Accepts values from `0` (no shadow) to `5`.
 
 ```jsx example
 return (
@@ -87,7 +87,7 @@ return (
 )
 ```
 
-## Complex interaction (intergration with other components)
+## Complex interaction (integration with other components)
 
 ```jsx example
 const style = { maxWidth: u(50) }

@@ -5,11 +5,11 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 # ObjectInput
 
-ObjectInput lets you build dynamic forms using its declarative API.
+ObjectInput lets you build dynamic forms using a declarative API. Define your form fields in the `properties` prop as an object where each key maps to an input configuration with a required `input` key specifying the input type.
 
-ObjectInput accepts an inputs metadata object with a required `input` key to specify what type of input to display in the `properties` property.
+Available input types: [array](/docs/forms/Array), [checkbox](/docs/forms/Checkbox), [date](/docs/forms/DateTimePicker), [datetime](/docs/forms/DateTimePicker), [multiselect](/docs/forms/Multiselect), [number](/docs/forms/NumberInput), [object](/docs/forms/ObjectInput), [password](/docs/forms/PasswordInput), [radio](/docs/forms/Radio), [select](/docs/forms/Select), [time](/docs/forms/DateTimePicker), [text](/docs/forms/TextInput).
 
-Possible types are: [array](/docs/forms/Array), [checkbox](/docs/forms/Checkbox), [date](/docs/forms/DateTimePicker), [datetime](/docs/forms/DateTimePicker), [multiselect](/docs/forms/Multiselect), [number](/docs/forms/NumberInput), [object](/docs/forms/ObjectInput), [password](/docs/forms/PasswordInput), [radio](/docs/forms/Radio), [select](/docs/forms/Select), [time](/docs/forms/DateTimePicker), [text](/docs/forms/TextInput).
+The component requires a `$value` prop for two-way data binding. It also accepts `style` for the outer wrapper, `inputStyle` for the inner input container, `disabled` to prevent interaction, and `readonly` for a non-editable display.
 
 ```jsx
 import { ObjectInput } from 'startupjs-ui'
@@ -17,7 +17,7 @@ import { ObjectInput } from 'startupjs-ui'
 
 ## Simple example
 
-It's important to have `properties` object defined as a constant either outside of your component or cached with `useMemo()`, otherwise component is going to re-render the whole form tree whenever you are editing one of the field.
+It is important to define the `properties` object as a constant outside of your component or cache it with `useMemo()`. Otherwise, the entire form tree will re-render whenever you edit any field.
 
 ```jsx example
 const $value = $()
@@ -70,7 +70,7 @@ return (
 
 ## Inputs order
 
-ObjectInput accepts an array in the `order` property to specify in what order should the inputs be displayed.
+Pass an `order` array to control the order in which inputs are displayed.
 
 ```jsx example
 const $value = $()
@@ -96,7 +96,7 @@ return (
 
 ## Displaying errors
 
-The `errors` property accepts an object with error texts for inputs, where the key is the input key from the `properties` object and its value is the error text.
+The `errors` prop accepts an object mapping property names to error messages. Each key should match a key from the `properties` object.
 
 ```jsx example
 const $value = $()
@@ -125,6 +125,8 @@ return (
 
 ## Disabled
 
+When the `disabled` prop is set, all inputs in the form become non-interactive.
+
 ```jsx example
 const $value = $()
 
@@ -148,6 +150,8 @@ return (
 ```
 
 ## Readonly
+
+When the `readonly` prop is set, all inputs display their values as non-editable text.
 
 ```jsx example
 const $value = $({ email: 'startupjs@gmail.com', password: '123456' })
@@ -173,14 +177,14 @@ return (
 
 ## Advanced usage
 
-ObjectInput supports `dependsOn` and `dependsValue` properties for each input object in `properties` to dynamically display inputs.
+ObjectInput supports `dependsOn` and `dependsValue` fields within each input configuration in `properties` to conditionally display inputs.
 
-- `dependsOn` is used to specify the object key which the current input depends on
-- `dependsValue` is used to specify at what value of the input with key `dependsOn` should the current input be shown
+- `dependsOn` specifies the property key that the current input depends on.
+- `dependsValue` specifies the value of the `dependsOn` field at which the current input should be shown. If `dependsValue` is omitted, the input is shown whenever the dependency has any non-empty value.
 
-In the example below the dependent `password` input will only be shown if the `email` input is not empty.
+In the example below, the `password` input only appears when the `email` input is not empty.
 
-**Caution**: When the `dependsOn` field changes and dependent field is no longer visible its previous value is preserved.
+**Caution**: When the `dependsOn` field changes and the dependent field is no longer visible, its previous value is preserved.
 
 ```jsx example
 const $value = $()

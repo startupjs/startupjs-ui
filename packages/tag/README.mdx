@@ -12,7 +12,9 @@ Inherits [Div props](/docs/components/Div).
 
 Tags are compact elements that represent an input, attribute, or action. They allow users to enter information, make selections, filter content, or trigger actions. While buttons are expected to appear consistently and with familiar calls to action, tags should appear dynamically as a group of multiple interactive elements.
 
-```js
+The component supports style overrides via `style`, `textStyle`, `iconStyle`, `secondaryIconStyle`, `hoverStyle`, and `activeStyle`. Use `onIconPress` and `onSecondaryIconPress` to handle presses on the left and right icons independently. Set `disabled` to prevent all interactions.
+
+```jsx
 import { Tag } from 'startupjs-ui'
 ```
 
@@ -28,7 +30,7 @@ return (
 
 ## Colors
 
-Color is `primary` by default. It can be changed by passing color name from the config colors to `color` property. Possible values of property can be found in the `Sandbox` section at the bottom of the page.
+The default color is `'primary'`. You can change it by passing a color name from the theme configuration to the `color` prop. See the Sandbox section at the bottom of the page for all available values.
 
 ```jsx example
 return (
@@ -43,7 +45,7 @@ return (
 
 ## Sizes
 
-The `size` property applies to the size of tag, icons, and text. There are two sizes - `m` and` s` (default is `m`).
+The `size` prop controls the overall dimensions of the tag, including its icons and text. Available sizes are `'s'` and `'m'` (default).
 
 ```jsx example
 return (
@@ -55,9 +57,13 @@ return (
 )
 ```
 
-## Outlined tags
+## Variants
 
-Outlined tags offer an alternative style, in property `variant` need to pass `outlined` or `outlined-bg` for an outlined tag with a background.
+The `variant` prop controls the tag's visual style. The default value is `'flat'`.
+
+- **flat** -- a solid, filled tag (default)
+- **outlined** -- a bordered tag with no background fill
+- **outlined-bg** -- a bordered tag with a tinted background
 
 ```jsx example
 return (
@@ -70,7 +76,10 @@ return (
 
 ## Shapes
 
-Tags can have different corner shapes. It can be changed by changing `shape` prop (`circle` by default) to `rounded`.
+The `shape` prop controls the border radius of the tag. The default value is `'circle'`.
+
+- **circle** -- fully rounded corners (default)
+- **rounded** -- standard rounded corners
 
 ```jsx example
 return (
@@ -83,9 +92,9 @@ return (
 
 ## Icons
 
-Left and right icons can be added using the `icon` and `secondaryIcon` properties. To change the color of an icon, use the corresponding `iconStyleName` or `secondaryIconStyleName` property.
+Use the `icon` prop to add a left-side icon and the `secondaryIcon` prop for a right-side icon. To change the color of an icon, use the corresponding `iconStyleName` or `secondaryIconStyleName` prop.
 
-In `.styl` file
+In your `.styl` file:
 ```stylus
 .icon
   color var(--color-text-main)
@@ -121,7 +130,8 @@ return (
 ```
 
 ## Actions
-Tag can be made interactive using `onPress` prop.
+
+A tag can be made interactive using the `onPress` prop.
 
 ```jsx example
 const [counter, setCounter] = useState(0)

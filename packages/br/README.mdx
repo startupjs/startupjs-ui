@@ -9,13 +9,14 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 # Br
 
-`Br` is used to insert a line break. It also lets the developer customize the number of line breaks needed.
+`Br` inserts vertical spacing between elements. You can control the amount of space by specifying the number of lines. The component also accepts a `style` prop for custom styles.
 
 ```jsx
 import { Br } from 'startupjs-ui'
 ```
 
 ## Simple example
+
 ```jsx example
 return (
   <Br />
@@ -24,7 +25,7 @@ return (
 
 ## Number of lines
 
-Number of line breaks can be changed by passing a number to `lines` prop. The default value of `lines` is `1` and the width of a one line is `16px`.
+You can change the amount of spacing by passing a number to the `lines` prop. The default value is `1`, and each line adds `16px` of vertical space.
 
 ```jsx example
 const itemStyle = {
@@ -52,7 +53,7 @@ return (
 )
 ```
 
-## Half of line break
+## Half line break
 
 Setting the `half` prop to `true` creates a line break equivalent to a `lines` value of `0.5`.
 

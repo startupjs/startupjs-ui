@@ -5,25 +5,32 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 # Tabs
 
-Inherits [react-native-tab-view](https://github.com/satya164/react-native-tab-view) with some changes:
+Tabs let you switch between different views. Built on top of [react-native-tab-view](https://github.com/satya164/react-native-tab-view) with the following API changes:
 
-- `navigationState` property is replaced to properties `routes` and `$value`, where:
-  - `routes` is have the same structure as `navigationState.routes`
-  - `$value` is the scoped model, to make tabs controlled (by omitting this property the tabs will be uncontrolled)
-- added property `initialKey` to set default tab
-- added property `onChange` that responds to tab change instead of `onIndexChange`
-- all props for [TabBar](https://github.com/satya164/react-native-tab-view#tabbar) can be assigned to `Tabs` component
+- The `navigationState` prop is replaced by `routes` and `$value`:
+  - `routes` has the same structure as `navigationState.routes` -- an array of `{ key, title }` objects.
+  - `$value` is a scoped model that controls which tab is active. Omit it to use uncontrolled mode.
+- `initialKey` sets the default active tab for uncontrolled usage.
+- `onChange` fires when the active tab changes, receiving the new tab key. It replaces `onIndexChange`.
+- All [TabBar](https://github.com/satya164/react-native-tab-view#tabbar) props (such as `activeColor`, `inactiveColor`, `scrollEnabled`, `tabStyle`, `indicatorStyle`, `labelStyle`, `contentContainerStyle`, `indicatorContainerStyle`, `bounces`, `pressColor`, `pressOpacity`, `renderIcon`, `renderTabBarItem`, `renderIndicator`, `renderBadge`, `onTabPress`, `onTabLongPress`, `getLabelText`, `getAccessible`, `getAccessibilityLabel`, and `getTestID`) can be passed directly to the `Tabs` component.
 
-Tabs allow you to switch between different views.
+The `renderScene` prop is used to render the content for each tab based on the route key.
+
+You can also pass TabView props like `style`, `sceneContainerStyle`, `swipeEnabled`, `tabBarPosition`, `lazy`, `lazyPreloadDistance`, `renderLazyPlaceholder`, `initialLayout`, `keyboardDismissMode`, `onSwipeStart`, and `onSwipeEnd`.
+
+Note: `tabsStyle` is a deprecated alias for `style`. The `renderLabel` prop is also deprecated -- use `renderTabBarItem` instead.
 
 ```jsx
 import { Tabs } from 'startupjs-ui'
 ```
 
 ## Tabs.Bar
-Use component `Tabs.Bar` in the `renderTabBar` function if you want to make a custom `TabBar`
+
+Use the `Tabs.Bar` component inside the `renderTabBar` function to create a custom tab bar.
 
 ## Simple example
+
+Define your routes as an array of `{ key, title }` objects and provide a `renderScene` function that returns the content for each tab.
 
 ```jsx example noscroll
 const [routes] = useState([

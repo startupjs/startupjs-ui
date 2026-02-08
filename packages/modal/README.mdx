@@ -16,13 +16,15 @@ import './index.mdx.cssx.styl'
 
 Inherits [React Native Modal](https://reactnative.dev/docs/modal).
 
-Modal can be used when the user needs to inform about critical information, require decisions or interact a complex sub-application without navigating to a new page or interrupting the workflow.
+Modal displays critical information, asks for user decisions, or presents a complex sub-task without navigating away from the current page or interrupting the workflow.
 
 ```js
 import { Modal } from 'startupjs-ui'
 ```
 
 ## Simple example
+
+The simplest way to use a Modal is to pass `visible` to control its visibility, a `title` for the header, and an `onRequestClose` callback to handle closing.
 
 ```jsx example
 const [visible, setVisible] = useState(false)
@@ -45,9 +47,11 @@ return (
 
 ## Managing visibility
 
-There are three options for managing visiblity of a modal:
+There are three ways to control the visibility of a modal:
 
-1. By passing the scoped model to the `$visible` property from the state of which visibility is controlled.
+### 1. Using a scoped model (`$visible`)
+
+Pass a scoped model to `$visible` for two-way data binding. The modal reads and writes its visibility state through the model automatically.
 
 ```jsx example
 const $visible = $()
@@ -67,7 +71,9 @@ return (
 )
 ```
 
-2. By passing the `visible` property that determines whether modal is visible.
+### 2. Using a controlled `visible` prop
+
+Pass the `visible` boolean prop along with an `onRequestClose` callback to manage visibility through React state.
 
 ```jsx example
 const [visible, setVisible] = useState(false)
@@ -88,7 +94,9 @@ return (
 )
 ```
 
-3. By passing `ref`, which will receive the `open()` and `close()` methods to control visibility.
+### 3. Using a ref
+
+Pass a `ref` to the Modal to get access to imperative `open()` and `close()` methods for controlling visibility.
 
 ```jsx example
 const modalRef = useRef()
@@ -110,7 +118,7 @@ return (
 
 ## Fullscreen modal
 
-By default the modal shows like window in center of the page. To make it fullscreen, you need pass the string `fullscreen` to the `variant` property.
+By default, the modal appears as a centered window. To make it fill the entire screen, set the `variant` prop to `'fullscreen'`.
 
 ```jsx example
 const $visible = $(false)
@@ -133,9 +141,48 @@ return (
 )
 ```
 
+## Action buttons
+
+The modal can automatically display action buttons at the bottom:
+
+- Pass `onCancel` alone to show a single action button (labeled "OK" by default, customizable via `cancelLabel`).
+- Pass both `onCancel` and `onConfirm` to show two buttons: "Cancel" and "Confirm" (customizable via `cancelLabel` and `confirmLabel`).
+
+## Props reference
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `style` | `StyleProp<ViewStyle>` | | Custom styles for the root view |
+| `modalStyle` | `StyleProp<ViewStyle>` | | Custom styles for the modal content container |
+| `children` | `ReactNode` | | Content rendered inside the modal |
+| `variant` | `'window' \| 'fullscreen'` | `'window'` | Layout variant |
+| `visible` | `boolean` | | Controlled visibility flag |
+| `$visible` | `any` | | Scoped model for two-way visibility binding |
+| `ref` | `RefObject` | | Imperative ref exposing `open()` and `close()` |
+| `title` | `string` | | Header title text |
+| `cancelLabel` | `string` | `'Cancel'` | Label for the cancel button |
+| `confirmLabel` | `string` | `'Confirm'` | Label for the confirm button |
+| `showCross` | `boolean` | `true` | Whether to show a close icon in the header |
+| `enableBackdropPress` | `boolean` | `true` | Whether tapping the backdrop closes the modal |
+| `ModalElement` | `ComponentType` | `SafeAreaView` | Component used as the modal container |
+| `animationType` | `'slide' \| 'fade' \| 'none'` | `'fade'` | Animation used when showing/hiding the modal |
+| `transparent` | `boolean` | `true` | Whether the modal has a transparent background |
+| `statusBarTranslucent` | `boolean` | | Controls status bar translucency on Android |
+| `supportedOrientations` | `SupportedOrientation[]` | all orientations | Allowed screen orientations while the modal is displayed |
+| `onShow` | `() => void` | | Called after the modal becomes visible |
+| `onCrossPress` | `(event) => void` | | Called when the close icon is pressed |
+| `onCancel` | `(event) => void` | | Provides a cancel action button; called when it is pressed |
+| `onConfirm` | `(event) => void` | | Provides a confirm action button; called when it is pressed |
+| `onBackdropPress` | `(event) => void` | | Called when the backdrop is pressed (requires `enableBackdropPress`) |
+| `onOrientationChange` | `(event) => void` | | Called when the device orientation changes while the modal is open |
+| `onRequestClose` | `(value?) => void` | | Called when the user requests to close (hardware back, Esc, etc.) |
+| `onDismiss` | `() => void` | | Called after the modal has been fully dismissed |
+
 ## Advanced usage
 
-Modal consists of three parts - `Header`, `Content` and `Actions`. These parts can be used to add custom markup, the `Header` is used instead of `title`, the `Content` is used instead of children and the `Actions` is used instead of handlers `onCancel`, `onConfirm`. They can be used separately.
+Modal is composed of three sub-components: `Modal.Header`, `Modal.Content`, and `Modal.Actions`. Use these to fully customize the modal layout. `Modal.Header` replaces the `title` prop, `Modal.Content` replaces `children`, and `Modal.Actions` replaces the `onCancel`/`onConfirm` buttons.
+
+Each sub-component can be used independently or in combination.
 
 ```jsx example
 const $visible = $(false)

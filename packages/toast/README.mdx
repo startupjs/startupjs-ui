@@ -14,7 +14,7 @@ import './index.mdx.cssx.styl'
 
 # Toast
 
-Toast provides brief non-blocking notifications that inform users of a process that an app has performed or will perform.
+Toast displays brief, non-blocking notifications that inform the user about actions the app has performed or will perform. Toasts appear at the top of the screen and automatically dismiss after 5 seconds unless marked as an alert.
 
 ```js
 import { ToastProvider, toast } from 'startupjs-ui'
@@ -22,7 +22,7 @@ import { ToastProvider, toast } from 'startupjs-ui'
 
 ## Installation
 
-Render `ToastProvider` once inside `Portal.Provider` before your page context (for example, `Stack`).
+Render the `ToastProvider` component once inside a `Portal.Provider`, before your page content (for example, a navigation `Stack`).
 
 ```jsx
 import { Portal, ToastProvider, DialogsProvider } from 'startupjs-ui'
@@ -43,6 +43,8 @@ export default function RootLayout () {
 
 ## Simple example
 
+Call the `toast()` function to show a notification. At minimum, pass a `text` property.
+
 ```jsx example
 function onPress () {
   toast({ text: 'Note archived' })
@@ -52,6 +54,31 @@ return pug`
   Button(onPress=onPress) Show toast
 `
 ```
+
+## Toast types
+
+The `type` option controls the visual style and default icon/title of the toast. Available types are `'info'` (default), `'success'`, `'warning'`, and `'error'`.
+
+## Alert mode
+
+By default, toasts auto-dismiss after 5 seconds. Set `alert` to `true` to keep the toast visible until the user manually closes it.
+
+## Action button
+
+Pass `onAction` to display an action button on the toast. The button label defaults to `'View'` and can be customized with `actionLabel`. The toast is automatically closed after the action is triggered.
+
+## `toast()` options
+
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `type` | `'info' \| 'error' \| 'warning' \| 'success'` | `'info'` | Visual style variant -- determines the color, icon, and default title |
+| `title` | `string` | Based on `type` | Title text displayed in the header (defaults to `'Info'`, `'Error'`, `'Warning'`, or `'Success'`) |
+| `text` | `string` | | Body text displayed below the title |
+| `icon` | `IconProps['icon']` | Based on `type` | Custom icon shown next to the title |
+| `alert` | `boolean` | `false` | When `true`, prevents the toast from auto-closing after 5 seconds |
+| `actionLabel` | `string` | `'View'` | Label for the action button |
+| `onAction` | `() => void` | | Handler called when the action button is pressed |
+| `onClose` | `() => void` | | Called after the toast is closed and removed from the stack |
 
 ## Sandbox
 

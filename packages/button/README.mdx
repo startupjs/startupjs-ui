@@ -13,13 +13,14 @@ import './index.mdx.cssx.styl'
 
 # Button
 
-Buttons allow users to perform an action or to navigate to another page. They have multiple styles for various needs, and are ideal for calling attention to where a user needs to do something in order to move forward in a flow.
+Buttons let users take actions or navigate to other pages. They support multiple visual styles to suit different needs and are ideal for drawing attention to the next step in a workflow.
 
 ```jsx
 import { Button } from 'startupjs-ui'
 ```
 
 ## Simple example
+
 ```jsx example
 const [counter, setCounter] = useState(0)
 
@@ -31,6 +32,8 @@ return (
 ```
 
 ## Async button
+
+When the `onPress` handler returns a Promise, the button automatically shows a loading indicator until the Promise resolves. The button is disabled while loading to prevent duplicate submissions.
 
 ```jsx example
 async function onPress() {
@@ -50,7 +53,11 @@ return (
 
 ## Variants
 
-The `variant` property is responsible for the external display of the button (affects the color of the icon and button text). Default value is `outlined`.
+The `variant` prop controls the button's visual style. It affects the background, border, and text/icon colors. The default value is `outlined`.
+
+- **outlined** -- a bordered button with no background fill (default)
+- **flat** -- a solid, filled button
+- **text** -- a borderless button with no background
 
 ```jsx example
 return pug`
@@ -76,7 +83,7 @@ return pug`
 
 ## Colors
 
-Color is `secondary` by default. It can be changed by passing color name from the config colors to `color` property. Possible values of property can be found in the `Sandbox` section at the bottom of the page.
+The default color is `secondary`. You can change it by passing any color name from your theme's color configuration to the `color` prop. See all available values in the Sandbox section at the bottom of the page.
 
 ```jsx example
 return (
@@ -102,7 +109,7 @@ return (
 
 ## Sizes
 
-The `size` property applies to the button size, icon and button text. Default value is `m`. Possible values of property can be found in the `Sandbox` section at the bottom of the page.
+The `size` prop controls the overall button dimensions, including the icon and label text. The default value is `m`. Available sizes are `xs`, `s`, `m`, `l`, `xl`, and `xxl`. See all available values in the Sandbox section at the bottom of the page.
 
 ```jsx example
 return (
@@ -122,11 +129,19 @@ return (
 )
 ```
 
+## Shape
+
+The `shape` prop controls the border radius of the button. The default value is `rounded`.
+
+- **rounded** -- standard rounded corners (default)
+- **squared** -- sharp, square corners
+- **circle** -- fully circular (best for icon-only buttons)
+
 ## Icons
 
-Icon can be added using `icon` property. Position of icon can be changed by passing `iconPosition` to component (`left` by default). To change icon color use the `iconStyleName` property.
+You can add an icon using the `icon` prop. To change the icon's position relative to the label, use the `iconPosition` prop (`left` by default).
 
-In `.styl` file
+In your `.styl` file:
 ```stylus
 .icon
   color var(--color-text-success)
@@ -146,11 +161,25 @@ return (
 )
 ```
 
+## Disabled state
+
+Set the `disabled` prop to `true` to prevent user interaction. A disabled button ignores all press events and appears visually muted.
+
+## Custom styles
+
+You can fine-tune the button's appearance using style props:
+
+- **style** -- custom styles for the root container
+- **textStyle** -- custom styles for the label text
+- **iconStyle** -- custom styles for the icon
+- **hoverStyle** -- custom styles applied on hover
+- **activeStyle** -- custom styles applied when pressed
+
 ## Call to Action
 
-Try to keep the variety of button combinations you use in your app to the minimum.
+Try to keep the variety of button combinations you use in your app to a minimum.
 
-Use regular Button without any options by default. Whenever you want to emphasize a particular `Call-to-Action`, use a primary flat button.
+Use a regular Button without any extra options by default. Whenever you want to emphasize a particular call to action, use a primary flat button.
 
 ```jsx example
 <Button color='primary' variant='flat'>
@@ -158,13 +187,13 @@ Use regular Button without any options by default. Whenever you want to emphasiz
 </Button>
 ```
 
-## Buttons order
+## Button order
 
-Whenever specifiying several buttons on one line, stick to the order of buttons which people are used to from various OS'es. `Cancel` should be first, and then `OK`.
+When placing several buttons on one line, follow the ordering conventions that users expect from common operating systems: put `Cancel` first, then `OK`.
 
-Never put multiple `Call-to-Action` buttons in one component. And try to keep the amount of them visible at the same time on one page to the minimum.
+Avoid placing multiple call-to-action buttons in the same component, and try to limit the number of them visible at once on a single page.
 
-It's a much better UX decision to use regular buttons by default and decide which of them to make a `Call-to-Action` later.
+It is a much better UX practice to use regular buttons by default and decide which one to make a call to action later.
 
 ```jsx example
 <Div row align='right'>

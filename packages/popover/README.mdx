@@ -9,7 +9,11 @@ import Span from '@startupjs-ui/span'
 
 # Popover
 
-Pop-up window for displaying hidden content, linked in some way to a specific element on the page and becomes visible when you click on this.
+A floating panel that appears near an anchor element when triggered. Use it to display additional content, menus, or tooltips tied to a specific element on the page.
+
+The `visible` prop controls whether the popover is shown, and `onChange` is called when visibility should change. You can also use `$visible` for two-way data binding. Pass `children` as the anchor (the always-visible element) and `renderContent` to render the popover content. A `ref` can be used to programmatically call `open()` and `close()`.
+
+The component also supports lifecycle callbacks inherited from AbstractPopover: `onRequestOpen`, `onRequestClose`, `onOpenComplete`, and `onCloseComplete`. Use `renderWrapper` to wrap the popover node with custom markup.
 
 ```jsx
 import { Popover } from 'startupjs-ui'
@@ -17,12 +21,11 @@ import { Popover } from 'startupjs-ui'
 
 ## Initialization
 
-Before use you need to configure [Portal](/docs/components/Portal)
+Before using Popover, you need to configure [Portal](/docs/components/Portal).
 
 ## Simple example
 
-- `children` (ReactNode): anchor (visible part)
-- `renderContent` (function: ReactNode): function returns hidden part
+Pass `children` as the anchor element and `renderContent` as a function that returns the popover content.
 
 ```jsx example
 const [visible, setVisible] = useState(false)
@@ -48,9 +51,7 @@ return (
 
 ## Position
 
-- `position` (string - 'top', 'bottom', 'left', 'right'): position relative to the visible part
-- `attachment` (string - 'start', 'center', 'end'): optional parameter for offset
-- `placements` (array): what positions can be used for auto-fix
+Use the `position` prop to control where the popover appears relative to the anchor: `'top'`, `'bottom'` (default), `'left'`, or `'right'`. The `attachment` prop adjusts alignment along the secondary axis: `'start'` (default), `'center'`, or `'end'`. The `placements` prop accepts an array of fallback positions used for automatic repositioning when the popover would overflow the screen.
 
 ```jsx example
 const [visible, setVisible] = useState(false)
@@ -76,13 +77,15 @@ return (
 )
 ```
 
-## Stylization
+## Styling
 
-- `style`: styles for the anchor wrapper
-- `attachmentStyle`: styles for the popover container
-- `overlayStyle`: dismiss overlay styles
-- `arrow` (boolean): show an arrow
-- `matchAnchorWidth` (boolean): the width of the popover is equal to the width of the anchor
+Use the following props to customize the appearance:
+
+- `style` -- styles for the anchor wrapper
+- `attachmentStyle` -- styles for the popover container
+- `overlayStyle` -- styles for the dismiss overlay
+
+Set `arrow` to `true` to display an arrow pointing from the popover to the anchor. Set `matchAnchorWidth` to `true` to make the popover match the anchor's width.
 
 ```jsx example
 const [visible, setVisible] = useState(false)
@@ -110,8 +113,7 @@ return (
 
 ## Extra options
 
-- `durationOpen` (number): animation time on opening
-- `durationClose` (number): animation time on close
+Use `durationOpen` (defaults to `100`ms) and `durationClose` (defaults to `50`ms) to control the animation timing for opening and closing the popover.
 
 ## Sandbox
 

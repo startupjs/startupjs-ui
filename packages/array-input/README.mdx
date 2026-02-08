@@ -4,17 +4,17 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 # ArrayInput
 
-ArrayInput lets you build dynamic forms using its declarative API.
+A dynamic list input that lets users add, edit, and remove items in an array. Each item is rendered using a declarative input descriptor, so you can build flexible repeating form fields with minimal code.
 
-ArrayInput accepts an input metadata object with a required `input` key to specify what type of input to display in the `items` property.
-
-Possible types are: [array](/docs/forms/Array), [checkbox](/docs/forms/Checkbox), [date](/docs/forms/DateTimePicker), [datetime](/docs/forms/DateTimePicker), [multiselect](/docs/forms/Multiselect), [number](/docs/forms/NumberInput), [object](/docs/forms/ObjectInput), [password](/docs/forms/PasswordInput), [radio](/docs/forms/Radio), [select](/docs/forms/Select), [time](/docs/forms/DateTimePicker), [text](/docs/forms/TextInput).
+The `items` prop accepts an input metadata object with a `type` key that specifies the kind of input to display for each array element. Supported types are: [array](/docs/forms/Array), [checkbox](/docs/forms/Checkbox), [date](/docs/forms/DateTimePicker), [datetime](/docs/forms/DateTimePicker), [multiselect](/docs/forms/Multiselect), [number](/docs/forms/NumberInput), [object](/docs/forms/ObjectInput), [password](/docs/forms/PasswordInput), [radio](/docs/forms/Radio), [select](/docs/forms/Select), [time](/docs/forms/DateTimePicker), [text](/docs/forms/TextInput).
 
 ```jsx
 import { ArrayInput } from 'startupjs-ui'
 ```
 
 ## Simple example
+
+Bind the array data with `$value` (a two-way observable model) and describe each item's input type via `items`. An empty input row is automatically appended so users can add new entries. Each existing item has a remove button.
 
 ```jsx example
 const $value = $(['Green', 'Blue'])
@@ -25,6 +25,11 @@ return (
   />
 )
 ```
+
+## Additional props
+
+- `style` -- custom styles applied to the outer wrapper
+- `inputStyle` -- custom styles applied to the inner input container
 
 ## Sandbox
 

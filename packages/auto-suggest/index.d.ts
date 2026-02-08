@@ -26,6 +26,8 @@ export interface AutoSuggestProps {
     options?: AutoSuggestOption[];
     /** Current selected value */
     value?: AutoSuggestValue;
+    /** Size preset @default 'm' */
+    size?: 'l' | 'm' | 's';
     /** Placeholder text @default 'Select value' */
     placeholder?: string | number;
     /** Custom item renderer (item, index, highlightedIndex) */

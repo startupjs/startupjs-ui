@@ -7,7 +7,9 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 # Checkbox
 
-Checkboxes allow the user to select one or more items from a set.
+Checkboxes allow the user to select one or more items from a set. The component supports two visual variants: a standard checkbox and a toggle switch.
+
+Use the `value` prop to control the checked state and the `onChange` prop to handle state changes. The component also accepts `style` for the outer wrapper, `inputStyle` for the input element itself, and `switchCircleStyle` to customize the switch thumb when using the `'switch'` variant.
 
 ```jsx
 import { Checkbox } from 'startupjs-ui'
@@ -36,7 +38,7 @@ return (
 
 ## Variants
 
-There are two display variants of component: `checkbox` and `switch`. **Default**: `checkbox`.
+There are two display variants: `'checkbox'` and `'switch'`. The default is `'checkbox'`.
 
 ```jsx example
 const [checked, setChecked] = useState(false)
@@ -52,6 +54,8 @@ return (
 
 ## Disabled
 
+When the `disabled` prop is set, the checkbox becomes non-interactive and appears dimmed.
+
 ```jsx example
 return (
   <Checkbox disabled />
@@ -59,6 +63,8 @@ return (
 ```
 
 ## Readonly
+
+When the `readonly` prop is set, the checkbox displays its current value as a non-interactive text symbol.
 
 ```jsx example
 return (
@@ -68,7 +74,7 @@ return (
 
 ## Checkbox with custom icon
 
-The `icon` property allows to change the default icon.
+The `icon` prop allows you to replace the default checkmark icon.
 
 ```jsx example
 const [checked, setChecked] = useState(false)

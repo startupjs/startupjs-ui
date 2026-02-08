@@ -4,13 +4,15 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 # Radio
 
-Radio button allows the user to select one option from a list.
+Lets the user pick exactly one option from a list. Each option is rendered as a radio button with an optional label and description.
 
 ```jsx
 import { Radio } from 'startupjs-ui'
 ```
 
 ## Basic usage
+
+Pass an array of options and track the selected value with `value` and `onChange`. Options can be plain strings (used as both the value and the label) or objects with `value`, `label`, and `description` fields.
 
 ```jsx example
 const [checked, setChecked] = useState()
@@ -24,6 +26,8 @@ return (
 ```
 
 ## Custom label and description
+
+When you need separate display text or a description beneath each option, pass objects with `value`, `label`, and an optional `description`.
 
 ```jsx example
 const [checked, setChecked] = useState()
@@ -49,6 +53,8 @@ return (
 
 ## Disabled
 
+Set `disabled` to prevent all interaction. Every option appears greyed out and cannot be selected.
+
 ```jsx example
 const [checked, setChecked] = useState()
 
@@ -73,6 +79,8 @@ return (
 
 ## Readonly
 
+Set `readonly` to display the current selection without allowing changes. Unlike `disabled`, the component retains its normal visual styling.
+
 ```jsx example
 const [checked, setChecked] = useState('js')
 
@@ -94,6 +102,13 @@ return (
   />
 )
 ```
+
+## Additional props
+
+- `style` -- custom styles applied to the root wrapper
+- `inputStyle` -- custom styles applied to each individual option item
+- `row` -- when `true`, renders the options horizontally in a row (default `false`)
+- `onChange` -- callback invoked with the selected option's value when the user makes a selection
 
 ## Sandbox
 

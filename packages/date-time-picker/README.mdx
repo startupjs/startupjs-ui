@@ -5,7 +5,13 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 # DateTimePicker
 
-DateTimePicker allows to display and change the date and time.
+DateTimePicker allows the user to display and select a date and time. It renders a text input that opens a picker when tapped.
+
+Use the `date` prop to set the current value as a timestamp and the `onChangeDate` callback to receive the selected timestamp. The picker supports several modes via the `mode` prop: `'date'`, `'time'`, `'datetime'` (default), or `'countdown'`.
+
+Additional props include `style` for custom root styles, `contentStyle` for the picker content container, `size` (`'s'`, `'m'`, `'l'`, defaults to `'m'`) for the input size, `display` for the native picker display mode (defaults to `'spinner'`), `dateFormat` for custom date formatting (using moment format strings), `locale` for localization (falls back to the device locale), and `timezone` for specifying an IANA timezone (defaults to auto-detected).
+
+You can constrain the selectable range with `minDate` and `maxDate` (both timestamps), disable specific days with `disabledDays`, set a date range highlight with `range`, control the time step with `timeInterval` (defaults to `5` minutes), and force 24-hour format with `is24Hour`. The component also supports `disabled`, `readonly`, `placeholder`, `renderInput` for a custom input renderer, `ref` for imperative access, and `testID`/`calendarTestID` for testing.
 
 ```jsx
 import { DateTimePicker } from 'startupjs-ui'
@@ -26,9 +32,9 @@ return (
 
 ## Managing visibility
 
-There are three options for managing visiblity of a `DateTimePicker`:
+There are three ways to manage the visibility of a DateTimePicker:
 
-1. By passing the scoped model to the `$visible` property from the state of which visibility is controlled.
+1. **Scoped model** -- pass a scoped model to the `$visible` prop, which automatically controls the picker's open/close state.
 
 ```jsx example
 const $visible = $()
@@ -43,7 +49,7 @@ return (
 )
 ```
 
-2. By passing the `visible`, `onRequestOpen` and `onRequestClose` properties that determines whether `DateTimePicker` is visible.
+2. **Controlled** -- pass the `visible`, `onRequestOpen`, and `onRequestClose` props to manually control when the picker opens and closes.
 
 ```jsx example
 const $visible = $()
@@ -61,7 +67,7 @@ return (
 )
 ```
 
-3. Uncontrolled.
+3. **Uncontrolled** -- if neither `$visible` nor `visible` is provided, the component manages its own visibility internally.
 
 ```jsx example
 const [date, setDate] = useState()

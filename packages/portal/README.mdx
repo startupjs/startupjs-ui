@@ -8,7 +8,7 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 # Portal
 
-The portal component renders its children into a new "subtree" outside of current DOM hierarchy.
+Portal renders its children into a separate subtree outside of the current component hierarchy. This is useful for overlays, modals, and any content that needs to appear above the rest of the UI.
 
 ```jsx
 import { Portal } from 'startupjs-ui'
@@ -16,7 +16,7 @@ import { Portal } from 'startupjs-ui'
 
 ## Initialization
 
-It is necessary to wrap the part of the application components on top of which the Portal will be displayed
+Wrap your application content with `Portal.Provider` so that portaled content has a host to render into.
 
 ```jsx
 function Layout ({ children }) {
@@ -67,6 +67,16 @@ return (
   </Div>
 )
 ```
+
+## Props
+
+### Portal
+
+- **children** -- the content to render into the portal host
+
+### Portal.Provider
+
+- **children** -- the application content that can use Portal
 
 ## Sandbox
 

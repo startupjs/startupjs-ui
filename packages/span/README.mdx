@@ -6,7 +6,7 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 # Span
 
-The base component of typography is `Span`, which is used for plain text.
+Span is the base typography component for rendering plain text. It extends React Native's `Text` component and adds shortcuts for headings, bold, italic, and description styles.
 
 ```jsx
 import { Span } from 'startupjs-ui'
@@ -20,7 +20,7 @@ import { Span } from 'startupjs-ui'
 
 ## Headers
 
-Use `h1` - `h6` props to create headers.
+Use the `h1` through `h6` props to render text as a heading. On web, the appropriate accessibility role is set automatically.
 
 ```jsx example
 <Span h1>H1 Heading</Span>
@@ -41,7 +41,7 @@ Use `h1` - `h6` props to create headers.
 
 ## Description
 
-Use `description` prop for secondary text.
+Use the `description` prop to apply a secondary text color, suitable for captions and helper text.
 
 ```jsx example
 <Span description>Description text</Span>
@@ -96,6 +96,20 @@ styl`
       box-shadow 0px 0px 10px rgba(green, 1)
 `
 ```
+
+## Props
+
+Span extends React Native's `TextProps`, so all standard Text props are supported in addition to the following:
+
+- **children** -- the text content to render
+- **bold** -- render text in bold
+- **italic** -- render text in italic
+- **description** -- apply a secondary text color for captions or helper text
+- **full** -- expand to full width (`flex: 1`)
+- **h1** through **h6** -- render text as a heading of the specified level
+- **theme** -- apply a named theme
+- **style** -- custom text styles
+- **ref** -- ref to access the underlying `Text` element
 
 ## Sandbox
 
