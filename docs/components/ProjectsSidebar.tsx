@@ -102,7 +102,7 @@ function ProjectButton ({ project, isActive, colorScheme }: { project: Project, 
       : 'transparent'
 
   const textColor = isActive
-    ? (isDark ? '#ffffff' : '#242424')
+    ? (isDark ? '#ffffff' : '#000000')
     : project.color
 
   return (
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(128,128,128,0.03)'
   },
   containerDark: {
-    backgroundColor: 'rgba(128,128,128,0.06)'
+    backgroundColor: 'rgba(128,128,128,0.03)'
   },
   button: {
     width: BUTTON_SIZE,
