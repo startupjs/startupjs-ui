@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect, type ReactNode } from 'react'
-import { View, Text, Pressable, Linking, Dimensions, StyleSheet } from 'react-native'
+import { View, Text, Pressable, Dimensions, StyleSheet } from 'react-native'
+import { type ExternalPathString, Link } from 'expo-router'
 
 const SIDEBAR_WIDTH = 48
 const BUTTON_SIZE = 48
@@ -89,12 +90,6 @@ function ProjectButton ({ project, isActive, colorScheme }: { project: Project, 
   const onHoverOut = useCallback(() => { setIsHover(false) }, [])
   const isDark = colorScheme === 'dark'
 
-  const onPress = useCallback(() => {
-    if (!isActive) {
-      Linking.openURL(project.url)
-    }
-  }, [isActive, project.url])
-
   const buttonBg = isActive
     ? project.activeBg
     : isHover
@@ -107,16 +102,15 @@ function ProjectButton ({ project, isActive, colorScheme }: { project: Project, 
 
   return (
     <Pressable
-      onPress={onPress}
       onHoverIn={onHoverIn}
       onHoverOut={onHoverOut}
       style={[styles.button, { backgroundColor: buttonBg }]}
       accessibilityLabel={project.fullName}
       accessibilityRole='link'
     >
-      <Text style={[styles.buttonText, { color: textColor }]}>
+      <Link href={project.url as ExternalPathString} style={[styles.buttonText, { color: textColor }]}>
         {project.label}
-      </Text>
+      </Link>
       <Tooltip text={project.fullName} visible={isHover} colorScheme={colorScheme} />
     </Pressable>
   )
