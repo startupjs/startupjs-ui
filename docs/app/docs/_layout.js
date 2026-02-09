@@ -1,15 +1,17 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
-import { View, ScrollView, TextInput, Pressable, Dimensions } from 'react-native'
+import { View, ScrollView, TextInput, Pressable, Dimensions, useColorScheme } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { pug, styl, observer } from 'startupjs'
 import { Slot, Link, usePathname, Stack } from 'expo-router'
 import GitHubIcon from '../../svg/github-mark.svg'
+import ProjectsSidebar from '../../components/ProjectsSidebar'
 
 const TABLET_BREAKPOINT = 768
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 
 export default observer(({ children }) => {
+  const colorScheme = useColorScheme()
   const initialWidth = useMemo(() => Dimensions.get('window').width, [])
   const [showSidebar, setShowSidebar] = useState(initialWidth >= TABLET_BREAKPOINT)
   const toggleSidebar = useCallback(() => setShowSidebar(!showSidebar), [showSidebar])
@@ -25,34 +27,39 @@ export default observer(({ children }) => {
 
   return pug`
     View.root
-      Stack.Screen(
-        options={ title: 'Docs' + (component ? ' / ' + component : '') }
-      )
-      Pressable.toggleSidebar(styleName={ showSidebar } onPress=toggleSidebar)
-        View.line
-        View.line
-        View.line
-      Animated.View.sidebar(styleName={ show: showSidebar })
-        View.header
-          Link.title(href='/') StartupJS UI
-          GitHubLink
-        TextInput.search(
-          placeholder='Search...'
-          placeholderTextColor='#999'
-          value=search
-          onChangeText=setSearch
+      ProjectsSidebar(colorScheme=colorScheme)
+      View.main
+        Stack.Screen(
+          options={ title: 'Docs' + (component ? ' / ' + component : '') }
         )
-        ScrollView.items
-          each component in filteredComponents
-            Item(key=component setShowSidebar=setShowSidebar)= component
-      ScrollView.contentWrapper
-        View.content
-          Slot
+        Pressable.toggleSidebar(styleName={ showSidebar } onPress=toggleSidebar)
+          View.line
+          View.line
+          View.line
+        Animated.View.sidebar(styleName={ show: showSidebar })
+          View.header
+            Link.title(href='/') StartupJS UI
+            GitHubLink
+          TextInput.search(
+            placeholder='Search...'
+            placeholderTextColor='#999'
+            value=search
+            onChangeText=setSearch
+          )
+          ScrollView.items
+            each component in filteredComponents
+              Item(key=component setShowSidebar=setShowSidebar)= component
+        ScrollView.contentWrapper
+          View.content
+            Slot
   `
   styl`
     .root
       flex-direction: row
       flex: 1
+    .main
+      flex: 1
+      flex-direction: row
     .header
       padding 15px 20px 15px 45px
       flex-direction: row
