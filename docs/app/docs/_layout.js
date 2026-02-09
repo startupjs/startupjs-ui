@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
-import { View, ScrollView, TextInput, Pressable, Dimensions, useColorScheme } from 'react-native'
+import { View, ScrollView, TextInput, Pressable, Dimensions } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { pug, styl, observer } from 'startupjs'
 import { Slot, Link, usePathname, Stack } from 'expo-router'
@@ -11,7 +11,9 @@ const TABLET_BREAKPOINT = 768
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 
 export default observer(({ children }) => {
-  const colorScheme = useColorScheme()
+  // TODO: use dynamic color scheme when it's supported in docs (import from 'react-native')
+  // const colorScheme = useColorScheme()
+  const colorScheme = 'light'
   const initialWidth = useMemo(() => Dimensions.get('window').width, [])
   const [showSidebar, setShowSidebar] = useState(initialWidth >= TABLET_BREAKPOINT)
   const toggleSidebar = useCallback(() => setShowSidebar(!showSidebar), [showSidebar])
