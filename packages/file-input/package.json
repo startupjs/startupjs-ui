@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/file-input",
-  "version": "0.1.5",
+  "version": "0.1.16",
   "publishConfig": {
     "access": "public"
   },
@@ -9,6 +9,7 @@
   "type": "module",
   "exports": {
     ".": "./index.tsx",
+    "./server": "./server/index.js",
     "./constants": "./constants.js",
     "./deleteFile": "./deleteFile.ts",
     "./uploadFile": "./uploadFile.ts",
@@ -16,17 +17,18 @@
     "./files.plugin": "./files.plugin.js"
   },
   "dependencies": {
-    "@fortawesome/free-solid-svg-icons": "^5.12.0",
-    "@startupjs-ui/button": "^0.1.5",
-    "@startupjs-ui/core": "^0.1.5",
-    "@startupjs-ui/dialogs": "^0.1.5",
-    "@startupjs-ui/div": "^0.1.5",
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "@startupjs-ui/button": "^0.1.16",
+    "@startupjs-ui/core": "^0.1.11",
+    "@startupjs-ui/dialogs": "^0.1.16",
+    "@startupjs-ui/div": "^0.1.16",
     "busboy": "^1.6.0",
     "expo-document-picker": ">=14.0.0",
     "expo-image-picker": ">=17.0.0",
     "sharp": "^0.34.5"
   },
   "peerDependencies": {
+    "@aws-sdk/client-s3": "*",
     "@azure/storage-blob": "*",
     "mongodb": "*",
     "react": "*",
@@ -34,6 +36,9 @@
     "startupjs": "*"
   },
   "peerDependenciesMeta": {
+    "@aws-sdk/client-s3": {
+      "optional": true
+    },
     "@azure/storage-blob": {
       "optional": true
     },

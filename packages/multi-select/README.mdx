@@ -7,7 +7,7 @@ import MultiSelect, { _PropsJsonSchema as MultiSelectPropsJsonSchema } from './i
 
 # MultiSelect
 
-MultiSelect lets user pick multiple options.
+MultiSelect lets users pick multiple options from a dropdown list. Selected options are displayed as tags in the input area.
 
 ```jsx
 import { MultiSelect } from 'startupjs-ui'
@@ -15,7 +15,7 @@ import { MultiSelect } from 'startupjs-ui'
 
 ## Initialization
 
-Before use you need to configure [Portal](/docs/components/Portal)
+Before using MultiSelect, you need to configure [Portal](/docs/components/Portal).
 
 ## Simple example
 
@@ -39,7 +39,7 @@ return (
 
 ## Options
 
-You can pass array of objects `{ label, value }` or primitives to `options`.
+You can pass an array of `{ label, value }` objects or an array of primitives to the `options` prop.
 
 ```jsx example
 const OBJECT_OPTIONS_EXAMPLE = [
@@ -73,6 +73,8 @@ return (
 
 ## Disabled
 
+Set `disabled` to `true` to prevent all user interaction with the component.
+
 ```jsx example
 const OPTIONS = [
   { label: 'New York', value: 'ny' },
@@ -92,6 +94,8 @@ return (
 ```
 
 ## Readonly
+
+Set `readonly` to `true` to display selected values as plain text without allowing changes.
 
 ```jsx example
 const OPTIONS = [
@@ -113,7 +117,7 @@ return (
 
 ## Tag
 
-You can add a custom tag component.
+You can provide a custom tag component using the `TagComponent` prop. It receives `{ record, index, isLast }` where `record` is the matching option object.
 
 ```jsx example
 const OPTIONS = [
@@ -134,9 +138,9 @@ return (
 )
 ```
 
-## Input Component
+## Input component
 
-You can add a custom input component.
+You can provide a custom input component using the `InputComponent` prop. It receives `{ children, onOpen, onHide, value, placeholder, disabled, readonly, focused }`.
 
 ```jsx example
 const OPTIONS = [
@@ -174,7 +178,7 @@ return (
 
 ## Tag limit
 
-You can limit the number of displayed tags by passing `tagLimit={number}`.
+You can limit the number of displayed tags by passing `tagLimit`. Extra tags are collapsed and shown as a "+N" indicator.
 
 ```jsx example
 const OPTIONS = [
@@ -197,7 +201,7 @@ return (
 
 ## Limit the number of selected tags
 
-You can limit the number of selected tags by passing `maxTagCount={number}`.
+You can limit the number of selections by passing `maxTagCount`. Once the limit is reached, additional options cannot be selected.
 
 ```jsx example
 const OPTIONS = [
@@ -218,6 +222,29 @@ return (
 )
 ```
 
+## Props
+
+- **value** -- an array of selected values (default `[]`)
+- **options** -- an array of `{ label, value }` objects or primitives (default `[]`)
+- **onChange** -- called with the updated array of values when the selection changes
+- **onSelect** -- called with the value when an option is selected
+- **onRemove** -- called with the value when an option is removed
+- **onFocus** -- called when the dropdown opens
+- **onBlur** -- called when the dropdown closes
+- **placeholder** -- text shown when no options are selected (default `'Select'`)
+- **disabled** -- disables all interactions (default `false`)
+- **readonly** -- renders selected values as read-only text (default `false`)
+- **tagLimit** -- maximum number of visible tags; extra tags show a "+N" indicator
+- **tagLimitVariant** -- behavior when tags are limited: `'hidden'` or `'disabled'` (default `'hidden'`)
+- **maxTagCount** -- maximum number of options that can be selected
+- **TagComponent** -- a custom component for rendering tags
+- **InputComponent** -- a custom component for rendering the input area
+- **renderListItem** -- a custom renderer for dropdown items; receives `{ item, index, selected }`
+- **hasWidthCaption** -- match the dropdown width to the input width on web (default `false`)
+- **style** -- custom styles for the popover anchor wrapper
+- **inputStyle** -- custom styles for the input wrapper
+- **ref** -- a ref providing imperative `focus()` and `blur()` methods
+
 ## Sandbox
 
 <Sandbox
@@ -227,8 +254,8 @@ return (
     value: ['New York'],
     options: ['New York', 'Los Angeles', 'Tokyo'],
     onChange: value => console.info('New value is ' + JSON.stringify(value)),
-    onSelect: value => console.info('Value \"' + value + '\" is selected'),
-    onRemove: value => console.info('Value \"' + value + '\" is removed'),
+    onSelect: value => console.info('Value "' + value + '" is selected'),
+    onRemove: value => console.info('Value "' + value + '" is removed'),
   }}
   block
 />

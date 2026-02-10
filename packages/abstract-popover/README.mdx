@@ -9,13 +9,17 @@ import Span from '@startupjs-ui/span'
 
 # AbstractPopover
 
-Low-level primitive for anchoring content to an element (tooltip / popover use-cases).
+AbstractPopover is a low-level primitive for anchoring floating content to a target element. It handles positioning, animations, and optional arrows, making it the building block for tooltips, popovers, and dropdown menus.
+
+The popover is rendered through a Portal, so it always appears above other content regardless of the component tree.
 
 ```jsx
 import { AbstractPopover } from 'startupjs-ui'
 ```
 
 ## Basic example
+
+Pass `anchorRef` pointing to the target element, toggle `visible` to show or hide the popover, and use `position` and `attachment` to control where it appears relative to the anchor.
 
 ```jsx example
 const anchorRef = useRef()
@@ -63,6 +67,8 @@ return (
 
 ## Matching anchor width
 
+Set `matchAnchorWidth` to force the popover to be the same width as its anchor element. This is useful for dropdown menus and autocomplete lists.
+
 ```jsx example
 const anchorRef = useRef()
 const [visible, setVisible] = useState(false)
@@ -108,6 +114,8 @@ return (
 
 ## Custom fallback placements
 
+Use the `placements` prop to provide an ordered list of fallback positions. If the preferred placement does not fit on screen, the popover tries each fallback in order. Each placement is a string in the format `'position-attachment'` (for example, `'top-center'` or `'bottom-start'`).
+
 ```jsx example
 const anchorRef = useRef()
 const [visible, setVisible] = useState(false)
@@ -141,6 +149,25 @@ return (
   </Div>
 )
 ```
+
+## Props
+
+- **children** -- the content to display inside the popover
+- **anchorRef** -- ref to the anchor element the popover is attached to (must support `measure`)
+- **visible** -- whether the popover is shown (`false` by default)
+- **position** -- primary side of the anchor to place the popover on: `'top'`, `'bottom'`, `'left'`, or `'right'` (defaults to `'bottom'`)
+- **attachment** -- alignment along the anchor edge: `'start'`, `'center'`, or `'end'` (defaults to `'start'`)
+- **placements** -- ordered list of fallback placements in `'position-attachment'` format (for example, `'top-center'`). If the preferred placement does not fit, each fallback is tried in order
+- **arrow** -- whether to display an arrow pointing to the anchor (`false` by default)
+- **matchAnchorWidth** -- force the popover width to match the anchor width (`false` by default)
+- **durationOpen** -- open animation duration in milliseconds (defaults to `100`)
+- **durationClose** -- close animation duration in milliseconds (defaults to `50`)
+- **renderWrapper** -- function that wraps the rendered popover node, useful for adding additional layers like backdrops
+- **onRequestOpen** -- called right before the open animation starts
+- **onRequestClose** -- called right before the close animation starts
+- **onOpenComplete** -- called after the open animation finishes
+- **onCloseComplete** -- called after the close animation finishes
+- **style** -- custom styles for the popover container
 
 ## Sandbox
 

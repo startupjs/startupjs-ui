@@ -1,5 +1,6 @@
-import { type ReactNode, type RefObject } from 'react'
-import { Platform, Text, type TextStyle, type StyleProp, type TextProps } from 'react-native'
+import { type ReactNode, type RefObject, useMemo } from 'react'
+import { Platform, StyleSheet, Text, type TextStyle, type StyleProp, type TextProps } from 'react-native'
+import Animated from 'react-native-reanimated'
 import { pug, observer } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
 import './index.cssx.styl'
@@ -73,8 +74,12 @@ function Span ({
     ? { accessibilityRole: 'header', accessibilityLevel: tag.replace(/^h/, '') }
     : {}
 
+  const Component = useMemo(() => {
+    return hasAnimatedProperty(StyleSheet.flatten(style)) ? Animated.Text : Text
+  }, [style])
+
   return pug`
-    Text.root(
+    Component.root(
       ref=ref
       style=style
       styleName=[
@@ -87,4 +92,9 @@ function Span ({
       ...props
     )= children
   `
+}
+
+function hasAnimatedProperty (style: any): boolean {
+  if (!style) return false
+  return Object.keys(style).some(key => key.startsWith('animation') || key.startsWith('transition'))
 }

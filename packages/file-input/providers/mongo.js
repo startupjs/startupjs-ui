@@ -11,8 +11,9 @@ export function validateSupport () {
   }
 }
 
-export async function getFileBlob (fileId, range) {
+export async function getFileBlob (fileId, options = {}) {
   validateSupport()
+  const { range } = options
   const files = await bucket.find({ filename: fileId }).toArray()
   if (!files || files.length === 0) {
     throw new Error(ERRORS.fileNotFound)
@@ -94,7 +95,7 @@ export async function getFileBlob (fileId, range) {
   })
 }
 
-export async function getFileSize (fileId) {
+export async function getFileSize (fileId, options) {
   validateSupport()
   const files = await bucket.find({ filename: fileId }).toArray()
   if (!files || files.length === 0) {
@@ -103,7 +104,7 @@ export async function getFileSize (fileId) {
   return files[0].length
 }
 
-export async function saveFileBlob (fileId, blob) {
+export async function saveFileBlob (fileId, blob, options) {
   console.log('[MongoDB GridFS] Saving file:', {
     fileId,
     blobType: blob ? blob.constructor.name : 'undefined',
@@ -164,7 +165,7 @@ export async function saveFileBlob (fileId, blob) {
   })
 }
 
-export async function deleteFile (fileId) {
+export async function deleteFile (fileId, options) {
   validateSupport()
   const files = await bucket.find({ filename: fileId }).toArray()
   if (!files || files.length === 0) {

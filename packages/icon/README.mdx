@@ -16,13 +16,15 @@ import './index.mdx.cssx.styl'
 
 Icons are visual symbols used to represent ideas, objects, or actions. They communicate messages at a glance, afford interactivity, and draw attention to important information.
 
+The `icon` prop accepts a FontAwesome icon definition, a custom SVG component, or a registered icon name. You can apply custom `style` to control the icon's appearance (including color).
+
 ```jsx
 import { Icon } from 'startupjs-ui'
 ```
 
 ## Simple example
 
-Component uses `@fortawesome/react-native-fontawesome` library to implement icons.
+The component uses the `@fortawesome/react-native-fontawesome` library for rendering icons.
 
 ```jsx
 import { faHouseUser } from '@fortawesome/free-solid-svg-icons'
@@ -36,7 +38,7 @@ return (
 
 ## Custom Icon
 
-To use your custom icon you must provide a valid `svg` icon to `icon` property
+To use a custom icon, pass a valid SVG component to the `icon` prop.
 
 ```jsx
 import CustomIconExample from './CustomIconExample.svg'
@@ -54,7 +56,7 @@ return (
 
 ## Sizes
 
-Size can be modified using the `size` prop. Default value is `m`. Pre defined icon size values are `xs`, `s`, `m`, `l`, `xl`, `xxl`. Size can also be arbitarily increased or decreased by providing a number to `size` prop. For a custom icon, you can set a different size of width and height using styles.
+The `size` prop controls the icon dimensions. It defaults to `'m'`. Predefined size presets are `'xs'`, `'s'`, `'m'`, `'l'`, `'xl'`, and `'xxl'`. You can also pass a number for an arbitrary pixel size. For custom SVG icons, you can set different width and height values using `style`.
 
 ```jsx
 import {
@@ -92,7 +94,7 @@ return (
 
 ## Colors
 
-Color can be set by specifying the `color` in StyleSheet.
+Set the icon color by specifying `color` in the stylesheet.
 
 In `.styl` file
 ```stylus

@@ -54,6 +54,8 @@ export interface AutoSuggestProps {
   options?: AutoSuggestOption[]
   /** Current selected value */
   value?: AutoSuggestValue
+  /** Size preset @default 'm' */
+  size?: 'l' | 'm' | 's'
   /** Placeholder text @default 'Select value' */
   placeholder?: string | number
   /** Custom item renderer (item, index, highlightedIndex) */
@@ -103,6 +105,7 @@ function AutoSuggest ({
   iconStyle,
   options = [],
   value,
+  size = 'm',
   placeholder = 'Select value',
   renderItem,
   isLoading = false,
@@ -215,6 +218,7 @@ function AutoSuggest ({
       ref=inputRef
       style=captionStyle
       inputStyle=inputStyle
+      size=size
       icon=value && !disabled ? faTimes : undefined
       iconPosition='right'
       iconStyle=iconStyle
@@ -229,7 +233,7 @@ function AutoSuggest ({
       testID=testID
     )
 
-    AbstractPopover(
+    AbstractPopover.attachment(
       visible=(isShow || isLoading)
       anchorRef=inputRef
       matchAnchorWidth=matchAnchorWidth

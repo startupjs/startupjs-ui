@@ -11,13 +11,15 @@ import './index.mdx.cssx.styl'
 
 # SmartSidebar
 
-SmartSidebar is typically used for navigation. It provides a desktop-mobile friendly interface. Based on a fixed layout breakpoint, it decides to stay as a [sidebar](/docs/components/Sidebar) or to turn into an [drawer sidebar](/docs/components/DrawerSidebar). By default it not visible on the screen.
+A responsive sidebar that automatically switches between a fixed [Sidebar](/docs/components/Sidebar) on desktop and a [DrawerSidebar](/docs/components/DrawerSidebar) on mobile, based on a configurable screen-width breakpoint. By default it is not visible on the screen.
+
+Use `$open` for two-way data binding to control the open state, `renderContent` to render the sidebar content, and `children` for the main content area. You can also pass custom `style` for the root wrapper, `sidebarStyle` for the sidebar container in fixed layout, and `width` (defaults to `264`) to set the sidebar width.
 
 ```jsx
 import { SmartSidebar } from 'startupjs-ui'
 ```
 
-## Simple Example
+## Simple example
 
 ```jsx example
 const $open = $()
@@ -36,9 +38,9 @@ return (
 )
 ```
 
-## Fixed Layout Breakpoint
+## Fixed layout breakpoint
 
-The `fixedLayoutBreakpoint` property specifies the screen width breakpoint below which the [sidebar](/docs/components/Sidebar) switches to a [drawer sidebar](/docs/components/DrawerSidebar). `fixedLayoutBreakpoint` is a number type with a default value of `1024`.
+The `fixedLayoutBreakpoint` prop specifies the screen width (in pixels) below which the component switches from a fixed [Sidebar](/docs/components/Sidebar) to a [DrawerSidebar](/docs/components/DrawerSidebar). It defaults to `1024`.
 
 ```jsx example noscroll
 const $open = $()
@@ -75,7 +77,7 @@ return (
 
 ## Position
 
-The `position` property specifies the side of the window from which the sidebar will show. Possible values of `position` property are `left` (default) and `right`.
+The `position` prop specifies which side of the screen the sidebar appears on. Accepted values are `'left'` (default) and `'right'`.
 
 ```jsx example noscroll
 const $open = $()
@@ -115,7 +117,7 @@ return (
 
 ## Default visibility (desktop only)
 
-To control default visibility use `defaultOpen` property.
+Set the `defaultOpen` prop to `true` to have the sidebar open by default on desktop. It defaults to `false`.
 
 ```jsx example
 const $open = $()
@@ -149,9 +151,9 @@ return (
 )
 ```
 
-## Locked SmartSidebar
+## Disabled sidebar
 
-Specifying `disabled` property will keep the sidebar closed and it won't respond to `open` property.
+Set the `disabled` prop to `true` to keep the sidebar closed and prevent it from responding to the `open` state. It defaults to `false`.
 
 ```jsx example
 const $open = $()
@@ -187,7 +189,7 @@ return (
 
 ## Lazy rendering
 
-By default the smart sidebar content are not destroyed when it is closed. To change this behavior pass `lazy=true`.
+By default the sidebar content is not destroyed when the sidebar is closed. Set `lazy` to `true` to unmount the sidebar content when it is closed and remount it when it opens again. It defaults to `false`.
 
 ```jsx example
 const $open = $()

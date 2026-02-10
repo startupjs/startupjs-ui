@@ -4,14 +4,17 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 # PasswordInput
 
-PasswordInput provides a text field for entering a password with a button to hide the entered text.
-PasswordInput inherits the properties of the [TextInput](/docs/forms/TextInput).
+Inherits [TextInput](/docs/forms/TextInput) props.
+
+PasswordInput is a text field designed for entering passwords. It obscures the entered text by default and includes a built-in toggle button (eye icon) that lets users show or hide their password.
 
 ```jsx
 import { PasswordInput } from 'startupjs-ui'
 ```
 
 ## Simple example
+
+Use `value` and `onChangeText` to control the input. The password text is hidden by default and can be revealed by pressing the eye icon on the right side of the field.
 
 ```jsx example
 const [password, setPassword] = useState()
@@ -25,6 +28,8 @@ return (
 ```
 
 ## Disabled
+
+Set the `disabled` prop to prevent user interaction with the input.
 
 ```jsx example
 return (

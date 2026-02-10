@@ -23,8 +23,9 @@ export function validateSupport () {
   }
 }
 
-export async function getFileBlob (fileId, range) {
+export async function getFileBlob (fileId, options = {}) {
   validateSupport()
+  const { range } = options
   const blobClient = containerClient.getBlobClient(fileId)
 
   try {
@@ -101,7 +102,7 @@ export async function getFileBlob (fileId, range) {
   }
 }
 
-export async function getFileSize (fileId) {
+export async function getFileSize (fileId, options) {
   validateSupport()
   const blobClient = containerClient.getBlobClient(fileId)
 
@@ -117,7 +118,7 @@ export async function getFileSize (fileId) {
   }
 }
 
-export async function saveFileBlob (fileId, blob) {
+export async function saveFileBlob (fileId, blob, options) {
   validateSupport()
   const blobClient = containerClient.getBlockBlobClient(fileId)
 
@@ -131,7 +132,7 @@ export async function saveFileBlob (fileId, blob) {
   }
 }
 
-export async function deleteFile (fileId) {
+export async function deleteFile (fileId, options) {
   validateSupport()
   const blobClient = containerClient.getBlobClient(fileId)
 

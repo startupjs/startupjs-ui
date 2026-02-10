@@ -6,7 +6,12 @@ import Span from '@startupjs-ui/span'
 import { Sandbox } from '@startupjs-ui/docs'
 
 # AutoSuggest
-A text field with a pop-up list of options.
+
+AutoSuggest is a text input with a pop-up list of filterable options. As the user types, the options are filtered to match the input text.
+
+Use the `options` prop to provide the list of options (strings, numbers, or objects with `value` and `label` keys), `value` for the currently selected value, and `onChange` to handle selection. The component also supports `placeholder` (defaults to `'Select value'`), `size` (`'s'`, `'m'`, `'l'`, defaults to `'m'`), `disabled`, `readonly`, and `isLoading` to show a loader while fetching options.
+
+For custom styling, use `style` for the suggestion list container, `captionStyle` for the input wrapper, `inputStyle` for the input field, `iconStyle` for the clear icon, and `inputIcon` for a custom input icon. Use `testID` for testing.
 
 ```jsx
 import { AutoSuggest } from 'startupjs-ui'
@@ -14,9 +19,10 @@ import { AutoSuggest } from 'startupjs-ui'
 
 ## Initialization
 
-Before use you need to configure [Portal](/docs/components/Portal)
+Before using AutoSuggest, you need to configure [Portal](/docs/components/Portal).
 
 ## Simple example
+
 ```jsx example
 const [value, setValue] = useState()
 
@@ -36,11 +42,14 @@ return (
 ```
 
 ## Props
-- options: array of objects for options, each option has a value and a label
-- value: active value
-- maxHeight: maximum height of the popup list
-- placeholder: the title of the field
-- onChange: callback function, called after selecting a value, takes the selected value as the first parameter
+
+- `options` -- an array of options, each being a string, number, or object with `value` and `label` keys.
+- `value` -- the currently selected value.
+- `placeholder` -- placeholder text displayed when no value is selected.
+- `onChange` -- callback called when the user selects a value, receiving the selected value as its argument.
+- `onChangeText` -- callback called when the user types in the input, receiving the current text.
+- `onDismiss` -- callback called when the suggestion list closes.
+- `onScrollEnd` -- callback called when the list is scrolled to the end (useful for loading more options).
 
 ```jsx example
 const [value, setValue] = useState()
@@ -67,7 +76,8 @@ return (
 ```
 
 ## Customization
-- renderItem: a function that is called when rendering each element of the array. Gets 3 arguments - the current element (item), its index, and the selected index.
+
+Use the `renderItem` prop to customize how each option is rendered. The function receives three arguments: the current item, its index, and the currently highlighted index.
 
 ```jsx example
 const [value, setValue] = useState()
@@ -113,13 +123,6 @@ return (
   />
 )
 ```
-
-## Also
-- style: responsible for styled hidden content
-- captionStyle: responsible for heading styles (input)
-- onDismiss: callback, called when the list is closed
-- onChangeText: callback, called when entering text, accepts 1 argument text
-- onScrollEnd: callback, called at the end of the scroll
 
 ## Sandbox
 

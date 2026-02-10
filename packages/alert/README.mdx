@@ -8,13 +8,18 @@ import { faFire } from '@fortawesome/free-solid-svg-icons'
 
 # Alert
 
-An alert displays a short, important message in a way that attracts the user's attention without interrupting the user's task.
+An alert displays a short, important message that attracts the user's attention without interrupting their current task.
 
 ```jsx
 import { Alert } from 'startupjs-ui'
 ```
 
 ## Simple example
+
+You can pass custom `style` to the root element and provide content as `children` (the `label` prop is deprecated -- use `children` instead).
+
+By default, the alert uses the `info` variant and displays a matching icon automatically.
+
 ```jsx example
 return (
   <Alert>
@@ -25,7 +30,7 @@ return (
 
 ## Variants
 
-The alert offers four severity levels that set a distinctive icon and color: `success`, `info`, `warning`, `error`. You can specify it by passing `variant` property.
+The alert offers four severity levels, each with its own icon and color: `info`, `success`, `warning`, and `error`. Use the `variant` prop to set the severity level.
 
 ```jsx example
 return (
@@ -35,11 +40,11 @@ return (
     </Alert>
     <Br />
     <Alert variant='success'>
-      This is an success alert — check it out!
+      This is a success alert — check it out!
     </Alert>
     <Br />
     <Alert variant='warning'>
-      This is an warning alert — check it out!
+      This is a warning alert — check it out!
     </Alert>
     <Br />
     <Alert variant='error'>
@@ -51,7 +56,7 @@ return (
 
 ## Title
 
-You can use the `title` property to display the title above the content.
+Use the `title` prop to display a bold heading above the alert content.
 
 ```jsx example
 return (
@@ -67,14 +72,14 @@ return (
       variant='success'
       title='Success'
     >
-      This is an success alert — check it out!
+      This is a success alert — check it out!
     </Alert>
     <Br />
     <Alert
       variant='warning'
       title='Warning'
     >
-      This is an warning alert — check it out!
+      This is a warning alert — check it out!
     </Alert>
     <Br />
     <Alert
@@ -87,12 +92,11 @@ return (
 )
 ```
 
-
 ## Icons
-The `icon` property allows you to change the icon at the beginning of the component.
-The `variant` prop defines the corresponding color for the icon.
 
-Setting the `icon` property to `false` will completely remove the icon.
+Use the `icon` prop to replace the default icon with a custom one. The icon color is determined by the `variant`.
+
+Set `icon` to `false` to hide the icon entirely.
 
 ```jsx example
 return (
@@ -116,7 +120,7 @@ return (
 
 ## Actions
 
-An alert can have an action (`onClose` prop). It is rendered after the message, at the end of the alert.
+An alert can include a close button by providing the `onClose` prop. The close button appears at the end of the alert.
 
 ```jsx example
 const [showFirstAlert, setShowFirstAlert] = useState(true)
@@ -141,7 +145,7 @@ return (
 )
 ```
 
-The `renderActions` prop can be used to provide an alternative action.
+For a fully custom action area, use the `renderActions` prop to provide your own component.
 
 ```jsx example
 const [showSecondAlert, setShowSecondAlert] = useState(true)

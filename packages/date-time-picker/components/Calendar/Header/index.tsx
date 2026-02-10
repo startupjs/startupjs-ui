@@ -108,7 +108,7 @@ const Years = observer(function YearsComponent ({
   const years = useMemo(() => {
     return new Array(yearsDiff + 1).fill(minYear).map((year, index) => {
       return year + index
-    })
+    }).reverse()
   }, [yearsDiff, minYear])
 
   const getItemLayout = useCallback((data: any, index: number) => {

@@ -3,6 +3,78 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.16](https://github.com/startupjs/startupjs-ui/compare/v0.1.15...v0.1.16) (2026-02-10)
+
+**Note:** Version bump only for package docs
+
+
+
+
+
+## [0.1.13](https://github.com/startupjs/startupjs-ui/compare/v0.1.12...v0.1.13) (2026-02-03)
+
+
+### Bug Fixes
+
+* **docs:** remove sidebar border on tablet+ ([07e9b50](https://github.com/startupjs/startupjs-ui/commit/07e9b508330dbe550d1bc7ed1c5d98bf55e3658b))
+
+
+
+
+
+## [0.1.12](https://github.com/startupjs/startupjs-ui/compare/v0.1.11...v0.1.12) (2026-01-21)
+
+**Note:** Version bump only for package docs
+
+
+
+
+
+## [0.1.11](https://github.com/startupjs/startupjs-ui/compare/v0.1.10...v0.1.11) (2026-01-20)
+
+
+### Bug Fixes
+
+* **docs:** fix mobile and implement mobile layout ([0f8beff](https://github.com/startupjs/startupjs-ui/commit/0f8beff32210f5666ce7f65583291b503f7c7b86))
+
+
+### Features
+
+* **docs:** animate hover of the github link icon ([c6b9be1](https://github.com/startupjs/startupjs-ui/commit/c6b9be1738cffb54657b309b08121c1c82067961))
+* **docs:** animate sidebar and links ([9bead57](https://github.com/startupjs/startupjs-ui/commit/9bead57cf3db990a175d2e416075066f4bb0cb22))
+* **docs:** change links font-family to monospace ([cf06ef0](https://github.com/startupjs/startupjs-ui/commit/cf06ef0fc4a78719d1e59688c9ff82cb4e7a1b8f))
+
+
+
+
+
+## [0.1.10](https://github.com/startupjs/startupjs-ui/compare/v0.1.9...v0.1.10) (2026-01-18)
+
+
+### Features
+
+* **div:** add automatic Reanimated support for animations and transitions ([#3](https://github.com/startupjs/startupjs-ui/issues/3)) ([043c39a](https://github.com/startupjs/startupjs-ui/commit/043c39aafd332276082bcbe3233ad0355b85e38a))
+
+
+
+
+
+## [0.1.9](https://github.com/startupjs/startupjs-ui/compare/v0.1.8...v0.1.9) (2026-01-16)
+
+**Note:** Version bump only for package docs
+
+
+
+
+
+## [0.1.8](https://github.com/startupjs/startupjs-ui/compare/v0.1.7...v0.1.8) (2026-01-08)
+
+**Note:** Version bump only for package docs
+
+
+
+
+
 ## [0.1.7](https://github.com/startupjs/startupjs-ui/compare/v0.1.6...v0.1.7) (2026-01-06)
 
 

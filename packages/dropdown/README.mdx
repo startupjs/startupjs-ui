@@ -11,7 +11,13 @@ import {
 
 # Dropdown
 
-Pop-up menus. Adaptable depending on the extension.
+Dropdown displays a pop-up menu of selectable items. On larger screens it renders as a popover; on small screens it adapts by showing a bottom drawer (controlled by the `hasDrawer` prop, which defaults to `true`).
+
+Use the `value` prop for the currently selected value and the `onChange` callback to handle selection. Build the menu content with `Dropdown.Caption` and `Dropdown.Item` sub-components passed as `children`.
+
+The component also accepts `style` for the dropdown content container, `captionStyle` for the caption wrapper, `activeItemStyle` for the active item, `position` (defaults to `'bottom'`) and `attachment` (defaults to `'start'`) to control popover placement, `placements` for fallback placement order, `disabled` to prevent opening, and `ref` for programmatic control via `open()` and `close()` methods. The `onDismiss` callback fires when the dropdown is closed via the overlay or cancel button.
+
+For the drawer variant on small screens, you can customize behavior with `drawerVariant` (`'list'`, `'buttons'`, or `'pure'`, defaults to `'buttons'`), `drawerListTitle` for the list variant header, `drawerCancelLabel` for the cancel button text (defaults to `'Cancel'`), and `showDrawerResponder` to display a swipe responder zone.
 
 ```jsx
 import { Dropdown } from 'startupjs-ui'
@@ -33,6 +39,8 @@ return (
 ```
 
 ## Custom caption
+
+You can provide a custom element as a child of `Dropdown.Caption` to replace the default caption appearance.
 
 ```jsx example
 const [sort, setSort] = useState('')
@@ -61,6 +69,8 @@ return (
 ```
 
 ## Icons in items
+
+Each `Dropdown.Item` can display an icon by passing the `icon` prop.
 
 ```jsx example
 const [value, setValue] = useState('')

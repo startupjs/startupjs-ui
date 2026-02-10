@@ -11,6 +11,7 @@
     "start": "yarn docs",
     "build": "cd docs && yarn build",
     "build-static": "cd docs && yarn build-static",
+    "postinstall": "npx startupjs postinstall",
     "start-production": "cd docs && yarn start-production",
     "start-production-static": "cd docs && yarn start-production-static",
     "docs": "cd docs && yarn start",

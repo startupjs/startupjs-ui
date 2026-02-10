@@ -1,3 +1,4 @@
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { StartupjsProvider } from 'startupjs'
 import Portal from '@startupjs-ui/portal'
 import { DialogsProvider } from '@startupjs-ui/dialogs'
@@ -6,17 +7,21 @@ import { Stack } from 'expo-router'
 
 export default function RootLayout () {
   return (
-    <StartupjsProvider>
-      <Portal.Provider>
-        <ToastProvider />
-        <Stack
-          screenOptions={{
-            contentStyle: { backgroundColor: 'white' },
-            headerShown: false
-          }}
-        />
-      </Portal.Provider>
-      <DialogsProvider />
-    </StartupjsProvider>
+    <SafeAreaProvider>
+      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+        <StartupjsProvider>
+          <Portal.Provider>
+            <ToastProvider />
+            <Stack
+              screenOptions={{
+                contentStyle: { backgroundColor: 'white' },
+                headerShown: false
+              }}
+            />
+          </Portal.Provider>
+          <DialogsProvider />
+        </StartupjsProvider>
+      </SafeAreaView>
+    </SafeAreaProvider>
   )
 }

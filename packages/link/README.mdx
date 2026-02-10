@@ -8,7 +8,9 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 # Link
 
-Link allows to navigate of the app and customize anchors.
+Link provides navigation within the app and to external URLs. Use the `to` prop (or its alias `href`) to specify the destination path or URL.
+
+The component also accepts a `style` prop for custom styles, a `theme` prop for theme-based styling, `push` to use router push instead of navigate, and `replace` to replace the current history entry instead of adding a new one.
 
 ```jsx
 import { Link } from 'startupjs-ui'
@@ -26,7 +28,7 @@ return (
 
 ## Different display
 
-There are two options `inline` and `block` of the `display` property. It is detected automatically based on the type of `children`, if not specified. When type of `children` is string it `inline` and `block` otherwise. Depending on the `display` property, component has a different appearance.
+The `display` prop has two options: `'inline'` and `'block'`. If not specified, it is auto-detected based on the type of `children` -- string children render as `'inline'`, and everything else renders as `'block'`. The two display modes have different visual appearances.
 
 ```jsx example
 return (
@@ -44,7 +46,7 @@ return (
 
 ## Colors
 
-To change link color pass the property `color` (works only when `display` value is `inline`).
+To change the link color, pass the `color` prop. This only applies when `display` is `'inline'`.
 
 ```jsx example
 return (
@@ -59,7 +61,7 @@ return (
 
 ## Bold link
 
-To make link text bold pass the property `bold` to component.
+To make the link text bold, pass the `bold` prop.
 
 ```jsx example
 return (
@@ -71,7 +73,7 @@ return (
 
 ## Italic link
 
-To make link text italic pass the property `italic` to component.
+To make the link text italic, pass the `italic` prop.
 
 ```jsx example
 return (
@@ -83,7 +85,7 @@ return (
 
 ## Hover style
 
-You can change hover style like in [Div component](/docs/Div) by passing `variant='highlight'` (works only when `display` value is `block`).
+You can change the hover style like in the [Div component](/docs/Div) by passing `variant='highlight'`. This only applies when `display` is `'block'`.
 
 ```jsx example
 const style = {
@@ -105,7 +107,7 @@ return (
 
 ## Button as link
 
-Sometimes you want to make button as link. The example below illustrates how to do this correctly.
+To use a button as a link, wrap a Button component inside Link. The link will automatically pass its props through to the button.
 
 ```jsx example
 return (
@@ -119,7 +121,7 @@ return (
 
 ## Actions
 
-By passing `onPress` handler to component you can run some logic before redirecting.
+By passing an `onPress` handler, you can run custom logic before the navigation occurs.
 
 ```jsx example
 function onPress (event) {

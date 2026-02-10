@@ -9,10 +9,18 @@ import {
   type ViewProps,
   type AccessibilityRole
 } from 'react-native'
+import Animated from 'react-native-reanimated'
 import { pug, observer, u, useDidUpdate } from 'startupjs'
 import { colorToRGBA, getCssVariable, themed } from '@startupjs-ui/core'
 import { useDecorateTooltipProps } from './useTooltip'
 import STYLES from './index.cssx.styl'
+
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
+
+function hasAnimatedProperty (style: any): boolean {
+  if (!style) return false
+  return Object.keys(style).some(key => key.startsWith('animation') || key.startsWith('transition'))
+}
 
 const DEPRECATED_PUSHED_VALUES = ['xs', 'xl', 'xxl']
 const PRESSABLE_PROPS = ['onPress', 'onLongPress', 'onPressIn', 'onPressOut']
@@ -166,7 +174,10 @@ function Div ({
 
   if (!accessible) accessibilityRole = undefined
 
-  const Component = isPressable ? Pressable : View
+  const isAnimated = hasAnimatedProperty(style) || hasAnimatedProperty(pressableStyle)
+  const Component = isPressable
+    ? (isAnimated ? AnimatedPressable : Pressable)
+    : (isAnimated ? Animated.View : View)
   const testID = props.testID ?? props['data-testid']
   const divElement = pug`
     Component.root(

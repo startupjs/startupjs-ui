@@ -10,7 +10,9 @@ import User, { _PropsJsonSchema as UserPropsJsonSchema } from './index'
 
 Inherits [Div props](/docs/components/Div).
 
-User is used to display information about users. It uses [Avatar](/docs/components/Avatar) component to display user avatar.
+Displays user information alongside an avatar. It uses the [Avatar](/docs/components/Avatar) component internally to render the avatar image. Pass `avatarUrl` for the image, `name` for the display name, and `description` for secondary text below the name.
+
+The component also supports style overrides via `style`, `nameStyle`, and `descriptionStyle`. Use `descriptionNumberOfLines` to limit the number of visible description lines.
 
 ```jsx
 import { User } from 'startupjs-ui'
@@ -26,7 +28,7 @@ return (
 
 ## Sizes
 
-Size is `m` by default. It can be changed by changing `size` prop. Possible values of property can be found in the `Sandbox` section at the bottom of the page.
+The `size` prop controls the overall dimensions of the avatar and text. Available sizes are `'s'`, `'m'` (default), and `'l'`. See the Sandbox section at the bottom of the page for all available values.
 
 ```jsx example
 return (
@@ -56,7 +58,7 @@ return (
 
 ## User status
 
-To display user online status on avatar you can pass string `online` or `away` to property `status`.
+Use the `status` prop to display a status indicator on the avatar. Built-in values are `'online'` and `'away'`. You can also pass a custom string and provide matching components via `statusComponents`.
 
 ```jsx example
 return (
@@ -78,9 +80,9 @@ return (
 )
 ```
 
-## User avatar position
+## Avatar position
 
-Avatar position can be modified by passing string `left` (default) or `right` to `avatarPosition` property.
+The `avatarPosition` prop controls which side the avatar appears on. Accepted values are `'left'` (default) and `'right'`.
 
 ```jsx example
 return (
@@ -95,7 +97,7 @@ return (
 
 ## Actions
 
-Passed handler to `onPress` property will be called when the user taps the component.
+Use the `onPress` prop to make the component interactive. The handler is called when the user taps anywhere on the component.
 
 ```jsx example
 const [clicked, setClicked] = useState(0)
@@ -117,7 +119,7 @@ return (
 
 ## Custom status icon
 
-You can provide custom components for the status icon using `statusComponents` prop.
+You can provide custom components for status icons using the `statusComponents` prop. Each key in the object maps a status name to a component that renders the corresponding icon.
 
 ```jsx example
 const AbsentStatus = useCallback(({ style }) => (

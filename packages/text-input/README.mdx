@@ -8,7 +8,9 @@ import './index.mdx.cssx.styl'
 
 # TextInput
 
-TextInput lets user enter or edit text.
+TextInput lets the user enter or edit text. Use the `value` prop for the current text and the `onChangeText` callback to handle changes.
+
+The component also accepts `style` for the wrapper, `inputStyle` for the input element, `placeholder` for placeholder text, `ref` for imperative access, `testID` for testing, and `onFocus`/`onBlur` for focus events.
 
 ```jsx
 import { TextInput } from 'startupjs-ui'
@@ -29,6 +31,8 @@ return (
 
 ## Disabled
 
+When the `disabled` prop is set, the input becomes non-interactive.
+
 ```jsx example
 return (
   <TextInput
@@ -39,6 +43,8 @@ return (
 ```
 
 ## Readonly
+
+When the `readonly` prop is set, the value is displayed as plain text.
 
 ```jsx example
 return (
@@ -51,7 +57,7 @@ return (
 
 ## Sizes
 
-Size can be modified using the `size` prop. Default size is `m`.
+The input size can be changed using the `size` prop. The default size is `'m'`.
 
 ```jsx example
 const [valueL, setValueL] = useState()
@@ -82,7 +88,7 @@ return (
 
 ## Icons
 
-Icon can be added using `icon` and `secondaryIcon` properties. Position of icon can be changed by passing `iconPosition` to component (`left` by default). The `secondaryIcon` uses opposite position of `iconPosition`. To handle clicks on the icon, use the property `onIconPress` and `onSecondaryIconPress`. To change icon color use the ʻiconStyleName` and `secondaryIconStyleName` properties.
+An icon can be added using the `icon` prop, and a secondary icon using `secondaryIcon`. The primary icon's position is controlled by `iconPosition` (`'left'` by default), and the secondary icon is placed on the opposite side. Use `onIconPress` and `onSecondaryIconPress` to handle clicks on the icons. To customize icon styles, use the `iconStyle` and `secondaryIconStyle` props.
 
 In `.styl` file
 ```stylus
@@ -117,7 +123,7 @@ return (
 
 ## Number of lines
 
-Pass `numberOfLines={number}` to set the number of lines.
+Pass `numberOfLines` to set the number of visible lines. This makes the input multiline.
 
 ```jsx example
 const [value, setValue] = useState()
@@ -134,7 +140,7 @@ return (
 
 ## Dynamic number of lines
 
-Pass `resize=true` to dynamically change number of lines according to content.
+Pass the `resize` prop to dynamically adjust the number of lines based on the content.
 
 ```jsx example
 const [value, setValue] = useState()

@@ -21,11 +21,11 @@ import './index.mdx.cssx.styl'
 
 # Draggable
 
-`Draggable` provides simple building blocks for drag & drop on React Native / RN Web:
+`Draggable` provides simple building blocks for drag and drop on React Native and React Native Web:
 
-- `DragDropProvider` stores drag/drop state and exposes it via context
-- `Droppable` marks a drop target and tracks the order of its children
-- `Draggable` handles gestures and renders the dragged item into a `Portal`
+- **DragDropProvider** -- stores drag/drop state and exposes it via context
+- **Droppable** -- marks a drop target and tracks the order of its children
+- **Draggable** -- handles gestures and renders the dragged item into a Portal
 
 ```jsx
 import { DragDropProvider, Droppable, Draggable } from 'startupjs-ui'
@@ -34,9 +34,37 @@ import { DragDropProvider, Droppable, Draggable } from 'startupjs-ui'
 ## How it works
 
 1. Wrap the area with `DragDropProvider`.
-2. Inside it render one or more `Droppable`s with unique `dropId`.
-3. Render `Draggable`s inside each `Droppable`, each with a unique `dragId`.
-4. Update your own data in `onDragEnd` using `{ dragId, dropId, dropHoverId, hoverIndex }`.
+2. Inside it, render one or more `Droppable` containers, each with a unique `dropId`.
+3. Render `Draggable` items inside each `Droppable`, each with a unique `dragId`.
+4. Update your data in the `onDragEnd` callback using `{ dragId, dropId, dropHoverId, hoverIndex }`.
+
+## Props
+
+### DragDropProvider
+
+- **children** -- the content to render inside the provider
+
+### Droppable
+
+- **dropId** (required) -- a unique identifier for this drop target
+- **type** -- an optional type string for filtering which draggables can be dropped here
+- **style** -- custom styles for the droppable container
+- **onHover** -- called when an active drag enters this droppable area
+- **onLeave** -- called when an active drag leaves this droppable area
+
+### Draggable
+
+- **dragId** (required) -- a unique identifier for this draggable item
+- **type** -- an optional type string for filtering compatible drop targets
+- **style** -- custom styles for the draggable item
+- **onDragBegin** -- called when the drag gesture starts; receives `{ dragId, dropId, dropHoverId, hoverIndex }`
+- **onDragEnd** -- called when the drag gesture ends; receives `{ dragId, dropId, dropHoverId, hoverIndex }`
+
+The callback options contain:
+- `dragId` -- the id of the dragged item
+- `dropId` -- the id of the droppable the item originated from
+- `dropHoverId` -- the id of the droppable the item is currently hovering over
+- `hoverIndex` -- the index position within the hovered droppable
 
 ## Simple example (reorder in a single list)
 

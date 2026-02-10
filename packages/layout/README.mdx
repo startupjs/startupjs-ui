@@ -7,12 +7,11 @@ import './index.mdx.cssx.styl'
 
 # Layout
 
-`Layout` serves as the root element of the application. It purpose is to render content within the safe area boundaries of a device. Also it displays a [StatusBar](https://reactnative.dev/docs/statusbar) for `android` & `ios` native apps.
+Layout serves as the root element of your application. Its purpose is to render content within the safe area boundaries of a device. It also displays a [StatusBar](https://reactnative.dev/docs/statusbar) on Android and iOS native apps.
 
 ```jsx
 import { Layout } from 'startupjs-ui'
 ```
-
 
 ## Simple example
 
@@ -28,6 +27,11 @@ return (
   </Layout>
 )
 ```
+
+## Props
+
+- **style** -- custom styles applied to the root safe area view
+- **children** -- the content rendered inside the layout
 
 ## Sandbox
 

@@ -7,14 +7,15 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 # Carousel
 
+A horizontally (or vertically) scrollable container for cycling through a series of slides. Supports swipe gestures, navigation arrows, dot indicators, infinite scrolling, auto-scroll, and responsive sizing. Pass slides as `children` and customize behavior with props like `isResponsive`, `isEndless`, `isLoop`, and more. You can also provide a `ref` to access navigation helpers (`toBack`, `toNext`, `toIndex`) and the `activeChild`. The `duration` prop (defaults to `300`ms) controls the animation speed, and `onChange` fires whenever the active slide changes.
+
 ```js
 import { Carousel } from 'startupjs-ui'
 ```
 
 ## Simple example
 
-All you need to use is to transfer children in Carousel
-Such an example of a carousel, used on instagram or vk for stories, children have no clear boundaries, such a carousel should be adaptive for all extensions and devices
+Pass child elements directly to the Carousel. Each child defines its own width, and the carousel scrolls horizontally by default. This works well for free-form layouts like story thumbnails. Custom `style` can be applied to the outer wrapper.
 
 ```jsx example noscroll
 const carouselStyle = { marginLeft: 4, marginRight: 4 }
@@ -44,7 +45,7 @@ return (
 )
 ```
 
-You can also set different widths for children, the component knows how to handle this case
+Children can also have different widths -- the component handles mixed sizes correctly.
 
 ```jsx example noscroll
 const carouselStyle = { marginLeft: 4, marginRight: 4 }
@@ -82,11 +83,7 @@ return (
 
 ## Adaptability
 
-If you need clear boundaries
-There is a property for this - isResponsive (by default - false)
-In conjunction with this property, each children needs to minWidth and maxWidth
-The component itself will calculate how many blocks need to be displayed for a specific resolution
-For example, when minWidth 100 and maxWidth 500, on the desktop extension there will be 2 blocks, on mobile 1
+Set `isResponsive` to `true` (defaults to `false`) to have the carousel automatically calculate how many slides fit within the available space. Each child must specify `minWidth` and `maxWidth` in its style so the component can determine the optimal size. For example, with `minWidth: 100` and `maxWidth: 500`, a desktop screen might display 2 slides at once, while a mobile screen shows only 1.
 
 ```jsx example noscroll
 const carouselStyle = { marginLeft: 4, marginRight: 4 }
@@ -117,7 +114,7 @@ return (
 )
 ```
 
-To use 1 visible block, children minWidth to be 100%
+To show only one slide at a time, set the child's `minWidth` to `'100%'`.
 
 ```jsx example noscroll
 const carouselStyle = { marginLeft: 4, marginRight: 4 }
@@ -149,8 +146,7 @@ return (
 
 ## Infinite scrolling
 
-Set by isEndless property (default is false)
-Without isResponsive property, infinite scrolling works only on arrow clicks
+Set `isEndless` to `true` (defaults to `false`) to enable infinite scrolling. Without `isResponsive`, infinite scrolling only works via arrow navigation. When combined with `isResponsive`, it also works through swipe gestures.
 
 ```jsx example noscroll
 const carouselStyle = { marginLeft: 4, marginRight: 4 }
@@ -187,7 +183,7 @@ return (
 )
 ```
 
-With isResponsive property, works also through swipe
+With both `isResponsive` and `isEndless` enabled, swipe-based infinite scrolling works as well.
 
 ```jsx example noscroll
 const carouselStyle = { marginLeft: 4, marginRight: 4 }
@@ -225,8 +221,7 @@ return (
 
 ## Swipe
 
-The ability to scroll with the mouse or finger is set by isSwipe
-The default is true, and you can always turn it off:
+The `isSwipe` prop controls whether users can scroll the carousel by dragging with a mouse or finger. It defaults to `true`. Set it to `false` to disable swipe gestures entirely.
 
 ```jsx example noscroll
 const carouselStyle = { marginLeft: 4, marginRight: 4 }
@@ -253,8 +248,7 @@ return (
 
 ## Display arrows and dots
 
-Set by properties hasArrows (default is true) and hasDots (default is false)
-Without isResponsive - hasDots always false
+Use `hasArrows` (defaults to `true`) and `hasDots` (defaults to `false`) to control the visibility of navigation arrows and dot indicators. Note that dots only appear when `isResponsive` is also enabled.
 
 ```jsx example noscroll
 const carouselStyle = { marginLeft: 4, marginRight: 4 }
@@ -286,7 +280,7 @@ return (
 
 ## Auto scroll
 
-Set by isLoop property (default is false)
+Set `isLoop` to `true` (defaults to `false`) to automatically advance slides on a timer. This is typically combined with `isEndless` and `isResponsive` for a seamless looping slideshow.
 
 ```jsx example noscroll
 const carouselStyle = { marginLeft: 4, marginRight: 4 }
@@ -319,7 +313,7 @@ return (
 
 ## Start value
 
-Set by startIndex (Number) property
+Use the `startIndex` prop to set the initially visible slide (defaults to `0`).
 
 ```jsx example noscroll
 const carouselStyle = { marginLeft: 4, marginRight: 4 }
@@ -357,7 +351,7 @@ return (
 
 ## Styling arrows
 
-Set with arrowBackStyle and arrowNextStyle
+Use `arrowBackStyle` and `arrowNextStyle` to customize the appearance of the navigation arrows.
 
 ```jsx example noscroll
 const carouselStyle = { width: '80%', alignSelf: 'center' }
@@ -404,7 +398,7 @@ return (
 )
 ```
 
-If you need full customization of arrows or points, can be transferred ref, it will contain functions to switch: toBack, toNext, toIndex
+For full control over arrows and dots, pass a `ref` to the Carousel. The ref exposes navigation methods: `toBack()`, `toNext()`, and `toIndex(index)`. Use the `onChange` callback to track the currently active slide index.
 
 ```jsx example noscroll
 const ref = useRef()
@@ -490,6 +484,8 @@ return (
 ```
 
 ## Vertical mode
+
+Set `variant` to `'vertical'` (defaults to `'horizontal'`) to scroll slides vertically instead of horizontally.
 
 ```jsx example
 const carouselStyle = { marginLeft: 4, marginRight: 4 }

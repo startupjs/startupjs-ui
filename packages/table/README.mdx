@@ -17,7 +17,9 @@ import Span from '@startupjs-ui/span'
 
 # Table
 
-The Table component arranges data in rows and columns. Use Thead for headers, Tbody for rows, and Tr/Th/Td for cells. Section and cell components accept Div props for layout and interaction.
+The Table component arranges data in rows and columns. Use `Thead` for the header section, `Tbody` for the body, `Tr` for rows, `Th` for header cells, and `Td` for data cells.
+
+The `Thead`, `Tbody`, `Tr`, `Th`, and `Td` components extend `Div` props, so they support layout and interaction features like `onPress`, `hoverStyle`, and `activeStyle`. The `Thead` component has a `bordered` prop (defaults to `true`) that adds a bottom border. Both `Th` and `Td` support an `ellipsis` prop that collapses text to a single line with an ellipsis -- tap the cell to toggle the full text.
 
 ```jsx
 import { Table, Thead, Tbody, Tr, Th, Td } from 'startupjs-ui'
@@ -61,6 +63,8 @@ return (
 ```
 
 ## Styling
+
+Since `Tr`, `Th`, and `Td` extend `Div` props, you can apply custom hover and active styles directly. The example below demonstrates hover effects on header cells and body rows.
 
 ```jsx example
 const tableStyle = {

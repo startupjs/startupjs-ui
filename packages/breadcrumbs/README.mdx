@@ -5,13 +5,16 @@ import { faAnchor, faBook, faGift, faHome, faRocket } from '@fortawesome/free-so
 import { Sandbox } from '@startupjs-ui/docs'
 
 # Breadcrumbs
-Breadcrumbs indicate the current page’s location within a navigational hierarchy and allow users to navigate through the hierarchy.
+
+Breadcrumbs show the current page's location within a navigational hierarchy and let users navigate back through parent pages.
 
 ```jsx
 import { Breadcrumbs } from 'startupjs-ui'
 ```
 
 ## Simple example
+
+Pass an array of route objects to the `routes` prop. Each route has a `to` path and a `name` label. The last route in the array is displayed as the active (current) page and is not clickable.
 
 ```jsx example
 return (
@@ -38,9 +41,9 @@ return (
 )
 ```
 
-## Custom Separator
+## Custom separator
 
-Separator is `/` by default. It can be changed by passing string to `separator` prop.
+The separator between routes is `/` by default. You can change it by passing a string or a custom React node to the `separator` prop.
 
 ```jsx example
 return (
@@ -70,7 +73,7 @@ return (
 
 ## Icons
 
-Each route object accepts its own icon in `icon` property. Position of icon can be changed by passing `iconPosition` to component (`left` by default).
+Each route object accepts an optional `icon` prop. To change the icon's position relative to the label, use the `iconPosition` prop on the Breadcrumbs component (`left` by default).
 
 ```jsx example
 return (
@@ -104,7 +107,7 @@ return (
 
 ## Sizes
 
-Size is `m` by default. It can be changed by changing `size` prop. Possible values of property can be found in the `Sandbox` section at the bottom of the page.
+The `size` prop controls the dimensions of the text and icons. The default value is `m`. Available sizes are `s`, `m`, and `l`. See all available values in the Sandbox section at the bottom of the page.
 
 ```jsx example
 return (
@@ -155,6 +158,14 @@ return (
   </Div>
 )
 ```
+
+## Navigation behavior
+
+By default, clicking a breadcrumb pushes a new entry onto the browser history stack. Set the `replace` prop to `true` to replace the current history entry instead, which prevents the user from navigating back to the replaced page.
+
+## Custom styles
+
+Use the `style` prop to apply custom styles to the root container element.
 
 ## Sandbox
 

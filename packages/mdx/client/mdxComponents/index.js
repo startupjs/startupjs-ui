@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { Image, ScrollView, Platform } from 'react-native'
-import Clipboard from '@react-native-clipboard/clipboard'
+import { Image, ScrollView, Platform, Text } from 'react-native'
 import { pug, observer, $, BASE_URL } from 'startupjs'
 import Alert from '@startupjs-ui/alert'
 import Div from '@startupjs-ui/div'
@@ -11,6 +10,7 @@ import Link from '@startupjs-ui/link'
 import Icon from '@startupjs-ui/icon'
 import { Table, Tbody, Td, Th, Thead, Tr } from '@startupjs-ui/table'
 import Collapse from '@startupjs-ui/collapse'
+import { setStringAsync } from 'expo-clipboard'
 // import { Anchor, scrollTo } from '@startupjs/scrollable-anchors'
 // import { faLink } from '@fortawesome/free-solid-svg-icons/faLink'
 import { faCode } from '@fortawesome/free-solid-svg-icons/faCode'
@@ -112,10 +112,10 @@ export default {
     `
   },
   strong: ({ children }) => pug`
-    P(bold)= children
+    Text(style={ fontWeight: 'bold' })= children
   `,
   em: ({ children }) => pug`
-    P(italic)= children
+    Text(style={ fontStyle: 'italic' })= children
   `,
   hr: ({ children }) => pug`
     Divider(size='l')
@@ -277,8 +277,8 @@ export default {
     const [open, setOpen] = useState(false)
     const $copyText = $('Copy code')
 
-    function copyHandler () {
-      Clipboard.setString(children)
+    async function copyHandler () {
+      await setStringAsync(children)
       $copyText.set('Copied')
     }
 

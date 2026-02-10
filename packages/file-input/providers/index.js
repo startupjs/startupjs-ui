@@ -1,19 +1,19 @@
 import { mongo, sqlite } from 'startupjs/server'
 
-export async function getFileBlob (storageType, fileId, range) {
-  return (await getStorageProvider(storageType)).getFileBlob(fileId, range)
+export async function getFileBlob (storageType, fileId, options) {
+  return (await getStorageProvider(storageType)).getFileBlob(fileId, options)
 }
 
-export async function getFileSize (storageType, fileId) {
-  return (await getStorageProvider(storageType)).getFileSize(fileId)
+export async function getFileSize (storageType, fileId, options) {
+  return (await getStorageProvider(storageType)).getFileSize(fileId, options)
 }
 
-export async function saveFileBlob (storageType, fileId, blob) {
-  return (await getStorageProvider(storageType)).saveFileBlob(fileId, blob)
+export async function saveFileBlob (storageType, fileId, blob, options) {
+  return (await getStorageProvider(storageType)).saveFileBlob(fileId, blob, options)
 }
 
-export async function deleteFile (storageType, fileId) {
-  return (await getStorageProvider(storageType)).deleteFile(fileId)
+export async function deleteFile (storageType, fileId, options) {
+  return (await getStorageProvider(storageType)).deleteFile(fileId, options)
 }
 
 export async function getDefaultStorageType () {
@@ -37,6 +37,8 @@ async function getStorageProvider (storageType) {
     theModule = await import('./mongo.js')
   } else if (storageType === 'azureblob') {
     theModule = await import('./azureblob.js')
+  } else if (storageType === 's3') {
+    theModule = await import('./awsS3.js')
   } else {
     throw Error(ERRORS.unsupportedStorageType(storageType))
   }

@@ -8,10 +8,9 @@ import './index.mdx.cssx.styl'
 
 # Content
 
-Content used as a parent container for the main content area of your app/website.
+A parent container for the main content area of your app or website. You can pass custom `style` to the root element and provide content as `children`.
 
-It has good defaults for paddings from sides of the screen and by default limits the maximum width of the content
-to what is usually considered a comfortable reading width - `768px`, which is roughly the width of a tablet in portrait mode.
+It applies sensible default horizontal padding and limits the maximum width to what is generally considered a comfortable reading width -- `768px` (roughly the width of a tablet in portrait mode).
 
 ```jsx
 import { Content } from 'startupjs-ui'
@@ -19,7 +18,7 @@ import { Content } from 'startupjs-ui'
 
 ## Simple Example
 
-By default content has left and right paddings of `16px`.
+By default, Content has left and right padding of `16px`.
 
 ```jsx example
 const contentStyle = {
@@ -42,11 +41,9 @@ return (
 
 ## No horizontal paddings
 
-Pass `pure` property to remove left and right paddings. You would want to do this to keep the behaviour of
-limiting the maximum width of the Content (`768px` by default) while handling the internal paddings yourself.
+Pass the `pure` prop to remove the left and right padding. This keeps the maximum width constraint (`768px` by default) while letting you handle internal padding yourself.
 
-This is useful when creating lists, tables, or other components that on small screens need to look like they go
-all the way from left to right. While on the bigger screens you would still want to limit the maximum width of the content.
+This is useful for lists, tables, or other components that need to span edge-to-edge on small screens, while still limiting the maximum content width on larger screens.
 
 ```jsx example
 const contentStyle = {
@@ -69,7 +66,7 @@ return (
 
 ## Vertical paddings
 
-Top and bottom paddings can be added by passing the `padding` property to component.
+Pass the `padding` prop to add equal top and bottom padding. When set to `true`, it uses a default spacing value. You can also pass a number to specify a custom padding amount.
 
 ```jsx example
 const contentStyle = {
@@ -92,7 +89,7 @@ return (
 
 ## Full space
 
-Content takes the `full` property, which gives it all the empty space on the main `flexbox` axis of the parent.
+The `full` prop makes the Content expand to fill all available space along the parent's main flexbox axis.
 
 ```jsx example
 const divStyle = {
@@ -123,7 +120,9 @@ return (
 
 ## Max width
 
-Content has limited max-width by default of `768px`, because we are making mobile first layout and can only go from smaller to larger screens by changing `width` property (possible values of property can be found in the `Sandbox` section at the bottom of the page). Also you can change the default width value for component by overriding `defaultWidth` property in your `$UI.Content.defaultWidth`. **We don't recommend to change the `defaultWidth` unnecessarily, because it is a more advanced setting that will change all your entire app.**
+By default, Content limits its max-width to `768px` (the `'tablet'` preset). Since the layout is mobile-first, you can scale up to larger screens using the `width` prop. The available presets are: `'mobile'`, `'tablet'` (default), `'desktop'`, `'wide'`, and `'full'`. See the Sandbox section below to try each one.
+
+You can also change the default width for all Content components app-wide by overriding `$UI.Content.defaultWidth` in your styles. **Changing the default width is an advanced setting that affects your entire app -- use with caution.**
 
 ```jsx example
 const contentStyle = {

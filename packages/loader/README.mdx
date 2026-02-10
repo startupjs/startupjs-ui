@@ -4,13 +4,15 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 # Loader
 
-Loaders are used to show a wait time.
+Displays a spinning activity indicator to signal that content is loading or a background process is in progress.
 
 ```jsx
 import { Loader } from 'startupjs-ui'
 ```
 
 ## Simple example
+
+Render a default loader with no additional configuration.
 
 ```jsx example
 return (
@@ -20,7 +22,7 @@ return (
 
 ## Sizes
 
-Loaders can be of two sizes - `s` and `m` (default).
+The `size` prop controls the diameter of the spinner. Available values are `'s'` (small) and `'m'` (large). The default is `'m'`.
 
 ```jsx example
 return (
@@ -33,7 +35,7 @@ return (
 
 ## Colors
 
-Color is `text-description` by default. It can be changed by passing color name from the config colors to `color` property. Possible values of property can be found in the `Sandbox` section at the bottom of the page.
+By default the loader uses the `'text-description'` color token. You can change it by passing any color name from the theme's color palette to the `color` prop. See the Sandbox section below for all available values.
 
 ```jsx example
 return (

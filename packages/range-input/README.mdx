@@ -4,7 +4,9 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 # RangeInput
 
-RangeInput lets user make selections from a range of values.
+A slider control that lets users select a value (or a range of values) by dragging a marker along a track. Pass `value` and `onChange` to control it. Use `min` (defaults to `0`) and `max` (defaults to `100`) to define the range.
+
+The component also supports style overrides for individual parts: `containerStyle`, `trackStyle`, `selectedStyle`, `markerStyle`, `stepStyle`, `stepLabelStyle`, and `stepMarkerStyle`. Use `customLabel` to replace the default marker label component, or `onChangeStart` and `onChangeFinish` to respond to the start and end of a drag gesture.
 
 ```jsx
 import { RangeInput } from 'startupjs-ui'
@@ -27,7 +29,7 @@ return (
 
 ## Two markers
 
-By default component has one marker. To enable two makers pass `range=true`.
+By default the component has one marker. Set `range` to `true` to enable two markers, allowing users to select a value range. When `range` is enabled, `value` should be an array of two numbers.
 
 ```jsx example
 const [value, setValue] = useState([20, 60])
@@ -45,7 +47,7 @@ return (
 
 ## Hide marker label
 
-Pass `showLabel=false` to hide marker label.
+Set `showLabel` to `false` to hide the label that appears above the marker while it is being dragged. It defaults to `true`.
 
 ```jsx example
 const [value, setValue] = useState(40)
@@ -63,7 +65,7 @@ return (
 
 ## Step
 
-Step with which the marker can step through values. It cannot be negative. We recommend `max - min` to be evenly divisible by the step.
+The `step` prop defines the increment between selectable values (defaults to `1`). It cannot be negative. We recommend that `max - min` be evenly divisible by the step.
 
 ```jsx example
 const [value, setValue] = useState(30)
@@ -79,9 +81,9 @@ return (
 )
 ```
 
-## Show labels and markers for step
+## Show labels and markers for steps
 
-Pass `showSteps=true` to display labels and markers for step.
+Set `showSteps` to `true` to display labels and tick markers at each step along the track.
 
 ```jsx example
 const [value, setValue] = useState(4)
@@ -97,7 +99,7 @@ return (
 )
 ```
 
-When you pass `showSteps=true` to hide the labels or markers you need to pass `showStepLabels=false` or `showStepMarkers=false`.
+When `showSteps` is enabled, you can selectively hide the step labels or step markers by setting `showStepLabels` or `showStepMarkers` to `false`. Both default to `true`.
 
 **Hide labels**
 
@@ -136,7 +138,7 @@ return (
 
 ## Width
 
-Use `width` property to specify custom width of input.
+Use the `width` prop to specify a custom width for the slider in pixels. It defaults to `280`.
 
 ```jsx example
 const [value, setValue] = useState(30)

@@ -8,15 +8,17 @@ import Button from '@startupjs-ui/button'
 
 # Drawer
 
-Navigation bars are designed to provide links to different parts of your application
-Sidebars provide additional information and dock to the left or right side of the browser window
+A sliding panel that appears from the edge of the screen, commonly used for navigation menus or supplementary content. The drawer slides in with an animated transition and can be dismissed by tapping the overlay or swiping it away.
+
+You can pass custom `style` to the drawer container and provide content as `children`. The `visible` prop (defaults to `false`) controls whether the drawer is open, and `onDismiss` is called when the drawer finishes its closing animation. The `onRequestOpen` callback fires after the drawer finishes its opening animation. The drawer renders inside a Portal, so you can use `AreaComponent` (defaults to `SafeAreaView`) and `ContentComponent` (defaults to `View`) to customize the wrapper components.
+
 ```jsx
 import { Drawer } from 'startupjs-ui'
 ```
 
 ## Initialization
 
-Before use you need to configure [Portal](/docs/components/Portal)
+Before using Drawer, you need to configure [Portal](/docs/components/Portal).
 
 ## Simple example
 ```jsx example
@@ -42,7 +44,9 @@ return (
 ```
 
 ## Position
-Сomponent can be deployed from different directions (left, right, top, buttom)
+
+The drawer can slide in from any edge of the screen: `'left'` (default), `'right'`, `'top'`, or `'bottom'`. Use the `position` prop to control this.
+
 ```jsx example
 const [visible, setVisible] = useState('')
 
@@ -92,7 +96,9 @@ return (
 ```
 
 ## Swipe
-The component has support for closing using a swipe
+
+The drawer supports swipe-to-close gestures by default (`isSwipe` defaults to `true`). A visible swipe responder zone is shown when `showResponder` is `true` (the default). You can also use the `hasOverlay` prop (defaults to `true`) to control whether a dimming overlay appears behind the drawer. Use `swipeStyle` to customize the appearance and position of the swipe responder zone.
+
 ```jsx example
 const [visible, setVisible] = useState('')
 
@@ -124,8 +130,11 @@ return (
 ```
 
 ## Hook for smooth closing
-If the component has events, before the execution of which the panel must be hidden, e.g. go to another page, and you need it to close smoothly with animation
-There is a hook - `useDrawerDismiss`, into which the default function is passed, which works out for each event `onDismiss`, and additional ones that will be called after it
+
+When actions inside the drawer need to trigger navigation or open another drawer, you want the current drawer to close smoothly with its animation before the next action runs. The `useDrawerDismiss` hook handles this by letting you define named actions that execute only after the dismiss animation completes.
+
+Pass `useDrawerDismiss` an object where each key is an action name mapped to a function, plus a `default` key for the standard dismiss behavior. It returns `[onDismiss, setOnDismiss]` -- pass `onDismiss` to the Drawer, and call `setOnDismiss(actionName, ...args)` to trigger a specific action after the drawer closes.
+
 ```jsx
 import { useDrawerDismiss } from 'startupjs-ui'
 ```

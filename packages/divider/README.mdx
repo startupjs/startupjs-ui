@@ -6,7 +6,7 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 # Divider
 
-A divider is a thin line that is used to divide content into thematic blocks. For example a thematic break between paragraphs.
+A divider is a thin line used to separate content into distinct sections, such as a thematic break between paragraphs. The component also accepts a `style` prop for custom styles.
 
 ```jsx
 import { Divider } from 'startupjs-ui'
@@ -30,7 +30,7 @@ return (
 
 ## Sizes
 
-Size of the divider thin line can be modified using `size` prop. The default size is `m`.
+The thickness of the divider line can be changed using the `size` prop. The default size is `'m'`.
 
 ```jsx example
 return (
@@ -46,9 +46,9 @@ return (
 )
 ```
 
-## Divider width
+## Divider spacing
 
-The divider width can be changed by passing a number to `lines` property. The default value of `lines` is `1` and the width of a one line is `16px`.
+The total space occupied by the divider can be changed by passing a number to the `lines` prop. The default value is `1`, and each line adds `16px` of spacing.
 
 ```jsx example
 return (
@@ -66,7 +66,7 @@ return (
 
 ## Vertical divider
 
-By default the divider shows horizontally. To make it vertical, you need pass the string `vertical` to the `variant` property.
+By default, the divider renders horizontally. To make it vertical, set the `variant` prop to `'vertical'`.
 
 ```jsx example
 return (

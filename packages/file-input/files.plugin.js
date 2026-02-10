@@ -3,7 +3,8 @@ import { createPlugin } from 'startupjs/registry'
 import busboy from 'busboy'
 import sharp from 'sharp'
 import { DELETE_FILE_URL, GET_FILE_URL, getDeleteFileUrl, getFileUrl, getUploadFileUrl, UPLOAD_SINGLE_FILE_URL } from './constants.js'
-import { deleteFile, getDefaultStorageType, getFileBlob, getFileSize, saveFileBlob } from './providers/index.js'
+import { deleteFile, getDefaultStorageType, getFileBlob, getFileSize } from './providers/index.js'
+import { uploadBuffer } from './server/index.js'
 
 export default createPlugin({
   name: 'files',
@@ -217,51 +218,19 @@ export default createPlugin({
           stream.on('data', data => buffers.push(data))
 
           stream.on('end', async () => {
-            blob = Buffer.concat(buffers)
-            meta = { filename, mimeType, encoding, storageType } // Update meta here to ensure it includes modifications for images
-
+            const blob = Buffer.concat(buffers)
+            meta = { filename, mimeType, encoding, storageType }
             if (!blob) return res.status(500).send('No file was uploaded')
 
             // extract extension from filename
             console.log('meta.filename', meta.filename)
             const extension = meta.filename?.match(/\.([^.]+)$/)?.[1]
             if (extension) meta.extension = extension
-            const create = !fileId
-            if (!fileId) fileId = $.id()
-            // try to save file to sqlite first to do an early exit if it fails
             try {
-              await saveFileBlob(storageType, fileId, blob)
+              fileId = await uploadBuffer(blob, { fileId, meta })
             } catch (err) {
               console.error(err)
-              return res.status(500).send('Error saving file')
-            }
-            if (create) {
-              const doc = { id: fileId, ...meta }
-              // if some of the meta fields were undefined, remove them from the doc
-              for (const key in meta) {
-                if (meta[key] == null) delete doc[key]
-              }
-              await $.files.addNew(doc)
-            } else {
-              const $file = await sub($.files[fileId])
-
-              // when changing storageType we should delete the file from the old storageType
-              const oldStorageType = $file.storageType.get()
-              if (oldStorageType !== meta.storageType) {
-                try {
-                  await deleteFile(oldStorageType, fileId)
-                } catch (err) {
-                  console.error(err)
-                  return res.status(500).send(`Error deleting file from old storageType ${oldStorageType}`)
-                }
-              }
-
-              const doc = { ...$file.get(), ...meta, updatedAt: Date.now() }
-              // if some of the meta fields were undefined, remove them from the doc
-              for (const key in meta) {
-                if (meta[key] == null) delete doc[key]
-              }
-              await $file.set(doc)
+              return res.status(500).send(err.message)
             }
             console.log(`Uploaded file to ${storageType}`, fileId)
             res.json({ fileId })

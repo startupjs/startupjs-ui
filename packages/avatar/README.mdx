@@ -8,7 +8,9 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 # Avatar
 
-Avatars can be used to represent people. When used with a specific logo, avatars can also be used to represent a brand. They also can be a placeholder when there is no image or image can't be loaded by some reason to be shown, showing an alternative in this case.
+Avatars represent people or brands. They display a user's photo when a `src` URL is provided, and fall back to showing initials (derived from the `children` string) or a `?` placeholder when no image is available or the image fails to load.
+
+The component also supports a `style` prop for custom styles, a `shape` prop to control the avatar's shape (defaults to `'circle'`), and a `disabled` prop to disable interactions.
 
 ```js
 import { Avatar } from 'startupjs-ui'
@@ -23,7 +25,8 @@ return pug`
 ```
 
 ## Sizes
-Size is `m` by default. It can be changed by changing the `size` property by setting it to one of the values ​​('s', 'm', 'l') or by specifying the size in pixels.
+
+The default size is `'m'`. You can change it by setting the `size` prop to one of the preset values (`'s'`, `'m'`, `'l'`) or to a specific number of pixels.
 
 ```jsx example
 return pug`
@@ -52,7 +55,8 @@ return pug`
 ```
 
 ## User status
-Avatars can be used to display user online status. It can be set by passing string `online` or `away` to property `status`.
+
+Avatars can display a user's online status. Set the `status` prop to `'online'` or `'away'` to show a built-in status indicator.
 
 ```jsx example
 return pug`
@@ -70,7 +74,7 @@ return pug`
 `
 ```
 
-Also you can provide custom components for the status icon using `statusComponents` prop.
+You can also provide custom components for status indicators using the `statusComponents` prop. Pass an object mapping status names to components, then use that status name in the `status` prop.
 
 ```jsx example
 const AbsentStatus = useCallback(({ style }) => (
@@ -109,7 +113,8 @@ styl`
 ```
 
 ## Fallback string
-If `url` prop is not provided or if there is an error loading the avatar image, the component using an alternative. The alternative is initials of two first words of `children` string if provided and `?` if not. In the example below alternative is 'John Doe' therefore 'JD' will be displayed.
+
+If the `src` prop is not provided or if the image fails to load, the avatar displays a fallback instead. The fallback shows the initials of the first two words of the `children` string. If no `children` are provided, it displays `?`. In the example below, the fallback text is "John Doe", so "JD" is displayed.
 
 ```jsx example
 return pug`
@@ -125,7 +130,7 @@ return pug`
 
 ## Actions
 
-Passed handler to `onPress` property will be called when the user taps the component.
+Pass a handler to the `onPress` prop to respond when the user taps the avatar.
 
 ```jsx example
 const [counter, setCounter] = useState(0)

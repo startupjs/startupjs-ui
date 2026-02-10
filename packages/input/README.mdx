@@ -6,28 +6,35 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 # Input
 
-Input provides a wrapper api around input components by adding two-way data bindings, different customizable layouts that allow you to display inputs with label and description in different ways and provides the ability to display an error.
+Input is a universal wrapper around various input components. It provides two-way data bindings via the `$value` prop (or controlled mode via `value`), customizable layouts for displaying inputs with a label and description, and built-in error display.
 
 ```jsx
 import { Input } from 'startupjs-ui'
 ```
 
-**Input components**
+**Input types**
 
-Possible types are: [array](/docs/forms/Array), [checkbox](/docs/forms/Checkbox), [date](/docs/forms/DateTimePicker), [datetime](/docs/forms/DateTimePicker), [multiselect](/docs/forms/Multiselect), [number](/docs/forms/NumberInput), [object](/docs/forms/ObjectInput), [password](/docs/forms/PasswordInput), [radio](/docs/forms/Radio), [range](/docs/forms/RangeInput), [select](/docs/forms/Select), [time](/docs/forms/DateTimePicker), [text](/docs/forms/TextInput).
+You can render any of the supported input components by setting the `type` prop (defaults to `'text'`). Alternatively, use the `input` prop to explicitly override the input type, bypassing schema-based guessing.
 
-You can use any of the above components by specifying the `type` property.
+Available types: [array](/docs/forms/Array), [checkbox](/docs/forms/Checkbox), [color](/docs/forms/ColorPicker), [date](/docs/forms/DateTimePicker), [datetime](/docs/forms/DateTimePicker), [file](/docs/forms/FileInput), [multiselect](/docs/forms/Multiselect), [number](/docs/forms/NumberInput), [object](/docs/forms/ObjectInput), [password](/docs/forms/PasswordInput), [radio](/docs/forms/Radio), [range](/docs/forms/RangeInput), [rank](/docs/forms/RankInput), [select](/docs/forms/Select), [time](/docs/forms/DateTimePicker), [text](/docs/forms/TextInput).
 
 **Layouts**
 
-Possible types are:
-- `pure` displays input without label and description
-- `rows` displays input in one row with provided label and description
-- `columns` displays input in two columns with provided label and description
+The `layout` prop controls how the label and description are displayed relative to the input:
 
-There are several rules that determine which layout to use:
-- for tablet screen resolutions and less the `rows` layout is always used
-- for screen resolutions larger than a tablet you can use any of the above layouts by specifying the `layout` property of the component, but if the layout is not passed to the component it is determined automatically by logic: `rows` if `label` or `description` property is specified, otherwise `pure`
+- `'pure'` -- renders the input without a label or description
+- `'rows'` -- displays the label and description above the input in a single column
+- `'columns'` -- displays the label and description in a separate column beside the input
+
+Layout behavior follows these rules:
+- On tablet-sized screens and smaller, the `'rows'` layout is always used regardless of the `layout` prop.
+- On larger screens, you can specify any layout. If no `layout` is provided, it defaults to `'rows'` when a `label` or `description` is set, and `'pure'` otherwise.
+
+**Additional props**
+
+The component supports `disabled` to prevent interaction, `readonly` for a non-editable display, `required` to mark the field as required, and `placeholder` for placeholder text. For select-like inputs, use `options` or `enum`; for array inputs, use `items`; and for object inputs, use `properties`. The `configuration` prop allows overriding the wrapper configuration. Use `testId` for testing and `ref` for imperative access to the underlying input.
+
+Change handlers vary by input type: `onChange` (checkbox, select, range, etc.), `onChangeText` (text), `onChangeNumber` (number), `onChangeDate` (date/time), and `onChangeColor` (color). Focus and blur events are available via `onFocus` and `onBlur`.
 
 ## Simple example
 
@@ -60,7 +67,7 @@ return (
 
 ## Displaying errors
 
-To display an error, pass the error text to the `error` property
+To display an error, pass the error text to the `error` prop.
 
 ```jsx example
 const $value = $()

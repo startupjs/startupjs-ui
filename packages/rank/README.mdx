@@ -4,13 +4,17 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 # Rank
 
-Rank input allows user to arrange options in specific order.
+Rank is an input component that lets users arrange a list of options in a specific order. Items can be reordered by dragging and dropping or by selecting a position from a numbered dropdown.
+
+The `options` prop defines the available items (as strings, numbers, or `{ value, label }` objects), while `value` holds the current ordering. Use `onChange` to receive the updated order whenever the user rearranges items. You can also apply custom `style` to the root element.
 
 ```jsx
 import { Rank } from 'startupjs-ui'
 ```
 
 ## Simple example
+
+Pass an array of options and track their current order with `value` and `onChange`.
 
 ```jsx example
 const options = ['option1', 'option2', 'option3', 'option4', 'option5']
@@ -27,6 +31,8 @@ return (
 
 ## Disabled
 
+Set the `disabled` prop to prevent users from reordering items. The drag handles and position dropdowns become inactive, and the background is dimmed to indicate the disabled state.
+
 ```jsx example
 const options = ['option1', 'option2', 'option3', 'option4', 'option5']
 const [value, setValue] = useState(options)
@@ -42,6 +48,8 @@ return (
 ```
 
 ## Readonly
+
+Set the `readonly` prop to display the ranked list as a simple numbered list without any interactive controls. This is useful for showing the final ranking result.
 
 ```jsx example
 const options = ['option1', 'option2', 'option3', 'option4', 'option5']

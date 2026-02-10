@@ -11,7 +11,7 @@ import './index.mdx.cssx.styl'
 
 # DrawerSidebar
 
-Drawer is typically used for nagivation. It initially not visible on the screen, but it can be pulled in from the edge of the window.
+DrawerSidebar is typically used for navigation. It is initially hidden off-screen but can be pulled in from the edge of the window. The drawer's open state is controlled through a scoped model via the `$open` prop, and its content is provided through the `renderContent` render prop.
 
 ```jsx
 import { DrawerSidebar } from 'startupjs-ui'
@@ -39,7 +39,7 @@ return (
 
 ## Position
 
-The `position` property specifies the side of the window from which the drawer will slide in. Possible values of `position` property are `left` (default) and `right`.
+The `position` prop specifies which side of the screen the drawer slides in from. Possible values are `left` (default) and `right`.
 
 ```jsx example noscroll
 const $open = $()
@@ -77,7 +77,7 @@ return (
 
 ## Lazy rendering
 
-By default the drawer content are not destroyed when it is closed. To change this behavior pass `lazy=true`.
+By default, the drawer content is not destroyed when the drawer is closed. Set `lazy` to `true` to render the drawer content only while it is open, which can improve performance for heavy sidebar content.
 
 ```jsx example
 const $open = $()
@@ -97,6 +97,15 @@ return (
   </Div>
 )
 ```
+
+## Additional props
+
+- **style** -- custom styles applied to the root container
+- **children** -- the main page content rendered alongside the drawer
+- **$open** -- a scoped model that controls whether the drawer is open or closed
+- **width** -- the drawer width in density-independent pixels (default `264`)
+- **disabled** -- set to `true` to lock the drawer closed and prevent user interaction
+- **renderContent** -- a function that returns the content to render inside the drawer panel
 
 ## Complex example
 

@@ -19,7 +19,7 @@ import './index.mdx.cssx.styl'
 
 # Dialogs
 
-There are three kinds of dialog boxes: `alert`, `confirm` and `prompt`.
+Dialogs provide three imperative functions for displaying dialog boxes: `alert`, `confirm`, and `prompt`. Each function is async and returns a Promise that resolves when the user dismisses the dialog.
 
 ```js
 import { DialogsProvider, alert, confirm, prompt } from 'startupjs-ui'
@@ -47,9 +47,9 @@ export default function RootLayout () {
 
 ## Alert box
 
-An alert box is used if you want to display a message to the user that requires their attention.
+Displays a message that requires the user's attention. The dialog has a single `OK` button. The returned Promise resolves once the user clicks `OK`.
 
-When an alert box pops up, the user will have to click `OK` to proceed.
+You can pass either a plain string or an options object with `title` and `message`.
 
 ```js
 await alert(message | { title?, message })
@@ -67,11 +67,9 @@ return pug`
 
 ## Confirm box
 
-A confirm box is used if you want to get user's permission for something.
+Asks the user to confirm or cancel an action. The dialog shows `Cancel` and `OK` buttons. Returns `true` if the user clicks `OK`, or `false` if they click `Cancel`.
 
-When a confirm box pops up, the user will have to click either `OK` or `Cancel` to proceed.
-
-If the user clicks `OK`, the function returns `true`. If the user clicks `Cancel`, the function returns `false`.
+You can pass either a plain string or an options object with `title` and `message`.
 
 ```js
 const result = await confirm(message | { title?, message })
@@ -95,11 +93,9 @@ return pug`
 
 ## Prompt box
 
-A prompt box is used if you want the user to input a value to do further actions.
+Asks the user to enter a text value. The dialog shows a text input along with `Cancel` and `OK` buttons. Returns the entered string if the user clicks `OK`, or `null` if they click `Cancel`.
 
-When a prompt box pops up, the user will have to click either `Cancel` or enter an input value and click `OK` to proceed.
-
-If the user clicks `OK` the function returns the input value. If the user clicks `Cancel` the function returns `null`.
+You can pass either a plain string or an options object with `title`, `message`, and `defaultValue`. An optional second argument sets the default input value.
 
 ```js
 const result = await prompt(message | { title?, message, defaultValue? }, defaultValue?)

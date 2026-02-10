@@ -6,7 +6,7 @@ import Pagination, { _PropsJsonSchema as PaginationPropsJsonSchema } from './ind
 
 # Pagination
 
-The Pagination component enables the user to select a specific page from a range of pages.
+Lets the user navigate through a range of pages. Supports both page-based and item-based (count/limit/skip) pagination, two-way data bindings, and customizable navigation buttons.
 
 ```jsx
 import { Pagination } from 'startupjs-ui'
@@ -14,8 +14,9 @@ import { Pagination } from 'startupjs-ui'
 
 ## Simple example
 
-- `pages` specifies the total number of pages
-- `page` specifies the current page, starting from `0` to `pages - 1`
+- `pages` -- the total number of pages
+- `page` -- the current page (zero-based, from `0` to `pages - 1`)
+- `onChangePage` -- called with the new page index when the user navigates
 
 ```jsx example
 const [page, setPage] = useState(0)
@@ -32,14 +33,18 @@ return (
 
 ## Alternatives
 
-- `count` - total count of items
-- `limit` - count of items to display per page
-- `skip` - count of items to skip
+Instead of specifying pages directly, you can express pagination in terms of items:
 
-You can use them instead of `pages` or `page` properties:
+- `count` -- total number of items (default `0`)
+- `limit` -- number of items per page (default `1`)
+- `skip` -- number of items to skip from the beginning (default `0`)
 
-- `count` and `limit` instead of `pages`
-- `limit` and `skip` instead of `page`
+These map to the page-based props as follows:
+
+- `count` and `limit` replace `pages` (total pages = count / limit)
+- `limit` and `skip` replace `page` (current page = skip / limit)
+
+The `onChangePage` callback still receives a zero-based page index, so multiply by `limit` to convert it back to a skip value.
 
 ```jsx example
 const COUNT = 100
@@ -59,7 +64,7 @@ return (
 
 ## Two-way data bindings
 
-You can use two-way data bindings `$page`, `$limit`, `$skip` instead of `page`, `limit`, `skip` respectively.
+You can use two-way data binding props (`$page`, `$skip`, `$limit`) in place of their corresponding value props (`page`, `skip`, `limit`). This eliminates the need for a separate `onChangePage` handler when using observable models.
 
 ```jsx example
 const $page = $(0)
@@ -90,10 +95,12 @@ return (
 
 ## Buttons
 
-- `showPrevButton` displays the previous-page button, (default `true`)
-- `showNextButton` displays the next-page button (default `true`)
-- `showFirstButton` displays the first-page button (default `false`)
-- `showLastButton` displays the last-page button (default `false`)
+Control which navigation buttons are visible:
+
+- `showPrevButton` -- previous-page button (default `true`)
+- `showNextButton` -- next-page button (default `true`)
+- `showFirstButton` -- jump-to-first-page button (default `false`)
+- `showLastButton` -- jump-to-last-page button (default `false`)
 
 ```jsx example
 const [page, setPage] = useState(0)
@@ -114,7 +121,7 @@ return (
 
 ## Compact view
 
-To display the component in a compact view pass `variant='compact'`.
+Set `variant='compact'` to display a simplified layout that shows only the current page status and navigation arrows instead of individual page buttons. The default variant is `'full'`.
 
 ```jsx example
 const [page, setPage] = useState(0)
@@ -132,10 +139,10 @@ return (
 
 ## Visible pages
 
-You can control the visibility of pages when component has default view (`variant='full'`).
+When using the default `'full'` variant, you can fine-tune which page numbers are visible:
 
-- `boundaryCount` controls the number of visible pages at the beginning and end
-- `siblingCount` controls the number of visible pages before and after the current page
+- `boundaryCount` -- number of pages always shown at the beginning and end of the range (default `1`)
+- `siblingCount` -- number of pages shown on each side of the current page (default `1`)
 
 ```jsx example
 const [page, setPage] = useState(5)
@@ -151,6 +158,12 @@ return (
   </Div>
 )
 ```
+
+## Additional props
+
+- `style` -- custom styles applied to the root container
+- `disabled` -- when `true`, disables all navigation buttons (default `false`)
+- `onChangeLimit` -- called when the page size changes
 
 ## Sandbox
 
