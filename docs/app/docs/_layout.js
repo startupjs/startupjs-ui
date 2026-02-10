@@ -318,9 +318,9 @@ const DOC_TUTORIAL_ITEMS = [
   { title: 'Quickstart', path: 'tutorial/foundation' },
   { title: 'To-Do app', path: 'tutorial/basics' },
   { title: 'Observer pattern', path: 'tutorial/observer' },
-  { title: 'ShareDB hooks', path: 'tutorial/sharedbHooks' },
-  { title: 'Racer model', path: 'tutorial/racerModel' },
-  { title: 'File structure', path: 'tutorial/fileStructure' },
+  { title: 'Signals & subscriptions', path: 'tutorial/sharedbHooks' },
+  { title: 'Signals API', path: 'tutorial/racerModel' },
+  { title: 'Project structure', path: 'tutorial/fileStructure' },
   { title: 'Pug', path: 'tutorial/pug' },
   { title: 'Stylus', path: 'tutorial/stylus' },
   { title: 'Tricks with styles', path: 'tutorial/tricksWithStyles' }

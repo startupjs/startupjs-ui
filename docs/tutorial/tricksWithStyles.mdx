@@ -1,10 +1,10 @@
 # Tricks with styles
 
-This chapter covers useful style conventions and mixins available in StartupJS.
+This chapter covers useful style conventions, built-in mixins, and global design tokens available in StartupJS.
 
 ## Units
 
-StartupJS uses an 8px grid. One unit is `1u = 8px`.
+StartupJS uses an 8px grid. One unit (`1u`) equals `8px`:
 
 ```styl
 .card
@@ -12,13 +12,13 @@ StartupJS uses an 8px grid. One unit is `1u = 8px`.
   margin 3u      // 24px
 ```
 
-Use pixel values only when you need exact 1px borders or hairline adjustments.
+Use pixel values only for exact adjustments like 1px borders or hairline separators.
 
 ## Mixins
 
 ### `font()`
 
-`font()` expands to `font-size` and `line-height` values.
+Sets both `font-size` and `line-height` in one call:
 
 | Value   | font-size | line-height |
 | ------- | --------- | ----------- |
@@ -34,15 +34,15 @@ Use pixel values only when you need exact 1px borders or hairline adjustments.
 
 ### `shadow()`
 
-`shadow(level)` normalizes shadows across web and native. Levels range from 0 to 4.
+`shadow(level)` generates consistent shadows across web and native. Levels range from 0 to 4:
 
-| Level | Styles |
+| Level | Effect |
 | ----- | ------ |
-| 0     | box-shadow: none; elevation: 0 |
-| 1     | box-shadow: 0 1px 2px var(--color-shadow-main); elevation: 3 |
-| 2     | box-shadow: 0 3px 5px var(--color-shadow-main-strong); elevation: 6 |
-| 3     | box-shadow: 0 5px 8px var(--color-shadow-main-strong); elevation: 12 |
-| 4     | box-shadow: 0 8px 12px var(--color-shadow-main); elevation: 18 |
+| 0     | No shadow |
+| 1     | Subtle shadow (elevation 3) |
+| 2     | Medium shadow (elevation 6) |
+| 3     | Pronounced shadow (elevation 12) |
+| 4     | Heavy shadow (elevation 18) |
 
 ### `radius()`
 
@@ -54,19 +54,21 @@ Use pixel values only when you need exact 1px borders or hairline adjustments.
 | l      | 8px           |
 | circle | 9999px        |
 
-## Screen and platform mixins
+## Responsive and platform mixins
 
-| Mixin      | Environment                  |
-| ---------- | ---------------------------- |
-| +tablet()  | min-width >= 768px           |
-| +desktop() | min-width >= 1024px          |
-| +wide()    | min-width >= 1280px          |
-| +portrait()| portrait orientation         |
-| +landscape()| landscape orientation       |
-| +web()     | web only                     |
-| +android() | Android only                 |
-| +ios()     | iOS only                     |
-| +native()  | native (not web)             |
+These mixins let you write styles that apply only at certain screen sizes or on certain platforms:
+
+| Mixin        | Applies when              |
+| ------------ | ------------------------- |
+| `+tablet()`  | screen width >= 768px     |
+| `+desktop()` | screen width >= 1024px    |
+| `+wide()`    | screen width >= 1280px    |
+| `+portrait()`| portrait orientation      |
+| `+landscape()`| landscape orientation    |
+| `+web()`     | web only                  |
+| `+android()` | Android only              |
+| `+ios()`     | iOS only                  |
+| `+native()`  | native (not web)          |
 
 Example:
 
@@ -82,23 +84,25 @@ Example:
     margin 0 4u
 ```
 
+This makes the card more spacious on larger screens.
+
 ## The `$UI` object
 
-`$UI` holds global design tokens. You can override it in `styles/index.styl` to customize your app.
+`$UI` is a global Stylus object that holds design tokens for your entire app. You can use its values in any `.styl` file.
 
 Common fields:
 
-- `$UI.palette` - base palette swatches
-- `$UI.colors` - derived semantic colors
-- `$UI.shadows` - shadow presets
-- `$UI.media` - breakpoints for mixins
-- `$UI.fontFamilies` - font families for body and headings
-- `$UI.fontSizes` - typography sizes
-- `$UI.lineHeights` - typography line heights
+- `$UI.palette` -- base color swatches
+- `$UI.colors` -- semantic colors (primary, warning, error, etc.)
+- `$UI.shadows` -- shadow presets
+- `$UI.media` -- breakpoints used by the responsive mixins
+- `$UI.fontFamilies` -- font families for body and headings
+- `$UI.fontSizes` -- typography sizes
+- `$UI.lineHeights` -- typography line heights
 
-### Extending `$UI`
+### Customizing `$UI`
 
-Use `merge` to add or override values:
+Use `merge` in your `styles/index.styl` to override or extend values:
 
 ```styl
 $UI = merge($UI, {
@@ -115,9 +119,11 @@ $UI = merge($UI, {
 }, true)
 ```
 
+The third argument `true` enables deep merging, so your values are combined with the defaults rather than replacing them.
+
 ## Export styles to JavaScript
 
-Use `:export` to expose values from Stylus to JS:
+Use `:export` in a `.styl` file to make values available in JavaScript:
 
 ```styl
 .root
@@ -134,3 +140,5 @@ import STYLES from './index.styl'
 
 const { colors, foobar } = STYLES
 ```
+
+This is useful when you need design tokens in your component logic (for example, to set a dynamic color based on a prop).

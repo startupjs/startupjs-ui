@@ -1,37 +1,33 @@
 # Project structure
 
-When you run `npx startupjs init myapp`, you get a full project with a standard layout. This chapter explains the key folders and files.
+When you run `npx startupjs init myapp`, you get a project with a standard layout. This chapter explains the key folders and files.
 
 ## Platform-specific files
 
-StartupJS uses React Native, so each file can target both web and native. You can split files per platform:
+StartupJS uses React Native, so your code runs on web, iOS, and Android by default. If you need platform-specific behavior, you can split files:
 
-- `*.web.js` for web-only files
-- `*.js` for shared or native files
+- `*.web.js` -- used only for web builds
+- `*.js` -- used everywhere (shared or native)
 
-If a `*.web.js` file exists, it is used for web builds; otherwise the `*.js` file is used everywhere.
+If both `Something.web.js` and `Something.js` exist, the web bundler uses the `.web.js` version while native uses the `.js` version.
 
 ### When to use platform files
 
-1. A library is only available on one platform.
-2. A screen has major UX differences between web and native (use sparingly).
+1. A library only works on one platform (for example, a web-only date picker).
+2. A screen has major UX differences between web and mobile. Use this sparingly -- most code should be shared.
 
 ## Application entry point
 
-The `Root` folder contains the top-level app entry. Example:
+The `Root` folder contains the top-level app entry. A typical entry file looks like this:
 
 ```jsx
 import { BASE_URL } from '@env'
 import init from 'startupjs/init'
 import App from 'startupjs/app'
-import { observer, model } from 'startupjs'
-import { Platform } from 'react-native'
-import orm from '../model'
+import { observer } from 'startupjs'
 import * as main from '../main'
 
-if (Platform.OS === 'web') window.model = model
-
-init({ baseUrl: BASE_URL, orm })
+init({ baseUrl: BASE_URL })
 
 export default observer(() => (
   <App apps={main} />
@@ -40,67 +36,17 @@ export default observer(() => (
 
 Key points:
 
-- `init({ baseUrl, orm })` connects to the server and sets up ORM.
-- `App apps={main}` mounts your app(s).
-- `main` is the default app; you can add more.
-
-## ORM models
-
-The `model` (or `models`) folder defines ORM classes and connects them to collection paths.
-
-```js
-import TodosModel from './TodosModel'
-import TodoModel from './TodoModel'
-
-export default function (racer) {
-  racer.orm('todos', TodosModel)
-  racer.orm('todos.*', TodoModel)
-}
-```
-
-Use the **plural** model for collection methods and the **singular** model for document-specific methods.
-
-### Extending models
-
-```js
-import { BaseModel } from 'startupjs/orm'
-
-export default class TodosModel extends BaseModel {
-  async addTodo (data) {
-    const id = this.id()
-    const createdAt = Date.now()
-
-    await this.add({
-      id,
-      createdAt,
-      ...data
-    })
-
-    return id
-  }
-}
-```
-
-Use it anywhere:
-
-```jsx
-const $todos = useModel('todos')
-
-function addTodo () {
-  $todos.addTodo({
-    title: 'New todo',
-    completed: false
-  })
-}
-```
+- `init({ baseUrl })` connects to the server and sets up the framework.
+- `App` mounts your application(s).
+- `main` is the default app. You can add more apps that share the same server and database.
 
 ## Apps
 
-Every project starts with one app: `main`. You can add additional apps that share the same server and database.
-
-Inside an app, the key files are:
+Every project starts with one app called `main`. Inside an app folder, the key files are:
 
 ### `routes.js`
+
+Defines the URL-to-component mapping:
 
 ```js
 export default (components = {}) => [
@@ -119,6 +65,8 @@ export default (components = {}) => [
 
 ### `index.js`
 
+Exports the app's routes and layout:
+
 ```js
 import * as pages from './pages'
 import getRoutes from './routes'
@@ -130,3 +78,22 @@ export const routes = getRoutes(pages)
 ### `Layout`
 
 `Layout` wraps every page in the app. This is where you place shared UI like headers, footers, and sidebars.
+
+## Pages
+
+Each page is a component in the `pages/` folder. By convention, page component names start with `P`:
+
+```
+main/
+  pages/
+    PHome/
+      index.jsx
+      index.styl
+    PAbout/
+      index.jsx
+      index.styl
+```
+
+Each page folder typically contains:
+- `index.jsx` -- the page component
+- `index.styl` -- styles for the page (using Stylus)

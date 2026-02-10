@@ -1,15 +1,15 @@
 # Pug
 
-StartupJS supports the Pug templating language. It is optional, but it can make your code more concise. If you prefer JSX, you can skip this chapter.
+StartupJS supports the Pug templating language as an alternative to JSX. Pug uses indentation instead of angle brackets, which can make templates more concise. If you prefer JSX, you can skip this chapter entirely.
 
-Pug is already supported by StartupJS. You only need to configure your IDE:
+Pug works out of the box in StartupJS. You only need to configure your IDE for syntax highlighting:
 https://github.com/startupjs/startupjs#ide-configuration
 
 ## Syntax basics
 
-- Nesting is defined by indentation
+- Nesting is defined by indentation (no closing tags)
 - Classes use `.className`
-- Ids use `#id`
+- IDs use `#id`
 - Attributes go in parentheses
 
 ## Tags and classes
@@ -23,7 +23,7 @@ Content
     Span Learn StartupJS
 ```
 
-**JSX**
+**JSX equivalent**
 
 ```jsx
 <Content>
@@ -34,7 +34,7 @@ Content
 </Content>
 ```
 
-Add classes:
+Add classes with dot notation:
 
 ```pug
 Content.root
@@ -44,10 +44,10 @@ Content.root
 ```
 
 ```jsx
-<Content className='root'>
-  <H1 className='title'>TODO List</H1>
-  <Card className='todo'>
-    <Span className='todoTitle'>Learn StartupJS</Span>
+<Content styleName='root'>
+  <H1 styleName='title'>TODO List</H1>
+  <Card styleName='todo'>
+    <Span styleName='todoTitle'>Learn StartupJS</Span>
   </Card>
 </Content>
 ```
@@ -69,48 +69,46 @@ Button.submit(size='m') Add
 ```
 
 ```jsx
-<Button className='submit' size='m'>Add</Button>
+<Button styleName='submit' size='m'>Add</Button>
 ```
 
-For many props, use a multiline block:
+When a component has many props, use a multiline block:
 
 ```pug
 Button(
   icon=faTimes
   iconColor='error'
   size='s'
-  onPress=() => removeTodo(todo.id)
+  onPress=() => $todo.del()
 )
 ```
 
-Note: in Pug you do not need `{}` around JavaScript expressions.
+In Pug, you do not need `{}` around JavaScript expressions. The value after `=` is treated as JavaScript.
 
 ## Loops
 
 Use `each` to render arrays:
 
 ```pug
-const [todos] = useQuery('todos', {})
-
 Content(padding)
   H1 Todo List
-  each todo, index in todos
-    Card(key=todo.id)
-      Span= todo.title
+  each $todo in $todos
+    Card(key=$todo.id.get())
+      Span= $todo.title.get()
 ```
 
 ## Conditions
 
 ```pug
-if todos.length
-  each todo in todos
-    Card(key=todo.id)
-      Span= todo.title
+if $todos.ids.get().length
+  each $todo in $todos
+    Card(key=$todo.id.get())
+      Span= $todo.title.get()
 else
-  Span Task list is empty
+  Span No tasks yet
 ```
 
-You can also write:
+You can also use `unless`:
 
 ```pug
 unless value
@@ -118,6 +116,8 @@ unless value
 ```
 
 ## Interpolation
+
+Use `=` to output a JavaScript expression as a child, or `#{}` for inline interpolation:
 
 ```pug
 const title = 'Todo List'

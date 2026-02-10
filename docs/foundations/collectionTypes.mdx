@@ -1,34 +1,55 @@
 # Collection types
 
-StartupJS stores data in ShareDB collections. There are two kinds of collections you will use most often: **public** and **private**.
+StartupJS organizes data into collections. There are two kinds: **public** and **private**.
 
 ## Public collections
 
-Public collections (for example `pokemons`) are synced with MongoDB in both directions. Any change made by one client is broadcast to all other subscribed clients.
+Public collections (for example `todos`, `users`) are stored in MongoDB and synced across all connected clients. Any change made by one client is broadcast to all others who are subscribed.
 
-Public collections are persisted on the server. Access control is enforced by server rules (see the Security section).
+You **must subscribe** to public collection data before reading it:
+
+```js
+// In a React component (with observer)
+const $todos = useSub($.todos, {})
+
+// Outside React
+const $todos = await sub($.todos, {})
+```
+
+Access control is enforced by server rules (see the Security section).
 
 ## Private collections
 
-Private collections are client-only and start with an underscore, for example `_session` or `_page`.
+Private collections exist only on the current client. They are never sent to the server or other clients. Their names start with an underscore.
 
-- `_session` lives for the whole client session (until the tab/app is closed).
-- `_page` lives only while the current route is active. It resets when you navigate away.
+- `$._session` -- persists for the entire browser session (until the tab or app is closed).
+- `$._page` -- persists only while the current route is active. It resets when the user navigates to a different page.
 
-Use private collections for UI state, temporary data, and routing parameters.
+You do **not** need to subscribe to private collections. Read and write them directly:
+
+```js
+$._page.sidebar.opened.set(true)
+const isOpen = $._page.sidebar.opened.get()
+
+const userId = $._session.userId.get()
+```
+
+Use private collections for UI state, temporary data, and any values that do not need to persist in the database.
 
 ## Routing parameters
 
-Routes can be parameterized using a `:` prefix. Example: `/pokemon/:pokemonId`.
+Routes can be parameterized using a `:` prefix. For example: `/pokemon/:pokemonId`.
 
-To navigate and set the parameter:
+To navigate programmatically:
 
 ```js
-emit('url', '/pokemon/' + pokemon.id)
+emit('url', '/pokemon/' + pokemonId)
 ```
 
-On the target page, read the param from `_render.params`:
+`emit` is a StartupJS navigation helper imported from `startupjs`.
+
+On the target page, read the parameter from `$._page.params`:
 
 ```js
-const pokemonId = model.get('_render.params.pokemonId')
+const pokemonId = $._page.params.pokemonId.get()
 ```

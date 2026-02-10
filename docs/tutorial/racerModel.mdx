@@ -1,100 +1,160 @@
-# Racer model
+# Signals API
 
-StartupJS uses Racer + ShareDB for realtime data sync. Racer exposes a **model** API that lets you read and mutate data from the client or server with the same interface.
+Signals are the core data primitive in StartupJS. Every piece of data -- whether it lives in the database or only in the browser -- is accessed through signals. This chapter covers all the methods available on signals.
 
-## Why it matters
+## What is a signal?
 
-- Realtime updates across all subscribed clients
-- Offline-first behavior (changes apply locally, then sync)
-- Conflict resolution with operational transforms
-- A single API on client and server
+A signal is a reactive pointer to a location in your data tree. It does not hold data directly. Instead, it knows the *path* to the data and provides methods to read, write, and delete it.
 
-## What is a model?
-
-Think of a model as a pointer to a part of your database. A model can point to:
-
-- a collection (`todos`)
-- a document (`todos.<id>`)
-- a nested field (`todos.<id>.title`)
-
-The model then provides methods like `get`, `set`, `add`, and `del`.
-
-By convention, models are named with a `$` prefix: `$todos`, `$todo`.
-
-## Getting a model manually
+Signals are created by navigating from the root signal `$`:
 
 ```js
-const $todos = model.scope('todos')
-await $todos.subscribe()
+import { $ } from 'startupjs'
 
-// Read and write
-const list = $todos.get()
-$todos.add({ title: 'Learn Racer', completed: false })
-
-$todos.unsubscribe()
+const $user = $.users['abc123']       // points to a document
+const $name = $.users['abc123'].name  // points to a field
+const $todos = $.todos                // points to a collection
 ```
 
-> Tip: when you use aggregations or `$count`, read the value with `getExtra()` instead of `get()`.
+By convention, signal variables start with `$` to distinguish them from plain values.
 
-## Collection model (with hooks)
+## Reading data: `.get()`
 
-Hooks make this easier:
-
-```jsx
-const [todos, $todos] = useQuery('todos', {})
-
-$todos.add({ title: 'New todo', completed: false })
-```
-
-`$todos` points to the collection, so you can do `$todos.at(todo.id)` to access a single document.
-
-## Document model
-
-```jsx
-function Todo ({ id }) {
-  const [todo, $todo] = useDoc('todos', id)
-
-  return (
-    <Card>
-      <Span>{todo.title}</Span>
-      <Checkbox
-        value={todo.completed}
-        onChange={value => $todo.set('completed', value)}
-      />
-    </Card>
-  )
-}
-```
-
-Useful document methods:
+Use `.get()` to read the current value of a signal:
 
 ```js
-$todo.set('title', 'New title')
-$todo.setEach({ priority: 'high', updatedAt: Date.now() })
-$todo.del()
+const name = $user.name.get()        // 'Alice'
+const todo = $todo.get()             // { title: 'Learn signals', completed: false }
+const isOpen = $._page.sidebar.opened.get()  // true
 ```
 
-## Custom model methods
+`.get()` is synchronous. It returns whatever value is currently available locally.
 
-You can add your own methods by extending `BaseModel`:
+## Writing data: `.set()`
+
+Use `.set()` to update a signal's value:
 
 ```js
-import { BaseModel } from 'startupjs/orm'
-
-export default class TodosModel extends BaseModel {
-  async addTodo (data) {
-    const id = this.id()
-    const createdAt = Date.now()
-
-    await this.add({
-      id,
-      createdAt,
-      ...data
-    })
-
-    return id
-  }
-}
+$user.name.set('Bob')
+$todo.completed.set(true)
+$._page.sidebar.opened.set(false)
 ```
 
-Register it in `model/index.js` with `racer.orm('todos', TodosModel)`.
+For database signals (public collections), `.set()` is asynchronous -- it returns a promise. The change is applied locally right away, then synced to the server in the background:
+
+```js
+await $user.name.set('Bob')  // resolves when the server confirms
+```
+
+In most cases you do not need to await it. The local UI updates instantly.
+
+## Deleting data: `.del()`
+
+Use `.del()` to remove a value:
+
+```js
+await $todo.del()           // deletes the entire document
+$user.profilePicture.del()  // deletes a single field
+```
+
+## Adding documents: `.add()`
+
+Use `.add()` on a collection signal to create a new document with an auto-generated ID:
+
+```js
+const newId = await $.todos.add({
+  title: 'Buy groceries',
+  completed: false
+})
+// newId is the generated document ID
+```
+
+## Updating multiple fields: `.assign()`
+
+Use `.assign()` to set several fields at once:
+
+```js
+await $todo.assign({
+  title: 'Updated title',
+  priority: 'high',
+  updatedAt: Date.now()
+})
+```
+
+This is equivalent to calling `.set()` on each field individually. Fields set to `null` or `undefined` are deleted.
+
+## Array operations
+
+Signals pointing to arrays support `push` and `pop`:
+
+```js
+await $user.tags.push('developer')   // adds to end
+const last = await $user.tags.pop()  // removes from end
+```
+
+## Incrementing numbers: `.increment()`
+
+For numeric values, use `.increment()` to add to the current value:
+
+```js
+await $user.loginCount.increment(1)  // adds 1
+await $user.score.increment(-5)      // subtracts 5
+```
+
+## Navigating signals
+
+You navigate deeper into the data tree using dot notation or bracket notation:
+
+```js
+// These are equivalent
+$.users.abc123.name
+$.users['abc123'].name
+$.users[userId].name  // using a variable
+```
+
+For private collections, the path starts with `_`:
+
+```js
+$._page.form.email       // page-scoped data
+$._session.userId         // session-scoped data
+```
+
+## Collection types
+
+StartupJS has two types of collections:
+
+### Public collections
+
+Public collections are stored in the database and synced across all clients. They use lowercase names:
+
+```js
+$.todos
+$.users
+$.messages
+```
+
+You **must subscribe** before reading from them (using `useSub` in React or `sub` outside React).
+
+### Private collections
+
+Private collections exist only on the current client. They start with `_`:
+
+```js
+$._page      // cleared on navigation
+$._session   // persists for the browser session
+```
+
+You do **not** need to subscribe to private collections. Read and write them directly.
+
+## All signal methods at a glance
+
+| Method | Description | Returns |
+| --- | --- | --- |
+| `.get()` | Read the current value | The value (sync) |
+| `.set(value)` | Set the value | Promise |
+| `.del()` | Delete the value | Promise |
+| `.add(object)` | Add a document to a collection | Promise (new ID) |
+| `.assign(object)` | Set multiple fields at once | Promise |
+| `.push(value)` | Append to an array | Promise |
+| `.pop()` | Remove last array item | Promise |
+| `.increment(n)` | Add to a number | Promise |

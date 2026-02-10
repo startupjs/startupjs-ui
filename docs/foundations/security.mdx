@@ -1,10 +1,10 @@
 # Security
 
-StartupJS uses ShareDB for realtime data sync. By default, ShareDB allows full read/write/delete access to every document. You must define access rules to protect your data.
+By default, StartupJS allows full read/write/delete access to every document. You must define access rules to protect your data in production.
 
 ## Document access control (`@startupjs/sharedb-access`)
 
-This package adds per-document permission checks for create/read/update/delete.
+This package adds per-document permission checks for create, read, update, and delete operations.
 
 Enable it in `server/index.js`:
 
@@ -14,10 +14,10 @@ startupjsServer({
 })
 ```
 
-Example model:
+Define access rules on your model:
 
 ```js
-export default class NewsModel extends basePermissions(BaseModel) {
+export default class NewsModel {
   static access = {
     create: async (model, collection, docId, doc, session) => {
       return hasPermission('global.admin', model, collection, docId, session)
@@ -33,11 +33,11 @@ export default class NewsModel extends basePermissions(BaseModel) {
 }
 ```
 
-`hasPermission` is your application-specific permission check.
+`hasPermission` is your application-specific permission check. Each callback receives the server-side model and session, so you can look up roles or ownership.
 
 ## Schema validation (`@startupjs/sharedb-schema`)
 
-This package enforces JSON schema rules for documents.
+This package enforces JSON Schema rules on documents. Any write that violates the schema is rejected.
 
 Enable it in `server/index.js`:
 
@@ -47,12 +47,10 @@ startupjsServer({
 })
 ```
 
-Example schema:
+Define a schema on your model:
 
 ```js
-import { BaseModel } from 'startupjs/orm'
-
-export default class UserModel extends BaseModel {
+export default class UserModel {
   static schema = {
     type: 'object',
     properties: {
@@ -86,7 +84,7 @@ More details: https://github.com/startupjs/startupjs/tree/master/packages/shared
 
 ## Secure aggregations (`@startupjs/server-aggregate`)
 
-Aggregations are unrestricted by default. Use server-defined aggregation templates instead.
+Aggregations are unrestricted by default. Use server-defined aggregation templates to control what queries clients can run.
 
 Enable it in `server/index.js`:
 
@@ -96,7 +94,7 @@ startupjsServer({
 })
 ```
 
-Define aggregation templates in the model:
+Define aggregation templates:
 
 ```js
 static aggregations = {
@@ -115,10 +113,10 @@ static aggregations = {
 }
 ```
 
-Use it in a query:
+Use the aggregation in a query:
 
 ```js
-model.query('events', {
+const $events = useSub($.events, {
   $aggregationName: 'example',
   $params: { status: 'published' }
 })
@@ -128,14 +126,15 @@ model.query('events', {
 
 You can prevent navigation to protected pages by adding `filters` in `routes.js`. Filters run on both client and server transitions.
 
+Server-side code (route guards, REST middleware) uses the request-scoped `model` to read session data, since each request has its own session.
+
 ```js
+import { $, sub } from 'startupjs'
+
 export async function isAdmin (model, next, redirect) {
   const userId = model.get('_session.userId')
-  const $user = model.scope(`users.${userId}`)
-  await $user.fetch()
-
-  const isAdmin = await $user.isSuperAdmin()
-  await $user.unfetch()
+  const $user = await sub($.users[userId])
+  const isAdmin = $user.role.get() === 'admin'
 
   if (isAdmin) return next()
   return redirect('/403')
@@ -155,10 +154,11 @@ export default (components = {}) => [
 
 Always validate access for REST endpoints. Express makes this simple with middleware.
 
+Server-side code (route guards, REST middleware) uses the request-scoped `model` to read session data, since each request has its own session.
+
 ```js
 import express from 'express'
-import addAdminTask from './addAdminTask'
-import getAdminTasks from './getAdminTasks'
+import { $, sub } from 'startupjs'
 
 async function isLoggedIn (req, res, next) {
   const { model } = req
@@ -170,13 +170,10 @@ async function isLoggedIn (req, res, next) {
 async function isAdmin (req, res, next) {
   const { model } = req
   const userId = model.get('_session.userId')
+  const $user = await sub($.users[userId])
+  const role = $user.role.get()
 
-  const $user = model.scope(`users.${userId}`)
-  await $user.fetch()
-  const isAdmin = await $user.isSuperAdmin()
-  await $user.unfetch()
-
-  if (!isAdmin) return res.sendStatus(403)
+  if (role !== 'admin') return res.sendStatus(403)
   next()
 }
 

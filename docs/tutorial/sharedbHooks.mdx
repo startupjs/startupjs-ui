@@ -1,33 +1,35 @@
-# ShareDB hooks
+# Signals and subscriptions
 
-StartupJS provides hooks that combine ShareDB subscriptions with React reactivity. Use them inside `observer` components to keep UI in sync with the database.
+This chapter covers the core tools for working with data in StartupJS: the root signal `$`, subscriptions with `useSub`, and local signals with `$()`.
 
-## `useDoc(collection, docId)`
+## The root signal: `$`
 
-Subscribe to a single document by id.
+`$` is the entry point to all your data. Think of it as the root of a tree. You navigate the tree using dot notation, just like a JavaScript object:
 
-**Arguments**
+```js
+import { $ } from 'startupjs'
 
-- `collection` (string): collection name
-- `docId` (string): document id
+$.todos              // points to the 'todos' collection
+$.todos['abc123']    // points to a specific document
+$.todos['abc123'].title  // points to the 'title' field of that document
+```
 
-**Returns**
+Each of these expressions creates a **signal** -- a reactive pointer to that piece of data. A signal does not hold data itself. It knows *where* the data is and provides methods to read and write it.
 
-- `doc` (object)
-- `$doc` (model)
+## Subscribing to a document: `useSub`
 
-**Example**
+Before you can read data from the database, you must **subscribe** to it. Use the `useSub` hook inside a component wrapped with `observer`:
 
 ```jsx
-import { observer, useDoc } from 'startupjs'
+import { observer, $, useSub } from 'startupjs'
 import { Card, Span, Button } from 'startupjs-ui'
 
 export default observer(function TodoCard ({ todoId }) {
-  const [todo, $todo] = useDoc('todos', todoId)
+  const $todo = useSub($.todos[todoId])
 
   return (
     <Card>
-      <Span>{todo.title}</Span>
+      <Span>{$todo.title.get()}</Span>
       <Button size='s' onPress={() => $todo.del()}>
         Delete
       </Button>
@@ -36,140 +38,174 @@ export default observer(function TodoCard ({ todoId }) {
 })
 ```
 
-> MongoDB stores ids in `_id`, but StartupJS exposes them as `id` on the document object.
+`useSub($.todos[todoId])` subscribes to a single document. The returned `$todo` is a signal. Use `.get()` to read a field's value and `.set()` to update it.
 
-## `useQuery(collection, query)`
+When the component unmounts, the subscription is automatically cleaned up.
 
-Subscribe to a query result.
+## Subscribing to a query: `useSub` with a query object
 
-**Arguments**
+Pass a query object as the second argument to subscribe to multiple documents:
 
-- `collection` (string)
-- `query` (object)
-
-**Returns**
-
-- `docs` (array)
-- `$docs` (model)
-
-**Example**
-
-```js
-const [todos, $todos] = useQuery('todos', { completed: false })
+```jsx
+const $todos = useSub($.todos, { completed: false })
 ```
 
-`$docs` points to the collection, so you can access a document directly:
+This subscribes to all documents in the `todos` collection where `completed` is `false`. The result, `$todos`, is a **query signal** -- an iterable collection of document signals.
 
-```js
-for (const todo of todos) {
-  $todos.at(todo.id).setEach({
-    completed: true,
-    updatedAt: Date.now()
-  })
+You can loop over it:
+
+```jsx
+{$todos.map($todo => (
+  <Card key={$todo.id.get()}>
+    <Span>{$todo.title.get()}</Span>
+  </Card>
+))}
+```
+
+Or use a `for...of` loop:
+
+```jsx
+for (const $todo of $todos) {
+  console.log($todo.title.get())
 }
 ```
 
-## `useQueryIds(collection, ids, options)`
-
-Subscribe to a list of documents by id.
-
-**Arguments**
-
-- `collection` (string)
-- `ids` (array)
-- `options.reverse` (boolean): reverse the result order
-
-**Returns**
-
-- `docs` (array)
-- `$docs` (model)
-
-**Example**
+An empty query `{}` returns all documents in the collection:
 
 ```jsx
-export default observer(function TodosList ({ todoIds }) {
-  const [todos] = useQueryIds('todos', todoIds)
-
-  return <Div>{todos.map(t => t.title).join(', ')}</Div>
-})
+const $allTodos = useSub($.todos, {})
 ```
 
-## `useQueryDoc(collection, query)`
+### Subscribing by IDs
 
-Subscribe to the newest document matching a query. This hook automatically adds `$limit: 1` and `$sort: { createdAt: -1 }` unless you override them.
-
-**Returns**
-
-- `doc` (object)
-- `$doc` (model)
-
-**Example**
+To subscribe to specific documents by their IDs, use the `$in` operator:
 
 ```jsx
-export default observer(function LatestTodo ({ userId }) {
-  const [latestTodo] = useQueryDoc('todos', { userId })
-  if (!latestTodo) return null
-
-  return <Div>Your latest todo: {latestTodo.title}</Div>
-})
+const $selectedTodos = useSub($.todos, { _id: { $in: todoIds } })
 ```
 
-## `useLocal(path)`
+This uses MongoDB's `$in` operator to match documents whose `_id` is in the given array.
 
-Subscribe to data already present in the local model (often `_page` or `_session`).
+### Subscribing to one document by query
 
-**Example**
+To get a single document matching a query, use `$limit: 1`:
 
 ```jsx
-const SIDEBAR_OPENED = '_page.sidebar.opened'
+const $latestTodos = useSub($.todos, { userId, $limit: 1 })
+```
 
-const Topbar = observer(() => {
-  const [opened, $opened] = useLocal(SIDEBAR_OPENED)
+`$limit` is a query modifier that caps the number of returned documents.
+
+The result is still a query signal. Access the first (and only) item by iterating or using `.find()`.
+
+## Query signal methods
+
+Query signals support several useful methods:
+
+- `.map(callback)` -- transform each document signal
+- `.reduce(callback, initial)` -- reduce to a single value
+- `.find(predicate)` -- find the first matching document signal
+- `.ids` -- a signal containing the array of document IDs
+
+```jsx
+// Get all titles as an array of strings
+const titles = $todos.map($todo => $todo.title.get())
+
+// Count completed todos
+const doneCount = $todos.reduce(
+  (count, $todo) => count + ($todo.completed.get() ? 1 : 0),
+  0
+)
+
+// Find the first incomplete todo
+const $firstIncomplete = $todos.find($todo => !$todo.completed.get())
+```
+
+## Local signals: `$()`
+
+For component-level state that does not need to be stored in the database, create a **local signal** with the `$()` function:
+
+```jsx
+import { observer, $ } from 'startupjs'
+import { Button, Span } from 'startupjs-ui'
+
+export default observer(function Counter () {
+  const $count = $(0)
+
   return (
-    <Button onPress={() => $opened.set(!opened)}>Toggle</Button>
+    <>
+      <Span>Count: {$count.get()}</Span>
+      <Button onPress={() => $count.set($count.get() + 1)}>
+        Increment
+      </Button>
+    </>
   )
 })
-
-const Sidebar = observer(() => {
-  const [opened] = useLocal(SIDEBAR_OPENED)
-  return opened ? <Div>Sidebar</Div> : null
-})
 ```
 
-## `useSession(path)`
+Local signals work like `useState` but integrate with the signal system. They are reactive -- components that read them re-render when they change.
 
-Shortcut for `_session`:
-
-```js
-const [userId] = useSession('userId')
-```
-
-## `usePage(path)`
-
-Shortcut for `_page`:
-
-```js
-const [game, $game] = usePage('game')
-```
-
-## `useValue(defaultValue)`
-
-An observable alternative to `useState`:
+You can also destructure object signals:
 
 ```jsx
-const [inputValue, $inputValue] = useValue('')
-
-<TextInput
-  value={inputValue}
-  onChangeText={value => $inputValue.set(value)}
-/>
+const { $name, $age } = $({ name: 'Alice', age: 30 })
+// $name.get() returns 'Alice'
+// $age.get() returns 30
 ```
 
-## `useModel(path)`
+## Private collections
 
-Get a model at a specific path without subscribing:
+Collections that start with `_` are **private** -- they live only on the client and are never sent to the server. They are useful for storing temporary UI state that multiple components need to share.
+
+The two most common private collections are:
+
+- `$._page` -- data scoped to the current page. It gets cleared when the user navigates away.
+- `$._session` -- data scoped to the current browser session. It persists across page navigations but is lost when the tab is closed.
+
+You can read and write them directly, without subscribing:
 
 ```jsx
-const $showSidebar = useModel('_page.sidebar.show')
-$showSidebar.set(true)
+// Store whether the sidebar is open
+$._page.sidebar.opened.set(true)
+
+// Read it in another component
+const isOpen = $._page.sidebar.opened.get()
+
+// Read the current user's ID from the session
+const userId = $._session.userId.get()
 ```
+
+Since private collections are local-only, you do not need `useSub` for them. Just use `$._page` or `$._session` directly.
+
+## Using `sub` outside React
+
+In non-React code (server-side scripts, background jobs, etc.), use the `sub` function instead of `useSub`. It returns a promise:
+
+```js
+import { $, sub } from 'startupjs'
+
+const $user = await sub($.users[userId])
+console.log($user.name.get())
+```
+
+For queries:
+
+```js
+const $activeUsers = await sub($.users, { status: 'active' })
+for (const $user of $activeUsers) {
+  console.log($user.name.get())
+}
+```
+
+## Summary
+
+| What you want to do | How to do it |
+| --- | --- |
+| Subscribe to one document | `const $doc = useSub($.collection[id])` |
+| Subscribe to a query | `const $docs = useSub($.collection, query)` |
+| Read a value | `$signal.field.get()` |
+| Set a value | `$signal.field.set(newValue)` |
+| Create a local signal | `const $val = $(initialValue)` |
+| Access page-level state | `$._page.something.get()` / `.set()` |
+| Access session data | `$._session.something.get()` |
+| Subscribe outside React | `const $doc = await sub($.collection[id])` |

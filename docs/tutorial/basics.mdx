@@ -1,201 +1,286 @@
 # Build a TODO app
 
-In this chapter, you will build a simple TODO list to learn the basics of StartupJS UI and data hooks.
+In this chapter you will build a working TODO list from scratch. Along the way you will learn how to use signals, subscribe to data, and update the database -- all in real time.
 
 ## Start with a clean page
 
-Open `main/pages/PHome/index.jsx` and replace the `return` block:
+Open `main/pages/PHome/index.jsx` and replace everything inside the `return` block:
 
 ```jsx
 return (
   <>
-    {/* Content goes here */}
+    {/* Your content will go here */}
   </>
 )
 ```
 
-## Add a wrapper
+## Add layout
 
-StartupJS uses `Div` and `Content` instead of HTML `div`. `Content` adds layout constraints and optional padding.
-
-```jsx
-import { Content } from 'startupjs-ui'
-
-return (
-  <Content></Content>
-)
-```
-
-Now add a heading using `H1`:
+StartupJS uses its own components instead of HTML elements. `Content` is a layout wrapper that constrains width and adds optional padding.
 
 ```jsx
+import { observer } from 'startupjs'
 import { Content, H1 } from 'startupjs-ui'
 
-return (
-  <Content>
-    <H1>TODO List</H1>
-  </Content>
-)
+export default observer(function PHome () {
+  return (
+    <Content padding>
+      <H1>TODO List</H1>
+    </Content>
+  )
+})
 ```
 
-### Add padding
+`Content` with the `padding` prop adds comfortable spacing around your content. `H1` renders a top-level heading. You can explore these components in the docs sidebar under Components.
 
-`Content` supports a `padding` prop. See the docs at `/docs/Content`.
+## Add a card
+
+`Card` is a container that displays content with a border. In React Native, you cannot place raw text directly inside a view -- always wrap text with `Span`.
 
 ```jsx
-<Content padding>
-  <H1>TODO List</H1>
-</Content>
+import { observer } from 'startupjs'
+import { Content, H1, Card, Span } from 'startupjs-ui'
+
+export default observer(function PHome () {
+  return (
+    <Content padding>
+      <H1>TODO List</H1>
+      <Card>
+        <Span>Learn StartupJS</Span>
+      </Card>
+    </Content>
+  )
+})
 ```
 
-## Add styles with `styleName`
+## Add styles
 
-Use `styleName` to connect a component to a Stylus class in `index.styl`.
+Use `styleName` to connect a component to a style class defined in the accompanying `index.styl` file:
 
 ```jsx
 <H1 styleName='title'>TODO List</H1>
 ```
 
 ```styl
+// index.styl
 .title
   color purple
 ```
 
-`styleName` can also take arrays or objects:
+`styleName` works like `className` in HTML, but it maps to Stylus classes. You can pass a string, an array, or an object for conditional styles:
 
 ```jsx
-const variant = 'primary'
-const color = 'warning'
-const disabled = true
-const active = false
-
-return (
-  <Button styleName={[variant, color, { disabled, active }]} />
-)
+<Button styleName={['primary', { disabled: isDisabled }]} />
 ```
 
-## Add a card
+## Fetch and display data
 
-`Card` is a container component. Text must be wrapped with `Span` (React Native does not allow raw text inside a `View`).
+Now for the interesting part. To display data from the database, you need to **subscribe** to it. StartupJS uses signals -- reactive pointers that track a piece of data and update your UI when it changes.
+
+Use the `useSub` hook to subscribe to a collection:
 
 ```jsx
+import { observer, $, useSub } from 'startupjs'
 import { Content, H1, Card, Span } from 'startupjs-ui'
 
-<Content padding>
-  <H1>TODO List</H1>
-  <Card>
-    <Span>Learn StartupJS</Span>
-  </Card>
-</Content>
+export default observer(function PHome () {
+  const $todos = useSub($.todos, {})
+
+  return (
+    <Content padding>
+      <H1>TODO List</H1>
+      {$todos.map($todo => (
+        <Card key={$todo.id.get()}>
+          <Span>{$todo.title.get()}</Span>
+        </Card>
+      ))}
+    </Content>
+  )
+})
 ```
 
-## Fetch and render data
+Here is what is happening:
 
-Use `useQuery` to subscribe to a collection and render the list.
+- `$` is the **root signal** -- the entry point to all your data.
+- `$.todos` points to the `todos` collection in the database.
+- `useSub($.todos, {})` subscribes to all documents in that collection. The `{}` is the query (an empty query means "everything").
+- `$todos` is a **query signal**. You can iterate over it with `.map()`. Each `$todo` in the callback is a signal pointing to a single document.
+- `$todo.title.get()` reads the value of the `title` field. Use `.get()` whenever you need the plain value.
+- `$todo.id.get()` reads the document's unique ID (used as the React `key`). Every document has an `id` field that is automatically generated when you call `.add()`.
 
-```jsx
-import { useQuery } from 'startupjs'
+The list is empty right now because there are no documents in the database yet. We will add them soon.
 
-const [todos, $todos] = useQuery('todos', {})
-```
+## Add a checkbox and delete button
 
-```jsx
-<Content padding>
-  <H1>TODO List</H1>
-  {todos.map(todo => (
-    <Card key={todo.id}>
-      <Span>{todo.title}</Span>
-    </Card>
-  ))}
-</Content>
-```
-
-## Add checkbox and delete button
-
-We will use `Checkbox` and `Button`, and align the row with `Div`.
+Let's make each todo item interactive. We will show a checkbox to mark it as done and a button to delete it.
 
 ```jsx
-import { Button, Card, Checkbox, Div, Span } from 'startupjs-ui'
-
-<Content padding>
-  <H1>TODO List</H1>
-  {todos.map(todo => (
-    <Card key={todo.id}>
-      <Div row align='between' vAlign='center'>
-        <Span>{todo.title}</Span>
-        <Div row align='between' vAlign='center'>
-          <Checkbox />
-          <Button />
-        </Div>
-      </Div>
-    </Card>
-  ))}
-</Content>
-```
-
-`align='between' vAlign='center'` are `Div` props similar to `justify-content: space-between` and `align-items: center`.
-
-## Connect the checkbox
-
-`Checkbox` accepts `value` and `onChange`:
-
-```jsx
-const changeStatus = (todoId, value) => $todos.at(todoId).set('completed', value)
-
-<Checkbox
-  value={todo.completed}
-  onChange={value => changeStatus(todo.id, value)}
-/>
-```
-
-## Delete tasks
-
-Add a delete button with an icon:
-
-```jsx
+import { observer, $, useSub } from 'startupjs'
+import { Button, Card, Checkbox, Content, Div, H1, Span } from 'startupjs-ui'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
-<Button
-  icon={faTimes}
-  iconColor='error'
-  size='s'
-  onPress={() => $todos.at(todo.id).del()}
-/>
+export default observer(function PHome () {
+  const $todos = useSub($.todos, {})
+
+  return (
+    <Content padding>
+      <H1>TODO List</H1>
+      {$todos.map($todo => (
+        <Card key={$todo.id.get()}>
+          <Div row align='between' vAlign='center'>
+            <Checkbox
+              value={$todo.completed.get()}
+              onChange={value => $todo.completed.set(value)}
+            />
+            <Span>{$todo.title.get()}</Span>
+            <Button
+              icon={faTimes}
+              iconColor='error'
+              size='s'
+              onPress={() => $todo.del()}
+            />
+          </Div>
+        </Card>
+      ))}
+    </Content>
+  )
+})
 ```
 
-See `/docs/Button` for more props.
+Key points:
+
+- **Reading data**: `$todo.completed.get()` returns the current value of `completed` (true or false).
+- **Writing data**: `$todo.completed.set(value)` updates the `completed` field in the database. The change syncs to all connected clients automatically.
+- **Deleting a document**: `$todo.del()` removes the entire todo from the database.
+- `Div` with `row` lays out children horizontally. `align='between'` spaces them out like CSS `justify-content: space-between`. `vAlign='center'` vertically centers them.
 
 ## Add new tasks
 
-Use `TextInput` and a local state for the input value.
+To create new todos, add a text input and a submit button. We will use a **local signal** to store the input value.
 
 ```jsx
-import { useState } from 'react'
-import { Button, Div, TextInput } from 'startupjs-ui'
+import { observer, $, useSub } from 'startupjs'
+import { Button, Card, Checkbox, Content, Div, H1, Span, TextInput } from 'startupjs-ui'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
-const [inputValue, setInputValue] = useState('')
+export default observer(function PHome () {
+  const $todos = useSub($.todos, {})
+  const $newTitle = $('')
 
-<TextInput
-  value={inputValue}
-  onChangeText={setInputValue}
-/>
+  async function addTodo () {
+    const title = $newTitle.get().trim()
+    if (!title) return
+    await $.todos.add({ title, completed: false })
+    $newTitle.set('')
+  }
+
+  return (
+    <Content padding>
+      <H1>TODO List</H1>
+
+      <Div row vAlign='center'>
+        <TextInput
+          style={{ flex: 1 }}
+          value={$newTitle.get()}
+          onChangeText={value => $newTitle.set(value)}
+          placeholder='What needs to be done?'
+        />
+        <Button onPress={addTodo}>Add</Button>
+      </Div>
+
+      {$todos.map($todo => (
+        <Card key={$todo.id.get()}>
+          <Div row align='between' vAlign='center'>
+            <Checkbox
+              value={$todo.completed.get()}
+              onChange={value => $todo.completed.set(value)}
+            />
+            <Span>{$todo.title.get()}</Span>
+            <Button
+              icon={faTimes}
+              iconColor='error'
+              size='s'
+              onPress={() => $todo.del()}
+            />
+          </Div>
+        </Card>
+      ))}
+    </Content>
+  )
+})
 ```
 
-Submit on button press:
+Here is what is new:
+
+- `$('')` creates a **local signal** with an initial value of an empty string. Note: `$` by itself is the root signal (your database). `$()` called as a function creates a local signal -- a reactive variable that lives only in this component, similar to React's `useState`.
+- `$newTitle.get()` reads the current input value.
+- `$newTitle.set(value)` updates it when the user types.
+- `$.todos.add({ title, completed: false })` creates a new document in the `todos` collection. The `add` method generates a unique ID automatically and returns it. We `await` it to make sure the document is created before clearing the input.
+
+## Complete code
+
+Here is the full component:
 
 ```jsx
-const handleSubmit = async () => {
-  if (!inputValue) return
-  await $todos.add({
-    title: inputValue,
-    completed: false
-  })
-  setInputValue('')
-}
+import { observer, $, useSub } from 'startupjs'
+import { Button, Card, Checkbox, Content, Div, H1, Span, TextInput } from 'startupjs-ui'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
-<Button onPress={handleSubmit}>Add</Button>
+export default observer(function PHome () {
+  const $todos = useSub($.todos, {})
+  const $newTitle = $('')
+
+  async function addTodo () {
+    const title = $newTitle.get().trim()
+    if (!title) return
+    await $.todos.add({ title, completed: false })
+    $newTitle.set('')
+  }
+
+  return (
+    <Content padding>
+      <H1>TODO List</H1>
+
+      <Div row vAlign='center'>
+        <TextInput
+          style={{ flex: 1 }}
+          value={$newTitle.get()}
+          onChangeText={value => $newTitle.set(value)}
+          placeholder='What needs to be done?'
+        />
+        <Button onPress={addTodo}>Add</Button>
+      </Div>
+
+      {$todos.map($todo => (
+        <Card key={$todo.id.get()}>
+          <Div row align='between' vAlign='center'>
+            <Checkbox
+              value={$todo.completed.get()}
+              onChange={value => $todo.completed.set(value)}
+            />
+            <Span>{$todo.title.get()}</Span>
+            <Button
+              icon={faTimes}
+              iconColor='error'
+              size='s'
+              onPress={() => $todo.del()}
+            />
+          </Div>
+        </Card>
+      ))}
+    </Content>
+  )
+})
 ```
 
-## Done
+## What you learned
 
-You now have a working TODO app with realtime data.
+- `$` is the root signal that gives you access to all collections.
+- `useSub($.collection, query)` subscribes to database documents and returns a query signal.
+- Query signals are iterable -- use `.map()` to render lists.
+- Each item in a query signal is a document signal. Use `.get()` to read fields, `.set()` to update them, and `.del()` to delete.
+- `$('initial value')` creates a local signal for component-level state.
+- `$.collection.add({...})` creates a new document.
+- All data changes sync to every connected client automatically.
+
+Open the app in two browser tabs and try adding, checking, and deleting todos. You will see both tabs update at the same time -- that is real-time sync in action.

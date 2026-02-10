@@ -2,11 +2,9 @@ import { useEffect } from 'react'
 import {
   pug,
   styl,
-  $root,
-  useDoc,
-  useModel,
-  useSession,
-  useValue
+  observer,
+  $,
+  useSub
 } from 'startupjs'
 import { Div, Span, Button, TextInput } from 'startupjs-ui'
 
@@ -18,12 +16,12 @@ StartupJS is reactive by default: when you update a document, every subscribed c
 
 ```jsx example
 const docId = 'a2205406-7de4-43a4-8b73-48ea23a8aaab'
-const [doc] = useDoc('temp', docId)
+const $doc = useSub($.temp[docId])
 
 useEffect(() => {
-  if (doc) return
-  $root.at('temp').add({ id: docId, title: 'Title', message: 'Message' })
-}, [doc])
+  if ($doc.get()) return
+  $.temp.add({ id: docId, title: 'Title', message: 'Message' })
+}, [$doc.get()])
 
 return pug`
   Span This example creates a demo document once, if it does not exist.
@@ -36,14 +34,14 @@ Changes are written to the document immediately, so the UI stays in sync with th
 
 ```jsx example
 const docId = 'a2205406-7de4-43a4-8b73-48ea23a8aaab'
-const [doc = {}, $doc] = useDoc('temp', docId)
+const $doc = useSub($.temp[docId])
 
 return pug`
-  Span= doc.title
+  Span= $doc.title.get()
   TextInput.input(
     placeholder='Title'
-    value=doc.title
-    onChangeText=t => $doc.set('title', t)
+    value=$doc.title.get()
+    onChangeText=t => $doc.title.set(t)
   )
 `
 
@@ -59,29 +57,29 @@ If you want a "Save" button, keep a local copy and only write changes to the doc
 
 ```jsx example
 const docId = 'a2205406-7de4-43a4-8b73-48ea23a8aaab'
-const [doc = {}, $doc] = useDoc('temp', docId)
-const [draft, $draft] = useValue({ ...doc })
+const $doc = useSub($.temp[docId])
+const $draft = $({ ...$doc.get() })
 
 function onSubmit () {
-  $doc.setDiffDeep(draft)
+  $doc.assign($draft.get())
 }
 
 return pug`
   Div
-    Span= doc.title
-    Span.line= doc.message
+    Span= $doc.title.get()
+    Span.line= $doc.message.get()
 
   Div
     TextInput.line(
       placeholder='Title'
-      value=draft.title
-      onChangeText=t => $draft.set('title', t)
+      value=$draft.title.get()
+      onChangeText=t => $draft.title.set(t)
     )
 
     TextInput.line(
       placeholder='Message'
-      value=draft.message
-      onChangeText=t => $draft.set('message', t)
+      value=$draft.message.get()
+      onChangeText=t => $draft.message.set(t)
     )
 
     Button(
@@ -105,40 +103,39 @@ draft__<userId>__<docId>
 ```
 
 ```jsx example
-const userId = useSession('userId')
+const userId = $._session.userId.get()
 const docId = 'a2205406-7de4-43a4-8b73-48ea23a8aaab'
 const draftId = `draft__${userId}__${docId}`
 
-const [doc, $doc] = useDoc('temp', docId)
-const [draft, $draft] = useDoc('temp', draftId)
-const $temp = useModel('temp')
+const $doc = useSub($.temp[docId])
+const $draft = useSub($.temp[draftId])
 
 useEffect(() => {
-  if (draft || !doc) return
-  $temp.add({ ...doc, id: draftId })
-}, [draft, doc, draftId])
+  if ($draft.get() || !$doc.get()) return
+  $.temp.add({ ...$doc.get(), id: draftId })
+}, [$draft.get(), $doc.get(), draftId])
 
 function onSubmit () {
-  $doc.setDiffDeep(draft)
+  $doc.assign($draft.get())
 }
 
-if (!draft) return null
+if (!$draft.get()) return null
 return pug`
   Div
-    Span= doc.title
-    Span.line= doc.message
+    Span= $doc.title.get()
+    Span.line= $doc.message.get()
 
   Div
     TextInput.line(
       placeholder='Title'
-      value=draft.title
-      onChangeText=t => $draft.set('title', t)
+      value=$draft.title.get()
+      onChangeText=t => $draft.title.set(t)
     )
 
     TextInput.line(
       placeholder='Message'
-      value=draft.message
-      onChangeText=t => $draft.set('message', t)
+      value=$draft.message.get()
+      onChangeText=t => $draft.message.set(t)
     )
 
     Button(
@@ -153,6 +150,6 @@ styl`
 `
 ```
 
-## Why `setDiffDeep`
+## Why `assign`
 
-Use `setDiffDeep(draft)` instead of `set({ ...draft })`. It generates only the minimal ShareDB ops and avoids re-rendering components that do not depend on changed fields.
+Use `$doc.assign(draft)` instead of replacing the entire document. It sets only the fields that changed, generating minimal operations and avoiding unnecessary re-renders in components that depend on unchanged fields.

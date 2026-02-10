@@ -1,10 +1,8 @@
 # Stylus
 
-Stylus is a CSS preprocessor that StartupJS uses by default. It supports variables, mixins, functions, loops, and conditions.
+Stylus is a CSS preprocessor that StartupJS uses by default. It drops the braces, colons, and semicolons of regular CSS and uses indentation instead.
 
 ## Selector syntax
-
-Stylus uses indentation instead of braces and colons.
 
 **Stylus**
 
@@ -13,7 +11,7 @@ Stylus uses indentation instead of braces and colons.
   background-color blue
 ```
 
-**CSS**
+**CSS equivalent**
 
 ```css
 .root {
@@ -23,7 +21,7 @@ Stylus uses indentation instead of braces and colons.
 
 ### Parent selector
 
-Use `&` to reference the parent selector:
+Use `&` to reference the parent selector, just like in SCSS:
 
 ```styl
 .button
@@ -32,9 +30,11 @@ Use `&` to reference the parent selector:
     background-color blue
 ```
 
+This compiles to `.button.active { background-color: blue; }`.
+
 ## Variables
 
-Define variables and reuse them in styles:
+Define variables and reuse them in your styles:
 
 ```styl
 _titleColor = #2f4f4f
@@ -45,7 +45,7 @@ _titleSize = 24px
   font-size _titleSize
 ```
 
-You can also reference an existing property using `@`:
+You can also reference a property that was already set in the same block using `@`:
 
 ```styl
 .card
@@ -53,13 +53,15 @@ You can also reference an existing property using `@`:
   padding @margin * 2
 ```
 
+Here, `@margin` refers to the `margin` value defined above it, so `padding` becomes `16px`.
+
 ## Mixins
 
-StartupJS ships with mixins such as `font()` for typography:
+StartupJS includes built-in mixins. For example, `font()` sets both `font-size` and `line-height` in one call:
 
 ```styl
 .text
   font(h1)
 ```
 
-The mixin expands into `font-size` and `line-height` values.
+See the Tricks with styles chapter for a full list of available mixins.
