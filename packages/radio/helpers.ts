@@ -11,7 +11,7 @@ export type RadioOption = string | number | RadioOptionObject
 export type RadioValue = string | number | RadioOptionObject | null | undefined
 
 export function getOptionLabel (option: RadioOption): any {
-  return (option as any)?.label || option
+  return (option as any)?.label ?? option
 }
 
 export function getOptionDescription (option: RadioOption): any {
@@ -19,7 +19,7 @@ export function getOptionDescription (option: RadioOption): any {
 }
 
 export function stringifyValue (option: any): string {
-  return JSON.stringify(option?.value || option)
+  return JSON.stringify(option?.value ?? option)
 }
 
 export function parseValue (value: any): any {
