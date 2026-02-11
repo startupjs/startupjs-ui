@@ -8,7 +8,25 @@ StartupJS is built on top of Expo. A new project is created by:
 
 1. Creating an Expo app: `yarn create expo-app myapp` (or `npx create-expo-app@latest myapp`)
 2. Installing StartupJS: `npm init startupjs@latest`
-3. Wrapping the root layout with `<StartupjsProvider>` from `'startupjs'` in `app/_layout.tsx`
+3. Wrapping the root layout in `app/_layout.tsx` with `<StartupjsProvider>` from `'startupjs'` and `<Layout>` from `'startupjs-ui'` inside it:
+
+```jsx
+import { StartupjsProvider } from 'startupjs'
+import { Layout } from 'startupjs-ui'
+import { Stack } from 'expo-router'
+
+export default function RootLayout () {
+  return (
+    <StartupjsProvider>
+      <Layout>
+        <Stack screenOptions={{ headerShown: false }} />
+      </Layout>
+    </StartupjsProvider>
+  )
+}
+```
+
+`Layout` renders content within safe area boundaries so it does not overlap the system UI (status bar, home indicator) on mobile devices.
 
 Requirements: Node 22+. Yarn is optional. MongoDB and Redis are NOT needed for development (mocked automatically).
 
@@ -513,6 +531,21 @@ For example, the `FileInput` docs are at `./node_modules/@startupjs-ui/file-inpu
 | `DialogsProvider` | Enables `alert()`, `confirm()`, `prompt()` functions | Wrap at app root |
 | `ToastProvider` | Enables `toast()` function | Wrap at app root |
 
+### Page Structure
+
+Every page should be wrapped in `ScrollView(full)` so it is scrollable on mobile:
+
+```js
+pug`
+  ScrollView(full)
+    Content(padding)
+      Span(h1) My Page
+      // ... page content
+`
+```
+
+`ScrollView(full)` makes the scroll view take the full height of the screen. Without it, pages with long content will be cut off on mobile and the user won't be able to scroll.
+
 ### Layout with Div
 
 ```js
@@ -665,7 +698,7 @@ async function isLoggedIn (req, res, next) {
 ```js
 // Complete example: a todo list component
 import { observer, $, useSub, pug, styl } from 'startupjs'
-import { Button, Card, Checkbox, Content, Div, Span, TextInput } from 'startupjs-ui'
+import { Button, Card, Checkbox, Content, Div, ScrollView, Span, TextInput } from 'startupjs-ui'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 export default observer(function TodoList () {
@@ -680,32 +713,33 @@ export default observer(function TodoList () {
   }
 
   return pug`
-    Content(padding)
-      Span(h1) TODO List
+    ScrollView(full)
+      Content(padding)
+        Span(h1) TODO List
 
-      Div.inputRow(row vAlign='center')
-        TextInput.input(
-          value=$newTitle.get()
-          onChangeText=value => $newTitle.set(value)
-          placeholder='What needs to be done?'
-        )
-        Button(onPress=addTodo) Add
+        Div.inputRow(row vAlign='center')
+          TextInput.input(
+            value=$newTitle.get()
+            onChangeText=value => $newTitle.set(value)
+            placeholder='What needs to be done?'
+          )
+          Button(onPress=addTodo) Add
 
-      each $todo in $todos
-        Card(key=$todo.getId())
-          Div(row align='between' vAlign='center')
-            Checkbox(
-              value=$todo.completed.get()
-              onChange=value => $todo.completed.set(value)
-            )
-            Span(styleName=['todoTitle', { completed: $todo.completed.get() }])
-              = $todo.title.get()
-            Button(
-              icon=faTimes
-              iconColor='error'
-              size='s'
-              onPress=() => $todo.del()
-            )
+        each $todo in $todos
+          Card(key=$todo.getId())
+            Div(row align='between' vAlign='center')
+              Checkbox(
+                value=$todo.completed.get()
+                onChange=value => $todo.completed.set(value)
+              )
+              Span(styleName=['todoTitle', { completed: $todo.completed.get() }])
+                = $todo.title.get()
+              Button(
+                icon=faTimes
+                iconColor='error'
+                size='s'
+                onPress=() => $todo.del()
+              )
   `
 
   styl`
