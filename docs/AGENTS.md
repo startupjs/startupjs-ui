@@ -414,6 +414,38 @@ const isOpen = $._page.sidebar.opened.get()
 const userId = $._session.userId.get()
 ```
 
+## Current User
+
+StartupJS automatically provides a unique user ID on the client via `$._session.userId`:
+
+```js
+const userId = $._session.userId.get()
+```
+
+This ID is generated per browser session and persists until the tab is closed. Use the `users` collection to store per-user data (preferences, progress, settings, etc.):
+
+```js
+const userId = $._session.userId.get()
+const $user = useSub($.users[userId])
+
+// Create user doc on first visit if it doesn't exist.
+// Throw the promise — Suspense (inside observer) will catch it
+// and re-render the component once the doc is created on the backend.
+if (!$user.get()) {
+  throw $.users.add({ id: userId, name: '', settings: {} })
+}
+
+// Read user data in render
+const name = $user.name.get()
+
+// Write user data in event handlers (async functions)
+async function updateTheme () {
+  await $user.settings.theme.set('light')
+}
+```
+
+**IMPORTANT**: Use `throw` (not `await`) when creating docs inside a component render body. The thrown promise is caught by Suspense (built into `observer`) which suspends the component until the document is created, then re-renders. Pass the explicit `id: userId` so the document ID matches the session user ID. Use `await` only inside event handlers and other async functions — never in the render body itself.
+
 ## UI Components
 
 All components below are imported from `'startupjs-ui'`. For detailed API docs on any component, read its README at:
