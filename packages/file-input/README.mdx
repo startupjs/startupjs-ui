@@ -1,29 +1,26 @@
-import { useState } from 'react'
-import { $, useSub } from 'startupjs'
-import FileInput, { _PropsJsonSchema as FileInputPropsJsonSchema } from './index'
-import Div from '@startupjs-ui/div'
-import Avatar from '@startupjs-ui/avatar'
-import Span from '@startupjs-ui/span'
-import { Sandbox } from '@startupjs-ui/docs'
+import { useState } from "react";
+import { $, useSub } from "startupjs";
+import FileInput, {
+  _PropsJsonSchema as FileInputPropsJsonSchema,
+} from "./index";
+import Div from "@startupjs-ui/div";
+import Avatar from "@startupjs-ui/avatar";
+import Span from "@startupjs-ui/span";
+import { Sandbox } from "@startupjs-ui/docs";
 
 # FileInput
 
 FileInput lets users pick a file (or image) and upload it to your StartupJS backend. The `value` is a `fileId` pointing to a document in the `files` model, and `onChange` is called with the new `fileId` after a successful upload.
 
 ```jsx
-import { FileInput } from 'startupjs-ui'
+import { FileInput } from "startupjs-ui";
 ```
 
 ## Basic usage
 
 ```jsx example
-const [fileId, setFileId] = useState()
-return (
-  <FileInput
-    value={fileId}
-    onChange={setFileId}
-  />
-)
+const [fileId, setFileId] = useState();
+return <FileInput value={fileId} onChange={setFileId} />;
 ```
 
 ## Image picker
@@ -31,23 +28,23 @@ return (
 Set `image` to `true` to open an image picker instead of a document picker.
 
 ```jsx
-const $avatarFileId = $()
-const $file = useSub($.files[$avatarFileId.get() ?? '__DUMMY__'])
+const $avatarFileId = $();
+const $file = useSub($.files[$avatarFileId.get() ?? "__DUMMY__"]);
 return (
   <Div gap>
     <Span>Your avatar:</Span>
-    {
-      $avatarFileId.get()
-        ? <Avatar src={$file.getUrl() + '?' + $file.updatedAt.get()}>{name}</Avatar>
-        : <Span italic>No avatar uploaded</Span>
-    }
+    {$avatarFileId.get() ? (
+      <Avatar src={$file.getUrl() + "?" + $file.updatedAt.get()}>{name}</Avatar>
+    ) : (
+      <Span italic>No avatar uploaded</Span>
+    )}
     <FileInput
       image
       value={$avatarFileId.get()}
-      onChange={fileId => $avatarFileId.set(fileId)}
+      onChange={(fileId) => $avatarFileId.set(fileId)}
     />
   </Div>
-)
+);
 ```
 
 **Note:** Appending `?` and the `updatedAt` timestamp to the URL is optional. It forces the browser to reload the image after it has been changed, instead of showing a cached version. This is useful for profile picture editors and similar use cases.
@@ -73,25 +70,72 @@ Pass a `ref` to access the following methods:
 - **deleteFile()** -- deletes the currently selected file
 - **uploadFile(asset, fileId?)** -- uploads a picked asset to the server and returns the new `fileId`
 
-## Storage providers
+## Storage providers (plugin system)
 
-FileInput supports multiple storage backends. By default it uses SQLite, but if `MONGO_URL` is configured (MongoDB is used by StartupJS), the default storage becomes MongoDB (GridFS). You can force a specific provider with `DEFAULT_STORAGE_TYPE`.
+FileInput uses a **modular plugin system** for storage backends. The core `@startupjs-ui/file-input` package is provider-agnostic — each storage backend is a separate package that you install and import explicitly.
 
-### SQLite (default)
+### Available provider plugins
 
-- Default when no `MONGO_URL` is configured.
-- Force with `DEFAULT_STORAGE_TYPE=sqlite`.
+| Plugin package                             | Storage type | SDK dependency           |
+| ------------------------------------------ | ------------ | ------------------------ |
+| `@startupjs-ui/file-input-provider-sqlite` | `sqlite`     | _(built into startupjs)_ |
+| `@startupjs-ui/file-input-provider-mongo`  | `mongo`      | `mongodb`                |
+| `@startupjs-ui/file-input-provider-azure`  | `azureblob`  | `@azure/storage-blob`    |
+| `@startupjs-ui/file-input-provider-s3`     | `s3`         | `@aws-sdk/client-s3`     |
 
-### MongoDB (GridFS)
+### Setup
 
-- Default when `MONGO_URL` is configured.
-- Force with `DEFAULT_STORAGE_TYPE=mongo`.
+1. **Install** the provider plugin(s) you need:
 
-### Azure Blob Storage
+```bash
+# For MongoDB GridFS (default when MONGO_URL is configured):
+yarn add @startupjs-ui/file-input-provider-mongo
 
-- Force with `DEFAULT_STORAGE_TYPE=azureblob`.
-- Requires `AZURE_BLOB_STORAGE_CONNECTION_STRING`.
-- Install the Azure SDK: `yarn add @azure/storage-blob`.
+# For SQLite (default for local dev without MongoDB):
+yarn add @startupjs-ui/file-input-provider-sqlite
+
+# For AWS S3:
+yarn add @startupjs-ui/file-input-provider-s3
+
+# For Azure Blob Storage:
+yarn add @startupjs-ui/file-input-provider-azure
+```
+
+2. **Import** the plugin in your server entry point (e.g. `server/index.js`):
+
+```js
+// Simply importing the package registers the provider automatically
+import "@startupjs-ui/file-input-provider-mongo";
+import "@startupjs-ui/file-input-provider-sqlite";
+```
+
+3. **Configure** the default storage type (optional):
+
+The system auto-detects which provider to use based on what is registered. You can force a specific one via the `DEFAULT_STORAGE_TYPE` environment variable:
+
+```bash
+DEFAULT_STORAGE_TYPE=mongo   # or sqlite, s3, azureblob
+```
+
+### Writing a custom provider plugin
+
+You can create your own storage provider plugin. A plugin must:
+
+1. Implement the provider interface (all functions are async):
+   - `validateSupport()` — check that the backend is available
+   - `getFileBlob(fileId, options)` — return file contents as Buffer
+   - `getFileSize(fileId, options)` — return file size in bytes
+   - `saveFileBlob(fileId, blob, options)` — save a Buffer to storage
+   - `deleteFile(fileId, options)` — remove a file from storage
+
+2. Register itself in the entry point:
+
+```js
+import { registerProvider } from "@startupjs-ui/file-input/providers/registry";
+import * as provider from "./provider.js";
+
+registerProvider("my-storage", provider);
+```
 
 ## Sandbox
 
@@ -99,7 +143,7 @@ FileInput supports multiple storage backends. By default it uses SQLite, but if 
   Component={FileInput}
   propsJsonSchema={FileInputPropsJsonSchema}
   props={{
-    onChange: fileId => alert('Uploaded fileId: ' + fileId)
+    onChange: (fileId) => alert("Uploaded fileId: " + fileId),
   }}
   block
 />

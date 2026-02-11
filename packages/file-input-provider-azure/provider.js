@@ -1,7 +1,8 @@
 import { BlobServiceClient } from '@azure/storage-blob'
 
 // Replace with your Azure Blob Storage connection string or Azurite connection string
-const AZURE_BLOB_STORAGE_CONNECTION_STRING = process.env.AZURE_BLOB_STORAGE_CONNECTION_STRING
+const AZURE_BLOB_STORAGE_CONNECTION_STRING =
+  process.env.AZURE_BLOB_STORAGE_CONNECTION_STRING
 const CONTAINER_NAME = 'files' // Container name for storing blobs
 
 let blobServiceClient
@@ -13,7 +14,9 @@ export function validateSupport () {
   }
   // Initialize the BlobServiceClient and ContainerClient once
   if (!blobServiceClient) {
-    blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_BLOB_STORAGE_CONNECTION_STRING)
+    blobServiceClient = BlobServiceClient.fromConnectionString(
+      AZURE_BLOB_STORAGE_CONNECTION_STRING
+    )
     containerClient = blobServiceClient.getContainerClient(CONTAINER_NAME)
     // Ensure container exists
     containerClient.createIfNotExists().catch((err) => {
@@ -34,11 +37,17 @@ export async function getFileBlob (fileId, options = {}) {
     const actualFileSize = properties.contentLength
 
     if (range) {
-      console.log('[Azure Blob Storage] Using Range request for optimal streaming:', { fileId, range })
+      console.log(
+        '[Azure Blob Storage] Using Range request for optimal streaming:',
+        { fileId, range }
+      )
 
       // Validate range boundaries
       if (range.start >= actualFileSize || range.start < 0) {
-        console.log('[Azure Blob Storage] Range start out of bounds:', { start: range.start, actualFileSize })
+        console.log('[Azure Blob Storage] Range start out of bounds:', {
+          start: range.start,
+          actualFileSize
+        })
         throw new Error('Range start out of bounds')
       }
 
@@ -47,7 +56,11 @@ export async function getFileBlob (fileId, options = {}) {
 
       // Ensure end is not before start
       if (adjustedEnd < range.start) {
-        console.log('[Azure Blob Storage] Invalid range:', { start: range.start, end: adjustedEnd, actualFileSize })
+        console.log('[Azure Blob Storage] Invalid range:', {
+          start: range.start,
+          end: adjustedEnd,
+          actualFileSize
+        })
         throw new Error('Invalid range')
       }
 
@@ -59,7 +72,10 @@ export async function getFileBlob (fileId, options = {}) {
       })
 
       // Download blob with range
-      const response = await blobClient.download(range.start, adjustedEnd - range.start + 1)
+      const response = await blobClient.download(
+        range.start,
+        adjustedEnd - range.start + 1
+      )
       const chunks = []
 
       for await (const chunk of response.readableStreamBody) {
@@ -78,7 +94,9 @@ export async function getFileBlob (fileId, options = {}) {
       })
 
       if (result.length === 0) {
-        console.warn('[Azure Blob Storage] Empty range response - this may indicate a problem')
+        console.warn(
+          '[Azure Blob Storage] Empty range response - this may indicate a problem'
+        )
       }
 
       return result

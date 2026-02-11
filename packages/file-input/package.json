@@ -14,6 +14,7 @@
     "./deleteFile": "./deleteFile.ts",
     "./uploadFile": "./uploadFile.ts",
     "./providers": "./providers/index.js",
+    "./providers/registry": "./providers/registry.js",
     "./files.plugin": "./files.plugin.js"
   },
   "dependencies": {
@@ -28,22 +29,8 @@
     "sharp": "^0.34.5"
   },
   "peerDependencies": {
-    "@aws-sdk/client-s3": "*",
-    "@azure/storage-blob": "*",
-    "mongodb": "*",
     "react": "*",
     "react-native": "*",
     "startupjs": "*"
-  },
-  "peerDependenciesMeta": {
-    "@aws-sdk/client-s3": {
-      "optional": true
-    },
-    "@azure/storage-blob": {
-      "optional": true
-    },
-    "mongodb": {
-      "optional": true
-    }
   }
 }

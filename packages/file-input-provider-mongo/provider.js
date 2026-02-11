@@ -23,12 +23,18 @@ export async function getFileBlob (fileId, options = {}) {
     // Performance optimization: use Range requests for partial content
     let downloadStream
     if (range) {
-      console.log('[MongoDB GridFS] Using Range request for optimal streaming:', { fileId, range })
+      console.log(
+        '[MongoDB GridFS] Using Range request for optimal streaming:',
+        { fileId, range }
+      )
 
       // Validate range boundaries
       const actualFileSize = files[0].length
       if (range.start >= actualFileSize || range.start < 0) {
-        console.log('[MongoDB GridFS] Range start out of bounds:', { start: range.start, actualFileSize })
+        console.log('[MongoDB GridFS] Range start out of bounds:', {
+          start: range.start,
+          actualFileSize
+        })
         return reject(new Error('Range start out of bounds'))
       }
 
@@ -37,7 +43,11 @@ export async function getFileBlob (fileId, options = {}) {
 
       // Ensure end is not before start
       if (adjustedEnd < range.start) {
-        console.log('[MongoDB GridFS] Invalid range:', { start: range.start, end: adjustedEnd, actualFileSize })
+        console.log('[MongoDB GridFS] Invalid range:', {
+          start: range.start,
+          end: adjustedEnd,
+          actualFileSize
+        })
         return reject(new Error('Invalid range'))
       }
 
@@ -87,7 +97,9 @@ export async function getFileBlob (fileId, options = {}) {
 
         // Validate that we got the expected data
         if (result.length === 0) {
-          console.warn('[MongoDB GridFS] Empty range response - this may indicate a problem')
+          console.warn(
+            '[MongoDB GridFS] Empty range response - this may indicate a problem'
+          )
         }
       }
       resolve(result)
@@ -126,7 +138,10 @@ export async function saveFileBlob (fileId, blob, options) {
     const uploadStream = bucket.openUploadStream(fileId)
 
     uploadStream.on('data', (chunk) => {
-      console.log('[MongoDB GridFS] Stream data received:', { fileId, chunkLength: chunk.length })
+      console.log('[MongoDB GridFS] Stream data received:', {
+        fileId,
+        chunkLength: chunk.length
+      })
     })
     uploadStream.on('end', () => {
       console.log('[MongoDB GridFS] Stream end event:', fileId)
@@ -179,7 +194,7 @@ export async function deleteFile (fileId, options) {
 
 const ERRORS = {
   mongoNotAvailable: `
-    [@startupjs/ui] FileInput: MongoDB connection is not available.
+    [@startupjs-ui/file-input-provider-mongo] MongoDB connection is not available.
     Make sure you have connected to MongoDB before using this function.
   `,
   fileNotFound: `
