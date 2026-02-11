@@ -367,7 +367,7 @@ In pug templates, use `each` to iterate query signals (see Pug Templates section
 
 ## observer()
 
-Every React component that reads signals MUST be wrapped with `observer()`:
+**Always wrap every component with `observer()`** — this is the default for all StartupJS components:
 
 ```js
 import { observer, $, useSub, pug } from 'startupjs'
@@ -381,7 +381,7 @@ export default observer(function MyComponent () {
 })
 ```
 
-Without `observer`, the component will NOT re-render when signal values change.
+`observer()` is required for signals reactivity, `useSub` subscriptions, and styles caching. Wrap all components by default — not just those that explicitly read signals.
 
 ## Private Collections
 
@@ -652,7 +652,7 @@ async function isLoggedIn (req, res, next) {
 1. **Do NOT use `.id` to get document IDs** — use `.getId()` instead
 2. **Prefer `startupjs-ui` over `react-native`** — use `Div` not `View`, `Span` not `Text`. Only use `react-native` for things not available in `startupjs-ui`
 3. **Do NOT read database signals without subscribing** — always use `useSub` or `sub` first
-4. **Do NOT forget `observer()`** — every component reading signals needs it
+4. **Do NOT forget `observer()`** — wrap every component by default, not just those reading signals
 5. **Do NOT use `useState`/`useEffect` for reactive data** — use signals (`$()`) and `observer` instead
 6. **Do NOT place raw text inside `Div`** — always wrap text in `Span`
 7. **Do NOT use inline `style` for layout/styling** — use `styl` template strings and `styleName`. Only use `style` for truly dynamic JS values
