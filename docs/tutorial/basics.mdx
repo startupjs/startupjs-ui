@@ -4,7 +4,7 @@ In this chapter you will build a working TODO list from scratch. Along the way y
 
 ## Start with a clean page
 
-Open `main/pages/PHome/index.jsx` and replace everything inside the `return` block:
+Open the home page file and replace its content. In a default Expo template with tabs, this is `app/(tabs)/index.tsx`. If your project does not use tabs, it is `app/index.tsx`.
 
 ```jsx
 return (
@@ -20,18 +20,18 @@ StartupJS uses its own components instead of HTML elements. `Content` is a layou
 
 ```jsx
 import { observer } from 'startupjs'
-import { Content, H1 } from 'startupjs-ui'
+import { Content, Span } from 'startupjs-ui'
 
 export default observer(function PHome () {
   return (
     <Content padding>
-      <H1>TODO List</H1>
+      <Span h1>TODO List</Span>
     </Content>
   )
 })
 ```
 
-`Content` with the `padding` prop adds comfortable spacing around your content. `H1` renders a top-level heading. You can explore these components in the docs sidebar under Components.
+`Content` with the `padding` prop adds comfortable spacing around your content. `Span` with the `h1` prop renders a top-level heading. You can explore these components in the docs sidebar under Components.
 
 ## Add a card
 
@@ -39,12 +39,12 @@ export default observer(function PHome () {
 
 ```jsx
 import { observer } from 'startupjs'
-import { Content, H1, Card, Span } from 'startupjs-ui'
+import { Content, Card, Span } from 'startupjs-ui'
 
 export default observer(function PHome () {
   return (
     <Content padding>
-      <H1>TODO List</H1>
+      <Span h1>TODO List</Span>
       <Card>
         <Span>Learn StartupJS</Span>
       </Card>
@@ -58,7 +58,7 @@ export default observer(function PHome () {
 Use `styleName` to connect a component to a style class defined in the accompanying `index.styl` file:
 
 ```jsx
-<H1 styleName='title'>TODO List</H1>
+<Span h1 styleName='title'>TODO List</Span>
 ```
 
 ```styl
@@ -81,16 +81,16 @@ Use the `useSub` hook to subscribe to a collection:
 
 ```jsx
 import { observer, $, useSub } from 'startupjs'
-import { Content, H1, Card, Span } from 'startupjs-ui'
+import { Content, Card, Span } from 'startupjs-ui'
 
 export default observer(function PHome () {
   const $todos = useSub($.todos, {})
 
   return (
     <Content padding>
-      <H1>TODO List</H1>
+      <Span h1>TODO List</Span>
       {$todos.map($todo => (
-        <Card key={$todo.id.get()}>
+        <Card key={$todo.getId()}>
           <Span>{$todo.title.get()}</Span>
         </Card>
       ))}
@@ -106,7 +106,7 @@ Here is what is happening:
 - `useSub($.todos, {})` subscribes to all documents in that collection. The `{}` is the query (an empty query means "everything").
 - `$todos` is a **query signal**. You can iterate over it with `.map()`. Each `$todo` in the callback is a signal pointing to a single document.
 - `$todo.title.get()` reads the value of the `title` field. Use `.get()` whenever you need the plain value.
-- `$todo.id.get()` reads the document's unique ID (used as the React `key`). Every document has an `id` field that is automatically generated when you call `.add()`.
+- `$todo.getId()` returns the document's unique identifier (used as the React `key`). Every document gets an auto-generated ID when you call `.add()`. Use `.getId()` (not `.id`) to retrieve it.
 
 The list is empty right now because there are no documents in the database yet. We will add them soon.
 
@@ -116,7 +116,7 @@ Let's make each todo item interactive. We will show a checkbox to mark it as don
 
 ```jsx
 import { observer, $, useSub } from 'startupjs'
-import { Button, Card, Checkbox, Content, Div, H1, Span } from 'startupjs-ui'
+import { Button, Card, Checkbox, Content, Div, Span } from 'startupjs-ui'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 export default observer(function PHome () {
@@ -124,9 +124,9 @@ export default observer(function PHome () {
 
   return (
     <Content padding>
-      <H1>TODO List</H1>
+      <Span h1>TODO List</Span>
       {$todos.map($todo => (
-        <Card key={$todo.id.get()}>
+        <Card key={$todo.getId()}>
           <Div row align='between' vAlign='center'>
             <Checkbox
               value={$todo.completed.get()}
@@ -160,7 +160,7 @@ To create new todos, add a text input and a submit button. We will use a **local
 
 ```jsx
 import { observer, $, useSub } from 'startupjs'
-import { Button, Card, Checkbox, Content, Div, H1, Span, TextInput } from 'startupjs-ui'
+import { Button, Card, Checkbox, Content, Div, Span, TextInput } from 'startupjs-ui'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 export default observer(function PHome () {
@@ -176,7 +176,7 @@ export default observer(function PHome () {
 
   return (
     <Content padding>
-      <H1>TODO List</H1>
+      <Span h1>TODO List</Span>
 
       <Div row vAlign='center'>
         <TextInput
@@ -189,7 +189,7 @@ export default observer(function PHome () {
       </Div>
 
       {$todos.map($todo => (
-        <Card key={$todo.id.get()}>
+        <Card key={$todo.getId()}>
           <Div row align='between' vAlign='center'>
             <Checkbox
               value={$todo.completed.get()}
@@ -223,7 +223,7 @@ Here is the full component:
 
 ```jsx
 import { observer, $, useSub } from 'startupjs'
-import { Button, Card, Checkbox, Content, Div, H1, Span, TextInput } from 'startupjs-ui'
+import { Button, Card, Checkbox, Content, Div, Span, TextInput } from 'startupjs-ui'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 export default observer(function PHome () {
@@ -239,7 +239,7 @@ export default observer(function PHome () {
 
   return (
     <Content padding>
-      <H1>TODO List</H1>
+      <Span h1>TODO List</Span>
 
       <Div row vAlign='center'>
         <TextInput
@@ -252,7 +252,7 @@ export default observer(function PHome () {
       </Div>
 
       {$todos.map($todo => (
-        <Card key={$todo.id.get()}>
+        <Card key={$todo.getId()}>
           <Div row align='between' vAlign='center'>
             <Checkbox
               value={$todo.completed.get()}

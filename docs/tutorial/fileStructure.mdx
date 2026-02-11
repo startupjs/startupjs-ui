@@ -1,6 +1,67 @@
 # Project structure
 
-When you run `npx startupjs init myapp`, you get a project with a standard layout. This chapter explains the key folders and files.
+A StartupJS project is built on top of Expo, so the folder layout follows standard Expo Router conventions. This chapter explains the key folders and files.
+
+## Typical layout
+
+```
+myapp/
+  app/
+    _layout.tsx        ← root layout (wraps with StartupjsProvider)
+    index.tsx          ← home page (/)
+    about.tsx          ← /about page
+    [id].tsx           ← dynamic route (e.g. /abc123)
+    (tabs)/
+      _layout.tsx      ← tab navigator layout
+      index.tsx        ← first tab
+      settings.tsx     ← second tab
+  components/
+    TodoCard.tsx       ← reusable components
+    TodoCard.styl      ← styles for the component
+  server/
+    index.js           ← server configuration
+  package.json
+```
+
+## Routing with Expo Router
+
+StartupJS uses [Expo Router](https://docs.expo.dev/router/introduction/) for file-based routing. Every file inside `app/` becomes a route automatically:
+
+- `app/index.tsx` → `/`
+- `app/about.tsx` → `/about`
+- `app/users/[id].tsx` → `/users/:id` (dynamic segment)
+
+### Layouts
+
+`_layout.tsx` files wrap all sibling and child routes. The root layout in `app/_layout.tsx` is where you add `StartupjsProvider`:
+
+```jsx
+import { StartupjsProvider } from 'startupjs'
+
+export default function RootLayout () {
+  return (
+    <StartupjsProvider>
+      {/* Expo Router renders child routes here */}
+    </StartupjsProvider>
+  )
+}
+```
+
+### Navigation
+
+Use Expo Router's `Link` component or the `router` object for navigation:
+
+```jsx
+import { Link } from 'expo-router'
+
+<Link href='/about'>Go to About</Link>
+```
+
+```jsx
+import { router } from 'expo-router'
+
+router.push('/about')
+```
 
 ## Platform-specific files
 
@@ -16,84 +77,36 @@ If both `Something.web.js` and `Something.js` exist, the web bundler uses the `.
 1. A library only works on one platform (for example, a web-only date picker).
 2. A screen has major UX differences between web and mobile. Use this sparingly -- most code should be shared.
 
-## Application entry point
+## Server
 
-The `Root` folder contains the top-level app entry. A typical entry file looks like this:
+The `server/` folder contains your backend configuration. A basic `server/index.js` might look like:
+
+```js
+import startupjsServer from '@startupjs/server'
+
+startupjsServer({
+  // Enable security features for production:
+  // accessControl: true,
+  // serverAggregate: true,
+  // validateSchema: true,
+})
+```
+
+## Styles
+
+Each component can have an accompanying `.styl` file for styles written in Stylus. Use `styleName` to connect styles to components:
 
 ```jsx
-import { BASE_URL } from '@env'
-import init from 'startupjs/init'
-import App from 'startupjs/app'
-import { observer } from 'startupjs'
-import * as main from '../main'
-
-init({ baseUrl: BASE_URL })
-
-export default observer(() => (
-  <App apps={main} />
-))
+// TodoCard.tsx
+<Card styleName='root'>
+  <Span styleName='title'>Learn StartupJS</Span>
+</Card>
 ```
 
-Key points:
-
-- `init({ baseUrl })` connects to the server and sets up the framework.
-- `App` mounts your application(s).
-- `main` is the default app. You can add more apps that share the same server and database.
-
-## Apps
-
-Every project starts with one app called `main`. Inside an app folder, the key files are:
-
-### `routes.js`
-
-Defines the URL-to-component mapping:
-
-```js
-export default (components = {}) => [
-  {
-    path: '/',
-    exact: true,
-    component: components.PHome
-  },
-  {
-    path: '/about',
-    exact: true,
-    component: components.PAbout
-  }
-]
+```styl
+// TodoCard.styl
+.root
+  margin-bottom 1u
+.title
+  font-weight bold
 ```
-
-### `index.js`
-
-Exports the app's routes and layout:
-
-```js
-import * as pages from './pages'
-import getRoutes from './routes'
-
-export { default as Layout } from './Layout'
-export const routes = getRoutes(pages)
-```
-
-### `Layout`
-
-`Layout` wraps every page in the app. This is where you place shared UI like headers, footers, and sidebars.
-
-## Pages
-
-Each page is a component in the `pages/` folder. By convention, page component names start with `P`:
-
-```
-main/
-  pages/
-    PHome/
-      index.jsx
-      index.styl
-    PAbout/
-      index.jsx
-      index.styl
-```
-
-Each page folder typically contains:
-- `index.jsx` -- the page component
-- `index.styl` -- styles for the page (using Stylus)

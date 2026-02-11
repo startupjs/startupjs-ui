@@ -4,56 +4,122 @@ StartupJS is a full-stack framework for building real-time, cross-platform apps.
 
 ## Prerequisites
 
-You need a few tools installed on your machine before you can create a project.
-
-**Node.js** -- JavaScript runtime (version 18 or higher recommended)
+**Node.js** -- version 22 or higher
 
 ```
 brew install node
 ```
 
-**MongoDB** -- the database StartupJS uses to store your data
+**Yarn** (optional but recommended)
+
+If you prefer Yarn over npm, enable Corepack and activate Yarn 4:
 
 ```
-brew tap mongodb/brew
-brew install mongodb-community
-brew services start mongodb-community
+corepack enable
 ```
 
-**Redis** -- used for pub/sub messaging between server instances
-
-```
-brew install redis
-brew services start redis
-```
-
-**Yarn** -- package manager
-
-```
-brew install yarn
-```
+> If `corepack` is not available, install it globally first: `npm install -g corepack`
 
 > These commands use Homebrew on macOS. On other operating systems, follow each tool's official installation guide.
 
+You do **not** need to install MongoDB or Redis for local development. StartupJS uses in-memory mocks by default. For production, see the [production setup](#production-setup) section below.
+
 ## Create a project
 
-Run these three commands to scaffold a new app:
+### 1. Create an Expo app
+
+If using **Yarn** (recommended):
 
 ```bash
-npx startupjs init myapp
+yarn create expo-app myapp
 cd myapp
+echo 'nodeLinker: node-modules' > .yarnrc.yml && corepack use yarn@4
+```
+
+If using **npm**:
+
+```bash
+npx create-expo-app@latest myapp
+cd myapp
+```
+
+### 2. Install StartupJS
+
+```bash
+npm init startupjs@latest
+```
+
+### 3. Fix dependency versions (temporary)
+
+Add the following to your `package.json` to fix a known compatibility issue, then run `npm install` again:
+
+If using **npm**:
+
+```json
+"overrides": {
+  "sharedb-redis-pubsub": {
+    ".": "2.0.1",
+    "sharedb": "5.2.2"
+  }
+}
+```
+
+If using **Yarn**:
+
+```json
+"resolutions": {
+  "sharedb-redis-pubsub": "2.0.1",
+  "sharedb-redis-pubsub/sharedb": "5.2.2"
+}
+```
+
+### 4. Wrap your root component
+
+Open `app/_layout.tsx` and wrap your root component with `StartupjsProvider`:
+
+```jsx
+import { StartupjsProvider } from 'startupjs'
+
+export default function RootLayout () {
+  return (
+    <StartupjsProvider>
+      {/* your existing layout content */}
+    </StartupjsProvider>
+  )
+}
+```
+
+### 5. Start the app
+
+```bash
+yarn start
+```
+
+Or with npm:
+
+```bash
 npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser. Edit `main/pages/PHome/index.jsx` and save the file -- the browser updates automatically.
+The app opens in your browser. Edit files and save -- the browser updates automatically.
+
+## Production setup
+
+For production, use a real MongoDB and Redis instead of the default mocks:
+
+```bash
+MONGO_URL=mongodb://... REDIS_URL=redis://... yarn start-production
+```
+
+Build first with `yarn build`, then run with `yarn start-production`.
 
 ## Why StartupJS?
 
-- **Cross-platform** -- one codebase for web, iOS, and Android (built on React Native).
+- **Cross-platform** -- one codebase for web, iOS, and Android (built on Expo and React Native).
 - **Real-time sync** -- data changes on one client appear instantly on all others.
 - **Signals** -- reactive data pointers that automatically update your UI when data changes.
 - **Built-in UI library** -- a full set of ready-to-use components designed for all platforms.
-- **Scalable backend** -- server, database, and pub/sub are set up for you.
+- **Zero setup database** -- MongoDB and Redis are mocked locally so you can start building immediately.
 
 ## How to use this tutorial
 

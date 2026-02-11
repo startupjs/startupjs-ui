@@ -56,7 +56,7 @@ You can loop over it:
 
 ```jsx
 {$todos.map($todo => (
-  <Card key={$todo.id.get()}>
+  <Card key={$todo.getId()}>
     <Span>{$todo.title.get()}</Span>
   </Card>
 ))}
@@ -105,7 +105,7 @@ Query signals support several useful methods:
 - `.map(callback)` -- transform each document signal
 - `.reduce(callback, initial)` -- reduce to a single value
 - `.find(predicate)` -- find the first matching document signal
-- `.ids` -- a signal containing the array of document IDs
+- `.getIds()` -- returns the array of document IDs
 
 ```jsx
 // Get all titles as an array of strings

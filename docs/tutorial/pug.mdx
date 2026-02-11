@@ -18,7 +18,7 @@ https://github.com/startupjs/startupjs#ide-configuration
 
 ```pug
 Content
-  H1 TODO List
+  Span(h1) TODO List
   Card
     Span Learn StartupJS
 ```
@@ -27,7 +27,7 @@ Content
 
 ```jsx
 <Content>
-  <H1>TODO List</H1>
+  <Span h1>TODO List</Span>
   <Card>
     <Span>Learn StartupJS</Span>
   </Card>
@@ -38,14 +38,14 @@ Add classes with dot notation:
 
 ```pug
 Content.root
-  H1.title TODO List
+  Span.title(h1) TODO List
   Card.todo
     Span.todoTitle Learn StartupJS
 ```
 
 ```jsx
 <Content styleName='root'>
-  <H1 styleName='title'>TODO List</H1>
+  <Span h1 styleName='title'>TODO List</Span>
   <Card styleName='todo'>
     <Span styleName='todoTitle'>Learn StartupJS</Span>
   </Card>
@@ -91,18 +91,18 @@ Use `each` to render arrays:
 
 ```pug
 Content(padding)
-  H1 Todo List
+  Span(h1) Todo List
   each $todo in $todos
-    Card(key=$todo.id.get())
+    Card(key=$todo.getId())
       Span= $todo.title.get()
 ```
 
 ## Conditions
 
 ```pug
-if $todos.ids.get().length
+if $todos.getIds().length
   each $todo in $todos
-    Card(key=$todo.id.get())
+    Card(key=$todo.getId())
       Span= $todo.title.get()
 else
   Span No tasks yet
