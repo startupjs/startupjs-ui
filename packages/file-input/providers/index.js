@@ -1,4 +1,8 @@
-import { mongo, sqlite } from 'startupjs/server'
+import {
+  getProvider,
+  getRegisteredProviders,
+  getDefaultProviderName
+} from './registry.js'
 
 export async function getFileBlob (storageType, fileId, options) {
   return (await getStorageProvider(storageType)).getFileBlob(fileId, options)
@@ -9,7 +13,11 @@ export async function getFileSize (storageType, fileId, options) {
 }
 
 export async function saveFileBlob (storageType, fileId, blob, options) {
-  return (await getStorageProvider(storageType)).saveFileBlob(fileId, blob, options)
+  return (await getStorageProvider(storageType)).saveFileBlob(
+    fileId,
+    blob,
+    options
+  )
 }
 
 export async function deleteFile (storageType, fileId, options) {
@@ -20,9 +28,18 @@ export async function getDefaultStorageType () {
   const storage = process.env.DEFAULT_STORAGE_TYPE
 
   if (storage) return storage
-  if (mongo) return 'mongo'
-  if (sqlite) return 'sqlite'
-  throw Error(ERRORS.noDefaultStorageProvider)
+
+  // Check if any provider registered itself as default
+  const defaultName = getDefaultProviderName()
+  if (defaultName) return defaultName
+
+  // Fallback: auto-detect based on which providers are registered.
+  // Prefer mongo over sqlite when both are available.
+  const registered = getRegisteredProviders()
+  if (registered.includes('mongo')) return 'mongo'
+  if (registered.includes('sqlite')) return 'sqlite'
+
+  throw Error(ERRORS.noDefaultStorageProvider(registered))
 }
 
 const moduleCache = {}
@@ -30,17 +47,13 @@ const moduleCache = {}
 async function getStorageProvider (storageType) {
   if (moduleCache[storageType]) return moduleCache[storageType]
 
-  let theModule
-  if (storageType === 'sqlite') {
-    theModule = await import('./sqlite.js')
-  } else if (storageType === 'mongo') {
-    theModule = await import('./mongo.js')
-  } else if (storageType === 'azureblob') {
-    theModule = await import('./azureblob.js')
-  } else if (storageType === 's3') {
-    theModule = await import('./awsS3.js')
-  } else {
-    throw Error(ERRORS.unsupportedStorageType(storageType))
+  // Look up the provider from the plugin registry
+  const theModule = getProvider(storageType)
+
+  if (!theModule) {
+    throw Error(
+      ERRORS.unsupportedStorageType(storageType, getRegisteredProviders())
+    )
   }
 
   await theModule.validateSupport?.()
@@ -50,13 +63,17 @@ async function getStorageProvider (storageType) {
 }
 
 const ERRORS = {
-  unsupportedStorageType: storageType => `
-    [@startupjs/ui] FileInput: You tried getting file from storageType '${storageType}',
-    but it's not supported.
-    This should never happen.
+  unsupportedStorageType: (storageType, registered) => `
+    [@startupjs-ui/file-input] You tried getting file from storageType '${storageType}',
+    but it's not registered.
+    Currently registered providers: [${registered.join(', ')}].
+    Make sure the corresponding provider plugin is installed and imported, e.g.:
+      import '@startupjs-ui/file-input-provider-${storageType}'
   `,
-  noDefaultStorageProvider: `
-    [@startupjs/ui] FileInput: No default storage provider can be used.
-    Neither MongoDB is used in your project nor SQLite (persistent mingo).
+  noDefaultStorageProvider: (registered) => `
+    [@startupjs-ui/file-input] No default storage provider can be used.
+    Currently registered providers: [${registered.join(', ')}].
+    Either install a provider plugin (e.g. @startupjs-ui/file-input-provider-mongo)
+    or set the DEFAULT_STORAGE_TYPE environment variable.
   `
 }

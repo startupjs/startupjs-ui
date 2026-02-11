@@ -1,0 +1,17 @@
+{
+  "name": "@startupjs-ui/file-input-provider-s3",
+  "version": "0.1.16",
+  "description": "AWS S3 storage provider plugin for @startupjs-ui/file-input",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.600.0",
+    "@startupjs-ui/file-input": "^0.1.16"
+  },
+  "peerDependencies": {
+    "startupjs": "*"
+  }
+}

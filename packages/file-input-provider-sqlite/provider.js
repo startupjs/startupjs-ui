@@ -16,11 +16,17 @@ export async function getFileBlob (fileId, options = {}) {
       const actualFileSize = blob.length
 
       if (range) {
-        console.log('[SQLite] Using Range request for optimal streaming:', { fileId, range })
+        console.log('[SQLite] Using Range request for optimal streaming:', {
+          fileId,
+          range
+        })
 
         // Validate range boundaries
         if (range.start >= actualFileSize || range.start < 0) {
-          console.log('[SQLite] Range start out of bounds:', { start: range.start, actualFileSize })
+          console.log('[SQLite] Range start out of bounds:', {
+            start: range.start,
+            actualFileSize
+          })
           return reject(new Error('Range start out of bounds'))
         }
 
@@ -29,7 +35,11 @@ export async function getFileBlob (fileId, options = {}) {
 
         // Ensure end is not before start
         if (adjustedEnd < range.start) {
-          console.log('[SQLite] Invalid range:', { start: range.start, end: adjustedEnd, actualFileSize })
+          console.log('[SQLite] Invalid range:', {
+            start: range.start,
+            end: adjustedEnd,
+            actualFileSize
+          })
           return reject(new Error('Invalid range'))
         }
 
@@ -53,7 +63,9 @@ export async function getFileBlob (fileId, options = {}) {
         })
 
         if (result.length === 0) {
-          console.warn('[SQLite] Empty range response - this may indicate a problem')
+          console.warn(
+            '[SQLite] Empty range response - this may indicate a problem'
+          )
         }
 
         resolve(result)
@@ -67,16 +79,20 @@ export async function getFileBlob (fileId, options = {}) {
 
 export async function saveFileBlob (fileId, blob, options) {
   return await new Promise((resolve, reject) => {
-    sqlite.run('INSERT OR REPLACE INTO files (id, data) VALUES (?, ?)', [fileId, blob], err => {
-      if (err) return reject(err)
-      resolve()
-    })
+    sqlite.run(
+      'INSERT OR REPLACE INTO files (id, data) VALUES (?, ?)',
+      [fileId, blob],
+      (err) => {
+        if (err) return reject(err)
+        resolve()
+      }
+    )
   })
 }
 
 export async function deleteFile (fileId, options) {
   return await new Promise((resolve, reject) => {
-    sqlite.run('DELETE FROM files WHERE id = ?', [fileId], err => {
+    sqlite.run('DELETE FROM files WHERE id = ?', [fileId], (err) => {
       if (err) return reject(err)
       resolve()
     })
@@ -97,7 +113,7 @@ export async function getFileSize (fileId, options) {
 
 const ERRORS = {
   disabled: `
-    [@startupjs/ui] FileInput: You tried getting file from SQLite,
+    [@startupjs-ui/file-input-provider-sqlite] You tried getting file from SQLite,
     but it's not used in your project.
     ('storageType' is set to 'sqlite' in the 'files' document).
     This should never happen.

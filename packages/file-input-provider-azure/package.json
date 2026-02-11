@@ -1,0 +1,17 @@
+{
+  "name": "@startupjs-ui/file-input-provider-azure",
+  "version": "0.1.16",
+  "description": "Azure Blob Storage provider plugin for @startupjs-ui/file-input",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "@azure/storage-blob": "^12.26.0",
+    "@startupjs-ui/file-input": "^0.1.16"
+  },
+  "peerDependencies": {
+    "startupjs": "*"
+  }
+}

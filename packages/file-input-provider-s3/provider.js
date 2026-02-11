@@ -1,5 +1,11 @@
 import { $, sub } from 'startupjs'
-import { S3Client, GetObjectCommand, PutObjectCommand, DeleteObjectCommand, HeadObjectCommand } from '@aws-sdk/client-s3'
+import {
+  S3Client,
+  GetObjectCommand,
+  PutObjectCommand,
+  DeleteObjectCommand,
+  HeadObjectCommand
+} from '@aws-sdk/client-s3'
 
 // AWS S3 Configuration from environment variables
 const AWS_REGION = process.env.AWS_REGION
@@ -69,11 +75,18 @@ export async function getFileBlob (fileId, options = {}) {
     const actualFileSize = headResponse.ContentLength
 
     if (range) {
-      console.log('[AWS S3] Using Range request for optimal streaming:', { fileId, range, filePath })
+      console.log('[AWS S3] Using Range request for optimal streaming:', {
+        fileId,
+        range,
+        filePath
+      })
 
       // Validate range boundaries
       if (range.start >= actualFileSize || range.start < 0) {
-        console.log('[AWS S3] Range start out of bounds:', { start: range.start, actualFileSize })
+        console.log('[AWS S3] Range start out of bounds:', {
+          start: range.start,
+          actualFileSize
+        })
         throw new Error('Range start out of bounds')
       }
 
@@ -82,7 +95,11 @@ export async function getFileBlob (fileId, options = {}) {
 
       // Ensure end is not before start
       if (adjustedEnd < range.start) {
-        console.log('[AWS S3] Invalid range:', { start: range.start, end: adjustedEnd, actualFileSize })
+        console.log('[AWS S3] Invalid range:', {
+          start: range.start,
+          end: adjustedEnd,
+          actualFileSize
+        })
         throw new Error('Invalid range')
       }
 
@@ -117,7 +134,9 @@ export async function getFileBlob (fileId, options = {}) {
       })
 
       if (result.length === 0) {
-        console.warn('[AWS S3] Empty range response - this may indicate a problem')
+        console.warn(
+          '[AWS S3] Empty range response - this may indicate a problem'
+        )
       }
 
       return result
