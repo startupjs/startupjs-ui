@@ -1,20 +1,10 @@
-import { useEffect } from 'react'
-import {
-  pug,
-  styl,
-  observer,
-  $,
-  useSub
-} from 'startupjs'
-import { Div, Span, Button, TextInput } from 'startupjs-ui'
-
 # Editing patterns
 
 StartupJS is reactive by default: when you update a document, every subscribed client sees the change immediately. That is great for collaboration, but sometimes you want a local draft that only saves on demand.
 
 ## Setup: create a demo document
 
-```jsx example
+```jsx
 const docId = 'a2205406-7de4-43a4-8b73-48ea23a8aaab'
 const $doc = useSub($.temp[docId])
 
@@ -32,7 +22,7 @@ return pug`
 
 Changes are written to the document immediately, so the UI stays in sync with the database.
 
-```jsx example
+```jsx
 const docId = 'a2205406-7de4-43a4-8b73-48ea23a8aaab'
 const $doc = useSub($.temp[docId])
 
@@ -55,7 +45,7 @@ styl`
 
 If you want a "Save" button, keep a local copy and only write changes to the document when the user confirms.
 
-```jsx example
+```jsx
 const docId = 'a2205406-7de4-43a4-8b73-48ea23a8aaab'
 const $doc = useSub($.temp[docId])
 const $draft = $({ ...$doc.get() })
@@ -102,7 +92,7 @@ If the draft must survive page reloads, store it in a separate document. A commo
 draft__<userId>__<docId>
 ```
 
-```jsx example
+```jsx
 const userId = $._session.userId.get()
 const docId = 'a2205406-7de4-43a4-8b73-48ea23a8aaab'
 const draftId = `draft__${userId}__${docId}`

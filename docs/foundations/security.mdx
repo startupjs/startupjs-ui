@@ -122,54 +122,24 @@ const $events = useSub($.events, {
 })
 ```
 
-## Route guards (client + server)
-
-You can prevent navigation to protected pages by adding `filters` in `routes.js`. Filters run on both client and server transitions.
-
-Server-side code (route guards, REST middleware) uses the request-scoped `model` to read session data, since each request has its own session.
-
-```js
-import { $, sub } from 'startupjs'
-
-export async function isAdmin (model, next, redirect) {
-  const userId = model.get('_session.userId')
-  const $user = await sub($.users[userId])
-  const isAdmin = $user.role.get() === 'admin'
-
-  if (isAdmin) return next()
-  return redirect('/403')
-}
-
-export default (components = {}) => [
-  {
-    path: '/admin/users',
-    exact: true,
-    component: components.PUsers,
-    filters: [isAdmin]
-  }
-]
-```
-
 ## REST API checks (server)
 
 Always validate access for REST endpoints. Express makes this simple with middleware.
 
-Server-side code (route guards, REST middleware) uses the request-scoped `model` to read session data, since each request has its own session.
+On the server, there are no private collections like `$._session`. Instead, the user ID is available on the request session object as `req.session.userId`. Use `sub` from `'startupjs'` to subscribe to documents:
 
 ```js
 import express from 'express'
 import { $, sub } from 'startupjs'
 
 async function isLoggedIn (req, res, next) {
-  const { model } = req
-  const loggedIn = model.get('_session.loggedIn')
-  if (!loggedIn) return res.sendStatus(403)
+  const userId = req.session.userId
+  if (!userId) return res.sendStatus(403)
   next()
 }
 
 async function isAdmin (req, res, next) {
-  const { model } = req
-  const userId = model.get('_session.userId')
+  const userId = req.session.userId
   const $user = await sub($.users[userId])
   const role = $user.role.get()
 

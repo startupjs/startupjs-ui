@@ -38,18 +38,20 @@ Use private collections for UI state, temporary data, and any values that do not
 
 ## Routing parameters
 
-Routes can be parameterized using a `:` prefix. For example: `/pokemon/:pokemonId`.
+StartupJS uses Expo Router for file-based routing. Routes are parameterized using bracket syntax in file names. For example: `app/pokemon/[pokemonId].tsx`.
 
 To navigate programmatically:
 
 ```js
-emit('url', '/pokemon/' + pokemonId)
+import { router } from 'expo-router'
+
+router.push('/pokemon/' + pokemonId)
 ```
 
-`emit` is a StartupJS navigation helper imported from `startupjs`.
-
-On the target page, read the parameter from `$._page.params`:
+On the target page, read the parameter with `useLocalSearchParams`:
 
 ```js
-const pokemonId = $._page.params.pokemonId.get()
+import { useLocalSearchParams } from 'expo-router'
+
+const { pokemonId } = useLocalSearchParams()
 ```

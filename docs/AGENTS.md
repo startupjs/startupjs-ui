@@ -698,13 +698,13 @@ router.push('/about')
 
 ## Server-Side Code
 
-Server-side code uses the same `$` and `sub` from `'startupjs'`, just like on the client:
+Server-side code uses `$` and `sub` from `'startupjs'` for data access. However, private collections like `$._session` are NOT available on the server. Instead, the user ID is on the request session object as `req.session.userId`:
 
 ```js
 import { $, sub } from 'startupjs'
 
 async function isLoggedIn (req, res, next) {
-  const userId = $._session.userId.get()
+  const userId = req.session.userId
   if (!userId) return res.sendStatus(403)
   const $user = await sub($.users[userId])
   if (!$user.get()) return res.sendStatus(403)
