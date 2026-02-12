@@ -25,7 +25,17 @@ export default observer(({ children }) => {
   useEffect(() => {
     setSearch('')
   }, [component])
-  const filteredComponents = DOC_COMPONENT_NAMES.filter(name => name.toLowerCase().includes(search.toLowerCase()))
+
+  const filteredCategories = useMemo(() => {
+    if (!search) return DOC_COMPONENT_CATEGORIES
+    const lower = search.toLowerCase()
+    return DOC_COMPONENT_CATEGORIES
+      .map(cat => ({
+        ...cat,
+        items: cat.items.filter(name => name.toLowerCase().includes(lower))
+      }))
+      .filter(cat => cat.items.length > 0)
+  }, [search])
 
   return pug`
     View.root
@@ -49,15 +59,10 @@ export default observer(({ children }) => {
             onChangeText=setSearch
           )
           ScrollView.items
-            Category(name='Tutorial')
-              each item in DOC_TUTORIAL_ITEMS
-                Item(key=item.path path=item.path setShowSidebar=setShowSidebar)= item.title
-            Category(name='Foundations')
-              each item in DOC_FOUNDATION_ITEMS
-                Item(key=item.path path=item.path setShowSidebar=setShowSidebar)= item.title
-            Category(name='Components' defaultOpen=true)
-              each component in filteredComponents
-                Item(key=component path=component setShowSidebar=setShowSidebar)= component
+            each cat in filteredCategories
+              Category(key=cat.name name=cat.name defaultOpen=true)
+                each component in cat.items
+                  Item(key=component path=component setShowSidebar=setShowSidebar)= component
         ScrollView.contentWrapper
           View.content
             Slot
@@ -254,87 +259,41 @@ const Item = observer(({ children, path, setShowSidebar }) => {
   `
 })
 
-const DOC_COMPONENT_NAMES = [
-  'AbstractPopover',
-  'Alert',
-  'ArrayInput',
-  'AutoSuggest',
-  'Avatar',
-  'Badge',
-  'Br',
-  'Breadcrumbs',
-  'Button',
-  'Card',
-  'Carousel',
-  'Checkbox',
-  'Collapse',
-  'ColorPicker',
-  'Content',
-  'DateTimePicker',
-  'Dialogs',
-  'Div',
-  'Divider',
-  'Draggable',
-  'Drawer',
-  'DrawerSidebar',
-  'Dropdown',
-  'FileInput',
-  'FlatList',
-  'Form',
-  'Icon',
-  'Input',
-  'Item',
-  'Layout',
-  'Link',
-  'Loader',
-  'Menu',
-  'Modal',
-  'MultiSelect',
-  'NumberInput',
-  'ObjectInput',
-  'Pagination',
-  'PasswordInput',
-  'Popover',
-  'Portal',
-  'Progress',
-  'Radio',
-  'RangeInput',
-  'Rank',
-  'Rating',
-  'ScrollView',
-  'Select',
-  'Sidebar',
-  'SmartSidebar',
-  'Span',
-  'Table',
-  'Tabs',
-  'Tag',
-  'TextInput',
-  'Toast',
-  'User'
-]
-
-const DOC_TUTORIAL_ITEMS = [
-  { title: 'Quickstart', path: 'tutorial/foundation' },
-  { title: 'To-Do app', path: 'tutorial/basics' },
-  { title: 'Observer pattern', path: 'tutorial/observer' },
-  { title: 'Signals & subscriptions', path: 'tutorial/sharedbHooks' },
-  { title: 'Signals API', path: 'tutorial/racerModel' },
-  { title: 'Project structure', path: 'tutorial/fileStructure' },
-  { title: 'Pug', path: 'tutorial/pug' },
-  { title: 'Stylus', path: 'tutorial/stylus' },
-  { title: 'Tricks with styles', path: 'tutorial/tricksWithStyles' }
-]
-
-const DOC_FOUNDATION_ITEMS = [
-  { title: 'Border radius', path: 'foundations/borderRadius' },
-  { title: 'Collection types', path: 'foundations/collectionTypes' },
-  { title: 'Colors', path: 'foundations/colors' },
-  { title: 'Color customization', path: 'foundations/colorCustomization' },
-  { title: 'Editing patterns', path: 'foundations/editing' },
-  { title: 'Export CSS to JS', path: 'foundations/exportCSStoJS' },
-  { title: 'Caching node_modules', path: 'foundations/nodeModulesCache' },
-  { title: 'Security', path: 'foundations/security' },
-  { title: 'WebSocket', path: 'foundations/websocket' },
-  { title: 'E2E testing', path: 'foundations/e2e-tests' }
+const DOC_COMPONENT_CATEGORIES = [
+  {
+    name: 'Layout & Structure',
+    items: ['Div', 'Content', 'Card', 'Layout', 'Sidebar', 'SmartSidebar', 'DrawerSidebar', 'Drawer', 'ScrollView', 'FlatList', 'Portal', 'Divider', 'Br']
+  },
+  {
+    name: 'Typography',
+    items: ['Span']
+  },
+  {
+    name: 'Buttons & Actions',
+    items: ['Button', 'Link', 'Tag']
+  },
+  {
+    name: 'Form Inputs',
+    items: ['TextInput', 'Checkbox', 'NumberInput', 'PasswordInput', 'Select', 'MultiSelect', 'Radio', 'RangeInput', 'ColorPicker', 'DateTimePicker', 'FileInput', 'Input', 'ArrayInput', 'ObjectInput', 'Form', 'Rank', 'Rating', 'AutoSuggest']
+  },
+  {
+    name: 'Feedback & Overlays',
+    items: ['Alert', 'Modal', 'Popover', 'Dropdown', 'Loader', 'Progress', 'Toast', 'Badge', 'Collapse']
+  },
+  {
+    name: 'Navigation & Data',
+    items: ['Tabs', 'Breadcrumbs', 'Pagination', 'Menu', 'Item', 'Table']
+  },
+  {
+    name: 'Display',
+    items: ['Avatar', 'Icon', 'User', 'Carousel', 'AbstractPopover']
+  },
+  {
+    name: 'Drag & Drop',
+    items: ['Draggable']
+  },
+  {
+    name: 'Providers',
+    items: ['Dialogs']
+  }
 ]
