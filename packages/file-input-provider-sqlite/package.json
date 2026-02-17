@@ -7,8 +7,9 @@
   },
   "main": "index.js",
   "type": "module",
-  "dependencies": {
-    "@startupjs-ui/file-input": "^0.1.16"
+  "exports": {
+    ".": "./index.js",
+    "./sqlite.plugin": "./sqlite.plugin.js"
   },
   "peerDependencies": {
     "startupjs": "*"

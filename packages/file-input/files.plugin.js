@@ -1,9 +1,22 @@
 import { $, BASE_URL, serverOnly, Signal, sub } from 'startupjs'
-import { createPlugin } from 'startupjs/registry'
+import { createPlugin, ROOT_MODULE as MODULE } from 'startupjs/registry'
 import busboy from 'busboy'
 import sharp from 'sharp'
-import { DELETE_FILE_URL, GET_FILE_URL, getDeleteFileUrl, getFileUrl, getUploadFileUrl, UPLOAD_SINGLE_FILE_URL } from './constants.js'
-import { deleteFile, getDefaultStorageType, getFileBlob, getFileSize } from './providers/index.js'
+import {
+  DELETE_FILE_URL,
+  GET_FILE_URL,
+  getDeleteFileUrl,
+  getFileUrl,
+  getUploadFileUrl,
+  UPLOAD_SINGLE_FILE_URL
+} from './constants.js'
+import {
+  deleteFile,
+  getDefaultStorageType,
+  getFileBlob,
+  getFileSize
+} from './providers/index.js'
+import { registerProvider } from './providers/registry.js'
 import { uploadBuffer } from './server/index.js'
 
 export default createPlugin({
@@ -11,7 +24,7 @@ export default createPlugin({
   enabled: true,
   order: 'system ui',
   isomorphic: () => ({
-    models: models => {
+    models: (models) => {
       return {
         ...models,
         files: {
@@ -27,24 +40,47 @@ export default createPlugin({
     }
   }),
   server: () => ({
-    serverRoutes: expressApp => {
+    serverRoutes: (expressApp) => {
+      // Collect storage providers from all plugins that define the
+      // 'fileStorageProviders' hook (e.g. file-input-provider-mongo).
+      // Each hook returns an object like { mongo: provider, ... }.
+      const allProviders = MODULE.hook('fileStorageProviders').reduce(
+        (acc, pluginProviders = {}) => {
+          for (const name in pluginProviders) {
+            if (acc[name]) {
+              console.warn(ERRORS.providerAlreadyDefined(name))
+            }
+          }
+          return { ...acc, ...pluginProviders }
+        },
+        {}
+      )
+
+      // Register collected providers in the internal registry
+      for (const [name, provider] of Object.entries(allProviders)) {
+        registerProvider(name, provider)
+      }
+
       expressApp.get(GET_FILE_URL, async (req, res) => {
         let { fileId } = req.params
 
         // Extract video file detection early for Range support
-        const isVideoRequest = req.url.includes('.mp4') || req.url.includes('.mov') || req.url.includes('.avi')
+        const isVideoRequest =
+          req.url.includes('.mp4') ||
+          req.url.includes('.mov') ||
+          req.url.includes('.avi')
         // if id has extension, remove it
         // (extension is sometimes added for client libraries to properly handle the file)
         fileId = fileId.replace(/\.[^.]+$/, '')
         // url might have ?download=true which means we should force download
-        const download = (req.query?.download != null)
+        const download = req.query?.download != null
         const $file = await sub($.files[fileId])
         const file = $file.get()
         if (!file) return res.status(404).send(ERRORS.fileNotFound)
         const { mimeType, storageType, filename, updatedAt } = file
         if (!mimeType) return res.status(500).send(ERRORS.fileMimeTypeNotSet)
         const isVideo = mimeType.startsWith('video/') || isVideoRequest
-        if (!storageType) return res.status(500).send(ERRORS.fileStorageTypeNotSet)
+        if (!storageType) { return res.status(500).send(ERRORS.fileStorageTypeNotSet) }
 
         // handle client-side caching of files
         const clientEtag = req.get('If-None-Match')
@@ -76,7 +112,8 @@ export default createPlugin({
 
         if (
           clientEtag === etag ||
-          (ifModifiedSince && +new Date(ifModifiedSince) >= +new Date(lastModified))
+          (ifModifiedSince &&
+            +new Date(ifModifiedSince) >= +new Date(lastModified))
         ) {
           setCacheHeaders()
           return res.status(304).send() // Not Modified
@@ -86,7 +123,10 @@ export default createPlugin({
           // Performance optimization: True streaming for Range requests
           if (isVideo && req.headers.range) {
             const range = req.headers.range
-            console.log('[StartupJS Files] Processing Range request with TRUE streaming:', { fileId, range })
+            console.log(
+              '[StartupJS Files] Processing Range request with TRUE streaming:',
+              { fileId, range }
+            )
 
             try {
               const parts = range.replace(/bytes=/, '').split('-')
@@ -96,11 +136,21 @@ export default createPlugin({
               const fileSize = await getFileSize(storageType, fileId)
               let end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1
 
-              console.log('[StartupJS Files] Processing range:', { range, start, end, fileSize, parts })
+              console.log('[StartupJS Files] Processing range:', {
+                range,
+                start,
+                end,
+                fileSize,
+                parts
+              })
 
               // Fix off-by-one error in range validation
               if (start >= fileSize || start > end) {
-                console.log('[StartupJS Files] Invalid range:', { start, end, fileSize })
+                console.log('[StartupJS Files] Invalid range:', {
+                  start,
+                  end,
+                  fileSize
+                })
                 res.status(416)
                 res.setHeader('Content-Range', `bytes */${fileSize}`)
                 return res.send('Range Not Satisfiable')
@@ -112,7 +162,10 @@ export default createPlugin({
               }
 
               // TRUE STREAMING: get only the requested range from storage
-              const rangeBlob = await getFileBlob(storageType, fileId, { start, end })
+              const rangeBlob = await getFileBlob(storageType, fileId, {
+                start,
+                end
+              })
 
               // Handle empty responses from MongoDB GridFS
               // This can happen for the last byte due to GridFS chunking behavior
@@ -120,40 +173,60 @@ export default createPlugin({
                 // For the last byte, return a fake byte to satisfy video players
                 // HTTP 416 for last byte can prevent video playback entirely
                 if (start === fileSize - 1) {
-                  console.log('[StartupJS Files] Last byte unavailable, returning fake byte for video compatibility:', { start, end, fileSize })
+                  console.log(
+                    '[StartupJS Files] Last byte unavailable, returning fake byte for video compatibility:',
+                    { start, end, fileSize }
+                  )
                   res.status(206)
-                  res.setHeader('Content-Range', `bytes ${start}-${end}/${fileSize}`)
+                  res.setHeader(
+                    'Content-Range',
+                    `bytes ${start}-${end}/${fileSize}`
+                  )
                   res.setHeader('Content-Length', '1')
                   res.type(mimeType)
                   setCacheHeaders()
                   return res.send(Buffer.from([0x00])) // Fake last byte for video compatibility
                 }
 
-                console.log('[StartupJS Files] Empty response from GridFS, returning 416:', { start, end, fileSize })
+                console.log(
+                  '[StartupJS Files] Empty response from GridFS, returning 416:',
+                  { start, end, fileSize }
+                )
                 res.status(416)
                 res.setHeader('Content-Range', `bytes */${fileSize}`)
                 return res.send('Range Not Satisfiable')
               }
 
-              const chunksize = (end - start) + 1
+              const chunksize = end - start + 1
 
               res.status(206) // Partial Content
-              res.setHeader('Content-Range', `bytes ${start}-${end}/${fileSize}`)
+              res.setHeader(
+                'Content-Range',
+                `bytes ${start}-${end}/${fileSize}`
+              )
               res.setHeader('Content-Length', rangeBlob.length.toString())
               res.type(mimeType)
 
-              if (download) res.setHeader('Content-Disposition', `attachment; filename="${filename}"`)
+              if (download) {
+                res.setHeader(
+                  'Content-Disposition',
+                  `attachment; filename="${filename}"`
+                )
+              }
               setCacheHeaders()
 
-              console.log('[StartupJS Files] Sending TRUE streaming response:', {
-                start,
-                end,
-                chunksize,
-                totalSize: fileSize,
-                actualChunkSize: rangeBlob.length,
-                contentLength: rangeBlob.length.toString(),
-                isLastByte: start === fileSize - 1
-              })
+              console.log(
+                '[StartupJS Files] Sending TRUE streaming response:',
+                {
+                  start,
+                  end,
+                  chunksize,
+                  totalSize: fileSize,
+                  actualChunkSize: rangeBlob.length,
+                  contentLength: rangeBlob.length.toString(),
+                  isLastByte: start === fileSize - 1
+                }
+              )
               return res.send(rangeBlob)
             } catch (err) {
               console.error('[StartupJS Files] Range request error:', err)
@@ -163,13 +236,18 @@ export default createPlugin({
 
           // Load file for non-Range requests (download functionality preserved)
           const blob = await getFileBlob(storageType, fileId)
-          const fileBuffer = (blob instanceof Buffer) ? blob : Buffer.from(blob) // avoid unnecessary copy
+          const fileBuffer = blob instanceof Buffer ? blob : Buffer.from(blob) // avoid unnecessary copy
 
           // set the Content-Type header
           res.type(mimeType)
 
           // force the file to be downloaded by setting the Content-Disposition header
-          if (download) res.setHeader('Content-Disposition', `attachment; filename="${filename}"`)
+          if (download) {
+            res.setHeader(
+              'Content-Disposition',
+              `attachment; filename="${filename}"`
+            )
+          }
 
           setCacheHeaders()
 
@@ -202,20 +280,22 @@ export default createPlugin({
 
           if (mimeType.startsWith('image/')) {
             // If it's an image, pipe it through sharp for resizing and conversion
-            stream = file.pipe(sharp()
-              .rotate()
-              .resize(1000, 1000, {
-                fit: sharp.fit.inside,
-                withoutEnlargement: true
-              })
-              .toFormat('jpeg', { quality: 80 })) // Convert to JPEG with 85% quality
+            stream = file.pipe(
+              sharp()
+                .rotate()
+                .resize(1000, 1000, {
+                  fit: sharp.fit.inside,
+                  withoutEnlargement: true
+                })
+                .toFormat('jpeg', { quality: 80 })
+            ) // Convert to JPEG with 85% quality
 
             filename = filename.replace(/\.[^.]+$/, '.jpg') // Change extension to .jpg
             mimeType = 'image/jpeg'
           }
 
           // Regardless of whether it's an image or not, collect the data
-          stream.on('data', data => buffers.push(data))
+          stream.on('data', (data) => buffers.push(data))
 
           stream.on('end', async () => {
             const blob = Buffer.concat(buffers)
@@ -246,7 +326,7 @@ export default createPlugin({
         const file = $file.get()
         if (!file) return res.status(404).send(ERRORS.fileNotFound)
         const { storageType } = file
-        if (!storageType) return res.status(500).send(ERRORS.fileStorageTypeNotSet)
+        if (!storageType) { return res.status(500).send(ERRORS.fileStorageTypeNotSet) }
         try {
           await deleteFile(storageType, fileId)
           await $file.del()
@@ -325,5 +405,9 @@ class FileModel extends Signal {
 const ERRORS = {
   fileNotFound: 'File not found',
   fileMimeTypeNotSet: 'File mimeType is not set. This should never happen',
-  fileStorageTypeNotSet: 'File storageType is not set. This should never happen'
+  fileStorageTypeNotSet:
+    'File storageType is not set. This should never happen',
+  providerAlreadyDefined: (name) => `
+    [@startupjs-ui/file-input] Storage provider "${name}" is already defined by another plugin. It will be overridden!
+  `
 }

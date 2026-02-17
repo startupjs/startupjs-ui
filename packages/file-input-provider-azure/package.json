@@ -7,9 +7,12 @@
   },
   "main": "index.js",
   "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./azureblob.plugin": "./azureblob.plugin.js"
+  },
   "dependencies": {
-    "@azure/storage-blob": "^12.26.0",
-    "@startupjs-ui/file-input": "^0.1.16"
+    "@azure/storage-blob": "^12.26.0"
   },
   "peerDependencies": {
     "startupjs": "*"

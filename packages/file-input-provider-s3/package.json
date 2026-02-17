@@ -7,9 +7,12 @@
   },
   "main": "index.js",
   "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./s3.plugin": "./s3.plugin.js"
+  },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.600.0",
-    "@startupjs-ui/file-input": "^0.1.16"
+    "@aws-sdk/client-s3": "^3.600.0"
   },
   "peerDependencies": {
     "startupjs": "*"
