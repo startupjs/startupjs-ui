@@ -46,9 +46,15 @@ export default function useKeyboard ({
       case 'Enter': {
         e.preventDefault()
         if (selectIndexValue === -1) return
-        const item = options.find((_: any, i: number) => i === selectIndexValue)
+        const item = options[selectIndexValue]
         onChangeShow(false)
-        onChange && onChange(item)
+        onChange?.(item)
+        setSelectIndexValue(-1)
+        break
+      }
+      case 'Escape': {
+        e.preventDefault()
+        onChangeShow(false)
         setSelectIndexValue(-1)
         break
       }

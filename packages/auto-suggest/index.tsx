@@ -86,13 +86,14 @@ function stringifyValue (option: AutoSuggestValue): string {
   return JSON.stringify((option as AutoSuggestOptionObject)?.value ?? option)
 }
 
-function parseValue (value: string): any {
-  return JSON.parse(value)
+function getOptionValue (option: AutoSuggestValue): any {
+  return (option as AutoSuggestOptionObject)?.value ?? option
 }
 
 function getLabelFromValue (value: AutoSuggestValue, options: AutoSuggestOption[]): any {
+  const targetValue = getOptionValue(value)
   for (const option of options) {
-    if (stringifyValue(value) === stringifyValue(option)) {
+    if (getOptionValue(option) === targetValue) {
       return getOptionLabel(option)
     }
   }
@@ -120,20 +121,17 @@ function AutoSuggest ({
   const inputRef = useRef<any>(null)
   const [isShow, setIsShow] = useState(false)
   const [inputValue, setInputValue] = useState('')
-  const [wrapperHeight, setWrapperHeight] = useState<number | null>(null)
-  const [scrollHeightContent, setScrollHeightContent] = useState<number | null>(null)
-  const [textToFilter, setTextToFilter] = useState<string | undefined>()
   const _options = useMemo(() => {
-    const escapedText = escapeRegExp(textToFilter ?? '')
+    const escapedText = escapeRegExp(inputValue ?? '')
     return options.filter(option => {
       return new RegExp(escapedText, 'gi')
-        .test(getLabelFromValue(option, options))
+        .test(getOptionLabel(option))
     })
-  }, [options, textToFilter])
+  }, [options, inputValue])
 
   const [selectIndexValue, setSelectIndexValue, onKeyPress] = useKeyboard({
     options: _options,
-    onChange,
+    onChange: option => { void onChange?.(getOptionValue(option)) },
     onChangeShow: v => { setIsShow(v) }
   })
 
@@ -148,20 +146,18 @@ function AutoSuggest ({
   function onClose () {
     setIsShow(false)
     setSelectIndexValue(-1)
-    inputRef.current.blur()
+    inputRef.current?.blur()
     onDismiss?.()
   }
 
   function _onChangeText (text: string) {
     setInputValue(text)
-    setTextToFilter(text)
-    if (!text) onChange?.()
     setSelectIndexValue(-1)
     onChangeText?.(text)
   }
 
   async function _onPress (item: AutoSuggestOption) {
-    onChange && await onChange(parseValue(stringifyValue(item)))
+    await onChange?.(getOptionValue(item))
     onClose()
   }
 
@@ -180,23 +176,9 @@ function AutoSuggest ({
         key=index
         styleName={ selectMenu: selectIndexValue === index }
         onPress=() => { void _onPress(item) }
-        active=stringifyValue(item) === stringifyValue(value)
-      )= getLabelFromValue(item, options)
+        active=getOptionValue(item) === getOptionValue(value)
+      )= getOptionLabel(item)
     `
-  }
-
-  function onScroll ({ nativeEvent }: any) {
-    if (nativeEvent.contentOffset.y + wrapperHeight === scrollHeightContent) {
-      onScrollEnd?.()
-    }
-  }
-
-  function onLayoutWrapper ({ nativeEvent }: any) {
-    setWrapperHeight(nativeEvent.layout.height)
-  }
-
-  function onChangeSizeScroll (width: number, height: number) {
-    setScrollHeightContent(height)
   }
 
   function renderWrapper (children: ReactNode): ReactNode {
@@ -241,7 +223,6 @@ function AutoSuggest ({
       durationOpen=200
       durationClose=200
       renderWrapper=renderWrapper
-      onCloseComplete=() => setTextToFilter()
     )
       if isLoading
         View.loaderCase
@@ -253,11 +234,8 @@ function AutoSuggest ({
             data=_options
             renderItem=_renderItem
             keyExtractor=item => stringifyValue(item)
-            scrollEventThrottle=500
             keyboardShouldPersistTaps='always'
-            onScroll=onScroll
-            onLayout=onLayoutWrapper
-            onContentSizeChange=onChangeSizeScroll
+            onEndReached=onScrollEnd
           )
   `
 }
