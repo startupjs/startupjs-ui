@@ -7,19 +7,24 @@ import debounce from 'lodash/debounce'
 import isPlainObject from 'lodash/isPlainObject'
 import keys from 'lodash/keys'
 import omit from 'lodash/omit'
-// TODO: IMPORTANT! Refactor this to NOT import all icons
-//       since it HUGELY bloats the bundle size
-import * as icons from '@fortawesome/free-solid-svg-icons'
+import { faHouseUser } from '@fortawesome/free-solid-svg-icons/faHouseUser'
+import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
+import { faCoffee } from '@fortawesome/free-solid-svg-icons/faCoffee'
 import '../index.styl'
 
 const EDITABLE_TYPES = ['string', 'number', 'boolean', 'oneOf', 'array', 'object']
+const DEMO_ICONS = {
+  faHouseUser,
+  faCheck,
+  faCoffee
+}
 
 const IconSelect = observer(function ({ $value, value }) {
   const _icons = useMemo(
     () =>
-      keys(omit(icons, ['fas', 'prefix'])).map(key => ({
+      keys(omit(DEMO_ICONS, ['fas', 'prefix'])).map(key => ({
         label: key,
-        value: icons[key]
+        value: DEMO_ICONS[key]
       })),
     []
   )
