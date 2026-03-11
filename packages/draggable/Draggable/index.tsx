@@ -237,7 +237,7 @@ function Draggable ({
 
         const startGhostTop = activeData.startGhostTop ?? activeData.ghostTop
         const movingDown = ghostTopNow >= startGhostTop
-        const upThreshold = 0.1
+        const upThreshold = 0.001
         let hoverIndex = 0
         for (let i = 0; i < n; i++) {
           const r = rects[i]
