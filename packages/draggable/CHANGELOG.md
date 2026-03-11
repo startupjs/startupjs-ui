@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## Unreleased
+
+### Fixes
+
+* **draggable:** placeholder position based on ghost (element) instead of cursor — same behavior regardless of grab point; equal slots + direction-aware index for reorder ([SortableJS-style](https://github.com/SortableJS/Sortable))
+
 ## [0.1.16](https://github.com/startupjs/startupjs-ui/compare/v0.1.15...v0.1.16) (2026-02-10)
 
 **Note:** Version bump only for package @startupjs-ui/draggable
