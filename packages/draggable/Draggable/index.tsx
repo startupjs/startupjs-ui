@@ -190,91 +190,94 @@ function Draggable ({
   }
 
   function checkPosition (activeData: any): Promise<number | null> {
-    const dropRef = $dndContext.drops[dropId].ref.current?.get?.()
-    if (!dropRef?.measure && !dropRef?.measureInWindow) {
-      return Promise.resolve(null)
-    }
+    const ghostTopNow = activeData.ghostTop
+    const ghostLeftNow = activeData.ghostLeft
+    const ghostHeight = (activeData.dragStyle?.height ?? 0) as number
+    const ghostWidth = (activeData.dragStyle?.width ?? 0) as number
+    const refY = ghostTopNow != null ? ghostTopNow + ghostHeight / 2 : activeData.y
+    const refX = ghostLeftNow != null ? ghostLeftNow + ghostWidth / 2 : activeData.x
+    if (refY == null) return Promise.resolve(null)
 
-    return new Promise((resolve) => {
-      const onMeasured = (dropTop: number, dropBottom: number) => {
-        const ghostTopNow = activeData.ghostTop
-        const ghostHeight = (activeData.dragStyle?.height ?? 0) as number
-        const refY = ghostTopNow != null ? ghostTopNow + ghostHeight / 2 : activeData.y
-        if (refY == null) {
-          resolve(null)
-          return
-        }
+    const dropIds = Object.keys($dndContext.drops.get() || {})
+    if (dropIds.length === 0) return Promise.resolve(null)
 
-        const items = $dndContext.drops[$dndContext.dropHoverId.get()]?.items?.get() || []
-        if (items.length === 0) {
-          $dndContext.dragHoverIndex.set(0)
-          resolve(0)
-          return
-        }
-
-        const n = items.length
-        const dropHeight = dropBottom - dropTop
-        const slotHeight = dropHeight / n
-        const rects: { top: number, bottom: number, height: number }[] = []
-        for (let i = 0; i < n; i++) {
-          rects.push({
-            top: dropTop + i * slotHeight,
-            bottom: dropTop + (i + 1) * slotHeight,
-            height: slotHeight
+    const measureDrop = (id: string) => {
+      const dref = $dndContext.drops[id].ref.current?.get?.()
+      if (!dref?.measureInWindow && !dref?.measure) return Promise.resolve(null)
+      return new Promise<{ id: string, left: number, right: number, top: number, bottom: number } | null>((res) => {
+        if (typeof dref.measureInWindow === 'function') {
+          dref.measureInWindow((x: number, y: number, w: number, h: number) =>
+            res({ id, left: x, right: x + (w ?? 0), top: y, bottom: y + (h ?? 0) }))
+        } else {
+          dref.measure((_x: number, _y: number, _w: number, dH: number, px: number, py: number) => {
+            const top = py ?? _y
+            const left = px ?? _x
+            res({ id, left, right: left + (_w ?? 0), top, bottom: top + (dH ?? 0) })
           })
         }
+      })
+    }
 
-        if (refY < rects[0].top) {
-          $dndContext.dragHoverIndex.set(0)
-          resolve(0)
-          return
-        }
-        if (refY >= rects[n - 1].bottom) {
-          $dndContext.dragHoverIndex.set(n)
-          resolve(n)
-          return
-        }
+    return Promise.all(dropIds.map(measureDrop)).then((results) => {
+      const hit = results.find((r) => r && refY >= r.top && refY < r.bottom && (refX == null || (refX >= r.left && refX < r.right)))
+      const targetDropId = hit ? hit.id : dropIds[0]
+      const fallback = results.find((r) => r && r.id === targetDropId)
+      const dropTop = (hit || fallback)?.top ?? 0
+      const dropBottom = (hit || fallback)?.bottom ?? 0
+      $dndContext.dropHoverId.set(targetDropId)
 
-        const startGhostTop = activeData.startGhostTop ?? activeData.ghostTop
-        const movingDown = ghostTopNow >= startGhostTop
-        const upThreshold = 0.001
-        let hoverIndex = 0
-        for (let i = 0; i < n; i++) {
-          const r = rects[i]
-          if (refY >= r.top && refY < r.bottom) {
-            const relY = r.height > 0 ? (refY - r.top) / r.height : 0
-            if (movingDown) {
-              hoverIndex = Math.min(i + 1, n)
-            } else {
-              hoverIndex = relY < upThreshold && i > 0 ? i - 1 : i
-            }
-            break
-          }
-          if (refY < r.top) {
-            hoverIndex = i
-            break
-          }
-          hoverIndex = i + 1
-        }
-
-        $dndContext.dragHoverIndex.set(hoverIndex)
-        resolve(hoverIndex)
+      const items = $dndContext.drops[targetDropId]?.items?.get() || []
+      if (items.length === 0) {
+        $dndContext.dragHoverIndex.set(0)
+        return 0
       }
 
-      if (typeof dropRef.measureInWindow === 'function') {
-        dropRef.measureInWindow((_dX: number, dY: number, _dW: number, dH: number) => {
-          const dropTop = dY
-          const dropBottom = dY + (dH ?? 0)
-          onMeasured(dropTop, dropBottom)
-        })
-      } else {
-        dropRef.measure((_dX: number, _dY: number, _dWidth: number, dHeight: number, _dPageX: number, dPageY: number) => {
-          const dropTop = dPageY ?? _dY
-          const dropBottom = dropTop + (dHeight ?? 0)
-          onMeasured(dropTop, dropBottom)
+      const n = items.length
+      const dropHeight = dropBottom - dropTop
+      const slotHeight = dropHeight / n
+      const rects: { top: number, bottom: number, height: number }[] = []
+      for (let i = 0; i < n; i++) {
+        rects.push({
+          top: dropTop + i * slotHeight,
+          bottom: dropTop + (i + 1) * slotHeight,
+          height: slotHeight
         })
       }
-    })
+
+      if (refY < rects[0].top) {
+        $dndContext.dragHoverIndex.set(0)
+        return 0
+      }
+      if (refY >= rects[n - 1].bottom) {
+        $dndContext.dragHoverIndex.set(n)
+        return n
+      }
+
+      const startGhostTop = activeData.startGhostTop ?? activeData.ghostTop
+      const movingDown = ghostTopNow >= startGhostTop
+      const upThreshold = 0.001
+      let hoverIndex = 0
+      for (let i = 0; i < n; i++) {
+        const r = rects[i]
+        if (refY >= r.top && refY < r.bottom) {
+          const relY = r.height > 0 ? (refY - r.top) / r.height : 0
+          if (movingDown) {
+            hoverIndex = Math.min(i + 1, n)
+          } else {
+            hoverIndex = relY < upThreshold && i > 0 ? i - 1 : i
+          }
+          break
+        }
+        if (refY < r.top) {
+          hoverIndex = i
+          break
+        }
+        hoverIndex = i + 1
+      }
+
+      $dndContext.dragHoverIndex.set(hoverIndex)
+      return hoverIndex
+    }).then((hoverIndex) => Promise.resolve(hoverIndex))
   }
 
   const contextStyle = $dndContext.drags[dragId].style.get() || {}

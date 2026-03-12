@@ -8,6 +8,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Fixes
 
 * **draggable:** placeholder position based on ghost (element) instead of cursor — same behavior regardless of grab point; equal slots + direction-aware index for reorder ([SortableJS-style](https://github.com/SortableJS/Sortable))
+* **draggable:** multi-drop 2D hit-test — ghost center (refX/refY) determines which Droppable is hovered; correct cross-list drag and dropHoverId
+* **droppable:** show placeholder when empty list is the active drop target (drag into empty zone)
 
 ## [0.1.16](https://github.com/startupjs/startupjs-ui/compare/v0.1.15...v0.1.16) (2026-02-10)
 
