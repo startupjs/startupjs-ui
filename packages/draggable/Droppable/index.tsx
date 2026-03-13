@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useContext, type ReactNode } from 'react'
-import { View, StatusBar, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, $ } from 'startupjs'
+import { View, type StyleProp, type ViewStyle } from 'react-native'
+import { pug, observer } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
 import { DragDropContext } from '../DragDropProvider'
 
@@ -15,6 +15,8 @@ export interface DroppableProps {
   type?: string
   /** Unique droppable container id */
   dropId: string
+  /** Optional: explicit list of item ids (e.g. when list is controlled and may be empty) */
+  items?: string[]
   /** Called when active drag leaves this droppable */
   onLeave?: () => void
   /** Called when active drag enters this droppable */
@@ -26,75 +28,40 @@ function Droppable ({
   style,
   type,
   dropId,
+  items: itemsProp,
   onLeave,
   onHover
 }: DroppableProps): ReactNode {
   const ref = useRef<any>(null)
   const $dndContext = useContext(DragDropContext)
-  const $isHover = $(false)
 
   useEffect(() => {
+    if (!$dndContext) return
+    const fromProp = Array.isArray(itemsProp) && itemsProp.length > 0
+    const items = fromProp
+      ? itemsProp
+      : React.Children.map(children as any, (child: any) => child?.props?.dragId)
     $dndContext.drops[dropId].set({
       ref,
-      items: React.Children.map(children as any, (child: any) => {
-        return child?.props?.dragId
-      })
+      items: items ?? []
     })
-  }, [children, dropId, $dndContext])
+  }, [children, dropId, itemsProp, $dndContext])
 
-  useEffect(() => {
-    ref.current.measure((x: any, y: any, width: any, height: any, pageX: any, pageY: any) => {
-      if (!$dndContext.activeData.dragId.get() || !$dndContext.dropHoverId.get()) {
-        $isHover.set(false)
-        return
-      }
+  if (!$dndContext) return children as ReactNode
 
-      const leftBorder = pageX
-      const rightBorder = pageX + width
-      const topBorder = pageY
-      const bottomBorder = pageY + height
+  const modChildren = React.Children.toArray(children).map((child: any, index) =>
+    React.cloneElement(child, { ...child.props, _dropId: dropId, _index: index })
+  )
 
-      const isHoverUpdate = (
-        $dndContext.activeData.x.get() > leftBorder &&
-        $dndContext.activeData.x.get() < rightBorder &&
-        $dndContext.activeData.y.get() - (StatusBar.currentHeight ?? 0) > topBorder &&
-        $dndContext.activeData.y.get() - (StatusBar.currentHeight ?? 0) < bottomBorder
-      )
-
-      if (isHoverUpdate && !$isHover.get()) {
-        $dndContext.dropHoverId.set(dropId)
-        onHover && onHover() // TODO
-      }
-
-      if (!isHoverUpdate && $isHover.get()) {
-        onLeave && onLeave() // TODO
-      }
-
-      $isHover.set(isHoverUpdate)
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify($dndContext.activeData.get())])
-
-  const modChildren = React.Children.toArray(children).map((child: any, index) => {
-    return React.cloneElement(child, {
-      ...child.props,
-      _dropId: dropId,
-      _index: index
-    })
-  })
-
-  const hasActiveDrag = $dndContext.drops[dropId].items.get()?.includes($dndContext.activeData.dragId.get())
+  const hasActiveDrag = ($dndContext.drops[dropId].items.get() || []).includes($dndContext.activeData.dragId?.get?.())
   const activeStyle = hasActiveDrag ? { zIndex: 9999 } : {}
-  const contextStyle = $dndContext.drops[dropId].style.get() || {}
+  const contextStyle = $dndContext.drops[dropId].style?.get?.() || {}
   const items = $dndContext.drops[dropId].items.get() || []
   const isHoverTargetEmpty = $dndContext.activeData.get() && $dndContext.dropHoverId.get() === dropId && items.length === 0
   const emptyPlaceholderStyle: ViewStyle = { backgroundColor: '#e5e7eb', minHeight: 32, borderRadius: 4 }
 
   return pug`
-    View(
-      ref=ref
-      style=[style, activeStyle, contextStyle]
-    )
+    View(ref=ref style=[style, activeStyle, contextStyle])
       if isHoverTargetEmpty
         View(style=emptyPlaceholderStyle)
       = modChildren
