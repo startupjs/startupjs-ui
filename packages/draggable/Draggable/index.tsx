@@ -194,7 +194,7 @@ function Draggable ({
     if (dropIds.length === 0) return await Promise.resolve(null)
 
     const measureDrop = async (id: string) => {
-      const dref = $dndContext.drops[id].ref.current?.get?.()
+      const dref = $dndContext.drops[id].ref.current?.get()
       if (!dref?.measureInWindow && !dref?.measure) return await Promise.resolve(null)
       return await new Promise<{ id: string, left: number, right: number, top: number, bottom: number } | null>((resolve) => {
         if (typeof dref.measureInWindow === 'function') {
@@ -315,7 +315,7 @@ function Draggable ({
 
   const placeholderStyle: ViewStyle = {
     ...flatStyle,
-    backgroundColor: '#e5e7eb',
+    backgroundColor: 'var(--color-bg-main-subtle-alt, #e5e7eb)' as any,
     minHeight: 32,
     borderRadius: flatStyle.borderRadius ?? 4,
     ...(typeof phHeight === 'number' && phHeight > 0 && { height: phHeight }),

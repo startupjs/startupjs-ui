@@ -58,7 +58,7 @@ function Droppable ({
   const contextStyle = $dndContext.drops[dropId].style?.get() ?? {}
   const items = $dndContext.drops[dropId].items.get() ?? []
   const isHoverTargetEmpty = $dndContext.activeData.get() && $dndContext.dropHoverId.get() === dropId && items.length === 0
-  const emptyPlaceholderStyle: ViewStyle = { backgroundColor: '#e5e7eb', minHeight: 32, borderRadius: 4 }
+  const emptyPlaceholderStyle: ViewStyle = { backgroundColor: 'var(--color-bg-main-subtle-alt, #e5e7eb)' as any, minHeight: 32, borderRadius: 4 }
 
   return pug`
     View(ref=ref style=[style, activeStyle, contextStyle])
