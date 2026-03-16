@@ -52,7 +52,8 @@ function Draggable ({
   const $dndContext = useContext(DragDropContext)
 
   useEffect(() => {
-    if ($dndContext?.drags?.[dragId]) {
+    if (!$dndContext) return
+    if ($dndContext.drags[dragId]) {
       $dndContext.drags[dragId].set({ ref, style: {} })
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -137,10 +138,10 @@ function Draggable ({
         })
       }
       try {
-        const finalY = nativeEvent.absoluteY ?? $dndContext.activeData.y?.get?.()
-        const finalX = nativeEvent.absoluteX ?? $dndContext.activeData.x?.get?.()
-        $dndContext.activeData.x?.set?.(finalX)
-        $dndContext.activeData.y?.set?.(finalY)
+        const finalY = nativeEvent.absoluteY ?? $dndContext.activeData.y.get()
+        const finalX = nativeEvent.absoluteX ?? $dndContext.activeData.x.get()
+        $dndContext.activeData.x.set(finalX)
+        $dndContext.activeData.y.set(finalY)
         const activeDataSnap = { ...$dndContext.activeData.get(), y: finalY, x: finalX }
         const finalHoverIndex = await checkPosition(activeDataSnap)
         const hoverIndex = finalHoverIndex ?? $dndContext.dragHoverIndex.get()
@@ -173,8 +174,8 @@ function Draggable ({
 
     const left = nativeEvent.absoluteX - $dndContext.activeData.startPosition.x.get()
     const top = nativeEvent.absoluteY - $dndContext.activeData.startPosition.y.get()
-    $dndContext.activeData.ghostLeft?.set?.(left)
-    $dndContext.activeData.ghostTop?.set?.(top)
+    $dndContext.activeData.ghostLeft.set(left)
+    $dndContext.activeData.ghostTop.set(top)
     $dndContext.activeData.x.set(nativeEvent.absoluteX)
     $dndContext.activeData.y.set(nativeEvent.absoluteY)
     checkPosition($dndContext.activeData.get())
@@ -216,7 +217,7 @@ function Draggable ({
       const dropBottom = (hit ?? fallback)?.bottom ?? 0
       $dndContext.dropHoverId.set(targetDropId)
 
-      const items = $dndContext.drops[targetDropId]?.items?.get() ?? []
+      const items = $dndContext.drops[targetDropId].items.get() ?? []
       if (items.length === 0) {
         $dndContext.dragHoverIndex.set(0)
         return 0
@@ -270,10 +271,10 @@ function Draggable ({
     }).then(async (hoverIndex) => await Promise.resolve(hoverIndex))
   }
 
-  const contextStyle = $dndContext.drags[dragId]?.style?.get?.() ?? {}
+  const contextStyle = $dndContext.drags[dragId] ? ($dndContext.drags[dragId].style.get() ?? {}) : {}
   const flatStyle = StyleSheet.flatten(style) || {} as any
 
-  const dragStyleRaw = $dndContext.activeData.dragStyle?.get?.()
+  const dragStyleRaw = $dndContext.activeData.dragStyle?.get()
   const dragStyle = dragStyleRaw && typeof dragStyleRaw === 'object' ? dragStyleRaw : null
   const getNum = (v: any): number | undefined =>
     v == null
@@ -287,8 +288,8 @@ function Draggable ({
   const phWidth = dragStyle ? getNum(dragStyle.width) : undefined
 
   const isActiveDrag = $dndContext.activeData.dragId.get() === dragId
-  const ghostLeft = isActiveDrag ? ($dndContext.activeData.ghostLeft?.get?.() ?? 0) : 0
-  const ghostTop = isActiveDrag ? ($dndContext.activeData.ghostTop?.get?.() ?? 0) : 0
+  const ghostLeft = isActiveDrag ? ($dndContext.activeData.ghostLeft.get() ?? 0) : 0
+  const ghostTop = isActiveDrag ? ($dndContext.activeData.ghostTop.get() ?? 0) : 0
   const ghostStyle: ViewStyle = {
     ...flatStyle,
     position: Platform.OS === 'web' ? ('fixed' as any) : 'absolute',
@@ -309,7 +310,7 @@ function Draggable ({
   const isShowLastPlaceholder =
     $dndContext.activeData.get() &&
     $dndContext.dropHoverId.get() === dropId &&
-    ($dndContext.drops[dropId].items.get()?.length ?? 0) - 1 === index &&
+    ($dndContext.drops[dropId].items.get() ?? []).length - 1 === index &&
     $dndContext.dragHoverIndex.get() === index + 1
 
   const placeholderStyle: ViewStyle = {

@@ -53,10 +53,10 @@ function Droppable ({
     React.cloneElement(child, { ...child.props, _dropId: dropId, _index: index })
   )
 
-  const hasActiveDrag = ($dndContext.drops[dropId].items.get() || []).includes($dndContext.activeData.dragId?.get?.())
+  const hasActiveDrag = ($dndContext.drops[dropId].items.get() ?? []).includes($dndContext.activeData.dragId?.get())
   const activeStyle = hasActiveDrag ? { zIndex: 9999 } : {}
-  const contextStyle = $dndContext.drops[dropId].style?.get?.() || {}
-  const items = $dndContext.drops[dropId].items.get() || []
+  const contextStyle = $dndContext.drops[dropId].style?.get() ?? {}
+  const items = $dndContext.drops[dropId].items.get() ?? []
   const isHoverTargetEmpty = $dndContext.activeData.get() && $dndContext.dropHoverId.get() === dropId && items.length === 0
   const emptyPlaceholderStyle: ViewStyle = { backgroundColor: '#e5e7eb', minHeight: 32, borderRadius: 4 }
 
