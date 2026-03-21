@@ -76,7 +76,8 @@ function Checkbox ({
           value=value
           onPress=onPress
           disabled=disabled
-          accessibilityRole='checkbox'
+          accessibilityRole=variant === 'switch' ? 'switch' : 'checkbox'
+          accessibilityState={ checked: value, disabled }
           ...props
         )
   `

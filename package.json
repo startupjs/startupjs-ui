@@ -5,7 +5,8 @@
   },
   "workspaces": [
     "packages/*",
-    "docs"
+    "docs",
+    "storybook"
   ],
   "scripts": {
     "start": "yarn docs",
@@ -15,6 +16,9 @@
     "start-production": "cd docs && yarn start-production",
     "start-production-static": "cd docs && yarn start-production-static",
     "docs": "cd docs && yarn start",
+    "storybook": "cd storybook && yarn start",
+    "storybook:web": "cd storybook && yarn web",
+    "storybook:build": "cd storybook && yarn build",
     "test": "sh -c 'set -e; for dir in packages/*/; do echo \"Testing $dir\"; (cd \"$dir\" && yarn test) || { echo \"\\033[31mERROR: Tests failed for $dir\\033[0m\"; exit 1; }; done'",
     "generate-package-dts": "node scripts/generate-package-dts.mjs",
     "publish-patch": "dotenv -- npx lerna publish patch --conventional-commits --create-release=github",

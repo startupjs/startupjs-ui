@@ -147,6 +147,15 @@ export default function wrapInput (Component: any, configuration: InputWrapperCo
     `
 
     const passRef = ref ? { ref } : {}
+    const inputAccessibilityProps: Record<string, any> = {}
+
+    if (label && props.accessibilityLabel == null) {
+      inputAccessibilityProps.accessibilityLabel = label
+    }
+
+    if (description && props.accessibilityHint == null) {
+      inputAccessibilityProps.accessibilityHint = description
+    }
 
     const input = pug`
       Component(
@@ -156,6 +165,7 @@ export default function wrapInput (Component: any, configuration: InputWrapperCo
         _hasError=hasError
         onFocus=handleFocus
         onBlur=handleBlur
+        ...inputAccessibilityProps
         ...passRef
         ...props
       )

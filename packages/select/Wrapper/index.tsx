@@ -31,6 +31,10 @@ export interface SelectWrapperProps {
   emptyValueLabel?: string | number
   /** Test identifier */
   testID?: string
+  /** Accessible label for the web select overlay */
+  accessibilityLabel?: string
+  /** Accessible hint for the web select overlay */
+  accessibilityHint?: string
   /** Fired when selected value changes */
   onChange?: (value: any) => void
 }
@@ -50,6 +54,8 @@ function SelectWrapperWeb ({
   showEmptyValue,
   emptyValueLabel,
   testID,
+  accessibilityLabel,
+  accessibilityHint,
   onChange
 }: SelectWrapperProps): ReactNode {
   function onSelectChange (event: any) {
@@ -65,6 +71,8 @@ function SelectWrapperWeb ({
           style=STYLES.overlay
           value=stringifyValue(value)
           onChange=onSelectChange
+          aria-label=accessibilityLabel
+          aria-description=accessibilityHint
         )
           if showEmptyValue
             option(key=-1 value=stringifyValue(NULL_OPTION))

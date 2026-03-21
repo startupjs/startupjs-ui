@@ -77,13 +77,19 @@ function Button ({
     let resolved = false
     const promise = onPress(event)
     if (!(promise && promise.then)) return
-    promise.then(() => { resolved = true })
+    promise.then(
+      () => { resolved = true },
+      () => { resolved = true }
+    )
     await new Promise((resolve) => setTimeout(resolve, 0))
     if (resolved) return
     setAsyncActive(true)
-    await promise
-    if (!isMountedRef.current) return
-    setAsyncActive(false)
+    try {
+      await promise
+    } finally {
+      if (!isMountedRef.current) return
+      setAsyncActive(false)
+    }
   }
 
   if (!getColor(color)) console.error('Button component: Color for color property is incorrect. Use colors from Colors')

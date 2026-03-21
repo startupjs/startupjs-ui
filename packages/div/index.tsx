@@ -172,7 +172,8 @@ function Div ({
   let levelModifier
   if (level) levelModifier = `shadow-${level}`
 
-  if (!accessible) accessibilityRole = undefined
+  if (accessible == null && isPressable) accessible = true
+  if (accessible === false) accessibilityRole = undefined
 
   const isAnimated = hasAnimatedProperty(style) || hasAnimatedProperty(pressableStyle)
   const Component = isPressable
@@ -261,6 +262,7 @@ function useDecoratePressableProps ({
 
   accessibilityRole ??= 'button'
   props.focusable ??= true
+  if (isWeb && accessibilityRole != null) props.role ??= accessibilityRole
 
   // setup hover and active states styles and props
   if (feedback) {

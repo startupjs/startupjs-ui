@@ -22,6 +22,10 @@ export interface SelectProps extends Omit<UITextInputProps, 'value' | 'onChangeT
   ref?: RefObject<any>
   /** Test identifier passed to wrapper */
   testID?: string
+  /** Accessible label forwarded to the web select overlay */
+  accessibilityLabel?: string
+  /** Accessible hint forwarded to the web select overlay */
+  accessibilityHint?: string
   /** Fired when selected value changes */
   onChange?: (value: any) => void
 }
@@ -33,6 +37,8 @@ function Select ({
   showEmptyValue = true,
   emptyValueLabel,
   testID,
+  accessibilityLabel,
+  accessibilityHint,
   onChange,
   ref,
   ...props
@@ -51,6 +57,8 @@ function Select ({
         showEmptyValue=showEmptyValue
         emptyValueLabel=emptyValueLabel
         testID=testID
+        accessibilityLabel=accessibilityLabel
+        accessibilityHint=accessibilityHint
       )= children
     `
   }

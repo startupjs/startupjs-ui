@@ -81,6 +81,7 @@ const RadioInput = function ({
       disabled=disabled || readonly
       onPress=() => onChange && onChange(parseValue(value))
       accessibilityRole='radio'
+      accessibilityState={ checked: !!checked, disabled: disabled || readonly }
       row
     )
       Div.radio(
