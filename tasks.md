@@ -30,14 +30,128 @@ Status legend:
 ## Current Focus
 
 - [ ] Follow-up pass:
-  - Tighten shared accessibility semantics first where that unlocks many components:
-    - input label/description/error propagation across all generated/composite fields
-    - disabled-state semantics on interactive surfaces
-    - icon-only action naming
-    - popup/dialog/listbox/menu semantics for overlay-style components
+  - Start with the obvious shared fixes that improve many components at once and are unlikely to be breaking.
   - Then work component-by-component turning `failingFollowup` specs green.
   - Keep `file-input` limited to surface-level work until the Expo/server runtime path is available.
   - Keep `abstract-popover` interaction work isolated, since it is still a Storybook harness blocker.
+
+## Follow-up Backlog
+
+### Low-hanging fruit / obvious / low-risk
+
+1. Shared disabled-state semantics normalization
+   - Add consistent disabled semantics on web for interactive surfaces that already block interaction:
+     - `Div`
+     - pressable `Card`
+     - `Button`
+     - wrapped `Checkbox`
+     - `ColorPicker`
+     - `MultiSelect` trigger
+   - Goal: if something is visually disabled and non-interactive, it should also expose disabled semantics naturally to users and E2E tools.
+
+2. Shared icon-only action naming
+   - Add or enforce accessible naming for icon-only action surfaces that are already clearly actionable:
+     - `Alert` close
+     - `Toast` close
+     - tag icon actions
+     - pagination icon buttons
+     - password visibility toggle
+   - Prefer small safe naming improvements over redesigns.
+
+3. Shared input wrapper tightening
+   - Keep improving label/description/error propagation where the wrapper model already exists:
+     - `Input`
+     - `Form`
+     - `ObjectInput`
+     - `NumberInput`
+     - `PasswordInput`
+     - disabled wrapped `Select`
+   - Focus on cases that should already be discoverable by label but still are not.
+
+4. Low-level host prop / targeting pass
+   - Forward straightforward host targeting props where the component is a low-level primitive and the omission looks accidental rather than intentional:
+     - `Badge`
+     - `Divider`
+     - `ColorPicker` trigger wrapper
+     - `Portal` host/debug surface where safe
+   - Goal: make developer-facing E2E targeting easier without changing component behavior.
+
+5. Story/docs cleanup where the examples are misleading
+   - Attach real handlers in stories/docs where actions are currently rendered as inert previews.
+   - Keep stories aligned with actual interactive usage so the QA surface stays trustworthy.
+
+6. Web deprecation cleanup that should be mechanical
+   - Clean up repeated web/runtime warnings that look implementation-level rather than product-level:
+     - deprecated `pointerEvents` prop usage
+     - `TouchableWithoutFeedback` where a safer modern replacement is obvious
+     - invalid DOM prop warnings such as `transform-origin`
+
+### Medium difficulty / likely worth doing next, but requires component-specific work
+
+1. Overlay semantics normalization
+   - Bring higher-level popup components closer to natural web contracts:
+     - `Dropdown`
+     - `Popover`
+     - `MultiSelect`
+     - `AutoSuggest`
+     - `Drawer`
+     - `Sidebar`
+     - `SmartSidebar`
+   - This likely needs component-by-component treatment even if some helpers can be shared.
+
+2. Landmark and container semantics
+   - Add clearer high-level semantics where the visual structure is already obvious:
+     - `Breadcrumbs`
+     - `Menu`
+     - `Sidebar`
+     - `Table`
+     - `Collapse`
+     - `Progress`
+     - `Radio` group boundary
+
+3. Readonly semantics pass
+   - Normalize components whose readonly output currently feels surprising:
+     - `Checkbox`
+     - `MultiSelect`
+     - possibly `Rating` / `Progress` value exposure depending on final direction
+
+4. Repeated-field naming for generated/nested inputs
+   - Improve developer and user ergonomics for repeated/nested structures:
+     - `ArrayInput`
+     - `ObjectInput`
+     - generated controls inside `Form`
+
+5. Hidden-state normalization
+   - Ensure closed/collapsed content behaves consistently for browser visibility and accessibility:
+     - `Collapse`
+     - `DrawerSidebar`
+     - `Sidebar`
+     - `SmartSidebar`
+
+### Research / design / potentially debatable or breaking
+
+1. Semantic contract decisions that may affect public expectations
+   - Should `Button` without `onPress` still expose button semantics?
+   - Should readonly controls remain semantic controls or degrade to plain text?
+   - Should badge counts/dots participate in accessible names or be hidden by default?
+
+2. Low-level primitive boundary decisions
+   - `AbstractPopover`: what belongs in the primitive versus higher-level wrappers?
+   - `Portal`: do we want an explicit host/debugging contract?
+   - `Icon`: whether decorative hiding should be automatic or opt-in in every context.
+
+3. Complex interaction semantics
+   - `RangeInput` slider semantics
+   - `Rank` reorder semantics
+   - `Draggable` keyboard/pointer accessibility contract
+   - `Carousel` navigation and active-slide semantics
+   - `Rating` star control contract
+
+4. Runtime/harness blockers
+   - `FileInput` real upload lifecycle in an Expo/server-backed environment
+   - `AbstractPopover` interaction coverage in Storybook web
+   - `DateTimePicker` time-mode instability in the current Storybook web harness
+   - `ObjectInput` hooks-order warning under dependency toggling
 
 ## Component Ledger
 
