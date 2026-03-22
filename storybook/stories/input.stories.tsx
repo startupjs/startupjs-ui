@@ -68,6 +68,12 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas }: PlayContext) {
+  await expect(canvas.getByLabelText('Age')).toBeVisible()
+}
+void failingFollowup
 
 export const States: Story = {
   tags: ['interaction'],

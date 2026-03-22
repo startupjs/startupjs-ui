@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect, userEvent } from 'storybook/test'
 import { NumberInput, Span } from 'startupjs-ui'
 import { InlineRow, StorySection, StoryStack } from './helpers'
 
@@ -52,7 +53,32 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas }: PlayContext) {
+  await expect(canvas.getByLabelText('Distance')).toBeVisible()
+  await expect(canvas.getByRole('button', { name: 'Increment Distance' })).toBeVisible()
+  await expect(canvas.getByRole('button', { name: 'Decrement Distance' })).toBeVisible()
+}
+void failingFollowup
 
 export const States: Story = {
-  render: () => <NumberInputStates />
+  tags: ['interaction'],
+  render: () => <NumberInputStates />,
+  play: async ({ canvas }) => {
+    const distanceInput = canvas.getByDisplayValue('42')
+    const priceInput = canvas.getByDisplayValue('19.95')
+
+    await expect(distanceInput).toBeVisible()
+    await expect(priceInput).toBeVisible()
+    await expect(canvas.getByText('12')).toBeVisible()
+
+    await userEvent.clear(distanceInput)
+    await userEvent.type(distanceInput, '55')
+    await expect(distanceInput).toHaveValue('55')
+
+    await userEvent.clear(priceInput)
+    await userEvent.type(priceInput, '21.10')
+    await expect(priceInput).toHaveValue('21.10')
+  }
 }

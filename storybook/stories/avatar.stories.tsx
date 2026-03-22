@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect } from 'storybook/test'
 import { Avatar, Div, Span } from 'startupjs-ui'
 import { InlineRow, StorySection, StoryStack } from './helpers'
 
@@ -20,28 +21,45 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas }: PlayContext) {
+  await expect(canvas.getByRole('button', { name: 'Ada Lovelace' })).toBeVisible()
+}
+void failingFollowup
 
 export const States: Story = {
+  tags: ['interaction'],
   render: () => (
     <StoryStack>
       <StorySection title='Initials and sizes'>
         <InlineRow>
-          <Avatar size='s'>Ada Lovelace</Avatar>
-          <Avatar size='m'>Grace Hopper</Avatar>
-          <Avatar size='l'>Hedy Lamarr</Avatar>
+          <Avatar data-testid='avatar-initials-s' size='s'>Ada Lovelace</Avatar>
+          <Avatar data-testid='avatar-initials-m' size='m'>Grace Hopper</Avatar>
+          <Avatar data-testid='avatar-initials-l' size='l'>Hedy Lamarr</Avatar>
         </InlineRow>
       </StorySection>
 
       <StorySection title='Image fallback and status'>
         <InlineRow>
-          <Avatar src={AVATAR_SRC} status='online'>
+          <Avatar data-testid='avatar-image' src={AVATAR_SRC} status='online'>
             Ada Lovelace
           </Avatar>
-          <Avatar status='away'>Grace Hopper</Avatar>
-          <Avatar status='vip' statusComponents={{ vip: StatusDot }}>
+          <Avatar data-testid='avatar-away' status='away'>Grace Hopper</Avatar>
+          <Avatar data-testid='avatar-vip' status='vip' statusComponents={{ vip: StatusDot }}>
             Hedy Lamarr
           </Avatar>
         </InlineRow>
+      </StorySection>
+
+      <StorySection title='Pressable avatar'>
+        <Avatar
+          data-testid='avatar-pressable'
+          aria-label='Open Ada profile'
+          onPress={() => {}}
+        >
+          Ada Lovelace
+        </Avatar>
       </StorySection>
 
       <Div gap={0.5}>
@@ -50,5 +68,22 @@ export const States: Story = {
         </Span>
       </Div>
     </StoryStack>
-  )
+  ),
+  play: async ({ canvas }) => {
+    const initialsAvatar = canvas.getByTestId('avatar-initials-s')
+    const imageAvatar = canvas.getByTestId('avatar-image')
+    const awayAvatar = canvas.getByTestId('avatar-away')
+    const vipAvatar = canvas.getByTestId('avatar-vip')
+    const pressableAvatar = canvas.getByRole('button', { name: 'Open Ada profile' })
+
+    await expect(pressableAvatar).toBeVisible()
+    expect(pressableAvatar.tagName).toBe('DIV')
+    expect(initialsAvatar.textContent?.trim()).toBe('AL')
+    expect(canvas.getByTestId('avatar-initials-m').textContent?.trim()).toBe('GH')
+    expect(canvas.getByTestId('avatar-initials-l').textContent?.trim()).toBe('HL')
+    expect(imageAvatar.querySelector('img') ?? imageAvatar.querySelector('[part=\"fallback\"]')).not.toBeNull()
+    expect(imageAvatar.children).toHaveLength(2)
+    expect(awayAvatar.children).toHaveLength(2)
+    expect(vipAvatar.children).toHaveLength(2)
+  }
 }

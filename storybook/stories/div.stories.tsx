@@ -12,9 +12,19 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas }: PlayContext) {
+  const disabledTrigger = canvas.getByRole('button', { name: 'Disabled trigger' })
+
+  await expect(disabledTrigger).toHaveAttribute('aria-disabled', 'true')
+}
+void failingFollowup
 
 function DivStates () {
   const [activationCount, setActivationCount] = useState(0)
+  const [simpleActivationCount, setSimpleActivationCount] = useState(0)
+  const [disabledActivationCount, setDisabledActivationCount] = useState(0)
 
   return (
     <StoryStack>
@@ -42,6 +52,26 @@ function DivStates () {
           <Span description>Tap target</Span>
         </Div>
         <Span aria-live='polite'>Activations: {activationCount}</Span>
+      </StorySection>
+
+      <StorySection title='Visible text naming and disabled state'>
+        <Div gap={1}>
+          <Div
+            onPress={() => setSimpleActivationCount(count => count + 1)}
+            style={{ padding: 16, borderRadius: 12, backgroundColor: '#fef3c7' }}
+          >
+            <Span>Simple trigger</Span>
+          </Div>
+          <Div
+            disabled
+            onPress={() => setDisabledActivationCount(count => count + 1)}
+            style={{ padding: 16, borderRadius: 12, backgroundColor: '#e5e7eb' }}
+          >
+            <Span>Disabled trigger</Span>
+          </Div>
+          <Span>Simple activations: {simpleActivationCount}</Span>
+          <Span>Disabled activations: {disabledActivationCount}</Span>
+        </Div>
       </StorySection>
 
       <StorySection title='Canonical role and aria props'>
@@ -75,17 +105,26 @@ export const States: Story = {
   render: () => <DivStates />,
   play: async ({ canvas, userEvent }) => {
     const pressableContainer = canvas.getByRole('button', { name: 'Open sheet', exact: true })
+    const simpleTrigger = canvas.getByRole('button', { name: 'Simple trigger' })
+    const disabledTrigger = canvas.getByRole('button', { name: 'Disabled trigger' })
     const canonicalButton = canvas.getByRole('button', { name: 'Open participant card', exact: true })
     const legacyButton = canvas.getByRole('button', { name: 'Legacy participant card', exact: true })
 
     expect(pressableContainer.tagName).toBe('DIV')
+    expect(simpleTrigger.tagName).toBe('DIV')
     expect(canonicalButton.tagName).toBe('DIV')
     expect(legacyButton.tagName).toBe('DIV')
     await expect(canonicalButton).toHaveAttribute('aria-expanded', 'false')
     await expect(legacyButton).toHaveAttribute('aria-selected', 'true')
-
     pressableContainer.focus()
     await userEvent.keyboard('{Enter}')
     await expect(canvas.getByText('Activations: 1', { exact: true })).toBeVisible()
+
+    simpleTrigger.focus()
+    await userEvent.keyboard(' ')
+    await expect(canvas.getByText('Simple activations: 1', { exact: true })).toBeVisible()
+
+    await userEvent.click(disabledTrigger)
+    await expect(canvas.getByText('Disabled activations: 0', { exact: true })).toBeVisible()
   }
 }

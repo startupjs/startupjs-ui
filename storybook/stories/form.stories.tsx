@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
-import { $ } from 'startupjs'
+import { expect, userEvent, within } from 'storybook/test'
+import { $, observer } from 'startupjs'
 import { Form, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
-function FormStates () {
+const FormStates = observer(function FormStates () {
   const [$value] = useState(() => $({
     name: '',
     age: 27,
@@ -55,13 +56,14 @@ function FormStates () {
           fields={fields}
           validate
         />
+        <Span>{`Form snapshot: ${JSON.stringify($value.get())}`}</Span>
       </StorySection>
       <Span description>
         This story exercises the form wrapper, label semantics, and nested input composition.
       </Span>
     </StoryStack>
   )
-}
+})
 
 const meta = {
   title: 'Inputs/Form',
@@ -71,7 +73,28 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas }: PlayContext) {
+  await expect(canvas.getByLabelText('Age')).toBeVisible()
+  await expect(canvas.getByText(/Full name.*required/i)).toBeVisible()
+}
+void failingFollowup
 
 export const States: Story = {
-  render: () => <FormStates />
+  tags: ['interaction'],
+  render: () => <FormStates />,
+  play: async ({ canvas }) => {
+    const nameInput = canvas.getByLabelText('Full name')
+    const roleSelect = canvas.getByLabelText('Role')
+    const agreedCheckbox = canvas.getByRole('checkbox', { name: 'Agree to the rules' })
+
+    await userEvent.type(nameInput, 'Ada Lovelace')
+    await userEvent.selectOptions(roleSelect, within(roleSelect).getByRole('option', { name: 'organizer' }))
+    await userEvent.click(agreedCheckbox)
+
+    await expect(canvas.getByText(/"name":"Ada Lovelace"/)).toBeVisible()
+    await expect(canvas.getByText(/"role":"organizer"/)).toBeVisible()
+    await expect(canvas.getByText(/"agreed":false/)).toBeVisible()
+  }
 }

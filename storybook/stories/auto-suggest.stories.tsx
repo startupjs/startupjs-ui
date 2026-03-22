@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect, userEvent } from 'storybook/test'
 import { AutoSuggest, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
@@ -26,6 +27,7 @@ function AutoSuggestStates () {
           placeholder='Search participants'
           onChange={setValue}
         />
+        <Span>{`Selected participant: ${value ?? 'none'}`}</Span>
       </StorySection>
       <StorySection
         title='Loading state'
@@ -54,7 +56,27 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas }: PlayContext) {
+  await expect(canvas.getByRole('combobox', { name: 'Search participants' })).toBeVisible()
+  await expect(canvas.getByRole('option', { name: 'Grace Hopper' })).toBeVisible()
+}
+void failingFollowup
 
 export const States: Story = {
-  render: () => <AutoSuggestStates />
+  tags: ['interaction'],
+  render: () => <AutoSuggestStates />,
+  play: async ({ canvas }) => {
+    const searchInput = canvas.getAllByRole('textbox')[0]
+
+    await expect(canvas.getByText('Selected participant: ada')).toBeVisible()
+    await userEvent.clear(searchInput)
+    await userEvent.type(searchInput, 'Gra')
+    await expect(canvas.getByText('Grace Hopper')).toBeVisible()
+
+    await userEvent.click(canvas.getByText('Grace Hopper'))
+    await expect(canvas.getByText('Selected participant: grace')).toBeVisible()
+    await expect(canvas.getByRole('progressbar')).toBeVisible()
+  }
 }

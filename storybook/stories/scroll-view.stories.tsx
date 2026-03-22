@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect } from 'storybook/test'
 import { ScrollView, Card, Span, Div } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
@@ -15,6 +16,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const States: Story = {
+  tags: ['interaction'],
   render: () => (
     <Div style={{ height: 320, borderRadius: 12, backgroundColor: '#f3f4f6', overflow: 'hidden' }}>
       <ScrollView full>
@@ -47,5 +49,9 @@ export const States: Story = {
         </StoryStack>
       </ScrollView>
     </Div>
-  )
+  ),
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText('Use `full` so the scroll view fills the viewport.')).toBeVisible()
+    await expect(canvas.getByText('Five')).toBeVisible()
+  }
 }

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect } from 'storybook/test'
 import { User, Div, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
@@ -20,8 +21,15 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas }: PlayContext) {
+  await expect(canvas.getByRole('button', { name: 'Ada Lovelace' })).toBeVisible()
+}
+void failingFollowup
 
 export const States: Story = {
+  tags: ['interaction'],
   render: () => (
     <StoryStack>
       <StorySection title='Layouts and sizes'>
@@ -38,6 +46,13 @@ export const States: Story = {
             status='vip'
             statusComponents={{ vip: StatusDot }}
           />
+          <User
+            avatarUrl={USER_IMAGE}
+            name='Margaret Hamilton'
+            description='Pressable profile row'
+            aria-label='Open Margaret Hamilton'
+            onPress={() => {}}
+          />
         </StoryStack>
       </StorySection>
 
@@ -47,5 +62,11 @@ export const States: Story = {
         </Span>
       </Div>
     </StoryStack>
-  )
+  ),
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText('Ada Lovelace')).toBeVisible()
+    await expect(canvas.getByText('Grace Hopper')).toBeVisible()
+    await expect(canvas.getByText('Hedy Lamarr')).toBeVisible()
+    await expect(canvas.getByRole('button', { name: 'Open Margaret Hamilton' })).toBeVisible()
+  }
 }

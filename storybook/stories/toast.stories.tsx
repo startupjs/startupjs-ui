@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect, screen, userEvent, waitFor } from 'storybook/test'
 import { Button, Card, Div, Span, toast } from 'startupjs-ui'
 import { InlineRow, StorySection, StoryStack } from './helpers'
 
@@ -47,7 +48,21 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas }: PlayContext) {
+  await userEvent.click(canvas.getByRole('button', { name: 'Alert' }))
+  await expect(screen.getByRole('status', { name: 'Sticky note' })).toBeVisible()
+  await expect(screen.getByRole('button', { name: 'Close toast' })).toBeVisible()
+}
+void failingFollowup
 
 export const Triggers: Story = {
-  render: () => <ToastStates />
+  tags: ['interaction'],
+  render: () => <ToastStates />,
+  play: async ({ canvas }) => {
+    await userEvent.click(canvas.getByRole('button', { name: 'Alert' }))
+    await waitFor(() => expect(screen.getByText('Sticky note')).toBeVisible())
+    await expect(screen.getByText('This toast stays until closed.')).toBeVisible()
+  }
 }

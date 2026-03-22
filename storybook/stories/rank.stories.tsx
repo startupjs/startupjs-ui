@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect, userEvent, within } from 'storybook/test'
 import { Rank, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
@@ -44,7 +45,29 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas }: PlayContext) {
+  await expect(canvas.getByRole('list', { name: 'Interactive ranking' })).toBeVisible()
+  await expect(canvas.getByRole('button', { name: 'Move Launch' })).toBeVisible()
+}
+void failingFollowup
 
 export const States: Story = {
-  render: () => <RankStates />
+  tags: ['interaction'],
+  render: () => <RankStates />,
+  play: async ({ canvas }) => {
+    const selects = canvas.getAllByRole('combobox')
+    const interactiveSelect = selects[0]
+    const readonlyRank = canvas.getByText('Readonly ranking')
+
+    expect(canvas.getAllByText('Concept').length).toBeGreaterThan(0)
+    expect(canvas.getAllByText('Build').length).toBeGreaterThan(0)
+    expect(canvas.getAllByText('Launch').length).toBeGreaterThan(0)
+    await expect(readonlyRank).toBeVisible()
+
+    await userEvent.selectOptions(interactiveSelect, within(interactiveSelect).getByRole('option', { name: '3' }))
+    await expect(canvas.getAllByDisplayValue('3')[0]).toBeVisible()
+    await expect(canvas.getAllByText('Launch').length).toBeGreaterThan(0)
+  }
 }

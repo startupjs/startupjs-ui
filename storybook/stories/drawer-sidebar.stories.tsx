@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
 import { $, observer } from 'startupjs'
+import { expect, screen, waitFor } from 'storybook/test'
 import { Button, Card, Div, DrawerSidebar, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
@@ -53,6 +54,7 @@ const DrawerSidebarStates = observer(function DrawerSidebarStates () {
               </Div>
             </Card>
           </DrawerSidebar>
+          <Span>Sidebar open: {String($open.get())}</Span>
         </Div>
       </StorySection>
     </StoryStack>
@@ -70,7 +72,29 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas, userEvent }: PlayContext) {
+  await userEvent.click(canvas.getByRole('button', { name: 'Open sidebar' }))
+  await waitFor(() => expect(screen.getByRole('navigation', { name: 'Organizer menu' })).toBeVisible())
+}
+void failingFollowup
 
 export const MobileDrawer: Story = {
-  render: () => <DrawerSidebarStates />
+  tags: ['interaction'],
+  render: () => <DrawerSidebarStates />,
+  play: async ({ canvas, userEvent }) => {
+    await expect(canvas.getByText('Workspace')).toBeVisible()
+    await expect(canvas.getByText('Sidebar open: false')).toBeVisible()
+
+    await userEvent.click(canvas.getByRole('button', { name: 'Open sidebar' }))
+    await waitFor(() => expect(screen.getByText('Organizer menu')).toBeVisible())
+    await waitFor(() => expect(canvas.getByText('Sidebar open: true')).toBeVisible())
+    await expect(screen.getByText('Dashboard')).toBeVisible()
+    await expect(screen.getByText('Participants')).toBeVisible()
+    await expect(canvas.getByText('Workspace')).toBeVisible()
+
+    await userEvent.click(canvas.getByRole('button', { name: 'Close sidebar' }))
+    await waitFor(() => expect(canvas.getByText('Sidebar open: false')).toBeVisible())
+  }
 }

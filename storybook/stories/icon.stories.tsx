@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect } from 'storybook/test'
 import { Icon } from 'startupjs-ui'
 import { faCircleInfo, faHeart, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { InlineRow, StorySection, StoryStack } from './helpers'
@@ -11,8 +12,15 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvasElement }: PlayContext) {
+  expect(canvasElement.querySelectorAll('svg[aria-hidden="true"]').length).toBeGreaterThan(0)
+}
+void failingFollowup
 
 export const States: Story = {
+  tags: ['interaction'],
   render: () => (
     <StoryStack>
       <StorySection title='Sizes'>
@@ -34,5 +42,11 @@ export const States: Story = {
         </InlineRow>
       </StorySection>
     </StoryStack>
-  )
+  ),
+  play: async ({ canvas, canvasElement }) => {
+    await expect(canvas.getByText('Sizes', { exact: true })).toBeVisible()
+    await expect(canvas.getByText('Different glyphs', { exact: true })).toBeVisible()
+    expect(canvas.queryByRole('button')).toBeNull()
+    expect(canvasElement.querySelectorAll('svg').length).toBeGreaterThanOrEqual(9)
+  }
 }

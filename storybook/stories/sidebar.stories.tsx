@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect, userEvent } from 'storybook/test'
 import { $, observer } from 'startupjs'
 import { Button, Card, Div, Sidebar, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
@@ -66,7 +67,25 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas }: PlayContext) {
+  await expect(canvas.getByRole('navigation', { name: 'Event navigation' })).toBeVisible()
+}
+void failingFollowup
 
 export const FixedLayout: Story = {
-  render: () => <SidebarStates />
+  tags: ['interaction'],
+  render: () => <SidebarStates />,
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText('Event navigation')).toBeVisible()
+    await expect(canvas.getByText('Main content')).toBeVisible()
+
+    await userEvent.click(canvas.getByRole('button', { name: 'Close' }))
+    await expect(canvas.getByText('Event navigation')).not.toBeVisible()
+    await expect(canvas.getByText('Main content')).toBeVisible()
+
+    await userEvent.click(canvas.getByRole('button', { name: 'Open' }))
+    await expect(canvas.getByText('Event navigation')).toBeVisible()
+  }
 }

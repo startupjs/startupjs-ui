@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect } from 'storybook/test'
 import { Tag, Span } from 'startupjs-ui'
 import { faHeart, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { InlineRow, StorySection, StoryStack } from './helpers'
@@ -11,8 +12,16 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas }: PlayContext) {
+  await expect(canvas.getByRole('button', { name: 'Search icon' })).toBeVisible()
+  await expect(canvas.getByRole('button', { name: 'Remove Favorite' })).toBeVisible()
+}
+void failingFollowup
 
 export const States: Story = {
+  tags: ['interaction'],
   render: () => (
     <StoryStack>
       <StorySection title='Variants'>
@@ -40,5 +49,12 @@ export const States: Story = {
 
       <Span description>Tag presses should be targetable by role on web after the UI patch.</Span>
     </StoryStack>
-  )
+  ),
+  play: async ({ canvas }) => {
+    const favoriteTag = canvas.getByRole('button', { name: 'Favorite' })
+
+    await expect(favoriteTag).toBeVisible()
+    await expect(canvas.getByText('Searchable')).toBeVisible()
+    expect(canvas.getAllByRole('button').length).toBeGreaterThanOrEqual(1)
+  }
 }

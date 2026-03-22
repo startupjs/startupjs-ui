@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect } from 'storybook/test'
 import { FlatList, Item } from 'startupjs-ui'
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons'
 import { StorySection, StoryStack } from './helpers'
@@ -23,10 +24,12 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const States: Story = {
+  tags: ['interaction'],
   render: () => (
     <StoryStack>
       <StorySection title='Scrollable list'>
         <FlatList
+          testID='flat-list'
           style={{ height: 280 }}
           data={ITEMS}
           keyExtractor={item => item.id}
@@ -39,5 +42,14 @@ export const States: Story = {
         />
       </StorySection>
     </StoryStack>
-  )
+  ),
+  play: async ({ canvas }) => {
+    const list = canvas.getByTestId('flat-list')
+
+    await expect(canvas.getByText('Ada Lovelace')).toBeVisible()
+    await expect(canvas.getByText('Grace Hopper')).toBeVisible()
+    await expect(canvas.getByText('Hedy Lamarr')).toBeVisible()
+    await expect(canvas.getByText('Radia Perlman')).toBeVisible()
+    expect(list.ownerDocument.defaultView?.getComputedStyle(list).height).toBe('280px')
+  }
 }

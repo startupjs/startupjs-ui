@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect } from 'storybook/test'
 import { Card, DragDropProvider, Draggable, Droppable, Div, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
@@ -124,7 +125,22 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas }: PlayContext) {
+  await expect(canvas.getByRole('button', { name: 'Prepare venue' })).toBeVisible()
+  await expect(canvas.getByText('Dropped prep from todo into doing at 1.')).toBeVisible()
+}
+void failingFollowup
 
 export const Board: Story = {
-  render: () => <DraggableStates />
+  tags: ['interaction'],
+  render: () => <DraggableStates />,
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText('To do')).toBeVisible()
+    await expect(canvas.getByText('Doing')).toBeVisible()
+    await expect(canvas.getByText('Prepare venue')).toBeVisible()
+    await expect(canvas.getByText('Collect photos')).toBeVisible()
+    await expect(canvas.getByText('Drag a card between columns.')).toBeVisible()
+  }
 }

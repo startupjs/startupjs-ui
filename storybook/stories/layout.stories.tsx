@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect } from 'storybook/test'
 import { Layout, Div, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
@@ -15,6 +16,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const States: Story = {
+  tags: ['interaction'],
   render: () => (
     <Layout>
       <StoryStack>
@@ -26,5 +28,10 @@ export const States: Story = {
         </StorySection>
       </StoryStack>
     </Layout>
-  )
+  ),
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText('Layout keeps content inside the safe area.')).toBeVisible()
+    await expect(canvas.getByText('This is intentionally minimal because the component is a shell.')).toBeVisible()
+    expect(canvas.queryByRole('button')).toBeNull()
+  }
 }

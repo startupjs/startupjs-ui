@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect, waitFor } from 'storybook/test'
 import { Button, Collapse, Div, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
@@ -12,6 +13,9 @@ function CollapseStates () {
         title='Default collapse'
         description='Click the header to toggle the body. This example is controlled so the open state is obvious on first load.'
       >
+        <Div gap={0.5}>
+          <Span>First example open: {String(open)}</Span>
+        </Div>
         <Collapse title='Event rules' open={open} onChange={setOpen}>
           <Div gap={0.5}>
             <Span>Participants must stay within the assigned timebox.</Span>
@@ -51,7 +55,36 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas, userEvent }: PlayContext) {
+  const defaultHeader = canvas.getByRole('button', { name: 'Event rules' })
+
+  await expect(defaultHeader).toHaveAttribute('aria-expanded', 'true')
+  await userEvent.click(defaultHeader)
+  await expect(defaultHeader).toHaveAttribute('aria-expanded', 'false')
+  await expect(canvas.getByText('Participants must stay within the assigned timebox.')).not.toBeVisible()
+}
+void failingFollowup
 
 export const States: Story = {
-  render: () => <CollapseStates />
+  tags: ['interaction'],
+  render: () => <CollapseStates />,
+  play: async ({ canvas, userEvent }) => {
+    const defaultHeader = canvas.getByRole('button', { name: 'Event rules' })
+    const resetButton = canvas.getByRole('button', { name: 'Reset first example' })
+    const customHeader = canvas.getByRole('button', { name: 'Notes for organizers' })
+
+    await expect(defaultHeader).toBeVisible()
+    await expect(customHeader).toBeVisible()
+    await expect(canvas.getByText('First example open: true')).toBeVisible()
+    await expect(canvas.getByText('Participants must stay within the assigned timebox.')).toBeVisible()
+    await expect(canvas.getByText('Use the dashboard to advance the event stage.')).toBeVisible()
+
+    await userEvent.click(defaultHeader)
+    await waitFor(() => expect(canvas.getByText('First example open: false')).toBeVisible())
+
+    await userEvent.click(resetButton)
+    await waitFor(() => expect(canvas.getByText('First example open: true')).toBeVisible())
+  }
 }

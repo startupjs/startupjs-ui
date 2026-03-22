@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect } from 'storybook/test'
 import { ColorPicker, Span } from 'startupjs-ui'
 import { InlineRow, StorySection, StoryStack } from './helpers'
 
@@ -32,7 +33,27 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas }: PlayContext) {
+  const disabledTrigger = canvas.getByRole('button', { name: '#111827' })
+
+  await expect(disabledTrigger).toBeDisabled()
+  await expect(disabledTrigger).toHaveAccessibleName('Choose color #111827')
+}
+void failingFollowup
 
 export const States: Story = {
-  render: () => <ColorPickerStates />
+  tags: ['interaction'],
+  render: () => <ColorPickerStates />,
+  play: async ({ canvas }) => {
+    const smallTrigger = canvas.getByRole('button', { name: '#3B82F6' })
+    const compactTrigger = canvas.getByRole('button', { name: '#22C55E' })
+    const disabledTrigger = canvas.getByRole('button', { name: '#111827' })
+
+    await expect(smallTrigger).toBeVisible()
+    await expect(compactTrigger).toBeVisible()
+    await expect(disabledTrigger).toBeVisible()
+    expect(canvas.getAllByRole('button')).toHaveLength(3)
+  }
 }

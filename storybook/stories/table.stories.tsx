@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect, userEvent } from 'storybook/test'
 import { Card, Span, Table, Tbody, Td, Th, Thead, Tr } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
@@ -74,7 +75,25 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas }: PlayContext) {
+  await expect(canvas.getByRole('table')).toBeVisible()
+  await expect(canvas.getByRole('columnheader', { name: 'Name' })).toBeVisible()
+}
+void failingFollowup
 
 export const States: Story = {
-  render: () => <TableStates />
+  tags: ['interaction'],
+  render: () => <TableStates />,
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText('Ada Lovelace')).toBeVisible()
+    await expect(canvas.getByText('Grace Hopper')).toBeVisible()
+    await expect(canvas.getByText('Missing participant number')).toBeVisible()
+
+    const longCell = canvas.getByText('A very long cell value that can be expanded when tapped in the web story')
+    await expect(longCell).toBeVisible()
+    await userEvent.click(longCell)
+    await expect(longCell).toBeVisible()
+  }
 }

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect, userEvent } from 'storybook/test'
 import { Button, Card, Div, Popover, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
@@ -54,7 +55,23 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas }: PlayContext) {
+  await expect(canvas.getByRole('dialog', { name: 'Popover menu' })).toBeVisible()
+}
+void failingFollowup
 
 export const Anchored: Story = {
-  render: () => <PopoverStates />
+  tags: ['interaction'],
+  render: () => <PopoverStates />,
+  play: async ({ canvas }) => {
+    await expect(canvas.queryByText('Popover menu')).not.toBeInTheDocument()
+
+    await userEvent.click(canvas.getByRole('button', { name: 'Open popover Press this card to open the anchored surface.' }))
+    const closeButtons = canvas.getAllByRole('button', { name: 'Close' })
+    expect(closeButtons.length).toBeGreaterThan(0)
+
+    await userEvent.click(closeButtons.at(-1)!)
+  }
 }

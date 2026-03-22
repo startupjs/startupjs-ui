@@ -56,13 +56,19 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas }: PlayContext) {
+  await expect(canvas.getByRole('radiogroup', { name: 'Gender' })).toBeVisible()
+}
+void failingFollowup
 
 export const States: Story = {
   tags: ['interaction'],
   render: () => <RadioStates />,
   play: async ({ canvas, userEvent }) => {
-    const wrappedWoman = canvas.getAllByRole('radio', { name: 'Woman', exact: true })[0]
-    const lowLevelOther = canvas.getAllByRole('radio', { name: 'Other', exact: true }).at(-1)
+    const wrappedWoman = canvas.getAllByRole('radio', { name: 'Woman' })[0]
+    const lowLevelOther = canvas.getAllByRole('radio', { name: 'Other' }).at(-1)
 
     await userEvent.click(wrappedWoman)
     await expect(wrappedWoman).toHaveAttribute('aria-checked', 'true')

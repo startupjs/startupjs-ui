@@ -15,6 +15,16 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas }: PlayContext) {
+  const docsLink = canvas.getByRole('link', { name: 'Open docs' })
+  const iconLink = canvas.getByRole('link', { name: 'Open StartupJS in a new tab' })
+
+  expect(docsLink.querySelector('button')).toBeNull()
+  expect(iconLink.querySelector('button')).toBeNull()
+}
+void failingFollowup
 
 export const States: Story = {
   tags: ['interaction'],
@@ -57,8 +67,19 @@ export const States: Story = {
     </StoryStack>
   ),
   play: async ({ canvas }) => {
-    await expect(canvas.getByRole('link', { name: 'StartupJS site', exact: true })).toBeVisible()
-    await expect(canvas.getByRole('link', { name: 'Open docs', exact: true })).toBeVisible()
-    await expect(canvas.getByRole('link', { name: 'Open StartupJS in a new tab', exact: true })).toBeVisible()
+    const siteLink = canvas.getByRole('link', { name: 'StartupJS site' })
+    const docsLink = canvas.getByRole('link', { name: 'Open docs' })
+    const iconLink = canvas.getByRole('link', { name: 'Open StartupJS in a new tab' })
+    const pushedLink = canvas.getByRole('link', { name: 'pushed link' })
+
+    await expect(siteLink).toBeVisible()
+    await expect(docsLink).toBeVisible()
+    await expect(iconLink).toBeVisible()
+    await expect(pushedLink).toBeVisible()
+    expect(canvas.getAllByRole('link')).toHaveLength(4)
+    expect(siteLink.getAttribute('href')).toContain('https://startupjs.org')
+    expect(docsLink.getAttribute('href')).toContain('https://startupjs.org/docs')
+    expect(iconLink.getAttribute('href')).toContain('https://startupjs.org')
+    expect(pushedLink.getAttribute('href')).toContain('/storybook')
   }
 }

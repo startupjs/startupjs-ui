@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect } from 'storybook/test'
 import { RangeInput, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
@@ -45,7 +46,20 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas }: PlayContext) {
+  await expect(canvas.getAllByRole('slider')).toHaveLength(3)
+}
+void failingFollowup
 
 export const States: Story = {
-  render: () => <RangeInputStates />
+  tags: ['interaction'],
+  render: () => <RangeInputStates />,
+  play: async ({ canvas, canvasElement }) => {
+    await expect(canvas.getByText('This story checks the track, labels, and the single/range value modes.')).toBeVisible()
+    await expect(canvas.getByText('Single value slider')).toBeVisible()
+    await expect(canvas.getByText('Range slider with steps')).toBeVisible()
+    expect(canvasElement.textContent).toContain('This story checks the track, labels, and the single/range value modes.')
+  }
 }

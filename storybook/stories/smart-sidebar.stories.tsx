@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect, userEvent } from 'storybook/test'
 import { $, observer } from 'startupjs'
 import { Button, Card, Div, SmartSidebar, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
@@ -36,7 +37,7 @@ function SmartSidebarDemo ({
           width={260}
           renderContent={() => (
             <Div gap={1.5} style={{ padding: 16 }}>
-              <Span h4>Navigation</Span>
+              <Span h4>{title} navigation</Span>
               <Card style={{ padding: 12 }}>
                 <Span bold>Dashboard</Span>
               </Card>
@@ -48,7 +49,7 @@ function SmartSidebarDemo ({
         >
           <Card style={{ padding: 20 }}>
             <Div gap={0.75}>
-              <Span h4>Workspace</Span>
+              <Span h4>{title} workspace</Span>
               <Span description>
                 The active branch is determined by `fixedLayoutBreakpoint` and the current viewport width.
               </Span>
@@ -80,7 +81,33 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas }: PlayContext) {
+  await expect(canvas.getByRole('navigation', { name: 'Fixed layout branch navigation' })).toBeVisible()
+  await expect(canvas.getByRole('dialog')).toBeVisible()
+}
+void failingFollowup
 
 export const Branches: Story = {
-  render: () => <SmartSidebarStates />
+  tags: ['interaction'],
+  render: () => <SmartSidebarStates />,
+  play: async ({ canvas }) => {
+    await expect(canvas.getByText('Fixed layout branch navigation')).toBeVisible()
+    await expect(canvas.getByText('Fixed layout branch workspace')).toBeVisible()
+    await expect(canvas.getByText('Drawer branch workspace')).toBeVisible()
+
+    const closeButtons = canvas.getAllByRole('button', { name: 'Close' })
+    const openButtons = canvas.getAllByRole('button', { name: 'Open' })
+
+    await userEvent.click(closeButtons[0])
+    await expect(canvas.getByText('Fixed layout branch navigation')).not.toBeVisible()
+
+    await userEvent.click(openButtons[0])
+    await expect(canvas.getByText('Fixed layout branch navigation')).toBeVisible()
+
+    await expect(canvas.getByText('Drawer branch navigation')).toBeVisible()
+    await userEvent.click(openButtons[1])
+    await expect(canvas.getByText('Drawer branch navigation')).toBeVisible()
+  }
 }

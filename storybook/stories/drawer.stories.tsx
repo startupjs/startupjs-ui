@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect, screen, waitFor } from 'storybook/test'
 import { Button, Card, Drawer, Div, Span } from 'startupjs-ui'
 import { InlineRow, StorySection, StoryStack } from './helpers'
 
@@ -43,6 +44,9 @@ function DrawerStates () {
           </Div>
         </Card>
       </Drawer>
+      <Div gap={0.5}>
+        <Span>Open drawer: {position ?? 'none'}</Span>
+      </Div>
     </StoryStack>
   )
 }
@@ -58,7 +62,30 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas, userEvent }: PlayContext) {
+  await userEvent.click(canvas.getByRole('button', { name: 'Left' }))
+  await waitFor(() => expect(screen.getByRole('dialog', { name: 'Left drawer' })).toBeVisible())
+}
+void failingFollowup
 
 export const Positions: Story = {
-  render: () => <DrawerStates />
+  tags: ['interaction'],
+  render: () => <DrawerStates />,
+  play: async ({ canvas, userEvent }) => {
+    await expect(canvas.getByText('Open drawer: none')).toBeVisible()
+
+    await userEvent.click(canvas.getByRole('button', { name: 'Left' }))
+    await waitFor(() => expect(screen.getByText('Left drawer')).toBeVisible())
+    await waitFor(() => expect(canvas.getByText('Open drawer: left')).toBeVisible())
+    await userEvent.click(screen.getByRole('button', { name: 'Close drawer' }))
+    await waitFor(() => expect(canvas.getByText('Open drawer: none')).toBeVisible())
+
+    await userEvent.click(canvas.getByRole('button', { name: 'Bottom' }))
+    await waitFor(() => expect(screen.getByText('Bottom drawer')).toBeVisible())
+    await waitFor(() => expect(canvas.getByText('Open drawer: bottom')).toBeVisible())
+    await userEvent.click(screen.getByRole('button', { name: 'Close drawer' }))
+    await waitFor(() => expect(canvas.getByText('Open drawer: none')).toBeVisible())
+  }
 }

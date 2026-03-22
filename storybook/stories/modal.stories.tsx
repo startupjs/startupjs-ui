@@ -83,6 +83,13 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas, userEvent }: PlayContext) {
+  await userEvent.click(canvas.getByRole('button', { name: 'Open window modal', exact: true }))
+  await expect(screen.getByRole('button', { name: 'Dismiss modal backdrop' })).toBeVisible()
+}
+void failingFollowup
 
 export const States: Story = {
   tags: ['interaction'],

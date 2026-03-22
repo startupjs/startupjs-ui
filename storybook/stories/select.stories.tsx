@@ -87,25 +87,35 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas }: PlayContext) {
+  await expect(canvas.getByLabelText('Disabled role')).toBeDisabled()
+}
+void failingFollowup
 
 export const States: Story = {
   tags: ['interaction'],
   render: () => <SelectStates />,
   play: async ({ canvas, userEvent }) => {
     const wrappedSelect = canvas.getByLabelText('Role')
+    const optionalSelect = canvas.getByLabelText('Optional role')
     const lowLevelSelect = canvas.getByLabelText('Role low level')
     const typedSelect = canvas.getByLabelText('Typed role')
 
-    await userEvent.selectOptions(wrappedSelect, within(wrappedSelect).getByRole('option', { name: 'Guest', exact: true }))
+    await expect(optionalSelect).toHaveDisplayValue('Choose a role')
+    await expect(canvas.getByDisplayValue('Guest')).toBeVisible()
+
+    await userEvent.selectOptions(wrappedSelect, within(wrappedSelect).getByRole('option', { name: 'Guest' }))
     await expect(wrappedSelect).toHaveDisplayValue('Guest')
 
-    await userEvent.selectOptions(lowLevelSelect, within(lowLevelSelect).getByRole('option', { name: 'Participant', exact: true }))
+    await userEvent.selectOptions(lowLevelSelect, within(lowLevelSelect).getByRole('option', { name: 'Participant' }))
     await expect(lowLevelSelect).toHaveDisplayValue('Participant')
 
-    await userEvent.selectOptions(typedSelect, within(typedSelect).getByRole('option', { name: 'Boolean true', exact: true }))
-    await expect(canvas.getByText('Selected typed value: true (boolean)', { exact: true })).toBeVisible()
+    await userEvent.selectOptions(typedSelect, within(typedSelect).getByRole('option', { name: 'Boolean true' }))
+    await expect(canvas.getByText('Selected typed value: true (boolean)')).toBeVisible()
 
-    await userEvent.selectOptions(typedSelect, within(typedSelect).getByRole('option', { name: 'String true', exact: true }))
-    await expect(canvas.getByText('Selected typed value: true (string)', { exact: true })).toBeVisible()
+    await userEvent.selectOptions(typedSelect, within(typedSelect).getByRole('option', { name: 'String true' }))
+    await expect(canvas.getByText('Selected typed value: true (string)')).toBeVisible()
   }
 }

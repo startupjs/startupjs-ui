@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect, screen, waitFor } from 'storybook/test'
 import { DateTimePicker, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
@@ -17,18 +18,28 @@ function DateTimePickerStates () {
             label='Event date'
             date={date}
             mode='date'
+            locale='en'
+            testID='dtp-date-input'
+            calendarTestID='dtp-date-calendar'
             onChangeDate={setDate}
           />
           <DateTimePicker
             label='Start time'
             date={time}
             mode='time'
+            locale='en'
+            is24Hour
+            testID='dtp-time-input'
             onChangeDate={setTime}
           />
           <DateTimePicker
             label='Start datetime'
             date={datetime}
             mode='datetime'
+            locale='en'
+            is24Hour
+            testID='dtp-datetime-input'
+            calendarTestID='dtp-datetime-calendar'
             onChangeDate={setDatetime}
           />
         </StoryStack>
@@ -48,7 +59,31 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas, userEvent }: PlayContext) {
+  const dateInput = canvas.getByLabelText('Event date')
+  const timeInput = canvas.getByLabelText('Start time')
+
+  await expect(dateInput).toBeVisible()
+  await userEvent.click(timeInput)
+  await expect(screen.getByText('18:30')).toBeVisible()
+}
+void failingFollowup
 
 export const States: Story = {
-  render: () => <DateTimePickerStates />
+  tags: ['interaction'],
+  render: () => <DateTimePickerStates />,
+  play: async ({ canvas, userEvent }) => {
+    const dateInput = await canvas.findByTestId('dtp-date-input')
+    const timeInput = await canvas.findByTestId('dtp-time-input')
+    const datetimeInput = await canvas.findByTestId('dtp-datetime-input')
+
+    await expect(dateInput).toBeVisible()
+    await expect(timeInput).toBeVisible()
+    await expect(datetimeInput).toBeVisible()
+
+    await userEvent.click(dateInput)
+    await waitFor(() => expect(screen.getByTestId('dtp-date-calendar')).toBeVisible())
+  }
 }

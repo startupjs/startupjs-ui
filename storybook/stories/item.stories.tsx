@@ -21,6 +21,12 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+type PlayContext = Parameters<NonNullable<Story['play']>>[0]
+
+async function failingFollowup ({ canvas }: PlayContext) {
+  await expect(canvas.getByRole('button', { name: 'Custom left Custom content block Right slot' })).toBeVisible()
+}
+void failingFollowup
 
 export const States: Story = {
   tags: ['interaction'],
@@ -67,12 +73,16 @@ export const States: Story = {
     const detailsLink = canvas.getByRole('link', { name: 'Open participant details', exact: true })
     const imageFallbackItem = canvas.getByRole('button', { name: 'With image fallback', exact: true })
     const selectableItem = canvas.getByRole('button', { name: 'Select Ada Lovelace', exact: true })
+    const customSlotItem = canvas.getByRole('button', { name: 'Custom left Custom content block Right slot' })
 
     await expect(detailsLink).toBeVisible()
     await expect(imageFallbackItem).toBeVisible()
     await expect(selectableItem).toBeVisible()
+    await expect(customSlotItem).toBeVisible()
     expect(detailsLink.tagName).toBe('A')
+    expect(detailsLink.getAttribute('href')).toContain('/people/ada')
     expect(imageFallbackItem.tagName).toBe('DIV')
     expect(selectableItem.tagName).toBe('DIV')
+    expect(customSlotItem.tagName).toBe('DIV')
   }
 }
