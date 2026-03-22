@@ -27,6 +27,8 @@ yarn-error.log
 doc_build
 docs/dist
 storybook/dist
+storybook/test-results
+storybook-web/storybook-static
 
 # tmp folders
 .tmp

@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
-import { Select, Span } from 'startupjs-ui'
+import { expect, within } from 'storybook/test'
+import { Input, Select, Span } from 'startupjs-ui'
 import { InlineRow, StorySection, StoryStack } from './helpers'
 
 const OPTIONS = [
@@ -12,12 +13,22 @@ const OPTIONS = [
 
 function SelectStates () {
   const [value, setValue] = useState<string | undefined>('organizer')
+  const [typedValue, setTypedValue] = useState<any>('true')
+
+  const TYPED_OPTIONS = [
+    { value: 'true', label: 'String true' },
+    { value: true, label: 'Boolean true' },
+    { value: '1', label: 'String one' },
+    { value: 1, label: 'Number one' }
+  ]
 
   return (
     <StoryStack>
       <StorySection title='Basic select'>
-        <Select
+        <Input
+          type='select'
           label='Role'
+          description='Wrapped select should be targetable by the visible label on web.'
           options={OPTIONS}
           value={value}
           onChange={setValue}
@@ -25,14 +36,16 @@ function SelectStates () {
       </StorySection>
       <StorySection title='Empty and disabled'>
         <InlineRow>
-          <Select
+          <Input
+            type='select'
             label='Optional role'
             options={OPTIONS}
             emptyValueLabel='Choose a role'
             value={undefined}
             onChange={() => {}}
           />
-          <Select
+          <Input
+            type='select'
             label='Disabled role'
             options={OPTIONS}
             value='guest'
@@ -40,6 +53,24 @@ function SelectStates () {
             onChange={() => {}}
           />
         </InlineRow>
+      </StorySection>
+      <StorySection title='Low-level select'>
+        <Select
+          options={OPTIONS}
+          value={value}
+          onChange={setValue}
+          aria-label='Role low level'
+        />
+      </StorySection>
+      <StorySection title='Typed values stay distinct'>
+        <Input
+          type='select'
+          label='Typed role'
+          options={TYPED_OPTIONS}
+          value={typedValue}
+          onChange={setTypedValue}
+        />
+        <Span>{`Selected typed value: ${String(typedValue)} (${typeof typedValue})`}</Span>
       </StorySection>
       <Span description>
         This story is mainly about the wrapper semantics and the overlay option list on web.
@@ -58,5 +89,23 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const States: Story = {
-  render: () => <SelectStates />
+  tags: ['interaction'],
+  render: () => <SelectStates />,
+  play: async ({ canvas, userEvent }) => {
+    const wrappedSelect = canvas.getByLabelText('Role')
+    const lowLevelSelect = canvas.getByLabelText('Role low level')
+    const typedSelect = canvas.getByLabelText('Typed role')
+
+    await userEvent.selectOptions(wrappedSelect, within(wrappedSelect).getByRole('option', { name: 'Guest', exact: true }))
+    await expect(wrappedSelect).toHaveDisplayValue('Guest')
+
+    await userEvent.selectOptions(lowLevelSelect, within(lowLevelSelect).getByRole('option', { name: 'Participant', exact: true }))
+    await expect(lowLevelSelect).toHaveDisplayValue('Participant')
+
+    await userEvent.selectOptions(typedSelect, within(typedSelect).getByRole('option', { name: 'Boolean true', exact: true }))
+    await expect(canvas.getByText('Selected typed value: true (boolean)', { exact: true })).toBeVisible()
+
+    await userEvent.selectOptions(typedSelect, within(typedSelect).getByRole('option', { name: 'String true', exact: true }))
+    await expect(canvas.getByText('Selected typed value: true (string)', { exact: true })).toBeVisible()
+  }
 }

@@ -69,7 +69,7 @@ function Link ({
 
   const isBlock = resolvedDisplay === 'block'
   const Component = isBlock ? Div : Span
-  const extraProps: Record<string, any> = { accessibilityRole: 'link', onPress: handlePress }
+  const extraProps: Record<string, any> = { role: 'link', onPress: handlePress }
   const {
     navigate: routerNavigate,
     push: routerPush,

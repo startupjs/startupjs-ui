@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect } from 'storybook/test'
 import { $ } from 'startupjs'
 import { Input, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
@@ -20,6 +21,7 @@ function InputStates () {
           <Input
             $value={$value.name}
             label='Name'
+            required
             description='Labelled text field for getByLabel()'
             type='text'
             placeholder='Participant name'
@@ -41,6 +43,14 @@ function InputStates () {
             type='select'
             options={['participant', 'organizer', 'guest']}
           />
+          <Input
+            $value={$value.name}
+            label='Error name'
+            description='The wrapper should expose both description and error semantics.'
+            type='text'
+            error='This field is required'
+            placeholder='Person name'
+          />
         </StoryStack>
       </StorySection>
       <Span description>
@@ -60,5 +70,19 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const States: Story = {
-  render: () => <InputStates />
+  tags: ['interaction'],
+  render: () => <InputStates />,
+  play: async ({ canvas, userEvent }) => {
+    const nameField = canvas.getByLabelText('Name')
+    const nameWithErrorField = canvas.getByLabelText('Error name')
+
+    await expect(nameField).toBeVisible()
+    await expect(nameWithErrorField).toBeVisible()
+
+    await userEvent.clear(nameField)
+    await userEvent.type(nameField, 'Grace Hopper')
+
+    await expect(nameField).toHaveValue('Grace Hopper')
+    await expect(nameWithErrorField).toHaveAttribute('aria-invalid', 'true')
+  }
 }

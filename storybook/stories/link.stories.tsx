@@ -1,4 +1,6 @@
+import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect } from 'storybook/test'
 import { Button, Div, Link, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
@@ -15,6 +17,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const States: Story = {
+  tags: ['interaction'],
   render: () => (
     <StoryStack>
       <StorySection
@@ -34,6 +37,14 @@ export const States: Story = {
             <Button>Open docs</Button>
           </Link>
 
+          <Link
+            href='https://startupjs.org'
+            display='block'
+            aria-label='Open StartupJS in a new tab'
+          >
+            <Button icon={faArrowUpRightFromSquare} />
+          </Link>
+
           <Link to='/storybook' display='inline' push>
             pushed link
           </Link>
@@ -44,5 +55,10 @@ export const States: Story = {
         <Span description>These examples keep the component visible even if the router is not changing in Storybook.</Span>
       </Div>
     </StoryStack>
-  )
+  ),
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('link', { name: 'StartupJS site', exact: true })).toBeVisible()
+    await expect(canvas.getByRole('link', { name: 'Open docs', exact: true })).toBeVisible()
+    await expect(canvas.getByRole('link', { name: 'Open StartupJS in a new tab', exact: true })).toBeVisible()
+  }
 }

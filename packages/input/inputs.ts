@@ -34,6 +34,13 @@ function useBoundProps<T extends Record<string, any>> (props: T): T {
   return useBind(props) as T
 }
 
+function getLabelableConfiguration (props: Record<string, any>) {
+  return {
+    isLabelClickable: !props.disabled && !props.readonly,
+    _webLabelMode: 'native' as const
+  }
+}
+
 const useArrayProps = (props: Record<string, any>): Record<string, any> => {
   return props
 }
@@ -78,7 +85,7 @@ const useDateProps = ({
   return {
     mode: 'date',
     date: value,
-    configuration: { isLabelClickable: !props.disabled && !props.readonly },
+    configuration: getLabelableConfiguration(props),
     onChangeDate,
     _onLabelPress: () => ref?.current?.focus(),
     ...props
@@ -96,7 +103,7 @@ const useDateTimeProps = ({
   return {
     mode: 'datetime',
     date: value,
-    configuration: { isLabelClickable: !props.disabled && !props.readonly },
+    configuration: getLabelableConfiguration(props),
     onChangeDate,
     _onLabelPress: () => ref?.current?.focus(),
     ...props
@@ -114,7 +121,7 @@ const useTimeProps = ({
   return {
     mode: 'time',
     date: value,
-    configuration: { isLabelClickable: !props.disabled && !props.readonly },
+    configuration: getLabelableConfiguration(props),
     onChangeDate,
     _onLabelPress: () => ref?.current?.focus(),
     ...props
@@ -148,7 +155,7 @@ const useNumberProps = ({
 
   return {
     value,
-    configuration: { isLabelClickable: !props.disabled && !props.readonly },
+    configuration: getLabelableConfiguration(props),
     onChangeNumber,
     _onLabelPress: () => ref?.current?.focus(),
     ...props
@@ -169,7 +176,7 @@ const usePasswordProps = ({
 
   return {
     value,
-    configuration: { isLabelClickable: !props.disabled && !props.readonly },
+    configuration: getLabelableConfiguration(props),
     onChangeText,
     _onLabelPress: () => ref?.current?.focus(),
     ...props
@@ -215,7 +222,14 @@ const useRangeProps = ({ value, $value, onChange, ...props }: Record<string, any
   }
 }
 
-const useSelectProps = ({ value, $value, enum: _enum, options, onChange, ...props }: Record<string, any>): Record<string, any> => {
+const useSelectProps = ({
+  value,
+  $value,
+  enum: _enum,
+  options,
+  onChange,
+  ...props
+}: Record<string, any>, ref?: RefObject<any>): Record<string, any> => {
   ;({ value, onChange } = useBoundProps({ value, $value, onChange }))
   // if json-schema `enum` is passed, use it as options
   if (!options && _enum) options = _enum
@@ -223,6 +237,8 @@ const useSelectProps = ({ value, $value, enum: _enum, options, onChange, ...prop
     value,
     onChange,
     options,
+    configuration: getLabelableConfiguration(props),
+    _onLabelPress: () => ref?.current?.focus?.(),
     ...props
   }
 }
@@ -236,7 +252,7 @@ const useTextProps = ({
   ;({ value, onChangeText } = useBoundProps({ value, $value, onChangeText }))
   return {
     value,
-    configuration: { isLabelClickable: !props.disabled && !props.readonly },
+    configuration: getLabelableConfiguration(props),
     onChangeText,
     _onLabelPress: () => ref?.current?.focus(),
     ...props

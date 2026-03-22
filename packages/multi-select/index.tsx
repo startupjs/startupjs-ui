@@ -201,6 +201,7 @@ function MultiSelect ({
         ...props
         captionStyle=style
         visible=focused
+        openOnAnchorPress=false
         matchAnchorWidth=hasWidthCaption
         attachment='start'
         position='bottom'

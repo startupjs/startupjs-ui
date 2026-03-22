@@ -1,4 +1,4 @@
-import { useState, useRef, type ReactNode, type RefObject } from 'react'
+import { useLayoutEffect, useState, useRef, type ReactNode, type RefObject } from 'react'
 import {
   View,
   Pressable,
@@ -33,6 +33,57 @@ const {
     defaultActiveOpacity
   }
 } = STYLES
+
+function normalizeAccessibilityProps ({
+  props,
+  disabled,
+  deferButtonRole
+}: {
+  props: Record<string, any>
+  disabled?: boolean
+  deferButtonRole?: boolean
+}) {
+  if (props.role == null && props.accessibilityRole != null && !(deferButtonRole && props.accessibilityRole === 'button')) {
+    props.role = props.accessibilityRole
+  }
+  props['aria-label'] ??= props.accessibilityLabel
+  props['aria-labelledby'] ??= props.accessibilityLabelledBy
+  props['aria-live'] ??= props.accessibilityLiveRegion
+  props['aria-modal'] ??= props.accessibilityViewIsModal
+  props['aria-hidden'] ??= props.accessibilityElementsHidden
+
+  const accessibilityState = props.accessibilityState
+  if (props['aria-checked'] == null && accessibilityState?.checked != null) {
+    props['aria-checked'] = accessibilityState.checked
+  }
+  if (props['aria-disabled'] == null) {
+    if (accessibilityState?.disabled != null) props['aria-disabled'] = accessibilityState.disabled
+    else if (disabled != null) props['aria-disabled'] = disabled
+  }
+  if (props['aria-expanded'] == null && accessibilityState?.expanded != null) {
+    props['aria-expanded'] = accessibilityState.expanded
+  }
+  if (props['aria-selected'] == null && accessibilityState?.selected != null) {
+    props['aria-selected'] = accessibilityState.selected
+  }
+  if (props['aria-busy'] == null && accessibilityState?.busy != null) {
+    props['aria-busy'] = accessibilityState.busy
+  }
+
+  const accessibilityValue = props.accessibilityValue
+  if (props['aria-valuemin'] == null && accessibilityValue?.min != null) {
+    props['aria-valuemin'] = accessibilityValue.min
+  }
+  if (props['aria-valuemax'] == null && accessibilityValue?.max != null) {
+    props['aria-valuemax'] = accessibilityValue.max
+  }
+  if (props['aria-valuenow'] == null && accessibilityValue?.now != null) {
+    props['aria-valuenow'] = accessibilityValue.now
+  }
+  if (props['aria-valuetext'] == null && accessibilityValue?.text != null) {
+    props['aria-valuetext'] = accessibilityValue.text
+  }
+}
 
 export default observer(themed('Div', Div))
 
@@ -95,6 +146,8 @@ export interface DivProps extends ViewProps {
   accessibilityRole?: AccessibilityRole
   /** Deprecated custom tooltip renderer @deprecated */
   renderTooltip?: any // Deprecated
+  /** Internal: render a native <button> host on web when the resolved role is button */
+  _webNativeButton?: boolean
   /** Test ID for testing purposes */
   'data-testid'?: string
 }
@@ -123,6 +176,7 @@ function Div ({
   tooltip,
   tooltipStyle,
   renderTooltip,
+  _webNativeButton = false,
   ref,
   ...props
 }: DivProps): ReactNode {
@@ -136,10 +190,12 @@ function Div ({
   const rootRef = ref ?? fallbackRef
 
   let pressableStyle: StyleProp<ViewStyle> = {}
+  let deferredRole: AccessibilityRole | string | undefined
   ;({
     props,
     pressableStyle,
-    accessibilityRole
+    accessibilityRole,
+    deferredRole
   } = useDecoratePressableProps({
     props,
     style,
@@ -149,7 +205,8 @@ function Div ({
     isPressable,
     disabled,
     accessibilityRole,
-    feedback
+    feedback,
+    webNativeButton: _webNativeButton
   }))
 
   let tooltipElement
@@ -173,7 +230,28 @@ function Div ({
   if (level) levelModifier = `shadow-${level}`
 
   if (accessible == null && isPressable) accessible = true
-  if (accessible === false) accessibilityRole = undefined
+  if (accessible === false) {
+    accessibilityRole = undefined
+    deferredRole = undefined
+    props.role = undefined
+  }
+
+  normalizeAccessibilityProps({
+    props,
+    disabled,
+    deferButtonRole: isWeb && deferredRole === 'button'
+  })
+
+  useLayoutEffect(() => {
+    if (!isWeb) return
+    const node = rootRef.current
+    if (!node || typeof node.setAttribute !== 'function') return
+    if (deferredRole != null) {
+      node.setAttribute('role', deferredRole)
+    } else if (props.role == null) {
+      node.removeAttribute('role')
+    }
+  }, [rootRef, deferredRole, props.role])
 
   const isAnimated = hasAnimatedProperty(style) || hasAnimatedProperty(pressableStyle)
   const Component = isPressable
@@ -227,7 +305,8 @@ function useDecoratePressableProps ({
   isPressable,
   disabled,
   accessibilityRole,
-  feedback
+  feedback,
+  webNativeButton
 }: {
   props: Record<string, any>
   style: StyleProp<ViewStyle>
@@ -238,12 +317,15 @@ function useDecoratePressableProps ({
   disabled?: boolean
   accessibilityRole?: AccessibilityRole
   feedback?: boolean
+  webNativeButton?: boolean
 }): {
     props: Record<string, any>
     pressableStyle?: StyleProp<ViewStyle>
     accessibilityRole?: AccessibilityRole
+    deferredRole?: AccessibilityRole | string
   } {
   let pressableStyle: StyleProp<ViewStyle> = {}
+  let deferredRole: AccessibilityRole | string | undefined
   const [hover, setHover] = useState(false)
   const [active, setActive] = useState(false)
 
@@ -260,9 +342,17 @@ function useDecoratePressableProps ({
   // decorate the element state (hover, active) only if it's pressable
   if (!isPressable) return { props }
 
-  accessibilityRole ??= 'button'
+  const resolvedRole = props.role ?? accessibilityRole ?? 'button'
+  accessibilityRole ??= typeof resolvedRole === 'string' ? resolvedRole as AccessibilityRole : undefined
   props.focusable ??= true
-  if (isWeb && accessibilityRole != null) props.role ??= accessibilityRole
+
+  if (isWeb && resolvedRole === 'button' && !webNativeButton) {
+    delete props.role
+    accessibilityRole = undefined
+    deferredRole = 'button'
+  } else {
+    props.role ??= accessibilityRole
+  }
 
   // setup hover and active states styles and props
   if (feedback) {
@@ -308,7 +398,7 @@ function useDecoratePressableProps ({
     }
   }
 
-  return { props, pressableStyle, accessibilityRole }
+  return { props, pressableStyle, accessibilityRole, deferredRole }
 }
 
 function getDefaultStyle (

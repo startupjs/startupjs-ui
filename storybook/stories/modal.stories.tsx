@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect, screen, within } from 'storybook/test'
 import { Button, Card, Div, Modal, Span } from 'startupjs-ui'
 import { InlineRow, StorySection, StoryStack } from './helpers'
 
@@ -84,5 +85,27 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const States: Story = {
-  render: () => <ModalStates />
+  tags: ['interaction'],
+  render: () => <ModalStates />,
+  play: async ({ canvas, userEvent }) => {
+    await userEvent.click(canvas.getByRole('button', { name: 'Open window modal', exact: true }))
+
+    const windowDialog = screen.getByRole('dialog', { name: 'Review match results', exact: true })
+    await expect(windowDialog).toBeInTheDocument()
+    const windowDialogQueries = within(windowDialog)
+    await expect(windowDialogQueries.getByRole('button', { name: 'Later', exact: true })).toBeInTheDocument()
+    await expect(windowDialogQueries.getByRole('button', { name: 'Publish', exact: true })).toBeInTheDocument()
+    await expect(windowDialogQueries.getByRole('button', { name: 'Close dialog', exact: true })).toBeInTheDocument()
+
+    await userEvent.click(windowDialogQueries.getByRole('button', { name: 'Close dialog', exact: true }))
+    await expect(windowDialog).not.toBeInTheDocument()
+
+    await userEvent.click(canvas.getByRole('button', { name: 'Open fullscreen modal', exact: true }))
+
+    const fullscreenDialog = screen.getByRole('dialog', { name: 'Export event data', exact: true })
+    await expect(fullscreenDialog).toBeInTheDocument()
+    const fullscreenDialogQueries = within(fullscreenDialog)
+    await expect(fullscreenDialogQueries.getByRole('button', { name: 'Close dialog', exact: true })).toBeInTheDocument()
+    await expect(fullscreenDialogQueries.getByRole('button', { name: 'Close', exact: true })).toBeInTheDocument()
+  }
 }

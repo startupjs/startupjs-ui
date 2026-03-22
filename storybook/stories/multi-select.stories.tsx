@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect } from 'storybook/test'
 import { MultiSelect, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
@@ -52,5 +53,14 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const States: Story = {
-  render: () => <MultiSelectStates />
+  tags: ['interaction'],
+  render: () => <MultiSelectStates />,
+  play: async ({ canvas, canvasElement, userEvent }) => {
+    const trigger = canvas.getAllByRole('button')[0]
+
+    await expect(trigger).toBeVisible()
+    await userEvent.click(trigger)
+
+    expect(canvasElement.querySelectorAll('button button')).toHaveLength(0)
+  }
 }

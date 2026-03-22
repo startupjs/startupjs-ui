@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect } from 'storybook/test'
 import { $ } from 'startupjs'
 import { Button, Card, Div, Span, Tabs } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
@@ -91,5 +92,21 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const States: Story = {
-  render: () => <TabsStates />
+  tags: ['interaction'],
+  render: () => <TabsStates />,
+  play: async ({ canvas, userEvent }) => {
+    const overviewTab = canvas.getAllByRole('tab', { name: 'Overview', exact: true })[0]
+    const matchesTab = canvas.getAllByRole('tab', { name: 'Matches', exact: true })[0]
+    const notesTab = canvas.getAllByRole('tab', { name: 'Notes', exact: true })[0]
+
+    await expect(overviewTab).toHaveAttribute('aria-selected', 'true')
+
+    await userEvent.click(matchesTab)
+    await expect(matchesTab).toHaveAttribute('aria-selected', 'true')
+    await expect(canvas.getAllByText('Show mutual matches and one-sided likes.', { exact: true })[0]).toBeVisible()
+
+    await userEvent.click(notesTab)
+    await expect(notesTab).toHaveAttribute('aria-selected', 'true')
+    await expect(canvas.getAllByText('Keep organizer comments and follow-up actions here.', { exact: true })[0]).toBeVisible()
+  }
 }

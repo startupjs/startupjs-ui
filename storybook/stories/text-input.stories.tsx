@@ -15,6 +15,7 @@ function TextInputStates () {
         <TextInput
           value={value}
           placeholder='Participant name'
+          aria-label='Participant name'
           onChangeText={setValue}
         />
       </StorySection>
@@ -59,5 +60,6 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const States: Story = {
+  tags: ['interaction'],
   render: () => <TextInputStates />
 }

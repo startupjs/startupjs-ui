@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
-import { Radio, Span } from 'startupjs-ui'
+import { expect } from 'storybook/test'
+import { Input, Radio, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
 const OPTIONS = [
@@ -17,7 +18,9 @@ function RadioStates () {
   return (
     <StoryStack>
       <StorySection title='Stacked options'>
-        <Radio
+        <Input
+          type='radio'
+          label='Gender'
           value={value}
           options={OPTIONS}
           onChange={setValue}
@@ -28,6 +31,13 @@ function RadioStates () {
           value={valueRow}
           options={OPTIONS}
           row
+          onChange={setValueRow}
+        />
+      </StorySection>
+      <StorySection title='Low-level radio group'>
+        <Radio
+          value={valueRow}
+          options={OPTIONS}
           onChange={setValueRow}
         />
       </StorySection>
@@ -48,5 +58,18 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const States: Story = {
-  render: () => <RadioStates />
+  tags: ['interaction'],
+  render: () => <RadioStates />,
+  play: async ({ canvas, userEvent }) => {
+    const wrappedWoman = canvas.getAllByRole('radio', { name: 'Woman', exact: true })[0]
+    const lowLevelOther = canvas.getAllByRole('radio', { name: 'Other', exact: true }).at(-1)
+
+    await userEvent.click(wrappedWoman)
+    await expect(wrappedWoman).toHaveAttribute('aria-checked', 'true')
+
+    if (lowLevelOther) {
+      await userEvent.click(lowLevelOther)
+      await expect(lowLevelOther).toHaveAttribute('aria-checked', 'true')
+    }
+  }
 }

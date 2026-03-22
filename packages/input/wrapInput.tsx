@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode, type RefObject } from 'react'
-import { Text } from 'react-native'
+import { Platform, Text } from 'react-native'
 import { pug, styl, observer } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
 import Div from '@startupjs-ui/div'
@@ -7,9 +7,11 @@ import Icon from '@startupjs-ui/icon'
 import Span from '@startupjs-ui/span'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle'
 import merge from 'lodash/merge'
+import getInputTestId from './helpers/getInputTestId'
 import useLayout from './useLayout'
 
 export const IS_WRAPPED = Symbol('wrapped into wrapInput()')
+const IS_WEB = Platform.OS === 'web'
 
 export type InputLayout = 'pure' | 'rows' | 'columns'
 
@@ -25,6 +27,7 @@ export interface InputWrapperConfiguration extends InputWrapperLayoutConfigurati
   columns?: InputWrapperLayoutConfiguration
   isLabelColoredWhenFocusing?: boolean
   isLabelClickable?: boolean
+  _webLabelMode?: 'aria' | 'native'
 }
 
 export interface InputWrapperProps {
@@ -49,7 +52,7 @@ export function isWrapped (Component: any): boolean {
 }
 
 export default function wrapInput (Component: any, configuration: InputWrapperConfiguration = {}): any {
-  configuration = merge(
+  const defaultConfiguration = merge(
     {
       rows: {
         labelPosition: 'top',
@@ -80,15 +83,16 @@ export default function wrapInput (Component: any, configuration: InputWrapperCo
       description
     })
 
-    configuration = merge(configuration, componentConfiguration)
-    configuration = merge(configuration, configuration[currentLayout])
+    const mergedConfiguration = merge({}, defaultConfiguration, componentConfiguration)
+    const resolvedConfiguration = merge({}, mergedConfiguration, mergedConfiguration[currentLayout])
 
     const {
       labelPosition,
       descriptionPosition,
       isLabelColoredWhenFocusing,
-      isLabelClickable
-    } = configuration
+      isLabelClickable,
+      _webLabelMode = 'aria'
+    } = resolvedConfiguration
 
     const [focused, setFocused] = useState(false)
     const isReadOnlyOrDisabled = [props.readonly, props.disabled].some(Boolean)
@@ -110,32 +114,67 @@ export default function wrapInput (Component: any, configuration: InputWrapperCo
     }, [focused, isLabelColoredWhenFocusing, isReadOnlyOrDisabled])
 
     const hasError = Array.isArray(error) ? error.length > 0 : !!error
+    const generatedTestID = props.testID ?? getInputTestId({
+      ...props,
+      label,
+      description,
+      testId: props.testID
+    })
+    const semanticBaseId = typeof generatedTestID === 'string' && generatedTestID !== ''
+      ? generatedTestID
+      : undefined
+    const inputId = semanticBaseId ? `${semanticBaseId}-input` : undefined
+    const labelId = label && semanticBaseId ? `${semanticBaseId}-label` : undefined
+    const descriptionId = description && semanticBaseId ? `${semanticBaseId}-description` : undefined
+    const errorId = hasError && semanticBaseId ? `${semanticBaseId}-error` : undefined
+    const useNativeWebLabel = IS_WEB && _webLabelMode === 'native' && !!inputId
 
-    const _label = pug`
-      if label
-        Span.label(
-          key='label'
-          part='label'
-          styleName=[
-            currentLayout,
-            currentLayout + '-' + labelPosition,
-            {
-              focused: isLabelColoredWhenFocusing ? focused : false,
-              error: hasError
-            }
-          ]
-          onPress=isLabelClickable
-            ? _onLabelPress
-            : undefined
-        )
-          = label
-          if required === true
-            Text.required= ' *'
-    `
+    const labelStyleName = [
+      currentLayout,
+      currentLayout + '-' + labelPosition,
+      {
+        focused: isLabelColoredWhenFocusing ? focused : false,
+        error: hasError
+      }
+    ]
+    const requiredAsterisk = required === true
+      ? pug`
+        Text.required(aria-hidden=IS_WEB ? true : undefined)= ' *'
+      `
+      : null
+    const WebLabelElement = 'label'
+    const _label = label
+      ? useNativeWebLabel
+        ? pug`
+          WebLabelElement.label(
+            key='label'
+            id=labelId
+            htmlFor=inputId
+            part='label'
+            styleName=labelStyleName
+          )
+            = label
+            = requiredAsterisk
+        `
+        : pug`
+          Span.label(
+            key='label'
+            id=labelId
+            part='label'
+            styleName=labelStyleName
+            onPress=isLabelClickable
+              ? _onLabelPress
+              : undefined
+          )
+            = label
+            = requiredAsterisk
+        `
+      : null
     const _description = pug`
       if description
         Span.description(
           key='description'
+          id=descriptionId
           part='description'
           styleName=[
             currentLayout,
@@ -148,13 +187,23 @@ export default function wrapInput (Component: any, configuration: InputWrapperCo
 
     const passRef = ref ? { ref } : {}
     const inputAccessibilityProps: Record<string, any> = {}
+    const describedBy = [descriptionId].filter(Boolean).join(' ') || undefined
 
-    if (label && props.accessibilityLabel == null) {
-      inputAccessibilityProps.accessibilityLabel = label
+    if (props['aria-label'] == null) {
+      if (props.accessibilityLabel != null) inputAccessibilityProps['aria-label'] = props.accessibilityLabel
+      else if (label) inputAccessibilityProps['aria-label'] = label
     }
 
-    if (description && props.accessibilityHint == null) {
-      inputAccessibilityProps.accessibilityHint = description
+    if (inputId) {
+      inputAccessibilityProps.id = inputId
+      inputAccessibilityProps.nativeID = inputId
+    }
+    if (required === true) inputAccessibilityProps['aria-required'] = true
+    if (labelId) inputAccessibilityProps['aria-labelledby'] = labelId
+    if (describedBy) inputAccessibilityProps['aria-describedby'] = describedBy
+    if (hasError && errorId) {
+      inputAccessibilityProps['aria-errormessage'] = errorId
+      inputAccessibilityProps['aria-invalid'] = true
     }
 
     const input = pug`
@@ -172,18 +221,22 @@ export default function wrapInput (Component: any, configuration: InputWrapperCo
     `
     const err = pug`
       if hasError
-        each _error, index in (Array.isArray(error) ? error : [error])
-          Div.errorContainer(
-            key='error-' + index
-            styleName=[
-              currentLayout,
-              currentLayout + '-' + descriptionPosition,
-            ]
-            vAlign='center'
-            row
-          )
-            Icon.errorContainer-icon(icon=faExclamationCircle)
-            Span.errorContainer-text= _error
+        Div.errorContainer(
+          key='error'
+          id=errorId
+          styleName=[
+            currentLayout,
+            currentLayout + '-' + descriptionPosition,
+          ]
+          vAlign='center'
+          row
+        )
+          Icon.errorContainer-icon(icon=faExclamationCircle)
+          Span.errorContainer-text
+            each _error, index in (Array.isArray(error) ? error : [error])
+              if index
+                Text= ' '
+              = _error
     `
 
     return pug`

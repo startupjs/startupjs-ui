@@ -1,4 +1,4 @@
-import React, { type ReactNode, type ComponentType } from 'react'
+import React, { useId, type ReactNode, type ComponentType } from 'react'
 import { View, TouchableOpacity, type StyleProp, type ViewStyle } from 'react-native'
 import { pug, observer } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
@@ -105,6 +105,10 @@ function Modal ({
   const isWindowLayout = variant === 'window'
   const hasActions = !!onCancel || !!onConfirm
   const hasHeader = !!title || !!showCross
+  const headerTitle = !title && React.isValidElement(header) && typeof (header as any).props?.children === 'string'
+    ? (header as any).props.children as string
+    : undefined
+  const dialogTitle = title ?? headerTitle
 
   const _onCrossPress = async (event: any) => {
     event.persist() // TODO: remove in react 17
@@ -146,9 +150,13 @@ function Modal ({
     cancelLabel = 'OK'
   }
 
+  const modalTitleId = useId()
+  const titleId = dialogTitle ? modalTitleId : undefined
+
   // Handle <Modal.Header>
   const headerProps = {
-    onCrossPress: showCross ? _onCrossPress : undefined
+    onCrossPress: showCross ? _onCrossPress : undefined,
+    titleId
   }
 
   header = header
@@ -185,7 +193,10 @@ function Modal ({
     : React.createElement(ModalContent, contentProps, contentChildren)
 
   return pug`
-    View.root(style=style styleName=[variant])
+    View.root(
+      style=style
+      styleName=[variant]
+    )
       if isWindowLayout
         TouchableOpacity.overlay(
           activeOpacity=1
@@ -194,6 +205,10 @@ function Modal ({
       ModalElement.modal(
         style=modalStyle
         styleName=[variant]
+        role='dialog'
+        aria-modal=true
+        aria-label=titleId ? undefined : dialogTitle
+        aria-labelledby=titleId
       )
         = header
         = content

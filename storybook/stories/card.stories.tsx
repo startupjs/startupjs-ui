@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect } from 'storybook/test'
 import { Card, Div, Span } from 'startupjs-ui'
 import { InlineRow, StorySection, StoryStack } from './helpers'
 
@@ -12,6 +13,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const States: Story = {
+  tags: ['interaction'],
   render: () => (
     <StoryStack>
       <StorySection title='Levels and variants'>
@@ -31,6 +33,7 @@ export const States: Story = {
       <StorySection title='Pressable card'>
         <Card
           level={2}
+          aria-label='Open participant details'
           style={{ padding: 16 }}
           onPress={() => {}}
         >
@@ -41,5 +44,11 @@ export const States: Story = {
         </Card>
       </StorySection>
     </StoryStack>
-  )
+  ),
+  play: async ({ canvas }) => {
+    const pressableCard = canvas.getByRole('button', { name: 'Open participant details', exact: true })
+
+    await expect(pressableCard).toBeVisible()
+    expect(pressableCard.tagName).toBe('DIV')
+  }
 }

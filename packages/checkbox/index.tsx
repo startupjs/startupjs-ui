@@ -76,8 +76,9 @@ function Checkbox ({
           value=value
           onPress=onPress
           disabled=disabled
-          accessibilityRole=variant === 'switch' ? 'switch' : 'checkbox'
-          accessibilityState={ checked: value, disabled }
+          role=variant === 'switch' ? 'switch' : 'checkbox'
+          aria-checked=value
+          aria-disabled=disabled
           ...props
         )
   `

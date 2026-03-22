@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-native'
+import { expect } from 'storybook/test'
 import { Div, Item, Span } from 'startupjs-ui'
 import { faCircleInfo, faHeart, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { StorySection, StoryStack } from './helpers'
@@ -22,6 +23,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const States: Story = {
+  tags: ['interaction'],
   render: () => (
     <StoryStack>
       <StorySection
@@ -34,6 +36,13 @@ export const States: Story = {
           </Item>
           <Item onPress={() => {}} icon={faHeart} url={ITEM_IMAGE}>
             With image fallback
+          </Item>
+          <Item
+            onPress={() => {}}
+            icon={faHeart}
+            aria-label='Select Ada Lovelace'
+          >
+            Ada Lovelace
           </Item>
           <Item icon={faSearch} onPress={() => {}}>
             <Item.Left>
@@ -53,5 +62,17 @@ export const States: Story = {
         <Span description>These examples exercise link-like and pressable row semantics without depending on router state.</Span>
       </Div>
     </StoryStack>
-  )
+  ),
+  play: async ({ canvas }) => {
+    const detailsLink = canvas.getByRole('link', { name: 'Open participant details', exact: true })
+    const imageFallbackItem = canvas.getByRole('button', { name: 'With image fallback', exact: true })
+    const selectableItem = canvas.getByRole('button', { name: 'Select Ada Lovelace', exact: true })
+
+    await expect(detailsLink).toBeVisible()
+    await expect(imageFallbackItem).toBeVisible()
+    await expect(selectableItem).toBeVisible()
+    expect(detailsLink.tagName).toBe('A')
+    expect(imageFallbackItem.tagName).toBe('DIV')
+    expect(selectableItem.tagName).toBe('DIV')
+  }
 }

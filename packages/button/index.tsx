@@ -44,8 +44,16 @@ export interface ButtonProps {
   hoverStyle?: StyleProp<ViewStyle>
   /** custom styles for active state */
   activeStyle?: StyleProp<ViewStyle>
+  /** cross-platform accessible name for icon-only or custom-content buttons */
+  'aria-label'?: string
+  /** legacy alias for aria-label */
+  accessibilityLabel?: string
+  /** accessible hint text */
+  accessibilityHint?: string
   /** onPress handler */
   onPress?: (event: GestureResponderEvent) => void | Promise<void>
+  /** Additional props forwarded to the root pressable */
+  [key: string]: any
 }
 function Button ({
   style,
@@ -87,8 +95,7 @@ function Button ({
     try {
       await promise
     } finally {
-      if (!isMountedRef.current) return
-      setAsyncActive(false)
+      if (isMountedRef.current) setAsyncActive(false)
     }
   }
 
@@ -160,6 +167,7 @@ function Button ({
   return pug`
     Div.root(
       row
+      _webNativeButton
       shape=shape
       style=[rootStyle, style]
       styleName=[
