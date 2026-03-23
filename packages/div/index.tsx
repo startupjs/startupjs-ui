@@ -17,11 +17,6 @@ import STYLES from './index.cssx.styl'
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 
-function hasAnimatedProperty (style: any): boolean {
-  if (!style) return false
-  return Object.keys(style).some(key => key.startsWith('animation') || key.startsWith('transition'))
-}
-
 const DEPRECATED_PUSHED_VALUES = ['xs', 'xl', 'xxl']
 const PRESSABLE_PROPS = ['onPress', 'onLongPress', 'onPressIn', 'onPressOut']
 const isWeb = Platform.OS === 'web'
@@ -33,18 +28,6 @@ const {
     defaultActiveOpacity
   }
 } = STYLES
-
-function normalizeAccessibilityProps ({
-  props,
-  disabled
-}: {
-  props: Record<string, any>
-  disabled?: boolean
-}) {
-  if (props['aria-disabled'] == null) {
-    if (disabled != null) props['aria-disabled'] = disabled
-  }
-}
 
 export default observer(themed('Div', Div))
 
@@ -170,6 +153,22 @@ function Div ({
     webNativeButton: _webNativeButton
   }))
 
+  ;({
+    props,
+    accessible,
+    accessibilityRole,
+    deferredRole
+  } = useDecorateAccessibilityProps({
+    props,
+    rootRef,
+    disabled,
+    accessible,
+    accessibilityRole,
+    isPressable,
+    deferredRole,
+    webNativeButton: _webNativeButton
+  }))
+
   let tooltipElement
   ;({
     props,
@@ -189,44 +188,6 @@ function Div ({
 
   let levelModifier
   if (level) levelModifier = `shadow-${level}`
-
-  if (accessible == null && isPressable) accessible = true
-  if (accessible === false) {
-    accessibilityRole = undefined
-    deferredRole = undefined
-    props.role = undefined
-  }
-
-  normalizeAccessibilityProps({
-    props,
-    disabled
-  })
-
-  useLayoutEffect(() => {
-    if (!isWeb) return
-    const node = rootRef.current
-    if (!node || typeof node.setAttribute !== 'function') return
-    // Keep role declarative by default too. This manual patch is only for the
-    // deferred-role web path where we intentionally avoid a native <button>
-    // host to prevent invalid nested-button markup, but still need button
-    // semantics on the resulting DOM node.
-    if (deferredRole != null) {
-      node.setAttribute('role', deferredRole)
-    } else if (props.role == null) {
-      node.removeAttribute('role')
-    }
-    // Keep the RN / aria props declarative by default. This manual patch is only
-    // for the current RN Web bug where disabled semantics are dropped on the
-    // deferred-role pressable path that we use to avoid nested native buttons.
-    if (props['aria-disabled'] != null) {
-      node.setAttribute('aria-disabled', String(props['aria-disabled']))
-    } else {
-      node.removeAttribute('aria-disabled')
-    }
-    if (_webNativeButton && 'disabled' in node) {
-      node.disabled = !!disabled
-    }
-  }, [rootRef, deferredRole, props.role, props['aria-disabled'], _webNativeButton, disabled])
 
   const isAnimated = hasAnimatedProperty(style) || hasAnimatedProperty(pressableStyle)
   const Component = isPressable
@@ -269,6 +230,78 @@ function Div ({
       = tooltipElement
     `
   } else return divElement
+}
+
+function hasAnimatedProperty (style: any): boolean {
+  if (!style) return false
+  return Object.keys(style).some(key => key.startsWith('animation') || key.startsWith('transition'))
+}
+
+function useDecorateAccessibilityProps ({
+  props,
+  rootRef,
+  disabled,
+  accessible,
+  accessibilityRole,
+  isPressable,
+  deferredRole,
+  webNativeButton
+}: {
+  props: Record<string, any>
+  rootRef: RefObject<any>
+  disabled?: boolean
+  accessible?: boolean
+  accessibilityRole?: AccessibilityRole
+  isPressable: boolean
+  deferredRole?: AccessibilityRole | string
+  webNativeButton?: boolean
+}): {
+    props: Record<string, any>
+    accessible?: boolean
+    accessibilityRole?: AccessibilityRole
+    deferredRole?: AccessibilityRole | string
+  } {
+  if (accessible == null && isPressable) accessible = true
+  if (accessible === false) {
+    accessibilityRole = undefined
+    deferredRole = undefined
+    props.role = undefined
+  }
+
+  if (props['aria-disabled'] == null && disabled != null) {
+    props['aria-disabled'] = disabled
+  }
+
+  const roleProp = props.role
+  const ariaDisabled = props['aria-disabled']
+
+  useLayoutEffect(() => {
+    if (!isWeb) return
+    const node = rootRef.current
+    if (!node || typeof node.setAttribute !== 'function') return
+    // Keep role declarative by default too. This manual patch is only for the
+    // deferred-role web path where we intentionally avoid a native <button>
+    // host to prevent invalid nested-button markup, but still need button
+    // semantics on the resulting DOM node.
+    if (deferredRole != null) {
+      node.setAttribute('role', deferredRole)
+    } else if (roleProp == null) {
+      node.removeAttribute('role')
+    }
+    // Keep the RN / aria props declarative by default. This manual patch is only
+    // for the current RN Web bug where disabled semantics are dropped on the
+    // deferred-role pressable path that we use to avoid nested native buttons.
+    if (ariaDisabled != null) {
+      node.setAttribute('aria-disabled', String(ariaDisabled))
+    } else {
+      node.removeAttribute('aria-disabled')
+    }
+    if (webNativeButton && 'disabled' in node) {
+      node.disabled = !!disabled
+    }
+  }, [rootRef, deferredRole, roleProp, ariaDisabled, webNativeButton, disabled])
+
+  return { props, accessible, accessibilityRole, deferredRole }
 }
 
 function useDecoratePressableProps ({
