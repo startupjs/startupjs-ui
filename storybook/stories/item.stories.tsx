@@ -70,9 +70,9 @@ export const States: Story = {
     </StoryStack>
   ),
   play: async ({ canvas }) => {
-    const detailsLink = canvas.getByRole('link', { name: 'Open participant details', exact: true })
-    const imageFallbackItem = canvas.getByRole('button', { name: 'With image fallback', exact: true })
-    const selectableItem = canvas.getByRole('button', { name: 'Select Ada Lovelace', exact: true })
+    const detailsLink = canvas.getByRole('link', { name: 'Open participant details' })
+    const imageFallbackItem = canvas.getByRole('button', { name: 'With image fallback' })
+    const selectableItem = canvas.getByRole('button', { name: 'Select Ada Lovelace' })
     const customSlotItem = canvas.getByRole('button', { name: 'Custom left Custom content block Right slot' })
 
     await expect(detailsLink).toBeVisible()

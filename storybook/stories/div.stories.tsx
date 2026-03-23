@@ -103,11 +103,11 @@ export const States: Story = {
   tags: ['interaction'],
   render: () => <DivStates />,
   play: async ({ canvas, userEvent }) => {
-    const pressableContainer = canvas.getByRole('button', { name: 'Open sheet', exact: true })
+    const pressableContainer = canvas.getByRole('button', { name: 'Open sheet' })
     const simpleTrigger = canvas.getByRole('button', { name: 'Simple trigger' })
     const disabledTrigger = canvas.getByRole('button', { name: 'Disabled trigger' })
-    const canonicalButton = canvas.getByRole('button', { name: 'Open participant card', exact: true })
-    const selectedButton = canvas.getByRole('button', { name: 'Selected participant card', exact: true })
+    const canonicalButton = canvas.getByRole('button', { name: 'Open participant card' })
+    const selectedButton = canvas.getByRole('button', { name: 'Selected participant card' })
 
     expect(pressableContainer.tagName).toBe('DIV')
     expect(simpleTrigger.tagName).toBe('DIV')

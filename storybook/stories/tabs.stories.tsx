@@ -94,9 +94,9 @@ export const States: Story = {
   tags: ['interaction'],
   render: () => <TabsStates />,
   play: async ({ canvas, userEvent }) => {
-    const overviewTab = canvas.getAllByRole('tab', { name: 'Overview', exact: true })[0]
-    const matchesTab = canvas.getAllByRole('tab', { name: 'Matches', exact: true })[0]
-    const notesTab = canvas.getAllByRole('tab', { name: 'Notes', exact: true })[0]
+    const overviewTab = canvas.getAllByRole('tab', { name: 'Overview' })[0]
+    const matchesTab = canvas.getAllByRole('tab', { name: 'Matches' })[0]
+    const notesTab = canvas.getAllByRole('tab', { name: 'Notes' })[0]
 
     await expect(overviewTab).toHaveAttribute('aria-selected', 'true')
 

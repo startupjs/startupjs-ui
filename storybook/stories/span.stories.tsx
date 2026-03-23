@@ -30,12 +30,12 @@ export const States: Story = {
     </StoryStack>
   ),
   play: async ({ canvas }) => {
-    await expect(canvas.getByRole('heading', { name: 'Large heading', exact: true })).toHaveAttribute('aria-level', '1')
-    await expect(canvas.getByRole('heading', { name: 'Medium heading', exact: true })).toHaveAttribute('aria-level', '2')
-    await expect(canvas.getByRole('heading', { name: 'Small heading', exact: true })).toHaveAttribute('aria-level', '4')
+    await expect(canvas.getByRole('heading', { name: 'Large heading' })).toHaveAttribute('aria-level', '1')
+    await expect(canvas.getByRole('heading', { name: 'Medium heading' })).toHaveAttribute('aria-level', '2')
+    await expect(canvas.getByRole('heading', { name: 'Small heading' })).toHaveAttribute('aria-level', '4')
     await expect(canvas.getByText('Bold text', { exact: true })).toBeVisible()
     await expect(canvas.getByText('Italic text', { exact: true })).toBeVisible()
     await expect(canvas.getByText('Description text', { exact: true })).toBeVisible()
-    expect(canvas.queryByRole('button', { name: 'Bold text', exact: true })).toBeNull()
+    expect(canvas.queryByRole('button', { name: 'Bold text' })).toBeNull()
   }
 }

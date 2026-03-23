@@ -86,7 +86,7 @@ type Story = StoryObj<typeof meta>
 type PlayContext = Parameters<NonNullable<Story['play']>>[0]
 
 async function failingFollowup ({ canvas, userEvent }: PlayContext) {
-  await userEvent.click(canvas.getByRole('button', { name: 'Open window modal', exact: true }))
+  await userEvent.click(canvas.getByRole('button', { name: 'Open window modal' }))
   await expect(screen.getByRole('button', { name: 'Dismiss modal backdrop' })).toBeVisible()
 }
 void failingFollowup
@@ -95,24 +95,24 @@ export const States: Story = {
   tags: ['interaction'],
   render: () => <ModalStates />,
   play: async ({ canvas, userEvent }) => {
-    await userEvent.click(canvas.getByRole('button', { name: 'Open window modal', exact: true }))
+    await userEvent.click(canvas.getByRole('button', { name: 'Open window modal' }))
 
-    const windowDialog = screen.getByRole('dialog', { name: 'Review match results', exact: true })
+    const windowDialog = screen.getByRole('dialog', { name: 'Review match results' })
     await expect(windowDialog).toBeInTheDocument()
     const windowDialogQueries = within(windowDialog)
-    await expect(windowDialogQueries.getByRole('button', { name: 'Later', exact: true })).toBeInTheDocument()
-    await expect(windowDialogQueries.getByRole('button', { name: 'Publish', exact: true })).toBeInTheDocument()
-    await expect(windowDialogQueries.getByRole('button', { name: 'Close dialog', exact: true })).toBeInTheDocument()
+    await expect(windowDialogQueries.getByRole('button', { name: 'Later' })).toBeInTheDocument()
+    await expect(windowDialogQueries.getByRole('button', { name: 'Publish' })).toBeInTheDocument()
+    await expect(windowDialogQueries.getByRole('button', { name: 'Close dialog' })).toBeInTheDocument()
 
-    await userEvent.click(windowDialogQueries.getByRole('button', { name: 'Close dialog', exact: true }))
+    await userEvent.click(windowDialogQueries.getByRole('button', { name: 'Close dialog' }))
     await expect(windowDialog).not.toBeInTheDocument()
 
-    await userEvent.click(canvas.getByRole('button', { name: 'Open fullscreen modal', exact: true }))
+    await userEvent.click(canvas.getByRole('button', { name: 'Open fullscreen modal' }))
 
-    const fullscreenDialog = screen.getByRole('dialog', { name: 'Export event data', exact: true })
+    const fullscreenDialog = screen.getByRole('dialog', { name: 'Export event data' })
     await expect(fullscreenDialog).toBeInTheDocument()
     const fullscreenDialogQueries = within(fullscreenDialog)
-    await expect(fullscreenDialogQueries.getByRole('button', { name: 'Close dialog', exact: true })).toBeInTheDocument()
-    await expect(fullscreenDialogQueries.getByRole('button', { name: 'Close', exact: true })).toBeInTheDocument()
+    await expect(fullscreenDialogQueries.getByRole('button', { name: 'Close dialog' })).toBeInTheDocument()
+    await expect(fullscreenDialogQueries.getByRole('button', { name: 'Close' })).toBeInTheDocument()
   }
 }

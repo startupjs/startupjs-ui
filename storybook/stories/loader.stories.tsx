@@ -14,7 +14,7 @@ type Story = StoryObj<typeof meta>
 type PlayContext = Parameters<NonNullable<Story['play']>>[0]
 
 async function failingFollowup ({ canvas }: PlayContext) {
-  await expect(canvas.getByRole('progressbar', { name: 'Paused hidden loader', exact: true })).not.toBeVisible()
+  await expect(canvas.getByRole('progressbar', { name: 'Paused hidden loader' })).not.toBeVisible()
 }
 void failingFollowup
 
@@ -47,10 +47,10 @@ export const States: Story = {
     </StoryStack>
   ),
   play: async ({ canvas }) => {
-    const smallLoader = canvas.getByRole('progressbar', { name: 'Small loader', exact: true })
-    const primaryLoader = canvas.getByRole('progressbar', { name: 'Primary loader', exact: true })
-    const pausedVisibleLoader = canvas.getByRole('progressbar', { name: 'Paused visible loader', exact: true })
-    const pausedHiddenLoader = canvas.getByRole('progressbar', { name: 'Paused hidden loader', exact: true })
+    const smallLoader = canvas.getByRole('progressbar', { name: 'Small loader' })
+    const primaryLoader = canvas.getByRole('progressbar', { name: 'Primary loader' })
+    const pausedVisibleLoader = canvas.getByRole('progressbar', { name: 'Paused visible loader' })
+    const pausedHiddenLoader = canvas.getByRole('progressbar', { name: 'Paused hidden loader' })
 
     await expect(smallLoader).toHaveAttribute('aria-valuemin', '0')
     await expect(primaryLoader).toHaveAttribute('aria-valuemax', '1')
