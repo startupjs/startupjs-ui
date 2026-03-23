@@ -128,6 +128,15 @@ Status legend:
      - `Sidebar`
      - `SmartSidebar`
 
+6. Storybook TypeScript cleanup
+   - Run `tsc --noEmit -p storybook-web/tsconfig.json` as a dedicated follow-up pass and separate story-only typing issues from package-source typing issues.
+   - Story-only issues currently include:
+     - icon prop typing mismatches in stories such as `Button` / `Link`
+     - stories using props not present in declared component types, such as `label` on `PasswordInput` / `DateTimePicker`
+     - story typing mismatches such as missing required `args` on `FlatList`
+     - callback typing mismatches such as `RangeInput` `onChange`
+   - Package-source issues currently also leak into this run, so decide whether Storybook typecheck should stay broad or get a narrower stories-only config.
+
 ### Research / design / potentially debatable or breaking
 
 1. Semantic contract decisions that may affect public expectations
@@ -152,6 +161,12 @@ Status legend:
    - `AbstractPopover` interaction coverage in Storybook web
    - `DateTimePicker` time-mode instability in the current Storybook web harness
    - `ObjectInput` hooks-order warning under dependency toggling
+
+5. TypeScript config boundary for Storybook
+   - Decide whether `storybook-web/tsconfig.json` should typecheck:
+     - all package source transitively, or
+     - stories plus only the intended public story surface
+   - Current `tsc` output mixes real story authoring issues with unrelated package-source typing problems, which makes Storybook-specific typecheck noisier than it should be.
 
 ## Component Ledger
 
