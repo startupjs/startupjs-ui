@@ -1,7 +1,6 @@
-import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
 import { expect } from 'storybook/test'
-import { $ } from 'startupjs'
+import { $, observer } from 'startupjs'
 import { Button, Card, Div, Span, Tabs } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
@@ -11,9 +10,9 @@ const ROUTES = [
   { key: 'notes', title: 'Notes' }
 ]
 
-function TabsStates () {
-  const [$value] = useState(() => $('overview'))
-  const [$bottomValue] = useState(() => $('matches'))
+const TabsStates = observer(function TabsStates () {
+  const $value = $('overview')
+  const $bottomValue = $('matches')
 
   function renderScene ({ route }: { route: { key: string } }) {
     switch (route.key) {
@@ -77,7 +76,7 @@ function TabsStates () {
       </Button>
     </StoryStack>
   )
-}
+})
 
 const meta = {
   title: 'Navigation/Tabs',

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
-import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
 import { expect, userEvent } from 'storybook/test'
 import { $, observer } from 'startupjs'
@@ -7,19 +6,19 @@ import { ObjectInput, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
 const ObjectInputStates = observer(function ObjectInputStates () {
-  const [$value] = useState(() => $({
+  const $value = $({
     wantsPartner: true,
     partnerName: 'Grace Hopper',
     notes: 'Conditional fields are useful for e2e coverage.'
-  }))
-  const [$details] = useState(() => $({
+  })
+  const $details = $({
     age: 31,
     city: 'London'
-  }))
-  const [$readonly] = useState(() => $({
+  })
+  const $readonly = $({
     email: 'ada@example.com',
     password: 'analytical-engine'
-  }))
+  })
 
   return (
     <StoryStack>

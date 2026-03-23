@@ -1,11 +1,10 @@
-import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
 import { expect, userEvent } from 'storybook/test'
 import { $, observer } from 'startupjs'
 import { Button, Card, Div, SmartSidebar, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
-function SmartSidebarDemo ({
+const SmartSidebarDemo = observer(function SmartSidebarDemo ({
   title,
   breakpoint,
   defaultOpen
@@ -14,7 +13,7 @@ function SmartSidebarDemo ({
   breakpoint: number
   defaultOpen: boolean
 }) {
-  const [$open] = useState(() => $(false))
+  const $open = $(false)
 
   return (
     <StorySection
@@ -59,7 +58,7 @@ function SmartSidebarDemo ({
       </Div>
     </StorySection>
   )
-}
+})
 
 const SmartSidebarStates = observer(function SmartSidebarStates () {
   return (

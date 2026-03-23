@@ -1,18 +1,17 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
-import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
 import { expect } from 'storybook/test'
-import { $ } from 'startupjs'
+import { $, observer } from 'startupjs'
 import { Input, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
-function InputStates () {
-  const [$value] = useState(() => $({
+const InputStates = observer(function InputStates () {
+  const $value = $({
     name: 'Ada Lovelace',
     age: 29,
     subscribed: true,
     role: 'organizer'
-  }))
+  })
 
   return (
     <StoryStack>
@@ -58,7 +57,7 @@ function InputStates () {
       </Span>
     </StoryStack>
   )
-}
+})
 
 const meta = {
   title: 'Inputs/Input',

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
-import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
 import { expect, userEvent, within } from 'storybook/test'
 import { $, observer } from 'startupjs'
@@ -7,13 +6,13 @@ import { Form, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
 const FormStates = observer(function FormStates () {
-  const [$value] = useState(() => $({
+  const $value = $({
     name: '',
     age: 27,
     role: 'participant',
     agreed: true,
     notes: 'Mostly interested in interface testing'
-  }))
+  })
 
   const fields = {
     name: {

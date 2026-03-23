@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
-import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
 import { expect, userEvent } from 'storybook/test'
 import { $, observer } from 'startupjs'
@@ -7,9 +6,9 @@ import { ArrayInput, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
 const ArrayInputStates = observer(function ArrayInputStates () {
-  const [$value] = useState(() => $({
+  const $value = $({
     participants: ['Ada Lovelace', 'Grace Hopper']
-  }))
+  })
 
   return (
     <StoryStack>

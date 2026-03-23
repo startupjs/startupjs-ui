@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
 import { expect, userEvent } from 'storybook/test'
 import { $, observer } from 'startupjs'
@@ -6,7 +5,7 @@ import { Button, Card, Div, Sidebar, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
 const SidebarStates = observer(function SidebarStates () {
-  const [$open] = useState(() => $(true))
+  const $open = $(true)
 
   return (
     <StoryStack>
