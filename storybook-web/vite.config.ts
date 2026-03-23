@@ -3,7 +3,6 @@ import { transformAsync } from '@babel/core'
 import { defineConfig } from 'vite'
 
 const reanimatedFilePattern = /node_modules\/react-native-(?:reanimated|worklets)\/.*\.[cm]?[jt]sx?(?:\?.*)?$/
-const base = process.env.STORYBOOK_BASE ?? '/'
 
 function reanimatedWorkletsBabelPlugin () {
   return {
@@ -35,7 +34,6 @@ function reanimatedWorkletsBabelPlugin () {
 }
 
 export default defineConfig({
-  base,
   server: {
     fs: {
       allow: [
