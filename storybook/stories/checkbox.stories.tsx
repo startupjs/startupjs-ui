@@ -56,10 +56,8 @@ type Story = StoryObj<typeof meta>
 type PlayContext = Parameters<NonNullable<Story['play']>>[0]
 
 async function failingFollowup ({ canvas }: PlayContext) {
-  const disabledCheckbox = canvas.getByLabelText('Disabled')
   const readonlyCheckbox = canvas.getByRole('checkbox', { name: 'Readonly' })
 
-  await expect(disabledCheckbox).toHaveAttribute('aria-disabled', 'true')
   await expect(readonlyCheckbox).toHaveAttribute('aria-readonly', 'true')
 }
 void failingFollowup
@@ -80,6 +78,7 @@ export const States: Story = {
 
     await expect(wrappedCheckbox).toHaveAttribute('role', 'checkbox')
     await expect(wrappedSwitch).toHaveAttribute('role', 'switch')
+    await expect(disabledCheckbox).toHaveAttribute('aria-disabled', 'true')
 
     await userEvent.click(wrappedCheckbox)
     await expect(wrappedCheckbox).toHaveAttribute('aria-checked', 'false')

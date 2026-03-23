@@ -39,7 +39,7 @@ Status legend:
 
 ### Low-hanging fruit / obvious / low-risk
 
-1. Shared disabled-state semantics normalization
+1. [x] Shared disabled-state semantics normalization
    - Add consistent disabled semantics on web for interactive surfaces that already block interaction:
      - `Div`
      - pressable `Card`
@@ -223,7 +223,6 @@ Status legend:
 - Follow-up notes:
   - `Button` without `onPress` currently renders as a static surface, so disabled/preview-only buttons lose button semantics entirely; decide whether `Button` should always expose button semantics regardless of handler presence.
   - Icon-only and custom-content buttons still depend on the caller supplying an accessible name; consider whether the component/docs should enforce that contract more strongly.
-  - Disabled buttons currently rely on visual styling and handler short-circuiting; they do not expose robust native disabled semantics on web.
   - Async pending state visually swaps to a loader and blocks duplicate presses, but likely also wants explicit busy-state semantics (`aria-busy` or equivalent).
   - Rejected async handlers still surface as unhandled browser rejections even though the loader clears; decide whether `Button` should swallow/rethrow them in a safer way.
 
@@ -247,7 +246,6 @@ Status legend:
 - Follow-up notes:
   - `readonly` currently renders as plain text glyphs instead of a semantic readonly checkbox/switch surface; decide whether that is the intended public contract.
   - Disabled behavior should be verified at the semantic level as well as the visual level; later pass may need stronger disabled-state normalization.
-  - Wrapped disabled checkbox currently does not expose `aria-disabled` in the rendered control, even though interaction is blocked.
 
 ### collapse
 - Status: covered with follow-up
@@ -264,7 +262,6 @@ Status legend:
   - The visible trigger is currently just the hex value button; consider whether it should expose a clearer accessible name such as “Choose color” plus the current value.
   - `ColorPicker` does not currently forward straightforward host targeting props such as `testID` on its outer wrapper, which makes direct E2E targeting harder than expected.
   - In this client-only Storybook pass, only the trigger/button contract is realistically testable; the native/system color picker UI itself remains outside the current browser harness.
-  - Disabled `ColorPicker` trigger does not currently expose robust disabled semantics on web.
 
 ### content
 - Status: covered
@@ -292,7 +289,6 @@ Status legend:
 - Status: covered with follow-up
 - Expected behavior: generic layout primitive, button semantics only when interactive, safe composition on web.
 - Follow-up notes:
-  - Disabled pressable `Div` currently blocks interaction but does not expose `aria-disabled` on web.
   - Keep watching for composition edge cases around deferred web `role="button"` assignment.
 
 ### divider
@@ -417,7 +413,7 @@ Status legend:
 - Expected behavior: named trigger, selected value lifecycle, max-count behavior, readonly/disabled discoverability, no nested interactive hosts.
 - Follow-up notes:
   - Natural expectation is one discoverable trigger whose accessible name comes from the placeholder or selected tags, plus a popup/list contract that clearly exposes selectable options.
-  - Disabled and readonly states likely need a stronger semantic contract on the trigger so a first-time user can tell they are intentionally non-interactive.
+  - Readonly state still needs a stronger semantic contract on the trigger so a first-time user can tell it is intentionally non-interactive.
   - The current default tags are visual only, so chip removal is not directly discoverable without reopening the popup; that may still be acceptable, but it should be an explicit product decision rather than an accidental limitation.
   - Readonly mode currently renders raw stored values (`ada, grace`) instead of the visible option labels (`Ada Lovelace, Grace Hopper`), which is surprising for both users and E2E authors.
   - The popup surface still behaves more like a free-floating list of buttons than a clearly labeled multi-select/listbox contract.

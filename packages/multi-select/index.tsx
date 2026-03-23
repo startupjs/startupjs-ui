@@ -366,6 +366,9 @@ function DefaultInput ({
       Div.input(
         style=style
         styleName={ disabled, focused, readonly, error: _hasError }
+        role='button'
+        aria-disabled=disabled
+        aria-readonly=readonly
         onPress=disabled || readonly ? void 0 : onOpen
         wrap
         row

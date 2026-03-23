@@ -17,10 +17,8 @@ type Story = StoryObj<typeof meta>
 type PlayContext = Parameters<NonNullable<Story['play']>>[0]
 
 async function failingFollowup ({ canvas }: PlayContext) {
-  const disabledButton = canvas.getByRole('button', { name: 'Disabled save' })
   const asyncSaveButton = canvas.getByRole('button', { name: 'Async save' })
 
-  await expect(disabledButton).toBeDisabled()
   await expect(asyncSaveButton).toHaveAttribute('aria-busy', 'true')
 }
 void failingFollowup
@@ -97,6 +95,7 @@ export const States: Story = {
     expect(iconOnlyButton.getAttribute('type')).toBe('button')
     expect(asyncSaveButton.tagName).toBe('BUTTON')
     expect(asyncSaveButton.getAttribute('type')).toBe('button')
+    await expect(disabledButton).toBeDisabled()
 
     await userEvent.click(disabledButton)
     await expect(canvas.getByText('Disabled runs: 0')).toBeVisible()

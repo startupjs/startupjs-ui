@@ -82,12 +82,9 @@ type Story = StoryObj<typeof meta>
 type PlayContext = Parameters<NonNullable<Story['play']>>[0]
 
 async function failingFollowup ({ canvas, userEvent }: PlayContext) {
-  const disabledTrigger = canvas.getByRole('button', { name: 'Disabled people' })
   const trigger = canvas.getByRole('button', { name: 'Select people' })
   const disabledReadonlySection = canvas.getByRole('heading', { name: 'Disabled and readonly' })
     .parentElement?.parentElement as HTMLElement
-
-  await expect(disabledTrigger).toHaveAttribute('aria-disabled', 'true')
 
   await userEvent.click(trigger)
   await expect(screen.getByRole('listbox')).toBeVisible()
@@ -101,11 +98,13 @@ export const States: Story = {
   play: async ({ canvas, canvasElement, userEvent }) => {
     const trigger = canvas.getByRole('button', { name: 'Select people' })
     const cappedTrigger = canvas.getByRole('button', { name: 'Choose up to two people' })
+    const disabledTrigger = canvas.getByRole('button', { name: 'Hedy Lamarr' })
     const getPopupOption = (name: string) => screen.getAllByRole('button', { name }).at(-1) as HTMLElement
     const disabledReadonlySection = canvas.getByRole('heading', { name: 'Disabled and readonly' })
       .parentElement?.parentElement as HTMLElement
 
     await expect(trigger).toBeVisible()
+    await expect(disabledTrigger).toHaveAttribute('aria-disabled', 'true')
     await expect(canvas.getByText('Selected tags snapshot: none')).toBeVisible()
     await userEvent.click(trigger)
 
@@ -134,6 +133,8 @@ export const States: Story = {
     await waitFor(() => expect(getPopupOption('Hedy Lamarr')).toBeVisible())
     await userEvent.click(getPopupOption('Hedy Lamarr'))
     await expect(canvas.getByText('Capped selection snapshot: ada, grace')).toBeVisible()
+
+    await expect(disabledTrigger).toBeDisabled()
 
     expect(disabledReadonlySection.textContent).toContain('Hedy Lamarr')
     expect(disabledReadonlySection.textContent).toContain('ada, grace')

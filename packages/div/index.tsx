@@ -36,52 +36,13 @@ const {
 
 function normalizeAccessibilityProps ({
   props,
-  disabled,
-  deferButtonRole
+  disabled
 }: {
   props: Record<string, any>
   disabled?: boolean
-  deferButtonRole?: boolean
 }) {
-  if (props.role == null && props.accessibilityRole != null && !(deferButtonRole && props.accessibilityRole === 'button')) {
-    props.role = props.accessibilityRole
-  }
-  props['aria-label'] ??= props.accessibilityLabel
-  props['aria-labelledby'] ??= props.accessibilityLabelledBy
-  props['aria-live'] ??= props.accessibilityLiveRegion
-  props['aria-modal'] ??= props.accessibilityViewIsModal
-  props['aria-hidden'] ??= props.accessibilityElementsHidden
-
-  const accessibilityState = props.accessibilityState
-  if (props['aria-checked'] == null && accessibilityState?.checked != null) {
-    props['aria-checked'] = accessibilityState.checked
-  }
   if (props['aria-disabled'] == null) {
-    if (accessibilityState?.disabled != null) props['aria-disabled'] = accessibilityState.disabled
-    else if (disabled != null) props['aria-disabled'] = disabled
-  }
-  if (props['aria-expanded'] == null && accessibilityState?.expanded != null) {
-    props['aria-expanded'] = accessibilityState.expanded
-  }
-  if (props['aria-selected'] == null && accessibilityState?.selected != null) {
-    props['aria-selected'] = accessibilityState.selected
-  }
-  if (props['aria-busy'] == null && accessibilityState?.busy != null) {
-    props['aria-busy'] = accessibilityState.busy
-  }
-
-  const accessibilityValue = props.accessibilityValue
-  if (props['aria-valuemin'] == null && accessibilityValue?.min != null) {
-    props['aria-valuemin'] = accessibilityValue.min
-  }
-  if (props['aria-valuemax'] == null && accessibilityValue?.max != null) {
-    props['aria-valuemax'] = accessibilityValue.max
-  }
-  if (props['aria-valuenow'] == null && accessibilityValue?.now != null) {
-    props['aria-valuenow'] = accessibilityValue.now
-  }
-  if (props['aria-valuetext'] == null && accessibilityValue?.text != null) {
-    props['aria-valuetext'] = accessibilityValue.text
+    if (disabled != null) props['aria-disabled'] = disabled
   }
 }
 
@@ -238,20 +199,34 @@ function Div ({
 
   normalizeAccessibilityProps({
     props,
-    disabled,
-    deferButtonRole: isWeb && deferredRole === 'button'
+    disabled
   })
 
   useLayoutEffect(() => {
     if (!isWeb) return
     const node = rootRef.current
     if (!node || typeof node.setAttribute !== 'function') return
+    // Keep role declarative by default too. This manual patch is only for the
+    // deferred-role web path where we intentionally avoid a native <button>
+    // host to prevent invalid nested-button markup, but still need button
+    // semantics on the resulting DOM node.
     if (deferredRole != null) {
       node.setAttribute('role', deferredRole)
     } else if (props.role == null) {
       node.removeAttribute('role')
     }
-  }, [rootRef, deferredRole, props.role])
+    // Keep the RN / aria props declarative by default. This manual patch is only
+    // for the current RN Web bug where disabled semantics are dropped on the
+    // deferred-role pressable path that we use to avoid nested native buttons.
+    if (props['aria-disabled'] != null) {
+      node.setAttribute('aria-disabled', String(props['aria-disabled']))
+    } else {
+      node.removeAttribute('aria-disabled')
+    }
+    if (_webNativeButton && 'disabled' in node) {
+      node.disabled = !!disabled
+    }
+  }, [rootRef, deferredRole, props.role, props['aria-disabled'], _webNativeButton, disabled])
 
   const isAnimated = hasAnimatedProperty(style) || hasAnimatedProperty(pressableStyle)
   const Component = isPressable

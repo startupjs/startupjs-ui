@@ -10,6 +10,11 @@ const localPackageNames = fs.readdirSync(packagesDir)
   .filter(file => fs.existsSync(file))
   .map(file => JSON.parse(fs.readFileSync(file, 'utf8')).name)
   .filter(Boolean)
+const transpiledModules = [
+  ...localPackageNames,
+  'react-native-reanimated',
+  'react-native-worklets'
+]
 
 const config: StorybookConfig = {
   stories: ['../../storybook/stories/**/*.stories.@(ts|tsx|js|jsx)'],
@@ -21,7 +26,7 @@ const config: StorybookConfig = {
   framework: {
     name: '@storybook/react-native-web-vite',
     options: {
-      modulesToTranspile: localPackageNames,
+      modulesToTranspile: transpiledModules,
       pluginReactOptions: {
         babel: {
           presets: [
@@ -35,7 +40,10 @@ const config: StorybookConfig = {
               }
             ]
           ],
-          plugins: ['react-native-reanimated/plugin']
+          plugins: [
+            '@babel/plugin-proposal-export-namespace-from',
+            'react-native-worklets/plugin'
+          ]
         },
         include: [
           /storybook\/stories\/.*\.[jt]sx?$/,

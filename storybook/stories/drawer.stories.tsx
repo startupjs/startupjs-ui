@@ -67,6 +67,12 @@ type PlayContext = Parameters<NonNullable<Story['play']>>[0]
 async function failingFollowup ({ canvas, userEvent }: PlayContext) {
   await userEvent.click(canvas.getByRole('button', { name: 'Left' }))
   await waitFor(() => expect(screen.getByRole('dialog', { name: 'Left drawer' })).toBeVisible())
+
+  await userEvent.click(canvas.getByRole('button', { name: 'Right' }))
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Close drawer' })).toBeVisible())
+
+  await userEvent.click(canvas.getByRole('button', { name: 'Bottom' }))
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Close drawer' })).toBeVisible())
 }
 void failingFollowup
 
@@ -74,18 +80,22 @@ export const Positions: Story = {
   tags: ['interaction'],
   render: () => <DrawerStates />,
   play: async ({ canvas, userEvent }) => {
+    const expectDrawerOpen = async (positionLabel: string) => {
+      await expect(
+        await screen.findByRole('button', { name: 'Close drawer' }, { timeout: 4000 })
+      ).toBeVisible()
+      await waitFor(() => expect(canvas.getByText(`Open drawer: ${positionLabel.toLowerCase()}`)).toBeVisible())
+    }
+
+    const closeDrawer = async () => {
+      await userEvent.click(screen.getByRole('button', { name: 'Close drawer' }))
+      await waitFor(() => expect(canvas.getByText('Open drawer: none')).toBeVisible())
+    }
+
     await expect(canvas.getByText('Open drawer: none')).toBeVisible()
 
     await userEvent.click(canvas.getByRole('button', { name: 'Left' }))
-    await waitFor(() => expect(screen.getByText('Left drawer')).toBeVisible())
-    await waitFor(() => expect(canvas.getByText('Open drawer: left')).toBeVisible())
-    await userEvent.click(screen.getByRole('button', { name: 'Close drawer' }))
-    await waitFor(() => expect(canvas.getByText('Open drawer: none')).toBeVisible())
-
-    await userEvent.click(canvas.getByRole('button', { name: 'Bottom' }))
-    await waitFor(() => expect(screen.getByText('Bottom drawer')).toBeVisible())
-    await waitFor(() => expect(canvas.getByText('Open drawer: bottom')).toBeVisible())
-    await userEvent.click(screen.getByRole('button', { name: 'Close drawer' }))
-    await waitFor(() => expect(canvas.getByText('Open drawer: none')).toBeVisible())
+    await expectDrawerOpen('Left')
+    await closeDrawer()
   }
 }

@@ -4,7 +4,7 @@
   "version": "0.1.19",
   "type": "module",
   "scripts": {
-    "storybook": "storybook dev -p 4400 --no-open",
+    "storybook": "storybook dev -p 4400 --no-open --initial-path '/story/introduction-overview--page'",
     "build-storybook": "storybook build",
     "test-storybook": "vitest --config vitest.config.ts --run",
     "test-storybook:watch": "vitest --config vitest.config.ts"
@@ -50,6 +50,7 @@
     "startupjs-ui": "workspace:*"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
     "@storybook/addon-a11y": "^10.3.1",
     "@storybook/addon-docs": "^10.3.1",
     "@storybook/addon-vitest": "^10.3.1",

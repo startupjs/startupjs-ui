@@ -19,6 +19,7 @@ function DateTimePickerStates () {
             date={date}
             mode='date'
             locale='en'
+            timezone='UTC'
             testID='dtp-date-input'
             calendarTestID='dtp-date-calendar'
             onChangeDate={setDate}
@@ -29,6 +30,7 @@ function DateTimePickerStates () {
             mode='time'
             locale='en'
             is24Hour
+            timezone='UTC'
             testID='dtp-time-input'
             onChangeDate={setTime}
           />
@@ -38,6 +40,7 @@ function DateTimePickerStates () {
             mode='datetime'
             locale='en'
             is24Hour
+            timezone='UTC'
             testID='dtp-datetime-input'
             calendarTestID='dtp-datetime-calendar'
             onChangeDate={setDatetime}

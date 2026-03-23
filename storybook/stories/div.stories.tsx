@@ -16,7 +16,6 @@ type PlayContext = Parameters<NonNullable<Story['play']>>[0]
 
 async function failingFollowup ({ canvas }: PlayContext) {
   const disabledTrigger = canvas.getByRole('button', { name: 'Disabled trigger' })
-
   await expect(disabledTrigger).toHaveAttribute('aria-disabled', 'true')
 }
 void failingFollowup
@@ -87,12 +86,12 @@ function DivStates () {
           </Div>
           <Div
             onPress={() => {}}
-            accessibilityRole='button'
-            accessibilityLabel='Legacy participant card'
-            accessibilityState={{ selected: true }}
+            role='button'
+            aria-label='Selected participant card'
+            aria-selected
             style={{ padding: 16, borderRadius: 12, backgroundColor: '#fee2e2' }}
           >
-            <Span>Legacy participant card</Span>
+            <Span>Selected participant card</Span>
           </Div>
         </Div>
       </StorySection>
@@ -108,14 +107,15 @@ export const States: Story = {
     const simpleTrigger = canvas.getByRole('button', { name: 'Simple trigger' })
     const disabledTrigger = canvas.getByRole('button', { name: 'Disabled trigger' })
     const canonicalButton = canvas.getByRole('button', { name: 'Open participant card', exact: true })
-    const legacyButton = canvas.getByRole('button', { name: 'Legacy participant card', exact: true })
+    const selectedButton = canvas.getByRole('button', { name: 'Selected participant card', exact: true })
 
     expect(pressableContainer.tagName).toBe('DIV')
     expect(simpleTrigger.tagName).toBe('DIV')
     expect(canonicalButton.tagName).toBe('DIV')
-    expect(legacyButton.tagName).toBe('DIV')
+    expect(selectedButton.tagName).toBe('DIV')
     await expect(canonicalButton).toHaveAttribute('aria-expanded', 'false')
-    await expect(legacyButton).toHaveAttribute('aria-selected', 'true')
+    await expect(selectedButton).toHaveAttribute('aria-selected', 'true')
+    await expect(disabledTrigger).toHaveAttribute('aria-disabled', 'true')
     pressableContainer.focus()
     await userEvent.keyboard('{Enter}')
     await expect(canvas.getByText('Activations: 1', { exact: true })).toBeVisible()

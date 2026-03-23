@@ -38,7 +38,6 @@ type PlayContext = Parameters<NonNullable<Story['play']>>[0]
 async function failingFollowup ({ canvas }: PlayContext) {
   const disabledTrigger = canvas.getByRole('button', { name: '#111827' })
 
-  await expect(disabledTrigger).toBeDisabled()
   await expect(disabledTrigger).toHaveAccessibleName('Choose color #111827')
 }
 void failingFollowup
@@ -54,6 +53,7 @@ export const States: Story = {
     await expect(smallTrigger).toBeVisible()
     await expect(compactTrigger).toBeVisible()
     await expect(disabledTrigger).toBeVisible()
+    await expect(disabledTrigger).toBeDisabled()
     expect(canvas.getAllByRole('button')).toHaveLength(3)
   }
 }
