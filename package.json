@@ -20,6 +20,7 @@
     "storybook": "cd storybook-web && yarn storybook",
     "storybook:web": "cd storybook-web && yarn storybook",
     "storybook:build": "cd storybook-web && yarn build-storybook",
+    "storybook:build:pages": "cd storybook-web && STORYBOOK_BASE=/storybook/ yarn build-storybook --output-dir ../docs/dist/storybook",
     "storybook:test": "cd storybook-web && yarn test-storybook",
     "storybook:test:watch": "cd storybook-web && yarn test-storybook:watch",
     "storybook:native": "cd storybook && yarn start",
