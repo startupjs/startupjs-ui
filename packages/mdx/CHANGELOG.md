@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.22](https://github.com/startupjs/startupjs-ui/compare/v0.1.21...v0.1.22) (2026-03-25)
+
+**Note:** Version bump only for package @startupjs-ui/mdx
+
+
+
+
+
+## [0.1.21](https://github.com/startupjs/startupjs-ui/compare/v0.1.20...v0.1.21) (2026-03-25)
+
+
+### Bug Fixes
+
+* **core,mdx:** rename remaining .styl files to .cssx.styl ([d239762](https://github.com/startupjs/startupjs-ui/commit/d2397629fe0d6267889a69868678a513b2a7815a))
+
+
+
+
+
 ## [0.1.19](https://github.com/startupjs/startupjs-ui/compare/v0.1.18...v0.1.19) (2026-03-17)
 
 **Note:** Version bump only for package @startupjs-ui/mdx

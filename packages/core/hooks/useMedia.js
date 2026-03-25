@@ -1,7 +1,7 @@
 import { Dimensions } from 'react-native'
 import { observable } from '@nx-js/observer-util'
 import debounce from 'lodash/debounce'
-import STYLES from './useMedia.styl'
+import STYLES from './useMedia.cssx.styl'
 
 const { media } = STYLES
 

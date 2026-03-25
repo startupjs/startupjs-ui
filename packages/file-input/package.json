@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/file-input",
-  "version": "0.1.19",
+  "version": "0.1.22",
   "publishConfig": {
     "access": "public"
   },
@@ -18,10 +18,10 @@
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
-    "@startupjs-ui/button": "^0.1.19",
-    "@startupjs-ui/core": "^0.1.19",
-    "@startupjs-ui/dialogs": "^0.1.19",
-    "@startupjs-ui/div": "^0.1.19",
+    "@startupjs-ui/button": "^0.1.22",
+    "@startupjs-ui/core": "^0.1.22",
+    "@startupjs-ui/dialogs": "^0.1.22",
+    "@startupjs-ui/div": "^0.1.22",
     "busboy": "^1.6.0",
     "expo-document-picker": ">=14.0.0",
     "expo-image-picker": ">=17.0.0",

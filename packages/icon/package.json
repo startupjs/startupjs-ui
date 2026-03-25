@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/icon",
-  "version": "0.1.19",
+  "version": "0.1.22",
   "publishConfig": {
     "access": "public"
   },
@@ -15,7 +15,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.26",
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
     "@fortawesome/react-native-fontawesome": "^0.3.0",
-    "@startupjs-ui/core": "^0.1.19"
+    "@startupjs-ui/core": "^0.1.22"
   },
   "peerDependencies": {
     "react": "*",

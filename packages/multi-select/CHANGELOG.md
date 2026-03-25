@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.22](https://github.com/startupjs/startupjs-ui/compare/v0.1.21...v0.1.22) (2026-03-25)
+
+**Note:** Version bump only for package @startupjs-ui/multi-select
+
+
+
+
+
+## [0.1.21](https://github.com/startupjs/startupjs-ui/compare/v0.1.20...v0.1.21) (2026-03-25)
+
+**Note:** Version bump only for package @startupjs-ui/multi-select
+
+
+
+
+
+## [0.1.20](https://github.com/startupjs/startupjs-ui/compare/v0.1.19...v0.1.20) (2026-03-23)
+
+
+### Bug Fixes
+
+* **multiselect:** Added line spacing for wrapped tags ([#20](https://github.com/startupjs/startupjs-ui/issues/20)) ([9e09db3](https://github.com/startupjs/startupjs-ui/commit/9e09db376dcef67f102112539100e86b82ed9a64))
+
+
+
+
+
 ## [0.1.19](https://github.com/startupjs/startupjs-ui/compare/v0.1.18...v0.1.19) (2026-03-17)
 
 **Note:** Version bump only for package @startupjs-ui/multi-select

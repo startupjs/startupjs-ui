@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/breadcrumbs",
-  "version": "0.1.19",
+  "version": "0.1.22",
   "publishConfig": {
     "access": "public"
   },
@@ -8,11 +8,11 @@
   "types": "index.d.ts",
   "type": "module",
   "dependencies": {
-    "@startupjs-ui/core": "^0.1.19",
-    "@startupjs-ui/div": "^0.1.19",
-    "@startupjs-ui/icon": "^0.1.19",
-    "@startupjs-ui/link": "^0.1.19",
-    "@startupjs-ui/span": "^0.1.19"
+    "@startupjs-ui/core": "^0.1.22",
+    "@startupjs-ui/div": "^0.1.22",
+    "@startupjs-ui/icon": "^0.1.22",
+    "@startupjs-ui/link": "^0.1.22",
+    "@startupjs-ui/span": "^0.1.22"
   },
   "peerDependencies": {
     "react": "*",

@@ -11,7 +11,7 @@ import languagePug from 'refractor/lang/pug.js'
 import languageMarkdown from 'refractor/lang/markdown.js'
 import languageJson from 'refractor/lang/json.js'
 import languageBash from 'refractor/lang/bash.js'
-import './index.styl'
+import './index.cssx.styl'
 
 const SUB_LANGUAGE_REGEX = /(^|\W)(pug|styl|css)(`\s*\n)([^`]*\s*\n)(`)/
 

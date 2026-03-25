@@ -17,7 +17,7 @@ import { faCode } from '@fortawesome/free-solid-svg-icons/faCode'
 import { faCopy } from '@fortawesome/free-solid-svg-icons/faCopy'
 // import _kebabCase from 'lodash/kebabCase'
 // import _get from 'lodash/get'
-import './index.styl'
+import './index.cssx.styl'
 import Code from '../Code'
 
 // const RowComponent = props => pug`Div(...props row)`
