@@ -19,7 +19,9 @@
     "generate-package-dts": "node scripts/generate-package-dts.mjs",
     "publish-patch": "dotenv -- npx lerna publish patch --conventional-commits --create-release=github",
     "publish-patch-force": "dotenv -- npx lerna publish patch --force-publish --conventional-commits --create-release=github",
-    "publish-breaking-minor": "dotenv -- npx lerna publish minor --conventional-commits --create-release=github"
+    "publish-breaking-minor": "dotenv -- npx lerna publish minor --conventional-commits --create-release=github",
+    "publish-alpha-patch": "dotenv -- npx lerna publish prerelease --preid alpha --dist-tag alpha --conventional-commits --create-release=github",
+    "publish-alpha-breaking-minor": "dotenv -- npx lerna publish preminor --preid alpha --dist-tag alpha --force-publish --conventional-commits --create-release=github"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.21",
