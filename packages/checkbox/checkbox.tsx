@@ -13,6 +13,7 @@ const AnimatedView = Animated.View
 interface CheckboxInputProps {
   value?: boolean
   icon?: any
+  checkedBgColor?: string
   _hasError?: boolean
   [key: string]: any
 }
@@ -20,7 +21,9 @@ interface CheckboxInputProps {
 function CheckboxInput ({
   value,
   icon,
+  checkedBgColor,
   _hasError,
+  style,
   ...props
 }: CheckboxInputProps): ReactNode {
   const animation = useRef(new Animated.Value(value ? 1 : 0)).current
@@ -47,14 +50,19 @@ function CheckboxInput ({
   }, [value])
 
   const checkedStyleName = { checked: value }
+  const checkedBgStyle = value && checkedBgColor
+    ? { backgroundColor: checkedBgColor }
+    : undefined
 
   return pug`
     Div.checkbox(
       styleName=[checkedStyleName, { error: _hasError }]
+      style=style
       accessibilityRole='checkbox'
       onLayout=(event) => setWidth(event.nativeEvent.layout.width)
       ...props
     )
+      Div.checkbox-bg(style=checkedBgStyle)
       Icon.checkbox-icon(
         styleName=[checkedStyleName]
         icon= icon || faCheck

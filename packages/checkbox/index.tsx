@@ -31,6 +31,8 @@ export interface CheckboxProps {
   value?: boolean
   /** Custom icon for the checkbox variant */
   icon?: any
+  /** Custom background color when checked */
+  checkedBgColor?: string
   /** Disable interactions @default false */
   disabled?: boolean
   /** Render a non-interactive value @default false */
@@ -55,6 +57,7 @@ function Checkbox ({
   readonly = false,
   value = false,
   disabled = false,
+  checkedBgColor,
   onChange,
   onFocus, // skip due to pointless triggering when clicked on the View
   onBlur, // skip due to pointless triggering when clicked on the View
@@ -77,6 +80,7 @@ function Checkbox ({
           onPress=onPress
           disabled=disabled
           accessibilityRole='checkbox'
+          checkedBgColor=checkedBgColor
           ...props
         )
   `
