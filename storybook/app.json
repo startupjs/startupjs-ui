@@ -1,0 +1,16 @@
+{
+  "expo": {
+    "name": "startupjs-ui-storybook",
+    "slug": "startupjs-ui-storybook",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "web": {
+      "output": "single"
+    },
+    "experiments": {
+      "reactCompiler": false
+    }
+  }
+}

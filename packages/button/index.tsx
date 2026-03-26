@@ -44,8 +44,16 @@ export interface ButtonProps {
   hoverStyle?: StyleProp<ViewStyle>
   /** custom styles for active state */
   activeStyle?: StyleProp<ViewStyle>
+  /** cross-platform accessible name for icon-only or custom-content buttons */
+  'aria-label'?: string
+  /** legacy alias for aria-label */
+  accessibilityLabel?: string
+  /** accessible hint text */
+  accessibilityHint?: string
   /** onPress handler */
   onPress?: (event: GestureResponderEvent) => void | Promise<void>
+  /** Additional props forwarded to the root pressable */
+  [key: string]: any
 }
 function Button ({
   style,
@@ -77,13 +85,18 @@ function Button ({
     let resolved = false
     const promise = onPress(event)
     if (!(promise && promise.then)) return
-    promise.then(() => { resolved = true })
+    promise.then(
+      () => { resolved = true },
+      () => { resolved = true }
+    )
     await new Promise((resolve) => setTimeout(resolve, 0))
     if (resolved) return
     setAsyncActive(true)
-    await promise
-    if (!isMountedRef.current) return
-    setAsyncActive(false)
+    try {
+      await promise
+    } finally {
+      if (isMountedRef.current) setAsyncActive(false)
+    }
   }
 
   if (!getColor(color)) console.error('Button component: Color for color property is incorrect. Use colors from Colors')
@@ -154,6 +167,7 @@ function Button ({
   return pug`
     Div.root(
       row
+      _webNativeButton
       shape=shape
       style=[rootStyle, style]
       styleName=[

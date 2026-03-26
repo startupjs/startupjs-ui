@@ -63,6 +63,8 @@ export interface DivProps extends ViewProps {
     accessibilityRole?: AccessibilityRole;
     /** Deprecated custom tooltip renderer @deprecated */
     renderTooltip?: any;
+    /** Internal: render a native <button> host on web when the resolved role is button */
+    _webNativeButton?: boolean;
     /** Test ID for testing purposes */
     'data-testid'?: string;
 }

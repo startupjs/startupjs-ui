@@ -1,0 +1,13 @@
+{
+  "extends": "../storybook/tsconfig.json",
+  "include": [
+    "./.storybook/**/*.ts",
+    "./.storybook/**/*.tsx",
+    "./vite.config.ts",
+    "./vitest.workspace.ts",
+    "../storybook/stories/**/*.ts",
+    "../storybook/stories/**/*.tsx",
+    "../storybook/shared/**/*.ts",
+    "../storybook/shared/**/*.tsx"
+  ]
+}

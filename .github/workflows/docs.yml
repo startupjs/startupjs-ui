@@ -36,6 +36,9 @@ jobs:
       - name: Build static docs site
         run: |
           yarn build-static
+      - name: Build static Storybook site
+        run: |
+          yarn storybook:build:pages
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

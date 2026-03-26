@@ -65,6 +65,12 @@ async function main () {
       rootDir: '../..',
       skipLibCheck: true
     },
+    include: [],
+    exclude: [
+      '../../docs/**/*',
+      '../../storybook/**/*',
+      '../../storybook-web/**/*'
+    ],
     files: [
       ...packagesToBuild.map(pkg => path.relative(tempDir, path.join(rootDir, pkg.entryFile))),
       ...extraDtsFiles.map(file => path.relative(tempDir, file))
