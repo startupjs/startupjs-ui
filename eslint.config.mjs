@@ -1,0 +1,87 @@
+import { defineConfig } from 'eslint/config'
+import neostandard, { resolveIgnoresFromGitignore } from 'neostandard'
+import expoConfig from 'eslint-config-expo/flat.js'
+import cssxjs from 'eslint-plugin-cssxjs'
+
+export default defineConfig([
+  ...neostandard({
+    ignores: resolveIgnoresFromGitignore(),
+    ts: true
+  }),
+  expoConfig,
+  {
+    plugins: {
+      cssxjs
+    },
+    processor: 'cssxjs/react-pug'
+  },
+  {
+    ignores: [
+      'node_modules/*', 'dist/*',
+      'docs/.expo', 'docs/dist/*', 'docs/expo-env.d.ts',
+      // Storybook workspaces
+      'storybook/*',
+      'storybook-web/*',
+      // AUTO-GENERATED START (generate-package-dts)
+      // DO NOT EDIT MANUALLY. Managed by scripts/generate-package-dts.mjs
+      'packages/abstract-popover/index.d.ts',
+      'packages/alert/index.d.ts',
+      'packages/array-input/index.d.ts',
+      'packages/auto-suggest/index.d.ts',
+      'packages/avatar/index.d.ts',
+      'packages/badge/index.d.ts',
+      'packages/br/index.d.ts',
+      'packages/breadcrumbs/index.d.ts',
+      'packages/button/index.d.ts',
+      'packages/card/index.d.ts',
+      'packages/carousel/index.d.ts',
+      'packages/checkbox/index.d.ts',
+      'packages/collapse/index.d.ts',
+      'packages/color-picker/index.d.ts',
+      'packages/content/index.d.ts',
+      'packages/date-time-picker/index.d.ts',
+      'packages/dialogs/index.d.ts',
+      'packages/div/index.d.ts',
+      'packages/divider/index.d.ts',
+      'packages/draggable/index.d.ts',
+      'packages/drawer-sidebar/index.d.ts',
+      'packages/drawer/index.d.ts',
+      'packages/dropdown/index.d.ts',
+      'packages/file-input/index.d.ts',
+      'packages/flat-list/index.d.ts',
+      'packages/form/index.d.ts',
+      'packages/icon/index.d.ts',
+      'packages/input/index.d.ts',
+      'packages/item/index.d.ts',
+      'packages/layout/index.d.ts',
+      'packages/link/index.d.ts',
+      'packages/loader/index.d.ts',
+      'packages/menu/index.d.ts',
+      'packages/modal/index.d.ts',
+      'packages/multi-select/index.d.ts',
+      'packages/number-input/index.d.ts',
+      'packages/object-input/index.d.ts',
+      'packages/pagination/index.d.ts',
+      'packages/password-input/index.d.ts',
+      'packages/popover/index.d.ts',
+      'packages/portal/index.d.ts',
+      'packages/progress/index.d.ts',
+      'packages/radio/index.d.ts',
+      'packages/range-input/index.d.ts',
+      'packages/rank/index.d.ts',
+      'packages/rating/index.d.ts',
+      'packages/scroll-view/index.d.ts',
+      'packages/select/index.d.ts',
+      'packages/sidebar/index.d.ts',
+      'packages/smart-sidebar/index.d.ts',
+      'packages/span/index.d.ts',
+      'packages/table/index.d.ts',
+      'packages/tabs/index.d.ts',
+      'packages/tag/index.d.ts',
+      'packages/text-input/index.d.ts',
+      'packages/toast/index.d.ts',
+      'packages/user/index.d.ts',
+      // AUTO-GENERATED END
+    ],
+  }
+])
