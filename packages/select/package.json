@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/select",
-  "version": "0.1.22",
+  "version": "0.2.0-alpha.0",
   "publishConfig": {
     "access": "public"
   },
@@ -9,10 +9,10 @@
   "type": "module",
   "dependencies": {
     "@react-native-picker/picker": "^2.11.1",
-    "@startupjs-ui/core": "^0.1.22",
-    "@startupjs-ui/div": "^0.1.22",
-    "@startupjs-ui/span": "^0.1.22",
-    "@startupjs-ui/text-input": "^0.1.22"
+    "@startupjs-ui/core": "^0.2.0-alpha.0",
+    "@startupjs-ui/div": "^0.2.0-alpha.0",
+    "@startupjs-ui/span": "^0.2.0-alpha.0",
+    "@startupjs-ui/text-input": "^0.2.0-alpha.0"
   },
   "peerDependencies": {
     "react": "*",

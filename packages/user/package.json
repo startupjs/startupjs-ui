@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/user",
-  "version": "0.1.22",
+  "version": "0.2.0-alpha.0",
   "publishConfig": {
     "access": "public"
   },
@@ -8,10 +8,10 @@
   "types": "index.d.ts",
   "type": "module",
   "dependencies": {
-    "@startupjs-ui/avatar": "^0.1.22",
-    "@startupjs-ui/core": "^0.1.22",
-    "@startupjs-ui/div": "^0.1.22",
-    "@startupjs-ui/span": "^0.1.22"
+    "@startupjs-ui/avatar": "^0.2.0-alpha.0",
+    "@startupjs-ui/core": "^0.2.0-alpha.0",
+    "@startupjs-ui/div": "^0.2.0-alpha.0",
+    "@startupjs-ui/span": "^0.2.0-alpha.0"
   },
   "peerDependencies": {
     "react": "*",

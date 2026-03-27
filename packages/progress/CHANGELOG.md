@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0-alpha.0](https://github.com/startupjs/startupjs-ui/compare/v0.1.22...v0.2.0-alpha.0) (2026-03-27)
+
+**Note:** Version bump only for package @startupjs-ui/progress
+
+
+
+
+
 ## [0.1.22](https://github.com/startupjs/startupjs-ui/compare/v0.1.21...v0.1.22) (2026-03-25)
 
 **Note:** Version bump only for package @startupjs-ui/progress
