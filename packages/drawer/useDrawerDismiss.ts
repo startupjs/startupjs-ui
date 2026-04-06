@@ -23,7 +23,6 @@ export default function useDrawerDismiss (
       callbacks.default()
     }
     // preserve legacy behavior (no dependency array)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   })
 
   return [
