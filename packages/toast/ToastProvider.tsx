@@ -6,8 +6,7 @@ import Toast, { type ToastProps } from './ToastView'
 
 export const _PropsJsonSchema = {/* ToastProviderProps */}
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface ToastProviderProps {}
+export type ToastProviderProps = Record<string, any>
 
 function ToastProvider (): ReactNode {
   const toasts = $toasts.get() as ToastProps[] | undefined

@@ -113,7 +113,6 @@ function Carousel ({
   const [isRender, setIsRender] = useState(false)
   const [isAnimate, setIsAnimate] = useState(false)
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useImperativeHandle(ref, () => {
     return new Proxy(refRoot.current, {
       get (target: any, prop: any) {
@@ -137,7 +136,6 @@ function Carousel ({
     isRender
   ])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (isRender && isLoop && !isAnimate) {
       refTimeout.current = setTimeout(onNext, 3000)
@@ -319,7 +317,6 @@ function Carousel ({
     })
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!endDrag) return
     if (startDrag === endDrag) return
@@ -428,7 +425,6 @@ function Carousel ({
     return { panHandlers: {} }
   }, [animateTranslate, coardName, isAnimate, isSwipe])
 
-  // eslint-disable-next-line @typescript-eslint/promise-function-async
   const renderChildren = React.Children.toArray(validChildren).map((child: any, index, arr) => {
     const _style = StyleSheet.flatten([child.props.style])
 
@@ -553,7 +549,9 @@ function Carousel ({
 
       if hasDots && isResponsive
         Div.dots(row)
-          each _, index in dots
+          each _dummy, index in dots
+            // noop on _dummy value to prevent eslint no-unused-vars error, since we only need the index here
+            - _dummy?.noop?.()
             Div.dot(
               key=index
               onPress=()=> toIndex(index)

@@ -206,7 +206,7 @@ function Modal ({
         style=modalStyle
         styleName=[variant]
         role='dialog'
-        aria-modal=true
+        aria-modal
         aria-label=titleId ? undefined : dialogTitle
         aria-labelledby=titleId
       )

@@ -37,7 +37,7 @@ export interface MultiSelectProps {
   /** Custom styles for the input wrapper */
   inputStyle?: StyleProp<ViewStyle>
   /** Available options (objects with `{ label, value }` or primitives) @default [] */
-  options?: Array<MultiSelectOption | string | number | boolean>
+  options?: (MultiSelectOption | string | number | boolean)[]
   /** Selected values @default [] */
   value?: any[]
   /** Placeholder text shown when empty @default 'Select' */
@@ -369,7 +369,7 @@ function DefaultInput ({
         role='button'
         aria-disabled=disabled
         aria-readonly=readonly
-        onPress=disabled || readonly ? void 0 : onOpen
+        onPress=disabled || readonly ? undefined : onOpen
         wrap
         row
       )

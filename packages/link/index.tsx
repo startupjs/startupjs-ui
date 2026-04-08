@@ -103,9 +103,11 @@ function Link ({
       }
 
       if (EXTERNAL_LINK_REGEXP.test(target ?? '')) {
-        isWeb
-          ? window.open(target, '_blank')
-          : Linking.openURL(target ?? '')
+        if (isWeb) {
+          window.open(target, '_blank')
+        } else {
+          Linking.openURL(target ?? '')
+        }
       } else {
         let method
         if (push) method = routerPush
@@ -122,7 +124,7 @@ function Link ({
       if ((children as any)?.props?.originalType === Button || (children as any)?.type === Button) {
         return cloneElement(children as any, { style, ...restProps, ...extraProps })
       }
-    } catch (e) {
+    } catch {
       // ignore errors when children contains multiple elements
     }
   }

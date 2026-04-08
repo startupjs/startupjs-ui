@@ -112,7 +112,7 @@ function Toast ({
         Div.header(vAlign='center' row)
           Div(vAlign='center' row)
             Icon.icon(
-              icon=icon ? icon : ICONS[type]
+              icon=icon ?? ICONS[type]
               styleName=[type]
             )
             Span.title(styleName=[type])

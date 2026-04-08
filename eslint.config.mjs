@@ -21,6 +21,8 @@ export default defineConfig([
       // Storybook workspaces
       'storybook/*',
       'storybook-web/*',
+      // Outdated code left for reference and future refactoring
+      'packages/docs/client/app/*',
       // AUTO-GENERATED START (generate-package-dts)
       // DO NOT EDIT MANUALLY. Managed by scripts/generate-package-dts.mjs
       'packages/abstract-popover/index.d.ts',

@@ -74,9 +74,8 @@ function RangeInput ({
   useMemo(() => {
     if (typeof value === 'undefined' || value === null) {
       // to initialize a model with default value if it is missing
-      // eslint-disable-next-line @typescript-eslint/no-throw-literal
       throw new Promise<void>(resolve => {
-        void (async () => {
+        (async () => {
           // TODO: maybe throw an Error instead of console.warn?
           if (!onChange) console.warn('[@startupjs-ui/range-input] `onChange` is required when `value` is undefined')
           await onChange?.(range ? [min, max] : min)

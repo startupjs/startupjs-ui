@@ -37,7 +37,9 @@ function Rating ({
         Star(active)
         Span.value(bold h6)= value.toFixed(1)
       else
-        each ITEM, index in ITEMS
+        each item, index in ITEMS
+          // noop to prevent eslint error about missing 'item'. TODO: implement eslint disable comments support in pug
+          - (item => {})(item)
           Div.star(
             key=index
             onPress=() => onChange && onChange(index + 1)

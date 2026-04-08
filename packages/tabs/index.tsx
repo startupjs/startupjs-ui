@@ -157,9 +157,11 @@ function Tabs ({
 
   function _onIndexChange (index: number) {
     const key = routes[index].key
-    onChange
-      ? onChange(key)
-      : $localValue.set(key)
+    if (onChange) {
+      onChange(key)
+    } else {
+      $localValue.set(key)
+    }
   }
 
   return pug`

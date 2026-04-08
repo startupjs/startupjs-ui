@@ -64,7 +64,7 @@ const JSONInput = observer(function ({ $value, type }) {
             $badJSON.set(true)
           }
         }
-      } catch (error) {
+      } catch {
         $badJSON.set(true)
       }
     }, 300),

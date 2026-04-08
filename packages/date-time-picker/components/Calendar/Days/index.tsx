@@ -37,7 +37,7 @@ function Days ({
       ._weekdaysShort
 
     return data.map((day: string) => day.toUpperCase())
-  }, [uiDate, timezone, exactLocale])
+  }, [uiDate, timezone, exactLocale, moment])
 
   const matrixMonthDays = useMemo(() => {
     const data = []
@@ -70,7 +70,7 @@ function Days ({
     }
 
     return data
-  }, [uiDate, timezone])
+  }, [uiDate, timezone, moment])
 
   function _onChangeDay (item: any) {
     const timestamp = +moment
@@ -91,7 +91,7 @@ function Days ({
       : false
 
     return isDisabledDay || isBeforeMinDate || isAfterMaxDate
-  }, [disabledDays, maxDate, minDate, timezone])
+  }, [disabledDays, maxDate, minDate, timezone, moment])
 
   function getLabelActive (value: number) {
     return range
@@ -107,6 +107,8 @@ function Days ({
           Span.shortName(bold)= shortDayName
 
     for week, weekIndex in matrixMonthDays
+      // noop to prevent eslint error about missing 'week'. TODO: implement eslint disable comments support in pug
+      - (week => {})(week)
       Div.row(key='week-' + weekIndex row)
         for day, dayIndex in matrixMonthDays[weekIndex]
           Div.cell(
