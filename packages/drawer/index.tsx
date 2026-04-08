@@ -92,7 +92,7 @@ function Drawer ({
   useEffect(() => {
     if (visible) {
       setIsShow(true)
-      setTimeout(() => { void runShow() }, 0)
+      setTimeout(() => { runShow() }, 0)
     } else {
       runHide()
     }

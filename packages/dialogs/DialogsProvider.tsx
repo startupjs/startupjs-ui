@@ -5,7 +5,7 @@ import { setUpdateDialogState, updateDialogState } from './helpers'
 
 export const _PropsJsonSchema = {/* DialogsProviderProps */}
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface DialogsProviderProps {}
 
 function DialogsProviderRoot (): ReactNode {
