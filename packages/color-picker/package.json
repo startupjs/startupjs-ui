@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/color-picker",
-  "version": "0.2.0-alpha.0",
+  "version": "0.2.0-alpha.1",
   "publishConfig": {
     "access": "public"
   },
@@ -8,11 +8,11 @@
   "types": "index.d.ts",
   "type": "module",
   "dependencies": {
-    "@startupjs-ui/button": "^0.2.0-alpha.0",
-    "@startupjs-ui/core": "^0.2.0-alpha.0",
-    "@startupjs-ui/div": "^0.2.0-alpha.0",
-    "@startupjs-ui/modal": "^0.2.0-alpha.0",
-    "@startupjs-ui/scroll-view": "^0.2.0-alpha.0",
+    "@startupjs-ui/button": "^0.2.0-alpha.1",
+    "@startupjs-ui/core": "^0.2.0-alpha.1",
+    "@startupjs-ui/div": "^0.2.0-alpha.1",
+    "@startupjs-ui/modal": "^0.2.0-alpha.1",
+    "@startupjs-ui/scroll-view": "^0.2.0-alpha.1",
     "color": "^3.1.2",
     "react-native-color-picker": "^0.6.0"
   },

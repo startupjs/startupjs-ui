@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/drawer",
-  "version": "0.2.0-alpha.0",
+  "version": "0.2.0-alpha.1",
   "publishConfig": {
     "access": "public"
   },
@@ -8,8 +8,8 @@
   "types": "index.d.ts",
   "type": "module",
   "dependencies": {
-    "@startupjs-ui/core": "^0.2.0-alpha.0",
-    "@startupjs-ui/portal": "^0.2.0-alpha.0"
+    "@startupjs-ui/core": "^0.2.0-alpha.1",
+    "@startupjs-ui/portal": "^0.2.0-alpha.1"
   },
   "peerDependencies": {
     "react": "*",
