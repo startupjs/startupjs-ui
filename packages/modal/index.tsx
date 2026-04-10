@@ -5,7 +5,7 @@ import React, {
   type ComponentType,
   type RefObject
 } from 'react'
-import { SafeAreaView, Modal as RNModal, type StyleProp, type ViewStyle } from 'react-native'
+import { SafeAreaView, Modal as RNModal, type StyleProp, type ViewStyle, type ViewProps } from 'react-native'
 import { pug, observer, $ } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
 import Portal from '@startupjs-ui/portal'
@@ -48,6 +48,8 @@ export interface ModalProps {
   ref?: RefObject<any>
   /** Header title text */
   title?: string
+  /** Accessible role for the modal surface on web @default 'dialog' */
+  role?: ViewProps['role']
   /** Label for cancel action @default 'Cancel' */
   cancelLabel?: string
   /** Label for confirm action @default 'Confirm' */
@@ -95,6 +97,7 @@ function ModalRoot ({
   $visible,
   ref,
   title,
+  role,
   cancelLabel = DEFAULT_CANCEL_LABEL,
   confirmLabel = DEFAULT_CONFIRM_LABEL,
   showCross = true,
@@ -175,6 +178,7 @@ function ModalRoot ({
             modalStyle=modalStyle
             variant=variant
             title=title
+            role=role
             cancelLabel=cancelLabel
             confirmLabel=confirmLabel
             showCross=showCross

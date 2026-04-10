@@ -1,5 +1,5 @@
 import React, { useId, type ReactNode, type ComponentType } from 'react'
-import { View, TouchableOpacity, type StyleProp, type ViewStyle } from 'react-native'
+import { View, TouchableOpacity, type StyleProp, type ViewStyle, type ViewProps } from 'react-native'
 import { pug, observer } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
 import ModalHeader from './ModalHeader'
@@ -18,6 +18,8 @@ export interface ModalLayoutProps {
   variant?: 'window' | 'fullscreen'
   /** Title rendered when no custom header provided */
   title?: string
+  /** Accessible role for the modal surface on web @default 'dialog' */
+  role?: ViewProps['role']
   /** DEPRECATED: use cancelLabel instead */
   dismissLabel?: string
   /** Cancel action label @default 'Cancel' */
@@ -48,6 +50,7 @@ function Modal ({
   children,
   variant,
   title,
+  role,
   dismissLabel,
   cancelLabel = DEFAULT_CANCEL_LABEL,
   confirmLabel = DEFAULT_CONFIRM_LABEL,
@@ -205,7 +208,7 @@ function Modal ({
       ModalElement.modal(
         style=modalStyle
         styleName=[variant]
-        role='dialog'
+        role=role ?? 'dialog'
         aria-modal
         aria-label=titleId ? undefined : dialogTitle
         aria-labelledby=titleId
