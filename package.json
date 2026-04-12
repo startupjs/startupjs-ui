@@ -40,7 +40,7 @@
     "@types/lodash": "^4.17.21",
     "dotenv-cli": "^11.0.0",
     "eslint": "^9.39.4",
-    "eslint-plugin-cssxjs": "^0.3.0-alpha.5",
+    "eslint-plugin-cssxjs": "^0.3.0-alpha.6",
     "husky": "^4.3.0",
     "lerna": "^9.0.3",
     "lint-staged": "^15.2.2",
