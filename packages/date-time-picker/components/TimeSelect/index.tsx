@@ -96,7 +96,7 @@ function TimeSelect ({
       Div.cell(
         styleName={ isActive }
         disabled=item.disabled
-        onPress=()=> onChangeDate && onChangeDate(item.value)
+        onPress=() => onChangeDate && onChangeDate(item.value)
       )
         Span.label(styleName={ isActive })
           = item.label
@@ -115,7 +115,7 @@ function TimeSelect ({
         length,
         index
       })
-      keyExtractor=item=> String(item.value)
+      keyExtractor=item => String(item.value)
     )
   `
 }

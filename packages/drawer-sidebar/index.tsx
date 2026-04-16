@@ -70,7 +70,7 @@ function DrawerSidebar ({
     const render = lazy ? open : true
     if (!render) return null
     return pug`
-      ScrollView(contentContainerStyle={flex: 1})
+      ScrollView(contentContainerStyle={ flex: 1 })
         = renderContent && renderContent()
     `
   }

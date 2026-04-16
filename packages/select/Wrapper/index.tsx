@@ -169,10 +169,10 @@ function SelectWrapperIOS ({
           transparent
           animationType='slide'
         )
-          Div.modalTop(onPress=()=> setShowModal(false))
+          Div.modalTop(onPress=() => setShowModal(false))
           Div.modalMiddle
             Div(
-              onPress=()=> setShowModal(false)
+              onPress=() => setShowModal(false)
               hitSlop={ top: 4, right: 4, bottom: 4, left: 4 }
             )
               Span.done Done

@@ -471,7 +471,7 @@ function Carousel ({
     return pug`
       View(
         key=index
-        onLayout=e=> onLayoutChild(e, index)
+        onLayout=e => onLayoutChild(e, index)
       )= child
     `
   })
@@ -554,7 +554,7 @@ function Carousel ({
             - _dummy?.noop?.()
             Div.dot(
               key=index
-              onPress=()=> toIndex(index)
+              onPress=() => toIndex(index)
               styleName={ dotActive: activeIndex === (isEndless ? (index + children.length) : index) }
             )
   `

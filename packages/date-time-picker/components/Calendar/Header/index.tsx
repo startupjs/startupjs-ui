@@ -64,14 +64,14 @@ function Header ({
           variant='text'
           disabled=isPrevDisabled
           icon=faAngleLeft
-          onPress=()=> onChangeMonth(-1)
+          onPress=() => onChangeMonth(-1)
         )
         Button.button(
           color='text-description'
           variant='text'
           disabled=isNextDisabled
           icon=faAngleRight
-          onPress=()=> onChangeMonth(1)
+          onPress=() => onChangeMonth(1)
         )
   `
 }

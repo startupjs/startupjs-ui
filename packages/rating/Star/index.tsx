@@ -20,7 +20,7 @@ function Star ({
 }: StarProps): ReactNode {
   return pug`
     Icon.icon(
-      styleName={active}
+      styleName={ active }
       style=style
       icon=faStar
     )

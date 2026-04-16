@@ -301,7 +301,7 @@ export default {
               Div.code-actions(align='right' row)
                 Div.code-action(
                   tooltip=open ? 'Hide code' : 'Show code'
-                  onPress=()=> setOpen(!open)
+                  onPress=() => setOpen(!open)
                 )
                   Icon.code-action-collapse(icon=faCode color='error')
                 Div.code-action(

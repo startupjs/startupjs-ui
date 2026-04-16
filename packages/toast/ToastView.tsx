@@ -106,7 +106,7 @@ function Toast ({
         }),
         top: topAnimation
       }
-      onLayout=e=> onLayout(e.nativeEvent.layout)
+      onLayout=e => onLayout(e.nativeEvent.layout)
     )
       Div.toast(styleName=[type])
         Div.header(vAlign='center' row)

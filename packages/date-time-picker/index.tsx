@@ -431,7 +431,7 @@ function DateTimePicker ({
   function renderWrapper (children: ReactNode): ReactNode {
     return pug`
       Div.popoverWrapper
-        Div.popoverOverlay(feedback=false onPress=()=> onChangeVisible(false))
+        Div.popoverOverlay(feedback=false onPress=() => onChangeVisible(false))
         = children
     `
   }
