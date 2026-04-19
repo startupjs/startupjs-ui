@@ -4889,19 +4889,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-pug/eslint-plugin-react-pug@npm:^0.1.18":
-  version: 0.1.18
-  resolution: "@react-pug/eslint-plugin-react-pug@npm:0.1.18"
+"@react-pug/eslint-plugin-react-pug@npm:^0.1.19":
+  version: 0.1.19
+  resolution: "@react-pug/eslint-plugin-react-pug@npm:0.1.19"
   dependencies:
     "@babel/parser": "npm:^7.0.0"
     "@prettier/sync": "npm:^0.6.1"
+    "@react-pug/pug-lexer": "npm:^0.1.17"
     "@react-pug/react-pug-core": "npm:^0.1.18"
     "@stylistic/eslint-plugin": "npm:^5.10.0"
     "@typescript-eslint/parser": "npm:^8.57.2"
     prettier: "npm:^3.8.1"
   peerDependencies:
     eslint: ">=9.0.0"
-  checksum: 10c0/f5e9a06bfeaeab91d40b94052c0e90a169dd4a0e645acbc1847a6c54173f69b2331c166f7d77eec8022fef4eccee8988fca7157ea783d371c2a7a7fccd69685a
+  checksum: 10c0/ecde93495035df5303c274ad38aa45d827d58c053c147bc9918dc624c18493ea58fc2f2b77d741a54d8099ad9f6b282e83175e33eaa53a9f7511104813a6ccd7
   languageName: node
   linkType: hard
 
@@ -6748,18 +6749,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@startupjs/cli@npm:^0.62.0-alpha.12":
-  version: 0.62.0-alpha.12
-  resolution: "@startupjs/cli@npm:0.62.0-alpha.12"
+"@startupjs/cli@npm:^0.62.0-alpha.13":
+  version: 0.62.0-alpha.13
+  resolution: "@startupjs/cli@npm:0.62.0-alpha.13"
   dependencies:
     "@react-pug/check-types": "npm:^0.1.18"
     "@startupjs/patches": "npm:^0.62.0-alpha.0"
     "@startupjs/pm": "npm:^0.62.0-alpha.0"
     chalk: "npm:^5.3.0"
     commander: "npm:^12.0.0"
-    create-startupjs: "npm:^0.62.0-alpha.12"
+    create-startupjs: "npm:^0.62.0-alpha.13"
     execa: "npm:^8.0.1"
-  checksum: 10c0/3cf8386d657187dddb51907c64b2ef874d609d5a39aae65fcf4443c0fa8f44c75536dbd1195dc2149aef674d6f96aae0efe93aff10b2a23b0853dfcd823687e2
+  checksum: 10c0/a8a7c85a2cd7646b8067f308abe07e0de6f0268723bb90165d16de692e540df19e7cbdb1004c21128208198975a3b190aae7aef7ac7bb846de353590d531e6dc
   languageName: node
   linkType: hard
 
@@ -9904,9 +9905,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"create-startupjs@npm:^0.62.0-alpha.12":
-  version: 0.62.0-alpha.12
-  resolution: "create-startupjs@npm:0.62.0-alpha.12"
+"create-startupjs@npm:^0.62.0-alpha.13":
+  version: 0.62.0-alpha.13
+  resolution: "create-startupjs@npm:0.62.0-alpha.13"
   dependencies:
     chalk: "npm:^5.3.0"
     commander: "npm:^12.0.0"
@@ -9915,7 +9916,7 @@ __metadata:
     lodash: "npm:^4.17.20"
   bin:
     create-startupjs: index.js
-  checksum: 10c0/5987fc5f3e93a1c4cbdb8b5c89d6c98786986bdd55cf2fd18ee50cca1c985e2be2cb904d9922eada0b20194953842b4fcaf455d889604ec4e568133233895993
+  checksum: 10c0/e02f5df85d3592ecb715d2986eeb1b3aa7a5142d2ef4a90a26dc344e70c3c5752d6c612367f49377149be35812fa87edcc0a84c7dadfb24f8b0b213eaa9ae605
   languageName: node
   linkType: hard
 
@@ -10416,7 +10417,7 @@ __metadata:
     react-native-web: "npm:~0.21.0"
     react-native-worklets: "npm:0.7.2"
     serve: "npm:^14.2.5"
-    startupjs: "npm:^0.62.0-alpha.12"
+    startupjs: "npm:^0.62.0-alpha.13"
     typescript: "npm:~5.9.2"
   languageName: unknown
   linkType: soft
@@ -11012,14 +11013,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-cssxjs@npm:^0.3.0-alpha.7":
-  version: 0.3.0-alpha.7
-  resolution: "eslint-plugin-cssxjs@npm:0.3.0-alpha.7"
+"eslint-plugin-cssxjs@npm:^0.3.0-alpha.8":
+  version: 0.3.0-alpha.8
+  resolution: "eslint-plugin-cssxjs@npm:0.3.0-alpha.8"
   dependencies:
-    "@react-pug/eslint-plugin-react-pug": "npm:^0.1.18"
+    "@react-pug/eslint-plugin-react-pug": "npm:^0.1.19"
   peerDependencies:
     eslint: "*"
-  checksum: 10c0/817f3c2eebc79c3149caac17728a8c956bf99b88a5738b699bf4e3d14bdd7e9ab625f62a8c000868bd9cf426af757af9eff7d082b7c21a02e23f5e19239a902e
+  checksum: 10c0/a4479eb21549a479fcb513a3d113c3d22f08dc233456d52df772f5a06a79d49374acc773b9e4a8e699c86d18a694f88042d60da31c91eb4643f10995b2481b43
   languageName: node
   linkType: hard
 
@@ -19600,7 +19601,7 @@ __metadata:
     "@types/lodash": "npm:^4.17.21"
     dotenv-cli: "npm:^11.0.0"
     eslint: "npm:^9.39.4"
-    eslint-plugin-cssxjs: "npm:^0.3.0-alpha.7"
+    eslint-plugin-cssxjs: "npm:^0.3.0-alpha.8"
     husky: "npm:^4.3.0"
     lerna: "npm:^9.0.3"
     lint-staged: "npm:^15.2.2"
@@ -20635,13 +20636,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"startupjs@npm:^0.62.0-alpha.12":
-  version: 0.62.0-alpha.12
-  resolution: "startupjs@npm:0.62.0-alpha.12"
+"startupjs@npm:^0.62.0-alpha.13":
+  version: 0.62.0-alpha.13
+  resolution: "startupjs@npm:0.62.0-alpha.13"
   dependencies:
     "@startupjs/auth": "npm:^0.62.0-alpha.6"
     "@startupjs/bundler": "npm:^0.62.0-alpha.11"
-    "@startupjs/cli": "npm:^0.62.0-alpha.12"
+    "@startupjs/cli": "npm:^0.62.0-alpha.13"
     "@startupjs/hooks": "npm:^0.62.0-alpha.6"
     "@startupjs/isomorphic-helpers": "npm:^0.62.0-alpha.0"
     "@startupjs/registry": "npm:^0.62.0-alpha.0"
@@ -20662,7 +20663,7 @@ __metadata:
       optional: true
   bin:
     startupjs: cli.js
-  checksum: 10c0/c00dd67331848b4891e48f18b8a51da1f4130969e5979baaf220e64b63ffd0bc083ecafb7346893f01d9d51e484f806c5743a9fbe64637a2682d006dcc2412fd
+  checksum: 10c0/34aacd33486e404f40cb0ec9493695312a7b34de35f4b46a47d7b1f862f26af55b617ff3a9f7cee6e81933256f93928106b1deec2f1c77e4b6ae4309b71af6cd
   languageName: node
   linkType: hard
 
