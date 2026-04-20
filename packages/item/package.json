@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/item",
-  "version": "0.2.0-alpha.1",
+  "version": "0.2.0-alpha.2",
   "publishConfig": {
     "access": "public"
   },
@@ -11,7 +11,7 @@
     "@startupjs-ui/core": "^0.2.0-alpha.1",
     "@startupjs-ui/div": "^0.2.0-alpha.1",
     "@startupjs-ui/icon": "^0.2.0-alpha.1",
-    "@startupjs-ui/link": "^0.2.0-alpha.1",
+    "@startupjs-ui/link": "^0.2.0-alpha.2",
     "@startupjs-ui/span": "^0.2.0-alpha.1"
   },
   "peerDependencies": {

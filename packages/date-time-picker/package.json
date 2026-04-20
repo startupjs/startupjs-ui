@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/date-time-picker",
-  "version": "0.2.0-alpha.1",
+  "version": "0.2.0-alpha.2",
   "publishConfig": {
     "access": "public"
   },
@@ -11,7 +11,7 @@
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
     "@react-native-community/datetimepicker": "^8.4.4",
     "@startupjs-ui/abstract-popover": "^0.2.0-alpha.1",
-    "@startupjs-ui/button": "^0.2.0-alpha.1",
+    "@startupjs-ui/button": "^0.2.0-alpha.2",
     "@startupjs-ui/core": "^0.2.0-alpha.1",
     "@startupjs-ui/div": "^0.2.0-alpha.1",
     "@startupjs-ui/divider": "^0.2.0-alpha.1",
