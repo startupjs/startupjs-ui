@@ -6822,9 +6822,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@startupjs/router@npm:^0.62.0-alpha.6":
-  version: 0.62.0-alpha.6
-  resolution: "@startupjs/router@npm:0.62.0-alpha.6"
+"@startupjs/router@npm:^0.62.0-alpha.15":
+  version: 0.62.0-alpha.15
+  resolution: "@startupjs/router@npm:0.62.0-alpha.15"
   dependencies:
     "@startupjs/utils": "npm:^0.62.0-alpha.6"
     react-router: "npm:^6.22.3"
@@ -6835,7 +6835,7 @@ __metadata:
   peerDependenciesMeta:
     expo-router:
       optional: true
-  checksum: 10c0/6d3c60a57364271b76df1e496ae39bda19d89168c3a628564256512ff081ff955a5ffa9fea77b7bcebc5cecf6d97274b3364046845c4e7acdca40ffa8e5e027c
+  checksum: 10c0/41cd0bdfdf1027f6eddee1a5521aaf7e71f0a4c52b59714276988ad2f9e3013d3c61e5c96dc7e651c44da64db2f397f8d540a8b4efc135c7160a423d1666d8f1
   languageName: node
   linkType: hard
 
@@ -10056,9 +10056,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cssxjs@npm:^0.3.0-alpha.7":
-  version: 0.3.0-alpha.7
-  resolution: "cssxjs@npm:0.3.0-alpha.7"
+"cssxjs@npm:^0.3.0-alpha.9":
+  version: 0.3.0-alpha.9
+  resolution: "cssxjs@npm:0.3.0-alpha.9"
   dependencies:
     "@cssxjs/babel-plugin-rn-stylename-inline": "npm:^0.3.0-alpha.0"
     "@cssxjs/babel-plugin-rn-stylename-to-style": "npm:^0.3.0-alpha.7"
@@ -10069,7 +10069,7 @@ __metadata:
     babel-preset-cssxjs: "npm:^0.3.0-alpha.7"
   peerDependencies:
     react: "*"
-  checksum: 10c0/80273a6405fbbf1bf4b39c6a3ad03c5cd2c94cc71ad0f0e022b78728d69146c1fbef5fbfd89af8e916da2b5f7a7638df11b2e50f9b82bb5c3b625f0a42883a64
+  checksum: 10c0/1ca6c0482ddf119e23aac01f00e21d507f78bd54c1a667d15b1f6fcda20b6efc01b90ebabe4a9e9ac533a0f003d62da4883fb978508013c68f4acac847e9e650
   languageName: node
   linkType: hard
 
@@ -10385,7 +10385,7 @@ __metadata:
     "@react-navigation/native": "npm:^7.1.8"
     "@startupjs-ui/docs": "npm:^0.2.0-alpha.1"
     "@startupjs-ui/mdx": "npm:^0.2.0-alpha.1"
-    "@startupjs/router": "npm:^0.62.0-alpha.6"
+    "@startupjs/router": "npm:^0.62.0-alpha.15"
     "@types/react": "npm:~19.2.10"
     eslint-config-expo: "npm:~55.0.0"
     expo: "npm:~55.0.11"
@@ -10417,7 +10417,7 @@ __metadata:
     react-native-web: "npm:~0.21.0"
     react-native-worklets: "npm:0.7.2"
     serve: "npm:^14.2.5"
-    startupjs: "npm:^0.62.0-alpha.13"
+    startupjs: "npm:^0.62.0-alpha.14"
     typescript: "npm:~5.9.2"
   languageName: unknown
   linkType: soft
@@ -20636,9 +20636,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"startupjs@npm:^0.62.0-alpha.13":
-  version: 0.62.0-alpha.13
-  resolution: "startupjs@npm:0.62.0-alpha.13"
+"startupjs@npm:^0.62.0-alpha.14":
+  version: 0.62.0-alpha.14
+  resolution: "startupjs@npm:0.62.0-alpha.14"
   dependencies:
     "@startupjs/auth": "npm:^0.62.0-alpha.6"
     "@startupjs/bundler": "npm:^0.62.0-alpha.11"
@@ -20649,7 +20649,7 @@ __metadata:
     "@startupjs/server": "npm:^0.62.0-alpha.6"
     "@startupjs/utils": "npm:^0.62.0-alpha.6"
     babel-preset-startupjs: "npm:^0.62.0-alpha.11"
-    cssxjs: "npm:^0.3.0-alpha.7"
+    cssxjs: "npm:^0.3.0-alpha.9"
     lodash: "npm:^4.17.20"
     teamplay: "npm:^0.4.0-alpha.76"
   peerDependencies:
@@ -20663,7 +20663,7 @@ __metadata:
       optional: true
   bin:
     startupjs: cli.js
-  checksum: 10c0/34aacd33486e404f40cb0ec9493695312a7b34de35f4b46a47d7b1f862f26af55b617ff3a9f7cee6e81933256f93928106b1deec2f1c77e4b6ae4309b71af6cd
+  checksum: 10c0/7ce010f207f9d4a0d23e1e2380199cccf324d380f67f64fabb6716a36b18977f0a2dcae0cc1b6ce4d2863c5f99014f05d8fdeffc6319066e0ed7782d04e151ed
   languageName: node
   linkType: hard
 

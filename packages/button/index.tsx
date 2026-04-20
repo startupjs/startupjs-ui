@@ -1,4 +1,4 @@
-import { Children, useState, type ComponentType, type JSXElementConstructor, type ReactNode } from 'react'
+import { Children, useState, type ReactNode } from 'react'
 import { StyleSheet, type GestureResponderEvent, type StyleProp, type TextStyle, type ViewStyle } from 'react-native'
 import { pug, observer, useIsMountedRef } from 'startupjs'
 import { Colors, colorToRGBA, themed, useColors } from '@startupjs-ui/core'
@@ -25,7 +25,7 @@ export interface ButtonProps {
   /** size @default 'm' */
   size?: 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl'
   /** icon component */
-  icon?: ComponentType | JSXElementConstructor<any>
+  icon?: object | string | (() => any)
   /** shape @default 'rounded' */
   shape?: 'squared' | 'rounded' | 'circle'
   /** icon position relative to label @default 'left' */
