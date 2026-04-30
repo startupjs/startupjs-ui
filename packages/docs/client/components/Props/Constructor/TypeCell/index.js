@@ -30,7 +30,7 @@ export default observer(themed(function TypeCell ({ possibleValues, theme, type 
         onPress=toggleList
       )= $collapsed.get() ? 'More...' : 'Less'
     `
-  }, [$collapsed, possibleValues, toggleList]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [$collapsed, possibleValues, toggleList])
 
   return pug`
     if type === 'oneOf'

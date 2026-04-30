@@ -3,23 +3,24 @@ export type SelectOption =
   | number
   | { value?: any, label?: string | number }
 
-// TODO: create logic for objects with circular structure like jsx components
-
-// Stringify values to omit bugs in Android/iOS Picker implementation
-
 // Force undefined to be a special value to
 // workaround the undefined value bug in Picker
-export const PICKER_NULL = '-\u00A0\u00A0\u00A0\u00A0\u00A0'
+export const PICKER_NULL = 'empty'
 export const NULL_OPTION: undefined = undefined
 
-export function stringifyValue (option: any): string | undefined {
+export interface SelectOptionEntry {
+  key: string
+  value: any
+  label: string
+}
+
+function getOptionValue (option: any): any {
+  return option?.value ?? option
+}
+
+function stringifyComparableValue (option: any): string | undefined {
   try {
-    let value: any
-    if (option?.value != null) {
-      value = option.value
-    } else {
-      value = option
-    }
+    const value = getOptionValue(option)
     if (value == null) return PICKER_NULL
     return JSON.stringify(value)
   } catch (error) {
@@ -27,16 +28,58 @@ export function stringifyValue (option: any): string | undefined {
   }
 }
 
-export function parseValue (value: any): any {
-  try {
-    if (value === PICKER_NULL || value == null) {
-      return undefined
-    } else {
-      return JSON.parse(value)
-    }
-  } catch (error) {
-    console.warn('[@startupjs/ui] Select: ' + String(error))
+export function areValuesEqual (a: any, b: any): boolean {
+  return stringifyComparableValue(a) === stringifyComparableValue(b)
+}
+
+function getOptionKey (index: number): string {
+  return `opt:${index}`
+}
+
+export function getOptionEntries (
+  options: SelectOption[],
+  showEmptyValue?: boolean,
+  emptyValueLabel?: string | number
+): SelectOptionEntry[] {
+  const entries: SelectOptionEntry[] = []
+
+  if (showEmptyValue) {
+    entries.push({
+      key: PICKER_NULL,
+      value: undefined,
+      label: getLabel(emptyValueLabel ?? NULL_OPTION)
+    })
   }
+
+  options.forEach((option, index) => {
+    entries.push({
+      key: getOptionKey(index),
+      value: getOptionValue(option),
+      label: getLabel(option)
+    })
+  })
+
+  return entries
+}
+
+export function getOptionKeyFromValue (
+  value: any,
+  options: SelectOption[],
+  showEmptyValue?: boolean,
+  emptyValueLabel?: string | number
+): string | undefined {
+  const entries = getOptionEntries(options, showEmptyValue, emptyValueLabel)
+  return entries.find(entry => areValuesEqual(entry.value, value))?.key
+}
+
+export function getValueFromKey (
+  key: string,
+  options: SelectOption[],
+  showEmptyValue?: boolean,
+  emptyValueLabel?: string | number
+): any {
+  const entries = getOptionEntries(options, showEmptyValue, emptyValueLabel)
+  return entries.find(entry => entry.key === key)?.value
 }
 
 export function getLabel (option: any): string {
@@ -56,7 +99,7 @@ export function getLabelFromValue (
   emptyValueLabel: any = NULL_OPTION
 ): string {
   for (const option of options) {
-    if (stringifyValue(value) === stringifyValue(option)) {
+    if (areValuesEqual(value, option)) {
       return getLabel(option)
     }
   }

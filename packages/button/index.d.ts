@@ -1,9 +1,9 @@
 /* eslint-disable */
 // DO NOT MODIFY THIS FILE - IT IS AUTOMATICALLY GENERATED ON COMMITS.
 
-import { type ComponentType, type JSXElementConstructor, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { type GestureResponderEvent, type StyleProp, type TextStyle, type ViewStyle } from 'react-native';
-declare const _default: ComponentType<ButtonProps>;
+declare const _default: import("react").ComponentType<ButtonProps>;
 export default _default;
 export declare const _PropsJsonSchema: {};
 export interface ButtonProps {
@@ -14,7 +14,7 @@ export interface ButtonProps {
     /** size @default 'm' */
     size?: 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
     /** icon component */
-    icon?: ComponentType | JSXElementConstructor<any>;
+    icon?: object | string | (() => any);
     /** shape @default 'rounded' */
     shape?: 'squared' | 'rounded' | 'circle';
     /** icon position relative to label @default 'left' */
@@ -33,6 +33,14 @@ export interface ButtonProps {
     hoverStyle?: StyleProp<ViewStyle>;
     /** custom styles for active state */
     activeStyle?: StyleProp<ViewStyle>;
+    /** cross-platform accessible name for icon-only or custom-content buttons */
+    'aria-label'?: string;
+    /** legacy alias for aria-label */
+    accessibilityLabel?: string;
+    /** accessible hint text */
+    accessibilityHint?: string;
     /** onPress handler */
     onPress?: (event: GestureResponderEvent) => void | Promise<void>;
+    /** Additional props forwarded to the root pressable */
+    [key: string]: any;
 }

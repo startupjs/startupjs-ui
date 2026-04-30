@@ -6,10 +6,10 @@ import { themed } from '@startupjs-ui/core'
 import Div from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
 import {
-  stringifyValue,
-  getLabel,
-  parseValue,
-  NULL_OPTION,
+  getOptionEntries,
+  getOptionKeyFromValue,
+  getValueFromKey,
+  PICKER_NULL,
   type SelectOption
 } from './helpers'
 import STYLES from './index.cssx.styl'
@@ -31,6 +31,22 @@ export interface SelectWrapperProps {
   emptyValueLabel?: string | number
   /** Test identifier */
   testID?: string
+  /** Cross-platform accessible name */
+  'aria-label'?: string
+  /** Accessible label for the web select overlay */
+  accessibilityLabel?: string
+  /** Accessible hint for the web select overlay */
+  accessibilityHint?: string
+  /** Web-only control id for label association */
+  id?: string
+  /** Web-only labelled-by relationship */
+  'aria-labelledby'?: string
+  /** Web-only described-by relationship */
+  'aria-describedby'?: string
+  /** Web-only error message relationship */
+  'aria-errormessage'?: string
+  /** Web-only invalid state */
+  'aria-invalid'?: boolean
   /** Fired when selected value changes */
   onChange?: (value: any) => void
 }
@@ -50,11 +66,21 @@ function SelectWrapperWeb ({
   showEmptyValue,
   emptyValueLabel,
   testID,
+  'aria-label': ariaLabel,
+  accessibilityLabel,
+  accessibilityHint,
+  id,
+  'aria-labelledby': ariaLabelledBy,
+  'aria-describedby': ariaDescribedBy,
+  'aria-errormessage': ariaErrorMessage,
+  'aria-invalid': ariaInvalid,
   onChange
 }: SelectWrapperProps): ReactNode {
+  const optionEntries = getOptionEntries(options, showEmptyValue, emptyValueLabel)
+  const selectedKey = getOptionKeyFromValue(value, options, showEmptyValue, emptyValueLabel) ?? PICKER_NULL
+
   function onSelectChange (event: any) {
-    const value = event.target.value
-    if (onChange) onChange(parseValue(value))
+    if (onChange) onChange(getValueFromKey(event.target.value, options, showEmptyValue, emptyValueLabel))
   }
 
   return pug`
@@ -62,16 +88,19 @@ function SelectWrapperWeb ({
       = children
       if !disabled
         select(
+          id=id
           style=STYLES.overlay
-          value=stringifyValue(value)
+          value=selectedKey
           onChange=onSelectChange
+          aria-label=ariaLabel ?? accessibilityLabel
+          aria-labelledby=ariaLabelledBy
+          aria-describedby=ariaDescribedBy
+          aria-errormessage=ariaErrorMessage
+          aria-invalid=ariaInvalid
         )
-          if showEmptyValue
-            option(key=-1 value=stringifyValue(NULL_OPTION))
-              = emptyValueLabel || getLabel(NULL_OPTION)
-          each item, index in options
-            option(key=index value=stringifyValue(item))
-              = getLabel(item)
+          each entry in optionEntries
+            option(key=entry.key value=entry.key)
+              = entry.label
   `
 }
 
@@ -85,8 +114,11 @@ function SelectWrapperAndroid ({
   emptyValueLabel,
   onChange
 }: SelectWrapperProps): ReactNode {
+  const optionEntries = getOptionEntries(options, showEmptyValue, emptyValueLabel)
+  const selectedKey = getOptionKeyFromValue(value, options, showEmptyValue, emptyValueLabel) ?? PICKER_NULL
+
   function onValueChange (value: any) {
-    if (onChange) onChange(parseValue(value))
+    if (onChange) onChange(getValueFromKey(value, options, showEmptyValue, emptyValueLabel))
   }
 
   return pug`
@@ -94,20 +126,14 @@ function SelectWrapperAndroid ({
       = children
       if !disabled
         Picker.overlay(
-          selectedValue=stringifyValue(value)
+          selectedValue=selectedKey
           onValueChange=onValueChange
         )
-          if showEmptyValue
+          each entry in optionEntries
             Picker.Item(
-              key=-1
-              value=stringifyValue(NULL_OPTION)
-              label=emptyValueLabel || getLabel(NULL_OPTION)
-            )
-          each item, index in options
-            Picker.Item(
-              key=index
-              value=stringifyValue(item)
-              label=getLabel(item)
+              key=entry.key
+              value=entry.key
+              label=entry.label
             )
   `
 }
@@ -123,9 +149,11 @@ function SelectWrapperIOS ({
   onChange
 }: SelectWrapperProps): ReactNode {
   const [showModal, setShowModal] = useState(false)
+  const optionEntries = getOptionEntries(options, showEmptyValue, emptyValueLabel)
+  const selectedKey = getOptionKeyFromValue(value, options, showEmptyValue, emptyValueLabel) ?? PICKER_NULL
 
   function onValueChange (value: any) {
-    if (onChange) onChange(parseValue(value))
+    if (onChange) onChange(getValueFromKey(value, options, showEmptyValue, emptyValueLabel))
   }
 
   return pug`
@@ -141,29 +169,23 @@ function SelectWrapperIOS ({
           transparent
           animationType='slide'
         )
-          Div.modalTop(onPress=()=> setShowModal(false))
+          Div.modalTop(onPress=() => setShowModal(false))
           Div.modalMiddle
             Div(
-              onPress=()=> setShowModal(false)
+              onPress=() => setShowModal(false)
               hitSlop={ top: 4, right: 4, bottom: 4, left: 4 }
             )
               Span.done Done
           Div.modalBottom
             Picker(
-              selectedValue=stringifyValue(value)
+              selectedValue=selectedKey
               onValueChange=onValueChange
             )
-              if showEmptyValue
+              each entry in optionEntries
                 Picker.Item(
-                  key=-1
-                  value=stringifyValue(NULL_OPTION)
-                  label=emptyValueLabel || getLabel(NULL_OPTION)
-                )
-              each item, index in options
-                Picker.Item(
-                  key=index
-                  value=stringifyValue(item)
-                  label=getLabel(item)
+                  key=entry.key
+                  value=entry.key
+                  label=entry.label
                 )
   `
 }

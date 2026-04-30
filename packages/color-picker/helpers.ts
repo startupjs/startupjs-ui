@@ -10,7 +10,7 @@ export function getLabelColor (hex: string): string {
     const lightness = (r + g + b) / 255
     const textColor = lightness >= threshold ? 'black' : 'white'
     return textColor
-  } catch (err) {
+  } catch {
     console.error('[getLabelColor]: Invalid hex color')
     return 'gray'
   }

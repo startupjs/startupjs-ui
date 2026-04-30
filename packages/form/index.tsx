@@ -71,10 +71,9 @@ function Form ({
     () => fields, [JSON.stringify(fields)]
   )
 
-  if (!$errors) $errors = $() // eslint-disable-line react-hooks/rules-of-hooks
+  if (!$errors) $errors = $()
   const validator = useMemo(() => new Validator(), [])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useMemo(() => {
     validator.init({
       fields: $fields?.get() || memoizedFields,
@@ -108,7 +107,6 @@ function Form ({
     debouncedValidate()
   }))
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useMemo(() => {
     // if validate prop is set, trigger validation right away on mount.
     if (validate === true) {

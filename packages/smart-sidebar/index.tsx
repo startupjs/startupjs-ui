@@ -71,7 +71,6 @@ function SmartSidebar ({
       // when change dimensions from mobile
       // to desktop resolution or when rendering happen on desktop resolution
       // we open sidebar if it was opened on mobile resolution or default value
-      // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
       $open.set(open || defaultOpen)
     } else {
       // when change dimensions from desktop

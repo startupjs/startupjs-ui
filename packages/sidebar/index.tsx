@@ -61,7 +61,7 @@ function Sidebar ({
     Div.root(style=restStyle styleName=[position])
       ScrollView.sidebar(
         contentContainerStyle=[{ flex: 1 }, sidebarStyle]
-        styleName={open}
+        styleName={ open }
         style={ width, backgroundColor }
       )= renderSidebarContent()
       View.main(style=contentStyle)= children

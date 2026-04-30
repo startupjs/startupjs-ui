@@ -18,12 +18,17 @@ npm-debug.*
 # yarn
 yarn-error.log
 .yarn
+.expo
 
 # GH_TOKEN and NPM_TOKEN in .env for 'auto' releases
 .env
 
 # documentation
 doc_build
+docs/dist
+storybook/dist
+storybook/test-results
+storybook-web/storybook-static
 
 # tmp folders
 .tmp

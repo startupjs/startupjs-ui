@@ -256,7 +256,7 @@ function DateTimePicker ({
     const locales = moment.locales()
     const _locale = locale ?? getLocale()
     return locales.includes(_locale) ? _locale : 'en'
-  }, [locale])
+  }, [locale, moment])
 
   const _dateFormat = useMemo(() => {
     if (dateFormat) return dateFormat
@@ -267,7 +267,7 @@ function DateTimePicker ({
 
     if (mode === 'date') return (moment().locale(exactLocale))._locale._longDateFormat.L
     if (mode === 'time') return (moment().locale(exactLocale))._locale._longDateFormat.LT
-  }, [mode, dateFormat, exactLocale])
+  }, [mode, dateFormat, exactLocale, moment])
 
   useEffect(() => {
     if (typeof date === 'undefined') {
@@ -278,7 +278,7 @@ function DateTimePicker ({
     const value = +moment.tz(date, timezone).seconds(0).milliseconds(0)
     setTextInput(moment.tz(value, timezone).format(_dateFormat))
     setTempDate(new Date(value))
-  }, [date, timezone, _dateFormat, setTempDate])
+  }, [date, timezone, _dateFormat, setTempDate, moment])
 
   function _onChangeDate (value: any) {
     const timestamp = getTimestampFromValue(value)
@@ -431,7 +431,7 @@ function DateTimePicker ({
   function renderWrapper (children: ReactNode): ReactNode {
     return pug`
       Div.popoverWrapper
-        Div.popoverOverlay(feedback=false onPress=()=> onChangeVisible(false))
+        Div.popoverOverlay(feedback=false onPress=() => onChangeVisible(false))
         = children
     `
   }

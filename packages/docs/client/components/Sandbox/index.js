@@ -3,11 +3,6 @@ import { pug, observer, $, useId } from 'startupjs'
 import Span from '@startupjs-ui/span'
 import Alert from '@startupjs-ui/alert'
 import Props from '../Props'
-import {
-  useShowGrid,
-  useShowSizes,
-  useValidateWidth
-} from '../../clientHelpers'
 import './index.styl'
 
 const MODELS = new WeakMap()
@@ -18,9 +13,6 @@ export default observer(function Sandbox ({
   $props,
   ...otherProps
 }) {
-  const [showGrid] = useShowGrid()
-  const [showSizes] = useShowSizes()
-  const [validateWidth] = useValidateWidth()
   const uniqId = useId()
 
   if (!Component) {
@@ -48,9 +40,9 @@ export default observer(function Sandbox ({
       Component=Component
       propsJsonSchema=propsJsonSchema
       $props=$props || getUniqModel(Component, uniqId)
-      showSizes=showSizes
-      showGrid=showGrid
-      validateWidth=validateWidth
+      showSizes
+      showGrid=false
+      validateWidth=false
       ...otherProps
     )
   `

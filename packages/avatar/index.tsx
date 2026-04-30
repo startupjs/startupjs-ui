@@ -76,10 +76,12 @@ function Avatar ({
           - const [firstName, lastName] = _fallback.split(' ')
           - const initials = (firstName ? firstName[0].toUpperCase() : '') + (lastName ? lastName[0].toUpperCase() : '')
           Div.avatar(
-            style={backgroundColor: randomcolor({
-              luminosity: 'bright',
-              seed: _fallback
-            })}
+            style={
+              backgroundColor: randomcolor({
+                luminosity: 'bright',
+                seed: _fallback
+              })
+            }
           )
             Span.fallback(part='fallback' bold style=_fallbackStyle)
               = initials

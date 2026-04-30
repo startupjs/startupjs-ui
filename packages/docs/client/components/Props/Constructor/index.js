@@ -74,10 +74,10 @@ export default observer(themed(function Constructor ({
                 else
                   | (tap to expand)
             if $showExtends.get()
-              each entry, index in entries
+              each entry in entries
                 if entry.extendedFrom === extendedFrom
                   = renderEntry(entry)
-        each entry, index in entries
+        each entry in entries
           if !entry.extendedFrom
             = renderEntry(entry)
   `

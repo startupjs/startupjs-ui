@@ -79,7 +79,7 @@ function CollapseHeader ({
           }
         )
           Icon(icon=icon style=iconStyle)
-      Div.container(style=containerStyle styleName={reverse})
+      Div.container(style=containerStyle styleName={ reverse })
         if typeof children === 'string'
           Span= children
         else

@@ -20,6 +20,24 @@ export interface SelectProps extends Omit<UITextInputProps, 'value' | 'onChangeT
     ref?: RefObject<any>;
     /** Test identifier passed to wrapper */
     testID?: string;
+    /** Cross-platform accessible name */
+    'aria-label'?: string;
+    /** Accessible label forwarded to the web select overlay */
+    accessibilityLabel?: string;
+    /** Accessible hint forwarded to the web select overlay */
+    accessibilityHint?: string;
+    /** Web-only control id forwarded to the native select overlay */
+    id?: string;
+    /** Native id alias forwarded to the native select overlay */
+    nativeID?: string;
+    /** Web-only labelled-by relationship */
+    'aria-labelledby'?: string;
+    /** Web-only described-by relationship */
+    'aria-describedby'?: string;
+    /** Web-only error message relationship */
+    'aria-errormessage'?: string;
+    /** Web-only invalid state */
+    'aria-invalid'?: boolean;
     /** Fired when selected value changes */
     onChange?: (value: any) => void;
 }

@@ -127,7 +127,7 @@ function Pagination ({
               ...itemProps
             )
               Icon.icon(
-                styleName={disabled}
+                styleName={ disabled }
                 icon=ICONS[type]
               )
           else if ~type.indexOf('ellipsis')

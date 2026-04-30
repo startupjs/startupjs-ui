@@ -1,4 +1,4 @@
-import { I18nManager, Platform, Settings } from 'react-native'
+import { I18nManager, NativeModules, Platform } from 'react-native'
 
 export default function getLocale (): string {
   if (Platform.OS === 'web') {
@@ -6,8 +6,9 @@ export default function getLocale (): string {
   }
 
   if (Platform.OS === 'ios') {
-    const appleLocale = Settings.get('AppleLocale') as string | undefined
-    const appleLanguages = Settings.get('AppleLanguages') as string[] | undefined
+    const settings = NativeModules.SettingsManager?.settings
+    const appleLocale = settings?.AppleLocale as string | undefined
+    const appleLanguages = settings?.AppleLanguages as string[] | undefined
     return appleLocale ?? appleLanguages?.[0] ?? 'en'
   }
 

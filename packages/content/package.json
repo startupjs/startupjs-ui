@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/content",
-  "version": "0.1.22",
+  "version": "0.2.0-alpha.1",
   "publishConfig": {
     "access": "public"
   },
@@ -8,8 +8,8 @@
   "types": "index.d.ts",
   "type": "module",
   "dependencies": {
-    "@startupjs-ui/core": "^0.1.22",
-    "@startupjs-ui/div": "^0.1.22"
+    "@startupjs-ui/core": "^0.2.0-alpha.1",
+    "@startupjs-ui/div": "^0.2.0-alpha.1"
   },
   "peerDependencies": {
     "react": "*",

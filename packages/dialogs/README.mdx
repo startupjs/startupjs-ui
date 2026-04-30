@@ -21,6 +21,8 @@ import './index.mdx.cssx.styl'
 
 Dialogs provide three imperative functions for displaying dialog boxes: `alert`, `confirm`, and `prompt`. Each function is async and returns a Promise that resolves when the user dismisses the dialog.
 
+On web, these dialogs render with `role="alertdialog"` so they can be distinguished from ordinary modals.
+
 ```js
 import { DialogsProvider, alert, confirm, prompt } from 'startupjs-ui'
 ```

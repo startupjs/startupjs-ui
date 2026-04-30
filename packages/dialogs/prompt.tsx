@@ -45,6 +45,7 @@ export default async function prompt (options: string | PromptOptions, defaultVa
 
     openDialog({
       title: normalizedTitle,
+      role: 'alertdialog',
       children: pug`
         Span= message
         Br(half)

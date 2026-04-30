@@ -69,7 +69,7 @@ function Link ({
 
   const isBlock = resolvedDisplay === 'block'
   const Component = isBlock ? Div : Span
-  const extraProps: Record<string, any> = { accessibilityRole: 'link', onPress: handlePress }
+  const extraProps: Record<string, any> = { role: 'link', onPress: handlePress }
   const {
     navigate: routerNavigate,
     push: routerPush,
@@ -137,7 +137,7 @@ function Link ({
       if ((children as any)?.props?.originalType === Button || (children as any)?.type === Button) {
         return cloneElement(children as any, { style, ...restProps, ...extraProps })
       }
-    } catch (e) {
+    } catch {
       // ignore errors when children contains multiple elements
     }
   }

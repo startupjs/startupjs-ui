@@ -8,9 +8,8 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const rootDir = path.resolve(__dirname, '..')
 const packagesDir = path.join(rootDir, 'packages')
-const eslintIgnorePath = path.join(rootDir, '.eslintignore')
+const eslintConfigPath = path.join(rootDir, 'eslint.config.mjs')
 const fileBanner = '/* eslint-disable */\n// DO NOT MODIFY THIS FILE - IT IS AUTOMATICALLY GENERATED ON COMMITS.\n\n'
-const legacyIgnoreBlock = '# Ignore generated declaration files\n**/*.d.ts'
 
 async function main () {
   const packageEntries = await fs.readdir(packagesDir, { withFileTypes: true })
@@ -65,6 +64,11 @@ async function main () {
       rootDir: '../..',
       skipLibCheck: true
     },
+    include: [],
+    exclude: [
+      '../../docs/**/*',
+      '../../storybook/**/*'
+    ],
     files: [
       ...packagesToBuild.map(pkg => path.relative(tempDir, path.join(rootDir, pkg.entryFile))),
       ...extraDtsFiles.map(file => path.relative(tempDir, file))
@@ -100,40 +104,17 @@ async function main () {
     }
   }
 
-  const relativeGeneratedFiles = generatedFiles.map(file => path.relative(rootDir, file)).sort()
+  const relativeGeneratedFiles = generatedFiles
+    .map(file => toPosixPath(path.relative(rootDir, file)))
+    .sort()
 
-  let eslintIgnoreUpdated = false
-  if (relativeGeneratedFiles.length) {
-    const autoBlock = [
-      '# AUTO-GENERATED START (generate-package-dts)',
-      '# DO NOT EDIT MANUALLY. Managed by scripts/generate-package-dts.mjs',
-      ...relativeGeneratedFiles,
-      '# AUTO-GENERATED END'
-    ].join('\n')
-
-    let existingIgnore = ''
-    try {
-      existingIgnore = await fs.readFile(eslintIgnorePath, 'utf8')
-    } catch {}
-
-    const blockRegex = /# AUTO-GENERATED START \(generate-package-dts\)[\s\S]*?# AUTO-GENERATED END\n?/g
-    let manualPart = existingIgnore ? existingIgnore.replace(blockRegex, '').trimEnd() : ''
-    if (manualPart.trim() === legacyIgnoreBlock.trim()) manualPart = ''
-
-    const sections = manualPart ? [manualPart, autoBlock] : [autoBlock]
-    const newIgnoreContent = sections.join('\n\n') + '\n'
-
-    if (newIgnoreContent !== existingIgnore) {
-      await fs.writeFile(eslintIgnorePath, newIgnoreContent)
-      eslintIgnoreUpdated = true
-    }
-  }
+  const eslintConfigUpdated = await updateEslintConfig(relativeGeneratedFiles)
 
   const filesToStage = [
     ...relativeGeneratedFiles,
     ...packageJsonsUpdated.map(file => path.relative(rootDir, file))
   ]
-  if (eslintIgnoreUpdated) filesToStage.push(path.relative(rootDir, eslintIgnorePath))
+  if (eslintConfigUpdated) filesToStage.push(path.relative(rootDir, eslintConfigPath))
 
   if (filesToStage.length) {
     spawnSync('git', ['add', ...filesToStage], {
@@ -172,6 +153,35 @@ async function collectDeclarationFiles (directories) {
     }
   }
   return Array.from(new Set(files))
+}
+
+async function updateEslintConfig (relativeGeneratedFiles) {
+  const existingConfig = await fs.readFile(eslintConfigPath, 'utf8')
+  const blockRegex = /^([ \t]*)\/\/ AUTO-GENERATED START \(generate-package-dts\)\n[\s\S]*?^\1\/\/ AUTO-GENERATED END$/m
+  const match = existingConfig.match(blockRegex)
+
+  if (!match) {
+    throw new Error('Could not find auto-generated declaration ignore block in eslint.config.mjs.')
+  }
+
+  const indent = match[1]
+  const itemIndent = indent
+  const autoBlock = [
+    `${indent}// AUTO-GENERATED START (generate-package-dts)`,
+    `${indent}// DO NOT EDIT MANUALLY. Managed by scripts/generate-package-dts.mjs`,
+    ...relativeGeneratedFiles.map(file => `${itemIndent}'${file}',`),
+    `${indent}// AUTO-GENERATED END`
+  ].join('\n')
+
+  const newConfig = existingConfig.replace(blockRegex, autoBlock)
+  if (newConfig === existingConfig) return false
+
+  await fs.writeFile(eslintConfigPath, newConfig)
+  return true
+}
+
+function toPosixPath (filePath) {
+  return filePath.split(path.sep).join('/')
 }
 
 main().catch(err => {

@@ -202,7 +202,7 @@ export default {
       .filter(child => child !== '\n')
 
     return pug`
-      BlockquoteContext.Provider(value=true)
+      BlockquoteContext.Provider(value)
         Alert.alert= filteredChildren
     `
   },
@@ -254,12 +254,11 @@ export default {
   },
   pre: ({ children }) => {
     return pug`
-      PreContext.Provider(value=true)
+      PreContext.Provider(value)
         = children
     `
   },
   code: observer(({ children, className, ...props }) => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const isBlockCode = useContext(PreContext)
 
     if (!isBlockCode) {
@@ -302,7 +301,7 @@ export default {
               Div.code-actions(align='right' row)
                 Div.code-action(
                   tooltip=open ? 'Hide code' : 'Show code'
-                  onPress=()=> setOpen(!open)
+                  onPress=() => setOpen(!open)
                 )
                   Icon.code-action-collapse(icon=faCode color='error')
                 Div.code-action(

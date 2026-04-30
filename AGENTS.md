@@ -1,176 +1,427 @@
-# Agent Guide: Component Refactoring
+# StartupJS UI — Agent Onboarding
 
-This document serves as a guide for Agents refactoring components from the legacy `@startupjs/ui` library to the new `startupjs-ui` monorepo structure. Start with the next unchecked component in the Progress list, follow the Quickstart, and optionally run lint/ts checks.
+This repository is the source monorepo for `startupjs-ui`: the shared multiplatform UI library used across StartupJS apps. Treat this repo as the source of truth for component behavior, accessibility semantics, provider wiring, Storybook QA coverage, and package exports.
 
-## Objective
+## What This Repo Contains
 
-Refactor each component from the `ui` folder (this is a source code of the old `@startupjs/ui` library) into its own package within `packages/`.
-The goal is to decouple components and introduce TypeScript interfaces for props to generate better documentation.
+- `packages/*`: one package per component or runtime module.
+- `packages/startupjs-ui`: the meta package that re-exports the public surface and wires the UI provider into StartupJS.
+- `packages/docs` and `packages/mdx`: internal docs support packages, not normal app-facing components.
+- `packages/core`: shared theming, helpers, CSS variables, and other low-level infrastructure.
+- `docs/`: the user-facing StartupJS + Expo documentation app.
+- `storybook/`: shared Storybook workspace with native `.rnstorybook` and web `.storybook` setups.
+- `scripts/`: repo maintenance scripts such as export checks and declaration generation.
+- `tasks.md`: the live QA ledger and follow-up backlog.
 
-## Reference Implementations
+## Repo Responsibilities
 
-- **Span**: `packages/span` (Completed refactoring. Merged H1-H6 into Span).
-- **Button**: `packages/button` (Reference for complex props and structure).
+- Keep public package APIs stable unless a breaking change is intentional and explicit.
+- Prefer fixing shared accessibility or semantics problems here instead of expecting downstream apps to patch around them.
+- Keep `docs/` working while evolving Storybook.
+- Keep Storybook web stories aligned with real component behavior and natural first-time-user expectations.
 
-## Quickstart (per component)
-- Create `packages/<component>` with `package.json` copied from `packages/span`; name `@startupjs-ui/<component>`, deps `@startupjs-ui/core`, peers `react`, `react-native`, `startupjs`. See `packages/span` for a basic example and `ui/components/Button` for a complex one.
-- Update `package.json` dependencies to include every `@startupjs-ui/*` package the component actually import (e.g., Div/Icon/Span), not just `core`. Note that docs imports do not matter (since docs are managed by the monorepo itself) and should not be taken into account.
-- Copy styles: `index.styl` -> `index.cssx.styl` (and `index.mdx.styl` -> `index.mdx.cssx.styl` if present) without changes.
-- Port logic: move `ui/components/<Component>/index.*` to `packages/<component>/index.tsx`; add props interface with JSDoc, defaults in destructuring, remove `propTypes`/`defaultProps`, return `ReactNode`, export `_PropsJsonSchema`.
-- Docs: move `Component.en.mdx` -> `packages/<component>/README.mdx`, update imports to new packages; for not-yet-refactored components import from `@startupjs/ui` top-level.
-- Register docs page for Component in `docs/app/docs/<Component>.js`.
+## StartupJS UI Wiring
 
-## Refactoring Steps & Tooling Notes
+- `startupjs-ui` integrates with apps through [plugin.js](packages/startupjs-ui/plugin.js).
+- `UiProvider` is injected automatically into `StartupjsProvider`, so downstream apps usually only need:
 
-### 1. Create Package
-- Create a new directory: `packages/<component-name>` (e.g., `packages/span`).
-- Create `package.json`. Use `packages/span/package.json` as a template.
-    - **Name**: `@startupjs-ui/<component-name>`
-    - **Dependencies**: `@startupjs-ui/core`
-    - **Peer Dependencies**: `react`, `react-native`, `startupjs`
+```jsx
+<StartupjsProvider>
+  <Layout>{/* app */}</Layout>
+</StartupjsProvider>
+```
 
-### 2. Migrate & Refactor Code
-- Move the component code from `ui/components/<Component>` to `packages/<component>/index.tsx`.
-- **TypeScript**:
-    - Convert the file to `.tsx` - just change the extension, keep runtime logic as-is.
-    - Only add the minimal types/interface needed - when making proper typing is too complex you can occasionally use 'any'.
-    - **MUST** define a single TypeScript interface for props of the main component you are refactoring (e.g., `SpanProps`), it must define all props. If the component extends another component (e.g. passes the rest of the props to Div) then extend the interface from it and if `tsc` complains then use Omit on the conflicting props.
-    - **MUST** add JSDoc descriptions to each prop in the interface. This is used by the Sandbox to generate documentation table.
-    - Add defaults into the props destructuring of the component itself and remove the Component.defaultProps.
-    - Remove the Component.propTypes (the interface handles it now).
-    - Specify the return type of the component function to be `ReactNode` (import { type ReactNode } from 'react').
-    - Export `_PropsJsonSchema` for docs generation: `export const _PropsJsonSchema = {/* ComponentProps */}`.
-    - If legacy code used `observer(..., { forwardRef: true })` and `(props, ref)` signature, switch to a `ref?: RefObject<any>` prop (like `packages/div`) and use `useImperativeHandle(ref, ...)`; do not rely on React `forwardRef`.
-    - Babel handles `part="..."` attributes: it auto-injects the corresponding style prop into destructuring and passes it down (e.g., `part='root'` adds `style`, `part='title'` adds `titleStyle`). You generally do not need to manually add `style` to the JSX unless you actually transform it, but you should declare the prop in the interface when relevant.
-    - Implement minimal TS typing beyond the props interface when needed to satisfy `tsc`/ESLint; keep the implementation otherwise as close to original JS code as possible.
-    - `index.d.ts` file will be generated automatically by the build system, don't create it yourself.
-    - Don't change anything in the original `ui/` components folder - they are only there for a reference, they are not used, and will be completely removed after we finish refactoring all components.
-    - Use already refactored components in `.mdx` docs (from @startupjs-ui/* packages).
-- **Styles**:
-    - Do not change the styles, keep them as is.
-    - Ensure `themed` is imported from `@startupjs-ui/core`.
-    - Stylus files keep the same content but use `.cssx.styl` extension in packages.
+- `UiProvider` mounts:
+  - CSS variables and theme context
+  - `Portal.Provider`
+  - `ToastProvider`
+  - `DialogsProvider`
 
-### 3. Update Documentation
-- Move `Component.en.mdx` to the new package and rename it to `README.mdx`.
-- Update imports to point to the new component.
-- Ensure the `Sandbox` component is used and linked to the component and its schema - import _PropsJsonSchema from the component and pass it to Sandbox as propsJsonSchema prop.
-- If the component requires a provider/context to render, create a small wrapper component in `README.mdx` for the Sandbox `Component` prop, but still pass the target component's `_PropsJsonSchema` so the props table matches the real component.
-- Some providers are **singletons** (use module-level state, e.g. `dialogs`): mount **only one** instance in the app (and in docs `_layout`) and avoid rendering multiple providers on the same page, otherwise the last-mounted provider will "steal" all calls.
-- In the docs on where to import the component from change it from '@startupjs/ui' to instead be 'startupjs-ui' (that's the new meta-library which will re-export all individual packages for each component).
+When debugging missing dialogs, toasts, portals, or shared icon/input behavior, inspect:
+- [plugin.js](packages/startupjs-ui/plugin.js)
+- [UiProvider.tsx](packages/startupjs-ui/UiProvider.tsx)
+- the package implementing the singleton or provider behavior
 
-### 4. Register in Docs App
-- Add a new file which re-exports README.mdx of the component in `docs/app/docs/<Component>.js`: `export { default } from '../../../packages/<component>/README.mdx'`.
+## Storybook And Docs Roles
 
-## Key Requirements
+### Storybook
 
-- **One Package Per Component**: Each component gets its own folder in `packages/`.
-- **Props Interface**: The main goal is to have a clean TS interface for props with JSDoc comments.
-- **Core Helpers**: Use `@startupjs-ui/core` for shared helpers (re-export them from core if missing).
-- **TS Config**: `ui/**` is excluded from `tsconfig.json`; do not move or fix legacy files there.
+Storybook is the component QA harness for:
+- interactive states
+- accessibility semantics
+- testability and E2E friendliness
+- visual smoke coverage
 
-## Verification
+Story files should be high-signal, not exhaustive prop cartesian products. Cover:
+- default state
+- major variants and sizes
+- disabled/loading/error states when relevant
+- important interaction flows
+- accessibility-critical behavior
+- realistic compositions for provider-heavy components
 
-1.  Run `yarn` in the root to link the new package.
-2.  Run `cd docs && yarn start -c` to start the docs server.
-3.  Open the docs in the browser (usually `http://localhost:8081`).
-4.  Navigate to the component page.
-5.  **Verify**:
-    - The page loads.
-    - The Sandbox section appears at the bottom.
-    - The props table in Sandbox shows the correct types and **descriptions**.
-6.  Optional quick checks: `yarn eslint packages/<component>/index.tsx` and `yarn tsc --noEmit --skipLibCheck`.
+Keep currently desirable but not yet passing expectations in colocated non-executed `failingFollowup` specs, and track the work in [tasks.md](tasks.md).
 
-## Common TS Fixes
+### Docs
 
-- Missing typings for third-party deps: prefer adding a minimal ambient module declaration in `types/*.d.ts` (instead of installing `@types/*`), so `yarn tsc --noEmit --skipLibCheck` passes in a network-restricted environment.
-- `@typescript-eslint/promise-function-async` and JSX wrappers: if the rule triggers on a synchronous wrapper like `node => node`, explicitly annotate the wrapper return type (e.g. `renderWrapper = (node): ReactNode => node`) so ESLint doesn’t infer a promise-returning function (see `packages/abstract-popover/index.tsx`).
-- Platform-specific entrypoints (`*.expo.tsx`, etc): if `index.tsx` re-exports from `./input`, add a typed `input.tsx` (non-Expo stub) and keep props/types in `index.tsx` so generated `index.d.ts` doesn’t fall back to an untyped `input.js`.
+`docs/` remains the user-facing documentation app. Use it as a reference for:
+- StartupJS Babel config
+- Expo dependency versions
+- docs-facing examples
+- real app-style integration behavior
 
-## Refactoring Order & Progress
+Do not break docs routes or docs build output while working on Storybook or package internals.
 
-Work through the components in the following order to ensure dependencies are ready when needed.
+## Accessibility And Testability Standards
 
-### Level 0: Independent Components
-These components have no internal dependencies (or only depend on utils/core).
+Prefer semantic accessibility over custom selectors.
 
-- [x] **Span** (`packages/span`)
-- [x] **Div** (`packages/div`)
-- [x] **Icon** (`packages/icon`)
-- [x] **Loader** (`packages/loader`)
-- [x] **Br** (`packages/br`)
-- [x] **Portal** (`packages/portal`)
-- [x] **Layout** (`packages/layout`)
-- [x] **FlatList** (`packages/flat-list`)
+For interactive surfaces on web, aim for:
+- correct role exposure: `button`, `link`, `checkbox`, `radio`, `switch`, `dialog`, `tab`, `tablist`, `option`, `combobox`, etc.
+- stable accessible names so Playwright can naturally use `getByRole(...)`
+- proper state semantics where relevant:
+  - `disabled` / `aria-disabled`
+  - `aria-busy`
+  - `aria-expanded`
+  - `aria-selected`
+  - `aria-checked`
+- correct label relationships so controls can be found with `getByLabel(...)`
 
-### Level 1: Base Components
-These depend only on Level 0 components.
+Only add `data-testid` when good semantics are still insufficient. If needed for composite widgets, prefer predictable slot-level test IDs over brittle DOM-structure selectors.
 
-- [x] **Button** (depends on Div, Icon, Loader, Span) (`packages/button`)
-- [x] **Badge** (depends on Div, Icon, Span) (`packages/badge`)
-- [x] **Avatar** (depends on Div, Icon, Span) (`packages/avatar`)
-- [x] **Tag** (depends on Div, Icon, Span) (`packages/tag`)
-- [x] **Card** (depends on Div) (`packages/card`)
-- [ ] ~~**Tooltip**~~ (depends on Div) - DEPRECATED, removed from new version
-- [x] **Alert** (depends on Div, Icon) (`packages/alert`)
-- [x] **Content** (depends on Div) (`packages/content`)
-- [ ] ~~**Row**~~ (depends on Div) - DEPRECATED, removed from new version
-- [x] **Breadcrumbs** (depends on Div, Icon, Span) (`packages/breadcrumbs`)
-- [x] **Menu** (depends on Div, Icon, Span) (`packages/menu`)
-- [x] **Progress** (depends on Div, Span) (`packages/progress`)
-- [x] **Rating** (depends on Div, Icon) (`packages/rating`)
-- [x] **Tabs** (depends on Div, Span) (`packages/tabs`)
-- [x] **Pagination** (depends on Button, Div, Icon, Span) (`packages/pagination`)
-- [x] **ScrollView** (`packages/scroll-view`)
-- [x] **Divider** (`packages/divider`)
-- [x] **Drawer** (`packages/drawer`)
-- [x] **AbstractPopover** (`packages/abstract-popover`)
-- [x] **Popover** (`packages/popover`)
-- [x] **Dropdown** (`packages/dropdown`)
-- [x] **DragDropProvider**, **Droppable**, **Draggable** (`packages/draggable`) TODO: when clicking on item instead of dragging it, the item disappears (or jumps to top left of the screen)
+A selector problem is often also an accessibility problem:
+- if a human cannot clearly understand or activate a control, E2E will usually be awkward too
+- if Playwright needs brittle selectors, the UI is often under-accessible
 
-### Level 2: Intermediate Components
-These depend on Level 1 components.
+## Required Validation
 
-- [x] **Link** (depends on Button, Div, Span) (`packages/link`)
-- [x] **User** (depends on Avatar) (`packages/user`)
-- [x] **Modal** (depends on Portal, Layout, Button) (`packages/modal`)
-- [x] **Sidebar** (`packages/sidebar`)
-- [x] **DrawerSidebar** (`packages/drawer-sidebar`)
-- [x] **Collapse** (`packages/collapse`)
-- [x] **Carousel** (`packages/carousel`)
+For meaningful changes, run the relevant checks before finishing:
 
-### Level 3: Complex Components
-These have deep dependency chains.
+- `yarn storybook:test`
+- `yarn storybook:build`
+- `yarn docs` or `cd docs && yarn web` for manual smoke testing when needed
+- `yarn build-static` or `yarn build` in `docs` when docs behavior changed
+- `yarn generate-package-dts`
+- `node scripts/check-startupjs-ui-exports.mjs`
+- `npx eslint .`
 
-- [x] **Item** (depends on Link) (`packages/item`)
-- [x] **SmartSidebar** (depends on Sidebar, DrawerSidebar) (`packages/smart-sidebar`)
-- [x] **AutoSuggest** (`packages/auto-suggest`)
-- [x] **Table**, **Tbody**, **Thead**, **Tr**, **Th**, **Td** (`packages/table`)
-- [x] **DialogsProvider**, **alert**, **confirm**, **prompt**  (`packages/dialogs`)
-- [x] **toast**, **ToastProvider**, **Toast** (`packages/toast`)
+Use the checks that match the scope of the change rather than blindly running everything on every small edit.
 
-### Level 4: Forms
-Form components from ui/components/forms/*
+## E2E Guidance
 
-- [x] **TextInput** (`packages/text-input`)
-- [x] **ArrayInput** (ui/components/forms/ArrayInput) (`packages/array-input`)
-- [x] **Checkbox** (ui/components/forms/Checkbox) (`packages/checkbox`)
-- [x] **ColorPicker** (ui/components/forms/ColorPicker) (`packages/color-picker`)
-- [x] **DateTimePicker** (ui/components/forms/DateTimePicker) (`packages/date-time-picker`)
-- [x] **FileInput** (ui/components/forms/FileInput) (`packages/file-input`)
-- [x] **Form** (ui/components/forms/Form) (`packages/form`)
-- [x] **Input** (`packages/input`)
-- [x] **MultiSelect** (ui/components/forms/Multiselect) (`packages/multi-select`)
-- [x] **NumberInput** (`packages/number-input`)
-- [x] **ObjectInput** (ui/components/forms/ObjectInput) (`packages/object-input`)
-- [x] **PasswordInput** (`packages/password-input`)
-- [x] **Radio** (`packages/radio`)
-- [x] **RangeInput** (`packages/range-input`)
-- [x] **Rank** (ui/components/forms/Rank) (`packages/rank`)
-- [x] **Select** (`packages/select`)
+There is a deeper generic guide at [E2E_GUIDE.md](E2E_GUIDE.md).
 
-## Updating this Guide
+Read it when you need to:
+- add or debug Playwright coverage in a StartupJS app
+- design selectors and semantics so UI components are naturally testable
+- understand recommended StartupJS production-backed E2E setup
+- reason about when a problem belongs in app code vs shared UI library code
 
-**IMPORTANT**: If you discover new patterns, caveats, or simplifications during your work, **UPDATE THIS FILE**.
-This guide should evolve to make the work of future Agents easier.
+## StartupJS — Generic Guide For AI Agents
+
+This section is framework guidance that applies across StartupJS projects, not just this repo.
+
+## Project Setup
+
+StartupJS is built on top of Expo. A new project is created by:
+
+1. Creating an Expo app: `yarn create expo-app myapp` or `npx create-expo-app@latest myapp`
+2. Installing StartupJS: `npm init startupjs@latest`
+3. Wrapping the root layout in `app/_layout.tsx` with `<StartupjsProvider>` from `startupjs` and `<Layout>` from `startupjs-ui` inside it
+
+```jsx
+import { StartupjsProvider } from 'startupjs'
+import { Layout } from 'startupjs-ui'
+import { Stack } from 'expo-router'
+
+export default function RootLayout () {
+  return (
+    <StartupjsProvider>
+      <Layout>
+        <Stack screenOptions={{ headerShown: false }} />
+      </Layout>
+    </StartupjsProvider>
+  )
+}
+```
+
+Requirements:
+- Node 22+
+- Yarn optional
+- MongoDB and Redis are not needed for normal development because they are mocked automatically
+
+Known issue after `npm init startupjs@latest`:
+- add `sharedb-redis-pubsub` overrides/resolutions and reinstall, otherwise the app may crash with `Redis is already connecting/connected`
+
+## Running The App
+
+Typical commands:
+
+```bash
+npm run web
+npm run ios
+npm run android
+```
+
+Equivalent forms:
+
+```bash
+npm start -- --web
+npm start -- --ios
+npm start -- --android
+```
+
+The default web app usually runs on `http://localhost:8081`.
+
+## Imports
+
+Core framework:
+
+```js
+import { $, observer, useSub, sub, pug } from 'startupjs'
+```
+
+UI components:
+
+```js
+import { Button, Card, Span, TextInput, Div, Content, Checkbox } from 'startupjs-ui'
+```
+
+Prefer `startupjs-ui` components over `react-native` ones when the equivalent exists.
+
+## Pug Templates
+
+StartupJS uses `pug` as the standard template language instead of JSX.
+
+Basic syntax:
+
+```js
+return pug`
+  Div.container
+    Span.title Hello World
+    Button(onPress=handleClick) Click Me
+`
+```
+
+Key rules:
+- nesting is indentation-based
+- `.className` maps to `styleName`
+- attributes go in parentheses
+- text follows the tag
+- interpolation uses `#{...}`
+- boolean attributes can be written without `=true`
+
+Conditionals:
+
+```js
+pug`
+  if isLoggedIn
+    Span Welcome back!
+  else
+    Button(onPress=login) Log In
+`
+```
+
+Loops:
+
+```js
+pug`
+  each $todo in $todos
+    Card(key=$todo.getId())
+      Span= $todo.title.get()
+`
+```
+
+## Signals
+
+Signals are the core reactive primitive.
+
+Root data signal:
+
+```js
+$.todos
+$.todos['abc123']
+$.todos['abc123'].title
+```
+
+Local signals:
+
+```js
+const $count = $(0)
+const { $name, $age } = $({ name: 'Alice', age: 30 })
+```
+
+Reading:
+
+```js
+$user.name.get()
+$todo.get()
+```
+
+Writing:
+
+```js
+$user.name.set('Bob')
+await $todo.completed.set(true)
+```
+
+Other common operations:
+
+```js
+await $todo.del()
+await $.todos.add({ title: 'Buy milk' })
+await $todo.assign({ title: 'Updated' })
+await $user.tags.push('developer')
+await $user.loginCount.increment(1)
+```
+
+Important:
+- use `.getId()` for document IDs
+- do not use `.id.get()` to read the document id
+
+## Subscriptions
+
+Subscribe before reading database data.
+
+Inside React:
+
+```js
+const $todo = useSub($.todos[todoId])
+const $todos = useSub($.todos, { completed: false })
+```
+
+Outside React:
+
+```js
+const $todo = await sub($.todos[todoId])
+```
+
+Private collections such as `$._session` do not need subscriptions.
+
+## observer()
+
+Wrap every component with `observer()` by default. It is required for:
+- signals reactivity
+- `useSub` subscriptions
+- styles caching
+
+## Passing Signals To Children
+
+Pass signals, not eagerly-read values, whenever possible.
+
+Prefer:
+
+```js
+UserName($name=$user.name)
+```
+
+over:
+
+```js
+UserName(name=$user.name.get())
+```
+
+Call `.get()` as late as possible.
+
+## Private Collections And Current User
+
+Private collections live only on the client:
+
+```js
+const userId = $._session.userId.get()
+```
+
+Typical current-user pattern:
+
+```js
+const userId = $._session.userId.get()
+const $user = useSub($.users[userId])
+
+if (!$user.get()) {
+  throw $.users.add({ id: userId, name: '', settings: {} })
+}
+```
+
+Use `throw`, not `await`, when creating docs during render. Let Suspense handle it.
+
+## UI Structure Guidance
+
+Common page pattern:
+
+```js
+pug`
+  ScrollView(full)
+    Content(padding)
+      Span(h1) My Page
+`
+```
+
+Layout example:
+
+```js
+pug`
+  Div(row align='between' vAlign='center')
+    Span Left
+    Button Right
+`
+```
+
+Always wrap raw text in `Span`, not directly in `Div`.
+
+## Styling
+
+Use a top-level `style(lang='styl')` block inside the returned pug template.
+
+```js
+return pug`
+  Div.root
+    Span.title Hello
+  style(lang='styl')
+    .root
+      padding 2u
+    .title
+      font-weight bold
+`
+```
+
+Guidelines:
+- use Stylus syntax
+- keep the `style(lang='styl')` block at the top level of the returned template
+- prefer `styleName` classes over inline `style`
+- use `u` spacing units instead of `px`
+
+Use inline `style` only for truly dynamic JS-driven values.
+
+## Routing
+
+StartupJS apps commonly use Expo Router file-based routing:
+
+- `app/index.tsx` -> `/`
+- `app/about.tsx` -> `/about`
+- `app/users/[id].tsx` -> `/users/:id`
+- `app/_layout.tsx` wraps child routes
+
+Navigation can be declarative or imperative:
+
+```js
+import { Link } from 'expo-router'
+import { router } from 'expo-router'
+```
+
+## Common Mistakes
+
+Do not:
+- use `.id` instead of `.getId()`
+- read database signals without subscribing first
+- forget `observer()`
+- default to `useState`/`useEffect` for reactive data when signals are the right tool
+- place raw text directly inside `Div`
+- rely on inline `style` for normal styling
+- use `px` for standard spacing
+- pass raw values to child components too early
+
+## Current Focus
+
+See [tasks.md](tasks.md) for the live workstreams:
+- Storybook coverage and follow-up pass
+- accessibility and E2E compatibility improvements across interactive components

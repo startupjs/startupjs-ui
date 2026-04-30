@@ -1,5 +1,5 @@
-import React, { type ReactNode, type ComponentType } from 'react'
-import { View, TouchableOpacity, type StyleProp, type ViewStyle } from 'react-native'
+import React, { useId, type ReactNode, type ComponentType } from 'react'
+import { View, TouchableOpacity, type StyleProp, type ViewStyle, type ViewProps } from 'react-native'
 import { pug, observer } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
 import ModalHeader from './ModalHeader'
@@ -18,6 +18,8 @@ export interface ModalLayoutProps {
   variant?: 'window' | 'fullscreen'
   /** Title rendered when no custom header provided */
   title?: string
+  /** Accessible role for the modal surface on web @default 'dialog' */
+  role?: ViewProps['role']
   /** DEPRECATED: use cancelLabel instead */
   dismissLabel?: string
   /** Cancel action label @default 'Cancel' */
@@ -48,6 +50,7 @@ function Modal ({
   children,
   variant,
   title,
+  role,
   dismissLabel,
   cancelLabel = DEFAULT_CANCEL_LABEL,
   confirmLabel = DEFAULT_CONFIRM_LABEL,
@@ -105,6 +108,10 @@ function Modal ({
   const isWindowLayout = variant === 'window'
   const hasActions = !!onCancel || !!onConfirm
   const hasHeader = !!title || !!showCross
+  const headerTitle = !title && React.isValidElement(header) && typeof (header as any).props?.children === 'string'
+    ? (header as any).props.children as string
+    : undefined
+  const dialogTitle = title ?? headerTitle
 
   const _onCrossPress = async (event: any) => {
     event.persist() // TODO: remove in react 17
@@ -146,9 +153,13 @@ function Modal ({
     cancelLabel = 'OK'
   }
 
+  const modalTitleId = useId()
+  const titleId = dialogTitle ? modalTitleId : undefined
+
   // Handle <Modal.Header>
   const headerProps = {
-    onCrossPress: showCross ? _onCrossPress : undefined
+    onCrossPress: showCross ? _onCrossPress : undefined,
+    titleId
   }
 
   header = header
@@ -185,7 +196,10 @@ function Modal ({
     : React.createElement(ModalContent, contentProps, contentChildren)
 
   return pug`
-    View.root(style=style styleName=[variant])
+    View.root(
+      style=style
+      styleName=[variant]
+    )
       if isWindowLayout
         TouchableOpacity.overlay(
           activeOpacity=1
@@ -194,6 +208,10 @@ function Modal ({
       ModalElement.modal(
         style=modalStyle
         styleName=[variant]
+        role=role ?? 'dialog'
+        aria-modal
+        aria-label=titleId ? undefined : dialogTitle
+        aria-labelledby=titleId
       )
         = header
         = content
