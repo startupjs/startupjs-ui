@@ -18,9 +18,8 @@ export default defineConfig([
     ignores: [
       'node_modules/*', 'dist/*',
       'docs/.expo', 'docs/dist/*', 'docs/expo-env.d.ts',
-      // Storybook workspaces
+      // Storybook workspace
       'storybook/*',
-      'storybook-web/*',
       // Outdated code left for reference and future refactoring
       'packages/docs/client/app/*',
       // AUTO-GENERATED START (generate-package-dts)

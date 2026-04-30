@@ -17,7 +17,7 @@ const transpiledModules = [
 ]
 
 const config: StorybookConfig = {
-  stories: ['../../storybook/stories/**/*.stories.@(ts|tsx|js|jsx)'],
+  stories: ['../stories/**/*.stories.@(ts|tsx|js|jsx)'],
   addons: [
     '@storybook/addon-docs',
     '@storybook/addon-a11y',

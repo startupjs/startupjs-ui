@@ -1,7 +1,9 @@
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { transformAsync } from '@babel/core'
 import { defineConfig } from 'vite'
 
+const dirname = path.dirname(fileURLToPath(import.meta.url))
 const reanimatedFilePattern = /node_modules\/react-native-(?:reanimated|worklets)\/.*\.[cm]?[jt]sx?(?:\?.*)?$/
 
 function reanimatedWorkletsBabelPlugin () {
@@ -37,9 +39,9 @@ export default defineConfig({
   server: {
     fs: {
       allow: [
-        path.resolve(__dirname, '../packages'),
-        path.resolve(__dirname, '../storybook'),
-        path.resolve(__dirname, '../node_modules')
+        path.resolve(dirname, '../packages'),
+        dirname,
+        path.resolve(dirname, '../node_modules')
       ]
     }
   },
@@ -50,11 +52,11 @@ export default defineConfig({
       // internal validator as a default export from a CommonJS file. Alias just this
       // helper to an ESM-compatible wrapper so the real library can keep running.
       'react-native-reanimated/scripts/validate-worklets-version': path.resolve(
-        __dirname,
+        dirname,
         './shims/reanimated/validate-worklets-version.ts'
       ),
       'react-native-reanimated/scripts/validate-worklets-version.js': path.resolve(
-        __dirname,
+        dirname,
         './shims/reanimated/validate-worklets-version.ts'
       )
     }

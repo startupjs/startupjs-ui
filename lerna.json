@@ -3,6 +3,7 @@
   "npmClient": "yarn",
   "packages": [
     "packages/*",
-    "docs"
+    "docs",
+    "storybook"
   ]
 }

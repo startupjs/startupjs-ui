@@ -5,11 +5,8 @@
   },
   "workspaces": [
     "packages/*",
-    "docs"
-  ],
-  "//workspaces": [
-    "storybook",
-    "storybook-web"
+    "docs",
+    "storybook"
   ],
   "scripts": {
     "start": "yarn docs",
@@ -19,15 +16,15 @@
     "start-production": "cd docs && yarn start-production",
     "start-production-static": "cd docs && yarn start-production-static",
     "docs": "cd docs && yarn start",
-    "storybook": "cd storybook-web && yarn storybook",
-    "storybook:web": "cd storybook-web && yarn storybook",
-    "storybook:build": "cd storybook-web && yarn build-storybook",
-    "storybook:build:pages": "cd storybook-web && yarn build-storybook --output-dir ../docs/dist/storybook",
-    "storybook:test": "cd storybook-web && yarn test-storybook",
-    "storybook:test:watch": "cd storybook-web && yarn test-storybook:watch",
-    "storybook:native": "cd storybook && yarn start",
-    "storybook:native:web": "cd storybook && yarn web",
-    "storybook:native:build": "cd storybook && yarn build",
+    "storybook": "yarn workspace startupjs-ui-storybook storybook",
+    "storybook:web": "yarn workspace startupjs-ui-storybook storybook",
+    "storybook:build": "yarn workspace startupjs-ui-storybook build-storybook",
+    "storybook:build:pages": "yarn workspace startupjs-ui-storybook build-storybook --output-dir ../docs/dist/storybook",
+    "storybook:test": "yarn workspace startupjs-ui-storybook test-storybook",
+    "storybook:test:watch": "yarn workspace startupjs-ui-storybook test-storybook:watch",
+    "storybook:native": "yarn workspace startupjs-ui-storybook start",
+    "storybook:native:web": "yarn workspace startupjs-ui-storybook web",
+    "storybook:native:build": "yarn workspace startupjs-ui-storybook build",
     "test": "sh -c 'set -e; for dir in packages/*/; do echo \"Testing $dir\"; (cd \"$dir\" && yarn test) || { echo \"\\033[31mERROR: Tests failed for $dir\\033[0m\"; exit 1; }; done'",
     "generate-package-dts": "node scripts/generate-package-dts.mjs",
     "publish-patch": "dotenv -- npx lerna publish patch --conventional-commits --create-release=github",
