@@ -90,19 +90,19 @@ export const Helpers: Story = {
     await expect(canvas.getByText('Last prompt value: idle')).toBeVisible()
 
     await userEvent.click(canvas.getByRole('button', { name: 'Open alert' }))
-    await waitFor(() => expect(screen.getByRole('dialog', { name: 'Delete participant?' })).toBeVisible())
+    await waitFor(() => expect(screen.getByRole('alertdialog', { name: 'Delete participant?' })).toBeVisible())
     await waitFor(() => expect(screen.getByRole('button', { name: 'OK' })).toBeVisible())
     await userEvent.click(screen.getByRole('button', { name: 'OK' }))
     await waitFor(() => expect(canvas.getByText('Last alert state: closed')).toBeVisible())
 
     await userEvent.click(canvas.getByRole('button', { name: 'Open confirm' }))
-    await waitFor(() => expect(screen.getByRole('dialog', { name: 'Publish results' })).toBeVisible())
+    await waitFor(() => expect(screen.getByRole('alertdialog', { name: 'Publish results' })).toBeVisible())
     await waitFor(() => expect(screen.getByText('Participants will see their matches immediately.')).toBeVisible())
     await userEvent.click(screen.getByRole('button', { name: 'Cancel' }))
     await waitFor(() => expect(canvas.getByText('Last confirm result: false')).toBeVisible())
 
     await userEvent.click(canvas.getByRole('button', { name: 'Open prompt' }))
-    await waitFor(() => expect(screen.getByRole('dialog', { name: 'Rename event' })).toBeVisible())
+    await waitFor(() => expect(screen.getByRole('alertdialog', { name: 'Rename event' })).toBeVisible())
     const promptInput = screen.getByRole('textbox')
     await userEvent.clear(promptInput)
     await userEvent.type(promptInput, 'Summer mixer')

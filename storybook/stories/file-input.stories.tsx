@@ -17,7 +17,7 @@ function FileInputStates () {
         ? (
           <StorySection
             title='Web blocker'
-            description='The public FileInput export currently resolves the non-Expo fallback in storybook-web and throws before rendering.'
+            description='The public FileInput export currently resolves the non-Expo fallback in web Storybook and throws before rendering.'
           >
             <Span description>
               Surface-level FileInput coverage remains blocked in this harness until the package-resolution/runtime path is fixed.

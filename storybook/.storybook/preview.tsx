@@ -1,5 +1,5 @@
 import type { Preview } from '@storybook/react-native-web-vite'
-import { startupjsParameters, withStartupjsLayout } from '../../storybook/shared/preview'
+import { startupjsParameters, withStartupjsLayout } from '../shared/preview'
 
 const preview: Preview = {
   decorators: [withStartupjsLayout],

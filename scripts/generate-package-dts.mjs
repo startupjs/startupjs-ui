@@ -67,8 +67,7 @@ async function main () {
     include: [],
     exclude: [
       '../../docs/**/*',
-      '../../storybook/**/*',
-      '../../storybook-web/**/*'
+      '../../storybook/**/*'
     ],
     files: [
       ...packagesToBuild.map(pkg => path.relative(tempDir, path.join(rootDir, pkg.entryFile))),

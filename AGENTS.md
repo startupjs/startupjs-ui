@@ -9,8 +9,7 @@ This repository is the source monorepo for `startupjs-ui`: the shared multiplatf
 - `packages/docs` and `packages/mdx`: internal docs support packages, not normal app-facing components.
 - `packages/core`: shared theming, helpers, CSS variables, and other low-level infrastructure.
 - `docs/`: the user-facing StartupJS + Expo documentation app.
-- `storybook/`: shared stories and native Storybook workspace.
-- `storybook-web/`: the web Storybook harness used for interaction and accessibility checks.
+- `storybook/`: shared Storybook workspace with native `.rnstorybook` and web `.storybook` setups.
 - `scripts/`: repo maintenance scripts such as export checks and declaration generation.
 - `tasks.md`: the live QA ledger and follow-up backlog.
 

@@ -14,6 +14,13 @@ export default meta
 type Story = StoryObj<typeof meta>
 type PlayContext = Parameters<NonNullable<Story['play']>>[0]
 
+function getByNormalizedText (canvas: PlayContext['canvas'], text: string) {
+  return canvas.getByText((_, element) => {
+    const normalizedText = element?.textContent?.replace(/\s+/g, ' ').trim()
+    return normalizedText === text
+  })
+}
+
 async function failingFollowup ({ canvas }: PlayContext) {
   const disabledTrigger = canvas.getByRole('button', { name: 'Disabled trigger' })
   await expect(disabledTrigger).toHaveAttribute('aria-disabled', 'true')
@@ -118,13 +125,13 @@ export const States: Story = {
     await expect(disabledTrigger).toHaveAttribute('aria-disabled', 'true')
     pressableContainer.focus()
     await userEvent.keyboard('{Enter}')
-    await expect(canvas.getByText('Activations: 1', { exact: true })).toBeVisible()
+    await expect(getByNormalizedText(canvas, 'Activations: 1')).toBeVisible()
 
     simpleTrigger.focus()
     await userEvent.keyboard(' ')
-    await expect(canvas.getByText('Simple activations: 1', { exact: true })).toBeVisible()
+    await expect(getByNormalizedText(canvas, 'Simple activations: 1')).toBeVisible()
 
     await userEvent.click(disabledTrigger)
-    await expect(canvas.getByText('Disabled activations: 0', { exact: true })).toBeVisible()
+    await expect(getByNormalizedText(canvas, 'Disabled activations: 0')).toBeVisible()
   }
 }

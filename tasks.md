@@ -129,7 +129,7 @@ Status legend:
      - `SmartSidebar`
 
 6. Storybook TypeScript cleanup
-   - Run `tsc --noEmit -p storybook-web/tsconfig.json` as a dedicated follow-up pass and separate story-only typing issues from package-source typing issues.
+   - Run `tsc --noEmit -p storybook/tsconfig.json` as a dedicated follow-up pass and separate story-only typing issues from package-source typing issues.
    - Story-only issues currently include:
      - icon prop typing mismatches in stories such as `Button` / `Link`
      - stories using props not present in declared component types, such as `label` on `PasswordInput` / `DateTimePicker`
@@ -163,7 +163,7 @@ Status legend:
    - `ObjectInput` hooks-order warning under dependency toggling
 
 5. TypeScript config boundary for Storybook
-   - Decide whether `storybook-web/tsconfig.json` should typecheck:
+   - Decide whether `storybook/tsconfig.json` should typecheck:
      - all package source transitively, or
      - stories plus only the intended public story surface
    - Current `tsc` output mixes real story authoring issues with unrelated package-source typing problems, which makes Storybook-specific typecheck noisier than it should be.
