@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/div",
-  "version": "0.2.0-alpha.1",
+  "version": "0.2.0",
   "publishConfig": {
     "access": "public"
   },
@@ -12,9 +12,9 @@
     "./useTooltip": "./useTooltip.tsx"
   },
   "dependencies": {
-    "@startupjs-ui/abstract-popover": "^0.2.0-alpha.1",
-    "@startupjs-ui/core": "^0.2.0-alpha.1",
-    "@startupjs-ui/span": "^0.2.0-alpha.1"
+    "@startupjs-ui/abstract-popover": "^0.2.0",
+    "@startupjs-ui/core": "^0.2.0",
+    "@startupjs-ui/span": "^0.2.0"
   },
   "peerDependencies": {
     "react": "*",
