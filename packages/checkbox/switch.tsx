@@ -17,13 +17,16 @@ const AnimatedView = Animated.View
 
 interface SwitchInputProps {
   value?: boolean
+  checkedBgColor?: string
   _hasError?: boolean
   [key: string]: any
 }
 
 function SwitchInput ({
   value,
+  checkedBgColor,
   _hasError,
+  style,
   ...props
 }: SwitchInputProps): ReactNode {
   const animation = useRef(new Animated.Value(value ? 1 : 0)).current
@@ -52,11 +55,17 @@ function SwitchInput ({
     }
   }, [value])
 
+  const checkedBgStyle = value && checkedBgColor
+    ? { backgroundColor: checkedBgColor }
+    : undefined
+
   return pug`
     Div.switch(
       styleName=[{ checked: value, error: _hasError }]
+      style=style
       ...props
     )
+      Div.switch-bg(style=checkedBgStyle)
       AnimatedView.switch-circle(
         part='switchCircle'
         style={

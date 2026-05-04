@@ -15,6 +15,8 @@ export interface CheckboxProps {
     value?: boolean;
     /** Custom icon for the checkbox variant */
     icon?: any;
+    /** Custom background color when checked */
+    checkedBgColor?: string;
     /** Disable interactions @default false */
     disabled?: boolean;
     /** Render a non-interactive value @default false */

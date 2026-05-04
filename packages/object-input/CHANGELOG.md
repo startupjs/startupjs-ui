@@ -20,6 +20,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 # [0.2.0-alpha.0](https://github.com/startupjs/startupjs-ui/compare/v0.1.22...v0.2.0-alpha.0) (2026-03-27)
+## [0.1.23](https://github.com/startupjs/startupjs-ui/compare/v0.1.22...v0.1.23) (2026-03-27)
 
 **Note:** Version bump only for package @startupjs-ui/object-input
 

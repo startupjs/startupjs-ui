@@ -5,9 +5,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.2.0-alpha.2](https://github.com/startupjs/startupjs-ui/compare/v0.2.0-alpha.1...v0.2.0-alpha.2) (2026-04-20)
 
-**Note:** Version bump only for package @startupjs-ui/input
-
-
 
 
 
@@ -27,6 +24,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * fix and improve accessibility of various components. Add storybook with tests. ([#21](https://github.com/startupjs/startupjs-ui/issues/21)) ([83b6576](https://github.com/startupjs/startupjs-ui/commit/83b65767ed61b24209f71b143ba1c2986170ab58))
 
 
+## [0.1.23](https://github.com/startupjs/startupjs-ui/compare/v0.1.22...v0.1.23) (2026-03-27)
+
+**Note:** Version bump only for package @startupjs-ui/input
 
 
 
