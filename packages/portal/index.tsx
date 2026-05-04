@@ -35,7 +35,6 @@ function Portal ({ children }: PortalProps): ReactNode {
   if (!$state) throw Error('Portal must be used within a Portal.Provider')
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/promise-function-async
     $state.nodes[componentId].set(() => children)
     const { $order } = $state
     if (!$order.get().includes(componentId)) $order.push(componentId)

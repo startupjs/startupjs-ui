@@ -33,6 +33,7 @@ export default async function alert (options: string | AlertOptions): Promise<vo
   await new Promise<void>(resolve => {
     openDialog({
       title: normalizedTitle,
+      role: 'alertdialog',
       children: message,
       cancelLabel: 'OK',
       onCancel: () => { resolve() },

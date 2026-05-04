@@ -21,6 +21,8 @@ export interface ModalHeaderProps {
   closeIcon?: object
   /** Style applied to the close icon */
   iconStyle?: StyleProp<ViewStyle>
+  /** Web-only title id for dialog naming */
+  titleId?: string
 }
 
 function ModalHeader ({
@@ -28,16 +30,18 @@ function ModalHeader ({
   children,
   onCrossPress, // @private
   closeIcon = faTimes,
-  iconStyle
+  iconStyle,
+  titleId
 }: ModalHeaderProps): ReactNode {
   return pug`
     Div.root(row style=style styleName=children ? 'between' : 'right' vAlign='center')
       if typeof children === 'string'
-        Span.title(numberOfLines=1)= children
+        Span.title(id=titleId numberOfLines=1)= children
       else
         = children
       if onCrossPress
         Div.close(onPress=onCrossPress)
+          Span.srOnly Close dialog
           Icon.icon(
             style=iconStyle
             icon=closeIcon

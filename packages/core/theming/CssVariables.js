@@ -53,7 +53,7 @@ export default function CssVariables ({ meta, clear = true, children }) {
         }
       }
     }
-  }, [JSON.stringify(meta)])
+  }, [JSON.stringify(meta), clear]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return children || null
 }

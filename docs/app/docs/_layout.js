@@ -60,7 +60,7 @@ export default observer(({ children }) => {
           )
           ScrollView.items
             each cat in filteredCategories
-              Category(key=cat.name name=cat.name defaultOpen=true)
+              Category(key=cat.name name=cat.name defaultOpen)
                 each component in cat.items
                   Item(key=component path=component setShowSidebar=setShowSidebar)= component
         ScrollView.contentWrapper

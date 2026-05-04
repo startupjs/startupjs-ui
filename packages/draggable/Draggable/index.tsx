@@ -226,7 +226,7 @@ function Draggable ({
       const n = items.length
       const dropHeight = dropBottom - dropTop
       const slotHeight = dropHeight / n
-      const rects: Array<{ top: number, bottom: number, height: number }> = []
+      const rects: { top: number, bottom: number, height: number }[] = []
       for (let i = 0; i < n; i++) {
         rects.push({
           top: dropTop + i * slotHeight,

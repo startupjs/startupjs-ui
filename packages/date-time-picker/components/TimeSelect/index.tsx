@@ -51,10 +51,10 @@ function TimeSelect ({
     if (is24Hour != null) return is24Hour
     const lt = (moment().locale(exactLocale))._locale._longDateFormat.LT
     return !/a/i.test(lt)
-  }, [is24Hour, exactLocale])
+  }, [is24Hour, exactLocale, moment])
 
   const preparedData = useMemo(() => {
-    const res: Array<{ label: string, value: number, disabled: boolean }> = []
+    const res: { label: string, value: number, disabled: boolean }[] = []
 
     let currentTimestamp = +moment.tz(date, timezone).locale(exactLocale).startOf('d')
     const endTimestamp = +moment.tz(date, timezone).locale(exactLocale).endOf('d')
@@ -75,14 +75,14 @@ function TimeSelect ({
     }
 
     return res
-  }, [date, exactLocale, timezone, timeInterval, _is24Hour, maxDate, minDate])
+  }, [date, exactLocale, timezone, timeInterval, _is24Hour, maxDate, minDate, moment])
 
   const scrollToIndex = useCallback((_date: Date = date) => {
     const dateTimestamp = +moment.tz(_date, timezone)
     const index = preparedData.findIndex(item => dateTimestamp === item.value)
     if (index === -1) return
     refScroll.current?.scrollToIndex?.({ index, animated: false })
-  }, [date, timezone, preparedData])
+  }, [date, timezone, preparedData, moment])
 
   useImperativeHandle(ref, () => ({ scrollToIndex }), [scrollToIndex])
   useEffect(() => {
@@ -96,7 +96,7 @@ function TimeSelect ({
       Div.cell(
         styleName={ isActive }
         disabled=item.disabled
-        onPress=()=> onChangeDate && onChangeDate(item.value)
+        onPress=() => onChangeDate && onChangeDate(item.value)
       )
         Span.label(styleName={ isActive })
           = item.label
@@ -115,7 +115,7 @@ function TimeSelect ({
         length,
         index
       })
-      keyExtractor=item=> String(item.value)
+      keyExtractor=item => String(item.value)
     )
   `
 }

@@ -38,7 +38,7 @@ function Header ({
   const onChangeMonth = useCallback((value: number) => {
     const ts = +moment($uiDate.get()).add('month', value)
     $uiDate.set(ts)
-  }, [$uiDate])
+  }, [$uiDate, moment])
 
   const isPrevDisabled = minDate
     ? +moment.tz($uiDate.get(), timezone).endOf('month').add('month', -1) < minDate
@@ -64,14 +64,14 @@ function Header ({
           variant='text'
           disabled=isPrevDisabled
           icon=faAngleLeft
-          onPress=()=> onChangeMonth(-1)
+          onPress=() => onChangeMonth(-1)
         )
         Button.button(
           color='text-description'
           variant='text'
           disabled=isNextDisabled
           icon=faAngleRight
-          onPress=()=> onChangeMonth(1)
+          onPress=() => onChangeMonth(1)
         )
   `
 }
@@ -103,7 +103,7 @@ const Years = observer(function YearsComponent ({
     const ts = +moment($uiDate.get()).year(year)
     $uiDate.set(ts)
     $visible.set(false)
-  }, [$uiDate, $visible])
+  }, [$uiDate, $visible, moment])
 
   const years = useMemo(() => {
     return new Array(yearsDiff + 1).fill(minYear).map((year, index) => {

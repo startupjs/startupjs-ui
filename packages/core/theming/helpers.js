@@ -129,7 +129,7 @@ export function transformOverrides (overrides, palette, Color) {
   return res
 }
 
-/* eslint-disable dot-notation, no-multi-spaces */
+/* eslint-disable @stylistic/no-multi-spaces */
 export function prepareColorsObject (
   palette,
   Color,
@@ -262,4 +262,4 @@ export function prepareColorsObject (
 
   return { colors: C, palette: P, componentColors: CC }
 }
-/* eslint-enable dot-notation, no-multi-spaces */
+/* eslint-enable @stylistic/no-multi-spaces */

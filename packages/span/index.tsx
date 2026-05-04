@@ -1,5 +1,5 @@
 import { type ReactNode, type RefObject, useMemo } from 'react'
-import { Platform, StyleSheet, Text, type TextStyle, type StyleProp, type TextProps } from 'react-native'
+import { StyleSheet, Text, type TextStyle, type StyleProp, type TextProps } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { pug, observer } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
@@ -70,8 +70,8 @@ function Span ({
 
   const tag = h1 ? 'h1' : h2 ? 'h2' : h3 ? 'h3' : h4 ? 'h4' : h5 ? 'h5' : h6 ? 'h6' : undefined
 
-  const role: any = Platform.OS === 'web' && tag
-    ? { accessibilityRole: 'header', accessibilityLevel: tag.replace(/^h/, '') }
+  const accessibilityProps: any = tag
+    ? { role: 'heading', 'aria-level': Number(tag.replace(/^h/, '')) }
     : {}
 
   const Component = useMemo(() => {
@@ -88,7 +88,7 @@ function Span ({
         tag,
         { bold, italic, full, description }
       ]
-      ...role
+      ...accessibilityProps
       ...props
     )= children
   `

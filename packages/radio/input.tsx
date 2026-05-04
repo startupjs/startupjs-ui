@@ -80,7 +80,9 @@ const RadioInput = function ({
       vAlign='center'
       disabled=disabled || readonly
       onPress=() => onChange && onChange(parseValue(value))
-      accessibilityRole='radio'
+      role='radio'
+      aria-checked=!!checked
+      aria-disabled=disabled || readonly
       row
     )
       Div.radio(

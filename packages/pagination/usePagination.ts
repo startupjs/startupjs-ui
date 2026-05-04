@@ -89,7 +89,7 @@ export default function usePagination ({
   const currentPage = page
 
   // Basic list of items to render
-  const itemList: Array<PaginationItemType | number> = []
+  const itemList: (PaginationItemType | number)[] = []
 
   if (showFirstButton) itemList.push('first')
   if (showPrevButton) itemList.push('previous')

@@ -170,7 +170,7 @@ function AutoSuggest ({
       return pug`
         TouchableOpacity(
           key=index
-          onPress=() => { void _onPress(item) }
+          onPress=() => { _onPress(item) }
         )= renderItem(item, index, selectIndexValue)
       `
     }
@@ -179,7 +179,7 @@ function AutoSuggest ({
       Menu.Item.item(
         key=index
         styleName={ selectMenu: selectIndexValue === index }
-        onPress=() => { void _onPress(item) }
+        onPress=() => { _onPress(item) }
         active=stringifyValue(item) === stringifyValue(value)
       )= getLabelFromValue(item, options)
     `
@@ -229,7 +229,7 @@ function AutoSuggest ({
       onChangeText=_onChangeText
       onFocus=() => setIsShow(true)
       onKeyPress=onKeyPress
-      onIconPress=() => { void onChange?.() }
+      onIconPress=() => { onChange?.() }
       testID=testID
     )
 

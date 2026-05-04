@@ -9,7 +9,7 @@ import Span from '@startupjs-ui/span'
 import './index.cssx.styl'
 
 const isWeb = Platform.OS === 'web'
-const EXTERNAL_LINK_REGEXP = /^(https?:\/\/|\/\/)/i
+const EXTERNAL_LINK_REGEXP = /^(https?:\/\/|\/\/|mailto:)/i
 
 export default observer(themed('Link', Link))
 
@@ -69,7 +69,7 @@ function Link ({
 
   const isBlock = resolvedDisplay === 'block'
   const Component = isBlock ? Div : Span
-  const extraProps: Record<string, any> = { accessibilityRole: 'link', onPress: handlePress }
+  const extraProps: Record<string, any> = { role: 'link', onPress: handlePress }
   const {
     navigate: routerNavigate,
     push: routerPush,
@@ -103,9 +103,24 @@ function Link ({
       }
 
       if (EXTERNAL_LINK_REGEXP.test(target ?? '')) {
-        isWeb
-          ? window.open(target, '_blank')
-          : Linking.openURL(target ?? '')
+        const url = target ?? ''
+        if (/^mailto:/i.test(url)) {
+          if (isWeb && typeof document !== 'undefined') {
+            const a = document.createElement('a')
+            a.href = url
+            document.body.appendChild(a)
+            a.click()
+            document.body.removeChild(a)
+          } else {
+            Linking.openURL(url)
+          }
+        } else {
+          if (isWeb) {
+            window.open(target, '_blank')
+          } else {
+            Linking.openURL(target ?? '')
+          }
+        }
       } else {
         let method
         if (push) method = routerPush
@@ -122,7 +137,7 @@ function Link ({
       if ((children as any)?.props?.originalType === Button || (children as any)?.type === Button) {
         return cloneElement(children as any, { style, ...restProps, ...extraProps })
       }
-    } catch (e) {
+    } catch {
       // ignore errors when children contains multiple elements
     }
   }

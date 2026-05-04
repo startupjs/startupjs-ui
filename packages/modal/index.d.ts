@@ -2,7 +2,7 @@
 // DO NOT MODIFY THIS FILE - IT IS AUTOMATICALLY GENERATED ON COMMITS.
 
 import { type ReactNode, type ComponentType, type RefObject } from 'react';
-import { type StyleProp, type ViewStyle } from 'react-native';
+import { type StyleProp, type ViewStyle, type ViewProps } from 'react-native';
 type SupportedOrientation = 'portrait' | 'portrait-upside-down' | 'landscape' | 'landscape-left' | 'landscape-right';
 export declare const _PropsJsonSchema: {};
 export interface ModalProps {
@@ -22,6 +22,8 @@ export interface ModalProps {
     ref?: RefObject<any>;
     /** Header title text */
     title?: string;
+    /** Accessible role for the modal surface on web @default 'dialog' */
+    role?: ViewProps['role'];
     /** Label for cancel action @default 'Cancel' */
     cancelLabel?: string;
     /** Label for confirm action @default 'Confirm' */

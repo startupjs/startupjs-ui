@@ -33,6 +33,7 @@ export default async function confirm (options: string | ConfirmOptions): Promis
   const result = await new Promise<boolean>(resolve => {
     openDialog({
       title: normalizedTitle,
+      role: 'alertdialog',
       children: message,
       cancelLabel: 'Cancel',
       confirmLabel: 'OK',
