@@ -1,4 +1,4 @@
-import { $, BASE_URL, serverOnly, Signal, sub } from 'startupjs'
+import { $, BASE_URL, accessControl, serverOnly, Signal, sub } from 'startupjs'
 import { createPlugin } from 'startupjs/registry'
 import busboy from 'busboy'
 import sharp from 'sharp'
@@ -10,14 +10,26 @@ export default createPlugin({
   name: 'files',
   enabled: true,
   order: 'system ui',
-  isomorphic: () => ({
+  isomorphic: (_options, plugin) => ({
     models: models => {
       return {
         ...models,
         files: {
           default: FilesModel,
           schema,
-          ...models.files
+          ...models.files,
+          access: accessControl(models.files?.access || {
+            read: ({ session, docId, doc }) => {
+              const canRead = getServerOptions(plugin).canRead
+              if (!canRead) return true
+              return canRead({
+                source: 'model',
+                session,
+                fileId: docId,
+                file: doc
+              })
+            }
+          }, { force: true })
         },
         'files.*': {
           default: FileModel,
@@ -26,7 +38,7 @@ export default createPlugin({
       }
     }
   }),
-  server: () => ({
+  server: (options = {}) => ({
     serverRoutes: expressApp => {
       expressApp.get(GET_FILE_URL, async (req, res) => {
         let { fileId } = req.params
@@ -45,6 +57,13 @@ export default createPlugin({
         if (!mimeType) return res.status(500).send(ERRORS.fileMimeTypeNotSet)
         const isVideo = mimeType.startsWith('video/') || isVideoRequest
         if (!storageType) return res.status(500).send(ERRORS.fileStorageTypeNotSet)
+        if (!await isAllowed(options.canRead, {
+          source: 'api',
+          req,
+          session: req.session,
+          fileId,
+          file
+        }, res)) return
 
         // handle client-side caching of files
         const clientEtag = req.get('If-None-Match')
@@ -218,7 +237,7 @@ export default createPlugin({
           stream.on('data', data => buffers.push(data))
 
           stream.on('end', async () => {
-            const blob = Buffer.concat(buffers)
+            let blob = Buffer.concat(buffers)
             meta = { filename, mimeType, encoding, storageType }
             if (!blob) return res.status(500).send('No file was uploaded')
 
@@ -227,6 +246,27 @@ export default createPlugin({
             const extension = meta.filename?.match(/\.([^.]+)$/)?.[1]
             if (extension) meta.extension = extension
             try {
+              const file = fileId ? (await sub($.files[fileId])).get() : undefined
+              const accessContext = {
+                source: 'api',
+                req,
+                session: req.session,
+                fileId,
+                file,
+                blob,
+                meta
+              }
+              if (!await isAllowed(options.canUpload, accessContext, res)) return
+
+              if (options.transformUpload) {
+                const transformed = await options.transformUpload(accessContext)
+                if (transformed) {
+                  if ('fileId' in transformed) fileId = transformed.fileId
+                  if ('blob' in transformed) blob = transformed.blob
+                  if ('meta' in transformed) meta = transformed.meta
+                }
+              }
+
               fileId = await uploadBuffer(blob, { fileId, meta })
             } catch (err) {
               console.error(err)
@@ -247,6 +287,13 @@ export default createPlugin({
         if (!file) return res.status(404).send(ERRORS.fileNotFound)
         const { storageType } = file
         if (!storageType) return res.status(500).send(ERRORS.fileStorageTypeNotSet)
+        if (!await isAllowed(options.canDelete, {
+          source: 'api',
+          req,
+          session: req.session,
+          fileId,
+          file
+        }, res)) return
         try {
           await deleteFile(storageType, fileId)
           await $file.del()
@@ -259,6 +306,23 @@ export default createPlugin({
     }
   })
 })
+
+function getServerOptions (plugin) {
+  return plugin.optionsByEnv?.server || {}
+}
+
+async function isAllowed (hook, context, res) {
+  if (!hook) return true
+  try {
+    if (await hook(context)) return true
+  } catch (err) {
+    console.error(err)
+    res.status(500).send('Error checking file access')
+    return false
+  }
+  res.status(403).send(ERRORS.accessDenied)
+  return false
+}
 
 const schema = {
   storageType: { type: 'string', required: true },
@@ -284,11 +348,11 @@ class FilesModel extends Signal {
   }
 
   getUrl (fileId, extension) {
-    return BASE_URL + getFileUrl(fileId, extension)
+    return getFileUrlWithAccessToken(fileId, extension)
   }
 
   getDownloadUrl (fileId, extension) {
-    return BASE_URL + getFileUrl(fileId, extension) + '?download=true'
+    return getFileUrlWithAccessToken(fileId, extension, { download: true })
   }
 
   getUploadUrl (fileId) {
@@ -302,11 +366,11 @@ class FilesModel extends Signal {
 
 class FileModel extends Signal {
   getUrl () {
-    return BASE_URL + getFileUrl(this.getId(), this.extension.get())
+    return getFileUrlWithAccessToken(this.getId(), this.extension.get())
   }
 
   getDownloadUrl () {
-    return this.getUrl() + '?download=true'
+    return getFileUrlWithAccessToken(this.getId(), this.extension.get(), { download: true })
   }
 
   getUploadUrl () {
@@ -322,7 +386,25 @@ class FileModel extends Signal {
   })
 }
 
+function getFileUrlWithAccessToken (fileId, extension, query = {}) {
+  const token = $.session.token.get()
+  return addQuery(BASE_URL + getFileUrl(fileId, extension), {
+    ...query,
+    ...(token ? { access_token: token } : {})
+  })
+}
+
+function addQuery (url, query) {
+  const search = Object.entries(query)
+    .filter(([, value]) => value != null && value !== false)
+    .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`)
+    .join('&')
+  if (!search) return url
+  return url + (url.includes('?') ? '&' : '?') + search
+}
+
 const ERRORS = {
+  accessDenied: 'Access denied',
   fileNotFound: 'File not found',
   fileMimeTypeNotSet: 'File mimeType is not set. This should never happen',
   fileStorageTypeNotSet: 'File storageType is not set. This should never happen'
