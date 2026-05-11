@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/startupjs/startupjs-ui/compare/v0.2.0...v0.2.1) (2026-05-11)
+
+
+### Features
+
+* **file-input:** provide server-side hooks for the 'files' plugin server config to check access to file operations and to transform the file during upload. Add types to the 'files' plugin to work with teamplay's type augmentation. ([bd527ad](https://github.com/startupjs/startupjs-ui/commit/bd527adcc2be0762af8439561cc39dcb44a7f991))
+
+
+
+
+
 # [0.2.0](https://github.com/startupjs/startupjs-ui/compare/v0.1.23...v0.2.0) (2026-05-04)
 
 
