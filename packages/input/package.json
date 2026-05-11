@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/input",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "publishConfig": {
     "access": "public"
   },
@@ -13,18 +13,18 @@
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
-    "@startupjs-ui/array-input": "^0.2.0",
+    "@startupjs-ui/array-input": "^0.2.1",
     "@startupjs-ui/card": "^0.2.0",
     "@startupjs-ui/checkbox": "^0.2.0",
     "@startupjs-ui/color-picker": "^0.2.0",
     "@startupjs-ui/core": "^0.2.0",
     "@startupjs-ui/date-time-picker": "^0.2.0",
     "@startupjs-ui/div": "^0.2.0",
-    "@startupjs-ui/file-input": "^0.2.0",
+    "@startupjs-ui/file-input": "^0.2.1",
     "@startupjs-ui/icon": "^0.2.0",
     "@startupjs-ui/multi-select": "^0.2.0",
     "@startupjs-ui/number-input": "^0.2.0",
-    "@startupjs-ui/object-input": "^0.2.0",
+    "@startupjs-ui/object-input": "^0.2.1",
     "@startupjs-ui/password-input": "^0.2.0",
     "@startupjs-ui/radio": "^0.2.0",
     "@startupjs-ui/range-input": "^0.2.0",
