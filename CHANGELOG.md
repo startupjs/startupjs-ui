@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](https://github.com/startupjs/startupjs-ui/compare/v0.2.1...v0.2.2) (2026-05-11)
+
+
+### Bug Fixes
+
+* **file-input:** fix typings of the files plugin ([2bf0191](https://github.com/startupjs/startupjs-ui/commit/2bf0191c7b389982f0956925f27b28e38de6427d))
+
+
+
+
+
 ## [0.2.1](https://github.com/startupjs/startupjs-ui/compare/v0.2.0...v0.2.1) (2026-05-11)
 
 
