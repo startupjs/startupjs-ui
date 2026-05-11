@@ -14,7 +14,10 @@
     "./deleteFile": "./deleteFile.ts",
     "./uploadFile": "./uploadFile.ts",
     "./providers": "./providers/index.js",
-    "./files.plugin": "./files.plugin.js"
+    "./files.plugin": {
+      "types": "./files.plugin.d.ts",
+      "default": "./files.plugin.js"
+    }
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
