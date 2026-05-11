@@ -1,4 +1,4 @@
-import type { CollectionSpec, Signal, SignalModelConstructor } from 'startupjs'
+import { Signal, type CollectionSpec } from 'startupjs'
 
 export interface FileDoc {
   storageType: string
@@ -49,7 +49,7 @@ export interface FilesPluginServerOptions {
   transformUpload?: (context: FileUploadContext) => FileUploadTransformResult | void | Promise<FileUploadTransformResult | void>
 }
 
-interface FilesModel extends Signal<FileDoc[]> {
+export declare class FilesModel extends Signal<FileDoc[]> {
   addNew (file: Omit<FileDoc, 'createdAt' | 'updatedAt'>): Promise<string>
   getUrl (fileId: string, extension?: string): string
   getDownloadUrl (fileId: string, extension?: string): string
@@ -57,7 +57,7 @@ interface FilesModel extends Signal<FileDoc[]> {
   getDeleteUrl (fileId: string): string
 }
 
-interface FileModel extends Signal<FileDoc> {
+export declare class FileModel extends Signal<FileDoc> {
   getUrl (): string
   getDownloadUrl (): string
   getUploadUrl (): string
@@ -65,13 +65,10 @@ interface FileModel extends Signal<FileDoc> {
   getBlob (): Promise<Blob>
 }
 
-type FilesModelConstructor = SignalModelConstructor<FileDoc[], FilesModel>
-type FileModelConstructor = SignalModelConstructor<FileDoc, FileModel>
-
 declare module 'teamplay' {
   interface TeamplayPluginCollections {
     '@startupjs-ui/file-input/files': {
-      files: CollectionSpec<FileDoc, FilesModelConstructor, FileModelConstructor>
+      files: CollectionSpec<FileDoc, typeof FilesModel, typeof FileModel>
     }
   }
 }
