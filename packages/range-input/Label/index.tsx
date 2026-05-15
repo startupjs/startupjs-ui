@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react'
-import { type LabelProps as MultiSliderLabelProps } from '@ptomasroos/react-native-multi-slider'
+import { type LabelProps as MultiSliderLabelProps } from '@startupjs-ui/react-native-multi-slider'
 import { pug } from 'startupjs'
 import Div from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'

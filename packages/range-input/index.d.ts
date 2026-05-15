@@ -1,7 +1,7 @@
 /* eslint-disable */
 // DO NOT MODIFY THIS FILE - IT IS AUTOMATICALLY GENERATED ON COMMITS.
 
-import { type MultiSliderProps } from '@ptomasroos/react-native-multi-slider';
+import { type MultiSliderProps } from '@startupjs-ui/react-native-multi-slider';
 import './index.cssx.styl';
 declare const _default: import("react").ComponentType<RangeInputProps>;
 export default _default;
