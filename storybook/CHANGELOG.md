@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.3](https://github.com/startupjs/startupjs-ui/compare/v0.2.2...v0.2.3) (2026-05-15)
+
+
+### Bug Fixes
+
+* **range-input:** use forked version of the underlying range-input library which is published to npm ([7870f61](https://github.com/startupjs/startupjs-ui/commit/7870f61884d0eef85db8c4495bbd41327bd08014))
+
+
+
+
+
 ## [0.2.2](https://github.com/startupjs/startupjs-ui/compare/v0.2.1...v0.2.2) (2026-05-11)
 
 **Note:** Version bump only for package startupjs-ui-storybook
