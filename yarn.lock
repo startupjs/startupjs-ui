@@ -4454,16 +4454,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ptomasroos/react-native-multi-slider@github:ptomasroos/react-native-multi-slider#368a0e8a67a595a84f411ea394b471a43ad8e7a4":
-  version: 2.2.2
-  resolution: "@ptomasroos/react-native-multi-slider@https://github.com/ptomasroos/react-native-multi-slider.git#commit=368a0e8a67a595a84f411ea394b471a43ad8e7a4"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 10c0/dca748213bd39588e86a0f7016d4c86ccb79cdbc22d5431b6a0465ad777dd96f4ca84c9fd825f4ebccdfd79987b683e337d65c3a62b9253f042d42930398333c
-  languageName: node
-  linkType: hard
-
 "@radix-ui/primitive@npm:1.1.3":
   version: 1.1.3
   resolution: "@radix-ui/primitive@npm:1.1.3"
@@ -6936,9 +6926,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/range-input@workspace:packages/range-input"
   dependencies:
-    "@ptomasroos/react-native-multi-slider": "github:ptomasroos/react-native-multi-slider#368a0e8a67a595a84f411ea394b471a43ad8e7a4"
     "@startupjs-ui/core": "npm:^0.2.0"
     "@startupjs-ui/div": "npm:^0.2.0"
+    "@startupjs-ui/react-native-multi-slider": "npm:^2.2.2"
     "@startupjs-ui/span": "npm:^0.2.0"
   peerDependencies:
     react: "*"
@@ -6978,6 +6968,16 @@ __metadata:
     startupjs: "*"
   languageName: unknown
   linkType: soft
+
+"@startupjs-ui/react-native-multi-slider@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "@startupjs-ui/react-native-multi-slider@npm:2.2.2"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/d2c2ec05fb7959693a5136d83acbb439f0bb1aec2ff4c028bf7ec6714a4a263e86c0a85d20e1b3876a33c78a0fbc202d2e76512275e7c3034924b18b041fe684
+  languageName: node
+  linkType: hard
 
 "@startupjs-ui/scroll-view@npm:^0.2.0, @startupjs-ui/scroll-view@workspace:packages/scroll-view":
   version: 0.0.0-use.local

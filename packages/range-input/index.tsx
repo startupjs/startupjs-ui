@@ -1,5 +1,5 @@
 import { useMemo, type ReactNode } from 'react'
-import MultiSlider, { type MultiSliderProps } from '@ptomasroos/react-native-multi-slider'
+import MultiSlider, { type MultiSliderProps } from '@startupjs-ui/react-native-multi-slider'
 import { pug, observer } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
 import Label from './Label'
