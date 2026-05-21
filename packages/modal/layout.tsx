@@ -1,4 +1,22 @@
 import React, { useId, type ReactNode, type ComponentType } from 'react'
+
+function getTextFromChildren (children: ReactNode): string | undefined {
+  if (children == null || typeof children === 'boolean') return undefined
+  if (typeof children === 'string' || typeof children === 'number') {
+    const text = String(children).trim()
+    return text || undefined
+  }
+  if (Array.isArray(children)) {
+    const parts = children
+      .map(getTextFromChildren)
+      .filter((part): part is string => !!part)
+    return parts.length ? parts.join(' ').trim() : undefined
+  }
+  if (React.isValidElement(children)) {
+    return getTextFromChildren((children as any).props?.children)
+  }
+  return undefined
+}
 import { View, TouchableOpacity, type StyleProp, type ViewStyle, type ViewProps } from 'react-native'
 import { pug, observer } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
@@ -108,8 +126,8 @@ function Modal ({
   const isWindowLayout = variant === 'window'
   const hasActions = !!onCancel || !!onConfirm
   const hasHeader = !!title || !!showCross
-  const headerTitle = !title && React.isValidElement(header) && typeof (header as any).props?.children === 'string'
-    ? (header as any).props.children as string
+  const headerTitle = !title && React.isValidElement(header)
+    ? getTextFromChildren((header as any).props?.children)
     : undefined
   const dialogTitle = title ?? headerTitle
 
@@ -154,7 +172,7 @@ function Modal ({
   }
 
   const modalTitleId = useId()
-  const titleId = dialogTitle ? modalTitleId : undefined
+  const titleId = header ? modalTitleId : undefined
 
   // Handle <Modal.Header>
   const headerProps = {
@@ -210,7 +228,7 @@ function Modal ({
         styleName=[variant]
         role=role ?? 'dialog'
         aria-modal
-        aria-label=titleId ? undefined : dialogTitle
+        aria-label=dialogTitle
         aria-labelledby=titleId
       )
         = header

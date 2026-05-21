@@ -34,6 +34,12 @@ export interface MenuItemProps extends Omit<ItemProps, 'style' | 'onPress' | 'ic
   to?: string
   /** Handler called on item press */
   onPress?: ItemProps['onPress']
+  /** Web accessibility role forwarded to the interactive root */
+  role?: ItemProps['role']
+  /** Whether the option is selected (for listbox/combobox patterns on web) */
+  'aria-selected'?: boolean
+  /** Accessible name when item text is not plain text */
+  accessibilityLabel?: string
 }
 
 function MenuItem ({
@@ -42,6 +48,9 @@ function MenuItem ({
   active = false,
   bold,
   icon,
+  role,
+  'aria-selected': ariaSelected,
+  accessibilityLabel,
   ...props
 }: MenuItemProps): ReactNode {
   const context = useContext(MenuContext)
@@ -61,9 +70,18 @@ function MenuItem ({
   color = active ? (activeColor ?? getColor('text-primary')) : (color ?? getColor('text-main'))
   const borderStyle: StyleProp<ViewStyle> = { backgroundColor: activeColor ?? getColor('border-primary') }
 
+  const optionLabel = accessibilityLabel ??
+    (typeof children === 'string' || typeof children === 'number' ? String(children) : undefined)
+
   return pug`
     Div
-      Item(...props)
+      Item(
+        ...props
+        role=role
+        accessibilityRole=role
+        accessibilityLabel=optionLabel
+        aria-selected=ariaSelected
+      )
         if icon && iconPosition === 'left'
           Item.Left
             Icon(icon=icon style={ color })

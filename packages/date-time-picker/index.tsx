@@ -312,6 +312,7 @@ function DateTimePicker ({
   if (Platform.OS === 'web') {
     inputProps.editable = false
     inputProps.onFocus = _onPressIn
+    if (textInput) inputProps['aria-valuetext'] = textInput
   }
 
   if (Platform.OS === 'android') {

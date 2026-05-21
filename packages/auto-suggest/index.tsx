@@ -175,13 +175,19 @@ function AutoSuggest ({
       `
     }
 
+    const optionLabel = getOptionLabel(item)
+    const isSelected = stringifyValue(item) === stringifyValue(value)
+
     return pug`
       Menu.Item.item(
         key=index
         styleName={ selectMenu: selectIndexValue === index }
         onPress=() => { _onPress(item) }
-        active=stringifyValue(item) === stringifyValue(value)
-      )= getLabelFromValue(item, options)
+        active=isSelected
+        role='option'
+        aria-selected=isSelected
+        accessibilityLabel=optionLabel != null ? String(optionLabel) : undefined
+      )= optionLabel
     `
   }
 
@@ -247,7 +253,7 @@ function AutoSuggest ({
         View.loaderCase
           Loader(size='s')
       else
-        View.contentCase
+        View.contentCase(role='listbox')
           FlatList.content(
             style=style
             data=_options

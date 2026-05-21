@@ -88,6 +88,9 @@ function DropdownItem ({
         onPress=handlePress
         icon=icon
         testID=testID
+        role='option'
+        aria-selected=(_activeValue === value)
+        accessibilityLabel=label
       )= label
     `
   }

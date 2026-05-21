@@ -167,12 +167,17 @@ function MultiSelect ({
     const { label, value: itemValue } = item
     const selected = value.includes(itemValue)
     const onPress = onItemPress(itemValue, selected)
+    const optionLabel = label != null ? String(label) : String(itemValue)
 
     return pug`
       Div(
         key=itemValue
         vAlign='center'
         disabled=selected ? false : shouldDisableSelection
+        role=IS_WEB ? 'option' : undefined
+        accessibilityRole=IS_WEB ? 'option' : undefined
+        accessibilityLabel=optionLabel
+        aria-selected=IS_WEB ? selected : undefined
         onPress=() => onPress(!selected)
       )
         if renderListItem
@@ -188,7 +193,7 @@ function MultiSelect ({
 
   function renderContent (): ReactNode {
     return pug`
-      ScrollView.suggestions-web
+      ScrollView.suggestions-web(role=IS_WEB ? 'listbox' : undefined)
         each option, index in normalizedOptions
           = _renderListItem({ item: option, index })
     `
@@ -366,7 +371,9 @@ function DefaultInput ({
       Div.input(
         style=style
         styleName={ disabled, focused, readonly, error: _hasError }
-        role='button'
+        role=IS_WEB ? 'combobox' : 'button'
+        aria-expanded=IS_WEB ? !!focused : undefined
+        aria-haspopup=IS_WEB ? 'listbox' : undefined
         aria-disabled=disabled
         aria-readonly=readonly
         onPress=disabled || readonly ? undefined : onOpen

@@ -180,6 +180,71 @@ That means:
 - prefer adding `aria-label`, `role`, and other semantic props in app code
 - avoid burying the problem under `locator('xpath=...')`, `.nth(...)`, or DOM-shape selectors unless no realistic semantic alternative exists
 
+### Labels and `getByLabel` (wrapped `Input`)
+
+StartupJS `Input` fields use `wrapInput` with `aria-labelledby` / `aria-label` on web. Prefer:
+
+- `page.getByLabel('Field label')` for `.fill()`, `.inputValue()`, and native `type='select'` via `.selectOption()`.
+- Explicit `testId` on the field (and `{testId}-combobox` for selects) when the control is custom or only wrapped in a `data-testid` container.
+- DOM fallback (`getByText` + parent `input`) only for non-standard pickers or very long label copy.
+
+### Select / Dropdown / listbox (web) test contract
+
+**`Input type='select'`** (StartupJS Select):
+
+- Prefer `page.getByLabel('Field label').selectOption({ label: 'Option' })`.
+- Or `page.getByTestId('{fieldTestId}-combobox').selectOption({ label: 'Option' })` when the field has `testId`.
+- Native `<option>` elements are exposed to Playwright as `role="option"`.
+
+**`Dropdown` popover** and **AutoSuggest** / **MultiSelect** lists:
+
+- Open list surfaces use `role="listbox"` on web.
+- Rows use `role="option"` and `aria-selected` for the active value.
+- Prefer `listbox.getByRole('option', { name: 'Option label' })` over `getByText` on the whole page.
+
+Example:
+
+```ts
+await page.getByTestId('billing-country-combobox').selectOption({ label: 'United States' })
+// or, for Dropdown:
+await page.getByRole('listbox').getByRole('option', { name: 'Create new' }).click()
+```
+
+### DateTimePicker (web) test contract
+
+When using `@startupjs-ui/date-time-picker` or `Input` with `type='date'`:
+
+- Set an explicit `testId` / `testID` on the field (avoid relying on auto-generated `Select_date-{hash}` ids).
+- The anchored popover uses `{testID}-popover` on tablet/web.
+- Calendar day cells use `data-testid="{MM}-{DD}-{YYYY}"` (for example `05-21-2026`).
+- Day cells expose `role="gridcell"` with an accessible name like `May 21, 2026`.
+- The readonly input exposes `aria-valuetext` with the formatted value; do not use `inputValue()` on RN-web.
+
+Example:
+
+```ts
+await page.getByTestId('starting-balance-date-input').click()
+const popover = page.getByTestId('starting-balance-date-popover')
+await popover.getByTestId('05-21-2026').click()
+```
+
+### Modal / Dialog (web) test contract
+
+`@startupjs-ui/modal` surfaces use `role="dialog"` and `aria-modal`.
+
+- Prefer `page.getByRole('dialog', { name: 'Modal title' })` over `.filter({ has: getByText(...) })`.
+- React Native `Modal` adds an outer `dialog` wrapper; use `.last()` to target the inner titled surface.
+- With `title="..."` or string `Modal.Header` children, the title is linked via `aria-labelledby`.
+- With custom `Modal.Header` content (for example a `Span` title), the header wrapper gets the title id so the dialog still exposes the title as its accessible name.
+- Built-in `Modal.Actions` buttons expose `data-part="cancel"` and `data-part="confirm"` for fallback clicks when labels vary.
+
+Example:
+
+```ts
+const presetModal = page.getByRole('dialog', { name: 'Create Preset', exact: true })
+await presetModal.getByRole('button', { name: 'Save', exact: true }).click()
+```
+
 ### When the problem is in a shared UI library
 
 If the selector problem appears to come from a shared UI component library:
