@@ -18,7 +18,7 @@ export interface SelectProps extends Omit<UITextInputProps, 'value' | 'onChangeT
     emptyValueLabel?: string | number;
     /** Ref forwarded to underlying TextInput */
     ref?: RefObject<any>;
-    /** Test identifier passed to wrapper */
+    /** Test identifier passed to wrapper; on web the native `<select>` overlay also receives `data-testid="{testID}-combobox"` when set */
     testID?: string;
     /** Cross-platform accessible name */
     'aria-label'?: string;
