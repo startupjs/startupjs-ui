@@ -29,7 +29,7 @@ export interface SelectWrapperProps {
   showEmptyValue?: boolean
   /** Label for empty/none option */
   emptyValueLabel?: string | number
-  /** Test identifier */
+  /** Test identifier passed to wrapper root; on web the native `<select>` overlay also receives `data-testid="{testID}-combobox"` when set */
   testID?: string
   /** Cross-platform accessible name */
   'aria-label'?: string
@@ -78,6 +78,8 @@ function SelectWrapperWeb ({
 }: SelectWrapperProps): ReactNode {
   const optionEntries = getOptionEntries(options, showEmptyValue, emptyValueLabel)
   const selectedKey = getOptionKeyFromValue(value, options, showEmptyValue, emptyValueLabel) ?? PICKER_NULL
+  const comboboxTestId =
+    testID != null && String(testID) !== '' ? `${testID}-combobox` : undefined
 
   function onSelectChange (event: any) {
     if (onChange) onChange(getValueFromKey(event.target.value, options, showEmptyValue, emptyValueLabel))
@@ -92,14 +94,21 @@ function SelectWrapperWeb ({
           style=STYLES.overlay
           value=selectedKey
           onChange=onSelectChange
+          role='combobox'
+          aria-haspopup='listbox'
           aria-label=ariaLabel ?? accessibilityLabel
           aria-labelledby=ariaLabelledBy
           aria-describedby=ariaDescribedBy
           aria-errormessage=ariaErrorMessage
           aria-invalid=ariaInvalid
+          'data-testid'=comboboxTestId
         )
           each entry in optionEntries
-            option(key=entry.key value=entry.key)
+            option(
+              key=entry.key
+              value=entry.key
+              aria-selected=entry.key === selectedKey
+            )
               = entry.label
   `
 }

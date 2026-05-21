@@ -39,6 +39,8 @@ export interface DropdownProps {
     onChange?: (value: string | number | undefined) => void;
     /** Called when dropdown is dismissed via overlay/cancel */
     onDismiss?: () => void;
+    /** Test id for the desktop/tablet popover surface (passed to `AbstractPopover`) */
+    popoverTestID?: string;
 }
 export interface DropdownRef {
     /** Open dropdown programmatically */
