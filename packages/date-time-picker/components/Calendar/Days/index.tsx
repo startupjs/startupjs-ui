@@ -102,32 +102,31 @@ function Days ({
   }
 
   return pug`
-    Div.grid(role='grid' accessibilityLabel='Calendar')
-      Div.row(row role='row')
-        for shortDayName in weekdaysShort
-          Div.cell(key=shortDayName role='columnheader')
-            Span.shortName(bold)= shortDayName
+    Div.row(row role='row')
+      for shortDayName in weekdaysShort
+        Div.cell(key=shortDayName role='columnheader')
+          Span.shortName(bold)= shortDayName
 
-      for week, weekIndex in matrixMonthDays
-        // noop to prevent eslint error about missing 'week'. TODO: implement eslint disable comments support in pug
-        - (week => {})(week)
-        Div.row(key='week-' + weekIndex row role='row')
-          for day, dayIndex in matrixMonthDays[weekIndex]
-            Div.cell(
-              key=weekIndex + '-' + dayIndex
-              role='gridcell'
-              accessibilityRole='gridcell'
-              accessibilityLabel=day.ariaLabel
-              styleName={
-                isActive: !range && moment.tz(day.value, timezone).isSame(date, 'd'),
-                isActiveRangeStart: range && moment.tz(day.value, timezone).isSame(range[0], 'd'),
-                isActiveRange: range && moment.tz(day.value, timezone).isBetween(range[0], range[1], 'd'),
-                isActiveRangeEnd: range && moment.tz(day.value, timezone).isSame(range[1], 'd')
-              }
-              disabled=isDisableDay(day.value)
-              testID=day.testID
-              onPress=() => _onChangeDay(day)
-            )
+    for week, weekIndex in matrixMonthDays
+      // noop to prevent eslint error about missing 'week'. TODO: implement eslint disable comments support in pug
+      - (week => {})(week)
+      Div.row(key='week-' + weekIndex row role='row')
+        for day, dayIndex in matrixMonthDays[weekIndex]
+          Div.cell(
+            key=weekIndex + '-' + dayIndex
+            role='gridcell'
+            accessibilityRole='gridcell'
+            accessibilityLabel=day.ariaLabel
+            styleName={
+              isActive: !range && moment.tz(day.value, timezone).isSame(date, 'd'),
+              isActiveRangeStart: range && moment.tz(day.value, timezone).isSame(range[0], 'd'),
+              isActiveRange: range && moment.tz(day.value, timezone).isBetween(range[0], range[1], 'd'),
+              isActiveRangeEnd: range && moment.tz(day.value, timezone).isSame(range[1], 'd')
+            }
+            disabled=isDisableDay(day.value)
+            testID=day.testID
+            onPress=() => _onChangeDay(day)
+          )
             Span.label(
               bold=getLabelActive(day.value)
               styleName={
