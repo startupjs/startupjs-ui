@@ -37,9 +37,6 @@ function ModalHeader ({
     Div.root(row style=style styleName=children ? 'between' : 'right' vAlign='center')
       if typeof children === 'string'
         Span.title(id=titleId numberOfLines=1)= children
-      else if titleId
-        Div.titleHost(id=titleId)
-          = children
       else
         = children
       if onCrossPress

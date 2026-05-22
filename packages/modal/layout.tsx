@@ -171,8 +171,12 @@ function Modal ({
     cancelLabel = 'OK'
   }
 
+  const headerChildren = header && React.isValidElement(header)
+    ? (header as any).props?.children
+    : undefined
+  const hasStringHeaderChildren = typeof headerChildren === 'string'
   const modalTitleId = useId()
-  const titleId = header ? modalTitleId : undefined
+  const titleId = dialogTitle && (title || hasStringHeaderChildren) ? modalTitleId : undefined
 
   // Handle <Modal.Header>
   const headerProps = {
