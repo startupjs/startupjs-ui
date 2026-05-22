@@ -216,8 +216,10 @@ When using `@startupjs-ui/date-time-picker` or `Input` with `type='date'`:
 
 - Set an explicit `testId` / `testID` on the field (avoid relying on auto-generated `Select_date-{hash}` ids).
 - The anchored popover uses `{testID}-popover` on tablet/web.
+- Calendar root uses `role="grid"` with accessible name `Calendar` (on the existing calendar wrapper, no extra layout node).
 - Calendar day cells use `data-testid="{MM}-{DD}-{YYYY}"` (for example `05-21-2026`).
 - Day cells expose `role="gridcell"` with an accessible name like `May 21, 2026`.
+- Month prev/next controls are the first two `button` roles inside the calendar grid.
 - The readonly input exposes `aria-valuetext` with the formatted value; do not use `inputValue()` on RN-web.
 
 Example:
