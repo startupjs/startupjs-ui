@@ -235,13 +235,13 @@ await popover.getByTestId('05-21-2026').click()
 - Prefer `page.getByRole('dialog', { name: 'Modal title' })` over `.filter({ has: getByText(...) })`.
 - React Native `Modal` adds an outer `dialog` wrapper; use `.last()` to target the inner titled surface.
 - With `title="..."` or string `Modal.Header` children, the title is linked via `aria-labelledby`.
-- With custom `Modal.Header` content (for example a `Span` title), the header wrapper gets the title id so the dialog still exposes the title as its accessible name.
+- With custom `Modal.Header` content (for example `Span` title + close button), the dialog `aria-label` is derived from visible header text; header layout stays unchanged.
 - Built-in `Modal.Actions` buttons expose `data-part="cancel"` and `data-part="confirm"` for fallback clicks when labels vary.
 
 Example:
 
 ```ts
-const presetModal = page.getByRole('dialog', { name: 'Create Preset', exact: true })
+const presetModal = page.getByRole('dialog', { name: 'Create Preset', exact: true }).last()
 await presetModal.getByRole('button', { name: 'Save', exact: true }).click()
 ```
 
