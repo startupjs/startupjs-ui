@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/file-input",
-  "version": "0.2.0-alpha.2",
+  "version": "0.2.2",
   "publishConfig": {
     "access": "public"
   },
@@ -14,14 +14,17 @@
     "./deleteFile": "./deleteFile.ts",
     "./uploadFile": "./uploadFile.ts",
     "./providers": "./providers/index.js",
-    "./files.plugin": "./files.plugin.js"
+    "./files.plugin": {
+      "types": "./files.plugin.d.ts",
+      "default": "./files.plugin.js"
+    }
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
-    "@startupjs-ui/button": "^0.2.0-alpha.2",
-    "@startupjs-ui/core": "^0.2.0-alpha.1",
-    "@startupjs-ui/dialogs": "^0.2.0-alpha.2",
-    "@startupjs-ui/div": "^0.2.0-alpha.1",
+    "@startupjs-ui/button": "^0.2.0",
+    "@startupjs-ui/core": "^0.2.0",
+    "@startupjs-ui/dialogs": "^0.2.0",
+    "@startupjs-ui/div": "^0.2.0",
     "busboy": "^1.6.0",
     "expo-document-picker": ">=14.0.0",
     "expo-image-picker": ">=17.0.0",

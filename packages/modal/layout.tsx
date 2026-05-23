@@ -1,4 +1,11 @@
 import React, { useId, type ReactNode, type ComponentType } from 'react'
+import { View, TouchableOpacity, type StyleProp, type ViewStyle, type ViewProps } from 'react-native'
+import { pug, observer } from 'startupjs'
+import { themed } from '@startupjs-ui/core'
+import ModalHeader from './ModalHeader'
+import ModalContent from './ModalContent'
+import ModalActions, { DEFAULT_CANCEL_LABEL, DEFAULT_CONFIRM_LABEL } from './ModalActions'
+import './index.cssx.styl'
 
 function getTextFromChildren (children: ReactNode): string | undefined {
   if (children == null || typeof children === 'boolean') return undefined
@@ -17,13 +24,6 @@ function getTextFromChildren (children: ReactNode): string | undefined {
   }
   return undefined
 }
-import { View, TouchableOpacity, type StyleProp, type ViewStyle, type ViewProps } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
-import ModalHeader from './ModalHeader'
-import ModalContent from './ModalContent'
-import ModalActions, { DEFAULT_CANCEL_LABEL, DEFAULT_CONFIRM_LABEL } from './ModalActions'
-import './index.cssx.styl'
 
 export interface ModalLayoutProps {
   /** Custom styles applied to the root view */

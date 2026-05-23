@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.3](https://github.com/startupjs/startupjs-ui/compare/v0.2.2...v0.2.3) (2026-05-15)
+
+
+### Bug Fixes
+
+* **range-input:** use forked version of the underlying range-input library which is published to npm ([7870f61](https://github.com/startupjs/startupjs-ui/commit/7870f61884d0eef85db8c4495bbd41327bd08014))
+
+
+
+
+
+## [0.2.2](https://github.com/startupjs/startupjs-ui/compare/v0.2.1...v0.2.2) (2026-05-11)
+
+
+### Bug Fixes
+
+* **file-input:** fix typings of the files plugin ([2bf0191](https://github.com/startupjs/startupjs-ui/commit/2bf0191c7b389982f0956925f27b28e38de6427d))
+
+
+
+
+
+## [0.2.1](https://github.com/startupjs/startupjs-ui/compare/v0.2.0...v0.2.1) (2026-05-11)
+
+
+### Features
+
+* **file-input:** provide server-side hooks for the 'files' plugin server config to check access to file operations and to transform the file during upload. Add types to the 'files' plugin to work with teamplay's type augmentation. ([bd527ad](https://github.com/startupjs/startupjs-ui/commit/bd527adcc2be0762af8439561cc39dcb44a7f991))
+
+
+
+
+
+# [0.2.0](https://github.com/startupjs/startupjs-ui/compare/v0.1.23...v0.2.0) (2026-05-04)
+
+
+### Features
+
+* [v0.2] add accessibility features to most components, which also dramatically improves E2E testability ([#22](https://github.com/startupjs/startupjs-ui/issues/22)) ([b563e2f](https://github.com/startupjs/startupjs-ui/commit/b563e2fa498a8a83bd5abc7836d120f6d2381e3f))
+
+
+
+
+
 # [0.2.0-alpha.2](https://github.com/startupjs/startupjs-ui/compare/v0.2.0-alpha.1...v0.2.0-alpha.2) (2026-04-20)
 
 ### Bug Fixes

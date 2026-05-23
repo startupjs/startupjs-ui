@@ -93,6 +93,37 @@ FileInput supports multiple storage backends. By default it uses SQLite, but if 
 - Requires `AZURE_BLOB_STORAGE_CONNECTION_STRING`.
 - Install the Azure SDK: `yarn add @azure/storage-blob`.
 
+## Server access hooks
+
+By default, file URLs are public to anyone who knows the `fileId`. The `files` model is read-only for direct client access: reads are allowed, while create/update/delete are done through the upload and delete API routes.
+
+Use `$file.getUrl()`, `$file.getDownloadUrl()`, `$.files.getUrl(fileId)`, or `$.files.getDownloadUrl(fileId)` to build file URLs. When StartupJS JWT auth is active and `$.session.token` exists, these helpers automatically append `access_token` to the URL so server `canRead` checks can see `req.session`.
+
+Use plugin server options to add app-specific checks:
+
+```js
+export default {
+  plugins: {
+    files: {
+      server: {
+        canRead: ({ source, session, fileId, file }) => true,
+        canUpload: ({ session, fileId, file, meta, blob }) => true,
+        canDelete: ({ session, fileId, file }) => true,
+        transformUpload: ({ meta, blob }) => ({
+          meta: {
+            ...meta,
+            filename: meta.filename?.toLowerCase()
+          },
+          blob
+        })
+      }
+    }
+  }
+}
+```
+
+`canRead` is reused for both file API reads (`source: 'api'`) and direct `$.files[fileId]` model reads (`source: 'model'`). Return `true` to allow the operation; any other value denies it. If you build file URLs manually, include your own auth token or use the model URL helpers above.
+
 ## Sandbox
 
 <Sandbox
