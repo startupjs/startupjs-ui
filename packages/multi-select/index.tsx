@@ -46,6 +46,14 @@ export interface MultiSelectProps {
   disabled?: boolean
   /** Render non-editable value @default false */
   readonly?: boolean
+  /** Accessible name for the combobox trigger */
+  'aria-label'?: string
+  /** Element id that labels the combobox trigger */
+  'aria-labelledby'?: string
+  /** Element id that describes the combobox trigger */
+  'aria-describedby'?: string
+  /** Whether the combobox trigger value is invalid */
+  'aria-invalid'?: boolean | 'true' | 'false'
   /** Maximum number of visible tags (extra tags are collapsed) */
   tagLimit?: number
   /** Behavior when tags are limited (legacy prop) @default 'hidden' */
@@ -84,6 +92,10 @@ function MultiSelect ({
   placeholder = 'Select',
   disabled = false,
   readonly = false,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  'aria-describedby': ariaDescribedBy,
+  'aria-invalid': ariaInvalid,
   tagLimitVariant = 'hidden',
   TagComponent = DefaultTag,
   InputComponent,
@@ -175,8 +187,7 @@ function MultiSelect ({
         vAlign='center'
         disabled=selected ? false : shouldDisableSelection
         role=IS_WEB ? 'option' : undefined
-        accessibilityRole=IS_WEB ? 'option' : undefined
-        accessibilityLabel=optionLabel
+        aria-label=IS_WEB ? optionLabel : undefined
         aria-selected=IS_WEB ? selected : undefined
         onPress=() => onPress(!selected)
       )
@@ -219,6 +230,10 @@ function MultiSelect ({
           focused=focused
           value=value
           placeholder=placeholder
+          aria-label=ariaLabel
+          aria-labelledby=ariaLabelledBy
+          aria-describedby=ariaDescribedBy
+          aria-invalid=ariaInvalid
           tagLimit=tagLimit
           tagLimitVariant=tagLimitVariant
           options=normalizedOptions
@@ -240,6 +255,10 @@ function MultiSelect ({
         focused=focused
         value=value
         placeholder=placeholder
+        aria-label=ariaLabel
+        aria-labelledby=ariaLabelledBy
+        aria-describedby=ariaDescribedBy
+        aria-invalid=ariaInvalid
         tagLimit=tagLimit
         tagLimitVariant=tagLimitVariant
         options=normalizedOptions
@@ -266,6 +285,10 @@ function MultiSelectInput ({
   value,
   placeholder,
   options,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  'aria-describedby': ariaDescribedBy,
+  'aria-invalid': ariaInvalid,
   disabled,
   readonly,
   focused,
@@ -281,6 +304,10 @@ function MultiSelectInput ({
   value: any[]
   placeholder?: string
   options: MultiSelectOption[]
+  'aria-label'?: string
+  'aria-labelledby'?: string
+  'aria-describedby'?: string
+  'aria-invalid'?: boolean | 'true' | 'false'
   disabled?: boolean
   readonly?: boolean
   focused?: boolean
@@ -298,6 +325,12 @@ function MultiSelectInput ({
     : 0
 
   const EffectiveInputComponent = InputComponent ?? DefaultInput
+  const inferredAccessibleName = value.length
+    ? value
+      .map(value => options.find(option => option.value === value)?.label ?? value)
+      .join(', ')
+    : placeholder
+  const accessibleName = ariaLabel ?? (ariaLabelledBy ? undefined : inferredAccessibleName)
 
   return pug`
     EffectiveInputComponent(
@@ -305,6 +338,10 @@ function MultiSelectInput ({
       style=style
       value=values
       placeholder=placeholder
+      aria-label=accessibleName != null ? String(accessibleName) : undefined
+      aria-labelledby=ariaLabelledBy
+      aria-describedby=ariaDescribedBy
+      aria-invalid=ariaInvalid
       disabled=disabled
       focused=focused
       readonly=readonly
@@ -334,6 +371,10 @@ function DefaultInput ({
   style,
   value = [],
   placeholder,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  'aria-describedby': ariaDescribedBy,
+  'aria-invalid': ariaInvalid,
   disabled,
   focused,
   readonly,
@@ -346,6 +387,10 @@ function DefaultInput ({
   style?: StyleProp<ViewStyle>
   value?: any[]
   placeholder?: string
+  'aria-label'?: string
+  'aria-labelledby'?: string
+  'aria-describedby'?: string
+  'aria-invalid'?: boolean | 'true' | 'false'
   disabled?: boolean
   focused?: boolean
   readonly?: boolean
@@ -372,6 +417,10 @@ function DefaultInput ({
         style=style
         styleName={ disabled, focused, readonly, error: _hasError }
         role=IS_WEB ? 'combobox' : 'button'
+        aria-label=ariaLabel
+        aria-labelledby=ariaLabelledBy
+        aria-describedby=ariaDescribedBy
+        aria-invalid=ariaInvalid
         aria-expanded=IS_WEB ? !!focused : undefined
         aria-haspopup=IS_WEB ? 'listbox' : undefined
         aria-disabled=disabled

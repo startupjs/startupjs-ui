@@ -102,10 +102,10 @@ function Days ({
   }
 
   return pug`
-    Div.row(row role='row')
+    Div.row(key='week-header' row role='row')
       for shortDayName in weekdaysShort
         Div.cell(key=shortDayName role='columnheader')
-          Span.shortName(bold)= shortDayName
+          Span.shortName(key='shortName-' + shortDayName bold)= shortDayName
 
     for week, weekIndex in matrixMonthDays
       // noop to prevent eslint error about missing 'week'. TODO: implement eslint disable comments support in pug
@@ -115,8 +115,7 @@ function Days ({
           Div.cell(
             key=weekIndex + '-' + dayIndex
             role='gridcell'
-            accessibilityRole='gridcell'
-            accessibilityLabel=day.ariaLabel
+            aria-label=day.ariaLabel
             styleName={
               isActive: !range && moment.tz(day.value, timezone).isSame(date, 'd'),
               isActiveRangeStart: range && moment.tz(day.value, timezone).isSame(range[0], 'd'),
@@ -128,6 +127,7 @@ function Days ({
             onPress=() => _onChangeDay(day)
           )
             Span.label(
+              key='day-label-' + weekIndex + '-' + dayIndex
               bold=getLabelActive(day.value)
               styleName={
                 isMute: !moment.tz(day.value, timezone).isSame(uiDate, 'M'),

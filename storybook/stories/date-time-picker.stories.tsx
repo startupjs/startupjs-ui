@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
-import { expect, screen, waitFor } from 'storybook/test'
+import { expect, screen, waitFor, within } from 'storybook/test'
 import { DateTimePicker, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
@@ -16,6 +16,7 @@ function DateTimePickerStates () {
         <StoryStack>
           <DateTimePicker
             label='Event date'
+            aria-label='Event date'
             date={date}
             mode='date'
             locale='en'
@@ -26,6 +27,7 @@ function DateTimePickerStates () {
           />
           <DateTimePicker
             label='Start time'
+            aria-label='Start time'
             date={time}
             mode='time'
             locale='en'
@@ -36,6 +38,7 @@ function DateTimePickerStates () {
           />
           <DateTimePicker
             label='Start datetime'
+            aria-label='Start datetime'
             date={datetime}
             mode='datetime'
             locale='en'
@@ -78,15 +81,19 @@ export const States: Story = {
   tags: ['interaction'],
   render: () => <DateTimePickerStates />,
   play: async ({ canvas, userEvent }) => {
-    const dateInput = await canvas.findByTestId('dtp-date-input')
-    const timeInput = await canvas.findByTestId('dtp-time-input')
-    const datetimeInput = await canvas.findByTestId('dtp-datetime-input')
+    const dateInput = await canvas.findByLabelText('Event date')
+    const timeInput = await canvas.findByLabelText('Start time')
+    const datetimeInput = await canvas.findByLabelText('Start datetime')
 
     await expect(dateInput).toBeVisible()
+    await expect(dateInput).toBe(canvas.getByTestId('dtp-date-input'))
     await expect(timeInput).toBeVisible()
     await expect(datetimeInput).toBeVisible()
 
     await userEvent.click(dateInput)
+    await waitFor(() => expect(screen.getByTestId('dtp-date-input-popover')).toBeVisible())
     await waitFor(() => expect(screen.getByTestId('dtp-date-calendar')).toBeVisible())
+    const calendar = screen.getByRole('grid', { name: 'Calendar' })
+    await expect(within(calendar).getByRole('gridcell', { name: 'January 21, 2026' })).toBeVisible()
   }
 }

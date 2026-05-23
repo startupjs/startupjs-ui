@@ -8,7 +8,7 @@ import Icon from '@startupjs-ui/icon'
 
 # Div
 
-Div is a basic building block for layouts. It is a wrapper around `View` with extra features like press handling (`onPress`, `onLongPress`, `onPressIn`, `onPressOut`), layout helpers (`row`, `wrap`, `reverse`, `align`, `vAlign`, `gap`), shadows (`level`), corner shapes (`shape`), spacing (`pushed`, `bleed`), tooltips (`tooltip`, `tooltipStyle`), and built-in animation support. You can pass custom `style`, provide content as `children`, and use `ref` to access the underlying native view. Accessibility is supported via `accessible` and `accessibilityRole`, and `data-testid` can be used for testing.
+Div is a basic building block for layouts. It is a wrapper around `View` with extra features like press handling (`onPress`, `onLongPress`, `onPressIn`, `onPressOut`), layout helpers (`row`, `wrap`, `reverse`, `align`, `vAlign`, `gap`), shadows (`level`), corner shapes (`shape`), spacing (`pushed`, `bleed`), tooltips (`tooltip`, `tooltipStyle`), and built-in animation support. You can pass custom `style`, provide content as `children`, and use `ref` to access the underlying native view. Accessibility and E2E semantics are exposed with `role`, `aria-*`, `testID`, and `data-testid`.
 
 ```jsx
 import { Div } from 'startupjs-ui'

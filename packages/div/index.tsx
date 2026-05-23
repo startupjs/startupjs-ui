@@ -6,8 +6,7 @@ import {
   StyleSheet,
   type StyleProp,
   type ViewStyle,
-  type ViewProps,
-  type AccessibilityRole
+  type ViewProps
 } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { pug, observer, u, useDidUpdate } from 'startupjs'
@@ -29,11 +28,28 @@ const {
   }
 } = STYLES
 
+type LegacyAccessibilityProp =
+  | 'accessibilityActions'
+  | 'accessibilityElementsHidden'
+  | 'accessibilityHint'
+  | 'accessibilityLabel'
+  | 'accessibilityLanguage'
+  | 'accessibilityLiveRegion'
+  | 'accessibilityRole'
+  | 'accessibilityState'
+  | 'accessibilityValue'
+  | 'accessibilityViewIsModal'
+  | 'importantForAccessibility'
+  | 'onAccessibilityAction'
+  | 'onAccessibilityEscape'
+  | 'onAccessibilityTap'
+  | 'onMagicTap'
+
 export default observer(themed('Div', Div))
 
 export const _PropsJsonSchema = {/* DivProps */}
 
-export interface DivProps extends ViewProps {
+export interface DivProps extends Omit<ViewProps, LegacyAccessibilityProp> {
   /** Ref to access underlying <View> or <Pressable> */
   ref?: RefObject<any>
   /** Custom styles applied to the root view */
@@ -86,8 +102,6 @@ export interface DivProps extends ViewProps {
   onPressOut?: (e: any) => void
   /** Whether view is accessible and focusable (if you can press it it's focusable by default) */
   accessible?: boolean
-  /** Accessibility role passed to native view (if you can press it it's a 'button') */
-  accessibilityRole?: AccessibilityRole
   /** Deprecated custom tooltip renderer @deprecated */
   renderTooltip?: any // Deprecated
   /** Internal: render a native <button> host on web when the resolved role is button */
@@ -116,7 +130,6 @@ function Div ({
   bleed,
   full,
   accessible,
-  accessibilityRole,
   tooltip,
   tooltipStyle,
   renderTooltip,
@@ -134,11 +147,10 @@ function Div ({
   const rootRef = ref ?? fallbackRef
 
   let pressableStyle: StyleProp<ViewStyle> = {}
-  let deferredRole: AccessibilityRole | string | undefined
+  let deferredRole: string | undefined
   ;({
     props,
     pressableStyle,
-    accessibilityRole,
     deferredRole
   } = useDecoratePressableProps({
     props,
@@ -148,7 +160,6 @@ function Div ({
     variant,
     isPressable,
     disabled,
-    accessibilityRole,
     feedback,
     webNativeButton: _webNativeButton
   }))
@@ -156,14 +167,12 @@ function Div ({
   ;({
     props,
     accessible,
-    accessibilityRole,
     deferredRole
   } = useDecorateAccessibilityProps({
     props,
     rootRef,
     disabled,
     accessible,
-    accessibilityRole,
     isPressable,
     deferredRole,
     webNativeButton: _webNativeButton
@@ -218,7 +227,6 @@ function Div ({
         levelModifier
       ]
       accessible=accessible
-      accessibilityRole=accessibilityRole
       testID=testID
       ...props
     )= children
@@ -242,7 +250,6 @@ function useDecorateAccessibilityProps ({
   rootRef,
   disabled,
   accessible,
-  accessibilityRole,
   isPressable,
   deferredRole,
   webNativeButton
@@ -251,19 +258,16 @@ function useDecorateAccessibilityProps ({
   rootRef: RefObject<any>
   disabled?: boolean
   accessible?: boolean
-  accessibilityRole?: AccessibilityRole
   isPressable: boolean
-  deferredRole?: AccessibilityRole | string
+  deferredRole?: string
   webNativeButton?: boolean
 }): {
     props: Record<string, any>
     accessible?: boolean
-    accessibilityRole?: AccessibilityRole
-    deferredRole?: AccessibilityRole | string
+    deferredRole?: string
   } {
   if (accessible == null && isPressable) accessible = true
   if (accessible === false) {
-    accessibilityRole = undefined
     deferredRole = undefined
     props.role = undefined
   }
@@ -301,7 +305,7 @@ function useDecorateAccessibilityProps ({
     }
   }, [rootRef, deferredRole, roleProp, ariaDisabled, webNativeButton, disabled])
 
-  return { props, accessible, accessibilityRole, deferredRole }
+  return { props, accessible, deferredRole }
 }
 
 function useDecoratePressableProps ({
@@ -312,7 +316,6 @@ function useDecoratePressableProps ({
   variant,
   isPressable,
   disabled,
-  accessibilityRole,
   feedback,
   webNativeButton
 }: {
@@ -323,17 +326,15 @@ function useDecoratePressableProps ({
   variant: 'opacity' | 'highlight'
   isPressable: boolean
   disabled?: boolean
-  accessibilityRole?: AccessibilityRole
   feedback?: boolean
   webNativeButton?: boolean
 }): {
     props: Record<string, any>
     pressableStyle?: StyleProp<ViewStyle>
-    accessibilityRole?: AccessibilityRole
-    deferredRole?: AccessibilityRole | string
+    deferredRole?: string
   } {
   let pressableStyle: StyleProp<ViewStyle> = {}
-  let deferredRole: AccessibilityRole | string | undefined
+  let deferredRole: string | undefined
   const [hover, setHover] = useState(false)
   const [active, setActive] = useState(false)
 
@@ -350,16 +351,14 @@ function useDecoratePressableProps ({
   // decorate the element state (hover, active) only if it's pressable
   if (!isPressable) return { props }
 
-  const resolvedRole = props.role ?? accessibilityRole ?? 'button'
-  accessibilityRole ??= typeof resolvedRole === 'string' ? resolvedRole as AccessibilityRole : undefined
+  const resolvedRole = props.role ?? 'button'
   props.focusable ??= true
 
   if (isWeb && resolvedRole === 'button' && !webNativeButton) {
     delete props.role
-    accessibilityRole = undefined
     deferredRole = 'button'
   } else {
-    props.role ??= accessibilityRole
+    props.role ??= resolvedRole
   }
 
   // setup hover and active states styles and props
@@ -406,7 +405,7 @@ function useDecoratePressableProps ({
     }
   }
 
-  return { props, pressableStyle, accessibilityRole, deferredRole }
+  return { props, pressableStyle, deferredRole }
 }
 
 function getDefaultStyle (

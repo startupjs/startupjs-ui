@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
-import { expect, screen, waitFor } from 'storybook/test'
+import { expect, screen, waitFor, within } from 'storybook/test'
 import { MultiSelect, Span } from 'startupjs-ui'
 import { StorySection, StoryStack } from './helpers'
 
@@ -24,6 +24,7 @@ function MultiSelectStates () {
           options={OPTIONS}
           value={value}
           placeholder='Select people'
+          aria-label='People'
           onChange={setValue}
         />
         <Span>{`Selected tags snapshot: ${value.join(', ') || 'none'}`}</Span>
@@ -82,7 +83,7 @@ type Story = StoryObj<typeof meta>
 type PlayContext = Parameters<NonNullable<Story['play']>>[0]
 
 async function failingFollowup ({ canvas, userEvent }: PlayContext) {
-  const trigger = canvas.getByRole('button', { name: 'Select people' })
+  const trigger = canvas.getByRole('combobox', { name: 'People' })
   const disabledReadonlySection = canvas.getByRole('heading', { name: 'Disabled and readonly' })
     .parentElement?.parentElement as HTMLElement
 
@@ -96,19 +97,25 @@ export const States: Story = {
   tags: ['interaction'],
   render: () => <MultiSelectStates />,
   play: async ({ canvas, canvasElement, userEvent }) => {
-    const trigger = canvas.getByRole('button', { name: 'Select people' })
-    const cappedTrigger = canvas.getByRole('button', { name: 'Choose up to two people' })
-    const disabledTrigger = canvas.getByRole('button', { name: 'Hedy Lamarr' })
-    const getPopupOption = (name: string) => screen.getAllByRole('button', { name }).at(-1) as HTMLElement
+    const trigger = canvas.getByRole('combobox', { name: 'People' })
+    const cappedTrigger = canvas.getByRole('combobox', { name: 'Choose up to two people' })
+    const disabledTrigger = canvas.getByRole('combobox', { name: 'Hedy Lamarr' })
+    const getPopupListbox = () => screen.getAllByRole('listbox').at(-1) as HTMLElement
+    const getPopupOption = (name: string) => within(getPopupListbox()).getByRole('option', { name })
     const disabledReadonlySection = canvas.getByRole('heading', { name: 'Disabled and readonly' })
       .parentElement?.parentElement as HTMLElement
 
     await expect(trigger).toBeVisible()
+    await expect(trigger).toHaveAttribute('aria-haspopup', 'listbox')
+    await expect(trigger).toHaveAttribute('aria-expanded', 'false')
     await expect(disabledTrigger).toHaveAttribute('aria-disabled', 'true')
     await expect(canvas.getByText('Selected tags snapshot: none')).toBeVisible()
     await userEvent.click(trigger)
 
+    await waitFor(() => expect(screen.getByRole('listbox')).toBeVisible())
+    await expect(trigger).toHaveAttribute('aria-expanded', 'true')
     await waitFor(() => expect(getPopupOption('Ada Lovelace')).toBeVisible())
+    await expect(getPopupOption('Ada Lovelace')).toHaveAttribute('aria-selected', 'false')
     await userEvent.click(getPopupOption('Ada Lovelace'))
     await expect(canvas.getByText('Selected tags snapshot: ada')).toBeVisible()
 
@@ -133,8 +140,6 @@ export const States: Story = {
     await waitFor(() => expect(getPopupOption('Hedy Lamarr')).toBeVisible())
     await userEvent.click(getPopupOption('Hedy Lamarr'))
     await expect(canvas.getByText('Capped selection snapshot: ada, grace')).toBeVisible()
-
-    await expect(disabledTrigger).toBeDisabled()
 
     expect(disabledReadonlySection.textContent).toContain('Hedy Lamarr')
     expect(disabledReadonlySection.textContent).toContain('ada, grace')

@@ -161,7 +161,7 @@ const GitHubLink = observer(() => {
   const onHoverOut = useCallback(() => setIsHover(false), [])
   return pug`
     AnimatedPressable.show(styleName={ isHover } onHoverIn=onHoverIn onHoverOut=onHoverOut)
-      Link(href='https://github.com/startupjs/startupjs-ui' target='_blank' accessibilityLabel='GitHub repository')
+      Link(href='https://github.com/startupjs/startupjs-ui' target='_blank' aria-label='GitHub repository')
         GitHubIcon(width=24 height=24)
   `
   styl`
@@ -260,6 +260,10 @@ const Item = observer(({ children, path, setShowSidebar }) => {
 })
 
 const DOC_COMPONENT_CATEGORIES = [
+  {
+    name: 'Guides',
+    items: ['Accessibility']
+  },
   {
     name: 'Layout & Structure',
     items: ['Div', 'Content', 'Card', 'Layout', 'Sidebar', 'SmartSidebar', 'DrawerSidebar', 'Drawer', 'ScrollView', 'FlatList', 'Portal', 'Divider', 'Br']

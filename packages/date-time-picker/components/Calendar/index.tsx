@@ -35,7 +35,7 @@ function Calendar ({
     Div(
       testID=testID
       role='grid'
-      accessibilityLabel='Calendar'
+      aria-label='Calendar'
     )
       Header(
         uiDate=$uiDate.get()

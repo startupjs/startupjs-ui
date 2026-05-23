@@ -49,6 +49,12 @@ export interface DropdownProps {
   drawerCancelLabel?: string
   /** Disable caption press */
   disabled?: boolean
+  /** Accessible name for the dropdown trigger */
+  'aria-label'?: string
+  /** Element id that labels the dropdown trigger */
+  'aria-labelledby'?: string
+  /** Element id that describes the dropdown trigger */
+  'aria-describedby'?: string
   /** Enable drawer behavior on small screens @default true */
   hasDrawer?: boolean
   /** Show swipe responder zone in drawer */
@@ -82,6 +88,9 @@ function Dropdown ({
   drawerListTitle = '',
   drawerCancelLabel = 'Cancel',
   disabled,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  'aria-describedby': ariaDescribedBy,
   hasDrawer = true,
   showDrawerResponder,
   onChange,
@@ -238,6 +247,9 @@ function Dropdown ({
   }
 
   const matchAnchorWidth = !(_popoverStyle as any)?.width && !(_popoverStyle as any)?.minWidth
+  const captionProps = (caption as any).props ?? {}
+  const inferredCaptionLabel = captionProps['aria-label'] ?? captionProps.placeholder ?? activeLabel
+  const captionLabel = (ariaLabel ?? (ariaLabelledBy ? undefined : inferredCaptionLabel)) || undefined
 
   if (isPopover) {
     const renderPopoverContent = (): ReactNode => pug`
@@ -272,6 +284,13 @@ function Dropdown ({
       )
         TouchableOpacity(
           disabled=disabled
+          role='button'
+          aria-label=captionLabel
+          aria-labelledby=ariaLabelledBy
+          aria-describedby=ariaDescribedBy
+          aria-haspopup='listbox'
+          aria-expanded=$isShow.get()
+          aria-disabled=disabled
           onPress=() => handleVisibleChange(!$isShow.get(), { reason: !$isShow.get() ? null : 'toggle' })
         )
           = caption
@@ -282,6 +301,13 @@ function Dropdown ({
     if caption
       TouchableOpacity.caption(
         disabled=disabled
+        role='button'
+        aria-label=captionLabel
+        aria-labelledby=ariaLabelledBy
+        aria-describedby=ariaDescribedBy
+        aria-haspopup='listbox'
+        aria-expanded=$isShow.get()
+        aria-disabled=disabled
         onPress=() => handleVisibleChange(!$isShow.get())
       )
         = caption

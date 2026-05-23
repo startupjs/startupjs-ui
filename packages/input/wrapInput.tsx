@@ -190,8 +190,7 @@ export default function wrapInput (Component: any, configuration: InputWrapperCo
     const describedBy = [descriptionId].filter(Boolean).join(' ') || undefined
 
     if (props['aria-label'] == null) {
-      if (props.accessibilityLabel != null) inputAccessibilityProps['aria-label'] = props.accessibilityLabel
-      else if (label) inputAccessibilityProps['aria-label'] = label
+      if (label) inputAccessibilityProps['aria-label'] = label
     }
 
     if (inputId) {
