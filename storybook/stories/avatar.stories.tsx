@@ -34,19 +34,19 @@ export const States: Story = {
     <StoryStack>
       <StorySection title='Initials and sizes'>
         <InlineRow>
-          <Avatar data-testid='avatar-initials-s' size='s'>Ada Lovelace</Avatar>
-          <Avatar data-testid='avatar-initials-m' size='m'>Grace Hopper</Avatar>
-          <Avatar data-testid='avatar-initials-l' size='l'>Hedy Lamarr</Avatar>
+          <Avatar testID='avatar-initials-s' size='s'>Ada Lovelace</Avatar>
+          <Avatar testID='avatar-initials-m' size='m'>Grace Hopper</Avatar>
+          <Avatar testID='avatar-initials-l' size='l'>Hedy Lamarr</Avatar>
         </InlineRow>
       </StorySection>
 
       <StorySection title='Image fallback and status'>
         <InlineRow>
-          <Avatar data-testid='avatar-image' src={AVATAR_SRC} status='online'>
+          <Avatar testID='avatar-image' src={AVATAR_SRC} status='online'>
             Ada Lovelace
           </Avatar>
-          <Avatar data-testid='avatar-away' status='away'>Grace Hopper</Avatar>
-          <Avatar data-testid='avatar-vip' status='vip' statusComponents={{ vip: StatusDot }}>
+          <Avatar testID='avatar-away' status='away'>Grace Hopper</Avatar>
+          <Avatar testID='avatar-vip' status='vip' statusComponents={{ vip: StatusDot }}>
             Hedy Lamarr
           </Avatar>
         </InlineRow>
@@ -54,7 +54,7 @@ export const States: Story = {
 
       <StorySection title='Pressable avatar'>
         <Avatar
-          data-testid='avatar-pressable'
+          testID='avatar-pressable'
           aria-label='Open Ada profile'
           onPress={() => {}}
         >

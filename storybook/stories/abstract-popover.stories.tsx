@@ -40,7 +40,7 @@ function AbstractPopoverStates () {
             arrow
             matchAnchorWidth
             testID='abstract-popover-surface'
-            renderWrapper={node => <Div data-testid='abstract-popover-portal'>{node}</Div>}
+            renderWrapper={node => <Div testID='abstract-popover-portal'>{node}</Div>}
             onRequestOpen={() => { setRequestOpenCount(count => count + 1) }}
             onRequestClose={() => {
               setRequestCloseCount(count => count + 1)

@@ -85,7 +85,10 @@ const useDateProps = ({
   return {
     mode: 'date',
     date: value,
-    configuration: getLabelableConfiguration(props),
+    configuration: {
+      isLabelClickable: !props.disabled && !props.readonly,
+      _webLabelMode: 'aria' as const
+    },
     onChangeDate,
     _onLabelPress: () => ref?.current?.focus(),
     ...props
@@ -103,7 +106,10 @@ const useDateTimeProps = ({
   return {
     mode: 'datetime',
     date: value,
-    configuration: getLabelableConfiguration(props),
+    configuration: {
+      isLabelClickable: !props.disabled && !props.readonly,
+      _webLabelMode: 'aria' as const
+    },
     onChangeDate,
     _onLabelPress: () => ref?.current?.focus(),
     ...props
@@ -121,7 +127,10 @@ const useTimeProps = ({
   return {
     mode: 'time',
     date: value,
-    configuration: getLabelableConfiguration(props),
+    configuration: {
+      isLabelClickable: !props.disabled && !props.readonly,
+      _webLabelMode: 'aria' as const
+    },
     onChangeDate,
     _onLabelPress: () => ref?.current?.focus(),
     ...props
@@ -259,12 +268,17 @@ const useTextProps = ({
   }
 }
 
-function cardWrapper (style: StyleProp<ViewStyle> | undefined, children: ReactNode): ReactNode {
+function cardWrapper ({
+  style,
+  testID,
+  props
+}: {
+  style?: StyleProp<ViewStyle>
+  testID?: string
+  props?: Record<string, any>
+}, children: ReactNode): ReactNode {
   return pug`
-    Card(
-      style=style
-      variant='outlined'
-    )
+    Card(style=style testID=testID variant='outlined' ...props)
       = children
   `
 }

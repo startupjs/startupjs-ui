@@ -29,7 +29,7 @@ export interface SelectWrapperProps {
   showEmptyValue?: boolean
   /** Label for empty/none option */
   emptyValueLabel?: string | number
-  /** Test identifier passed to wrapper root; on web the native `<select>` overlay also receives `data-testid="{testID}-combobox"` when set */
+  /** Test identifier passed to wrapper root */
   testID?: string
   /** Cross-platform accessible name */
   'aria-label'?: string
@@ -43,6 +43,8 @@ export interface SelectWrapperProps {
   'aria-errormessage'?: string
   /** Web-only invalid state */
   'aria-invalid'?: boolean
+  /** Web-only required state */
+  'aria-required'?: boolean
   /** Fired when selected value changes */
   onChange?: (value: any) => void
 }
@@ -68,13 +70,11 @@ function SelectWrapperWeb ({
   'aria-describedby': ariaDescribedBy,
   'aria-errormessage': ariaErrorMessage,
   'aria-invalid': ariaInvalid,
+  'aria-required': ariaRequired,
   onChange
 }: SelectWrapperProps): ReactNode {
   const optionEntries = getOptionEntries(options, showEmptyValue, emptyValueLabel)
   const selectedKey = getOptionKeyFromValue(value, options, showEmptyValue, emptyValueLabel) ?? PICKER_NULL
-  const comboboxTestId =
-    testID != null && String(testID) !== '' ? `${testID}-combobox` : undefined
-
   function onSelectChange (event: any) {
     if (onChange) onChange(getValueFromKey(event.target.value, options, showEmptyValue, emptyValueLabel))
   }
@@ -95,7 +95,7 @@ function SelectWrapperWeb ({
         aria-describedby=ariaDescribedBy
         aria-errormessage=ariaErrorMessage
         aria-invalid=ariaInvalid
-        'data-testid'=comboboxTestId
+        aria-required=ariaRequired
       )
         each entry in optionEntries
           option(

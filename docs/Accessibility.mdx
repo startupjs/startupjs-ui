@@ -49,6 +49,6 @@ await page.getByLabel('Role').selectOption({ label: 'Organizer' })
 await page.getByRole('listbox').getByRole('option', { name: 'Ada Lovelace' }).click()
 ```
 
-Use `testID` / `data-testid` only when a semantic locator is not a good fit, for example when asserting a low-level wrapper, portal surface, generated calendar cell, or non-user-facing debug hook.
+Use `testID` only when a semantic locator is not a good fit, for example when asserting a low-level wrapper, portal surface, generated calendar cell, or non-user-facing debug hook.
 
 When a component is hard to locate semantically, treat that as an accessibility bug first and a test-selector problem second.

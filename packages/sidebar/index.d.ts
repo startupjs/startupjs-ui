@@ -28,4 +28,6 @@ export interface SidebarProps {
     lazy?: boolean;
     /** Custom renderer for sidebar content */
     renderContent?: () => ReactNode;
+    /** Test identifier */
+    testID?: string;
 }

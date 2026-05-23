@@ -31,6 +31,8 @@ export interface DrawerProps {
     onDismiss: () => void;
     /** Called after drawer becomes visible (after show animation completes) */
     onRequestOpen?: () => void;
+    /** Test identifier for the drawer content */
+    testID?: string;
 }
 declare const _default: ComponentType<DrawerProps>;
 export default _default;

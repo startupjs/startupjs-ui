@@ -11,6 +11,8 @@ export interface BrProps {
     half?: boolean;
     /** Number of spacer lines @default 1 */
     lines?: number;
+    /** Test identifier */
+    testID?: string;
 }
 declare const _default: import("react").ComponentType<BrProps>;
 export default _default;

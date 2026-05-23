@@ -3,6 +3,7 @@ import { StyleSheet, Platform } from 'react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { pug, observer, u } from 'startupjs'
 import { Colors, themed, useColors } from '@startupjs-ui/core'
+import Div from '@startupjs-ui/div'
 import { customIcons } from './globalCustomIcons'
 
 const SIZES = {
@@ -25,12 +26,15 @@ export interface IconProps {
   icon: object | string | (() => any)
   /** Icon size preset or numeric value @default 'm' */
   size?: 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl' | number
+  /** Additional props forwarded to the icon element */
+  [key: string]: any
 }
 
 function Icon ({
   style,
   icon,
   size = 'm',
+  testID,
   ...props
 }: IconProps): ReactNode {
   const getColor = useColors()
@@ -50,33 +54,44 @@ function Icon ({
 
   if (CustomIcon) {
     const { color: fill, width = _size, height = _size, ...iconStyle } = style
-    return pug`
+    const customIcon = pug`
       CustomIcon(
         style=iconStyle
         width=width
         height=height
         fill=fill
+        ...props
       )
     `
+    return testID
+      ? pug`Div(testID=testID)= customIcon`
+      : customIcon
   }
 
+  let fontAwesomeIcon
   if (Platform.OS === 'web') {
     style.width ??= _size
     style.height ??= _size
     style.outline ??= 'none'
-    return pug`
+    fontAwesomeIcon = pug`
       FontAwesomeIcon(
         style=style
         icon=icon
+        ...props
+      )
+    `
+  } else {
+    fontAwesomeIcon = pug`
+      FontAwesomeIcon(
+        style=style
+        icon=icon
+        size=_size
+        ...props
       )
     `
   }
 
-  return pug`
-    FontAwesomeIcon(
-      style=style
-      icon=icon
-      size=_size
-    )
-  `
+  return testID
+    ? pug`Div(testID=testID)= fontAwesomeIcon`
+    : fontAwesomeIcon
 }

@@ -3,10 +3,7 @@ import { TabBar } from 'react-native-tab-view'
 import { pug, observer } from 'startupjs'
 
 export const TAB_BAR_PROP_NAMES = [
-  'getLabelText',
-  'getAccessible',
-  'getAccessibilityLabel',
-  'getTestID',
+  'options',
   'renderIcon',
   'renderTabBarItem',
   'renderLabel',

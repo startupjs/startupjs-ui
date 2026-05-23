@@ -117,8 +117,7 @@ export default function wrapInput (Component: any, configuration: InputWrapperCo
     const generatedTestID = props.testID ?? getInputTestId({
       ...props,
       label,
-      description,
-      testId: props.testID
+      description
     })
     const semanticBaseId = typeof generatedTestID === 'string' && generatedTestID !== ''
       ? generatedTestID
@@ -195,7 +194,6 @@ export default function wrapInput (Component: any, configuration: InputWrapperCo
 
     if (inputId) {
       inputAccessibilityProps.id = inputId
-      inputAccessibilityProps.nativeID = inputId
     }
     if (required === true) inputAccessibilityProps['aria-required'] = true
     if (labelId) inputAccessibilityProps['aria-labelledby'] = labelId

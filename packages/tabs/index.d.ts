@@ -45,14 +45,8 @@ export interface TabsProps {
     swipeEnabled?: boolean;
     /** Position of the tab bar */
     tabBarPosition?: 'top' | 'bottom';
-    /** Function returning label text for a route */
-    getLabelText?: (scene: any) => any;
-    /** Function returning accessibility flag for a route */
-    getAccessible?: (scene: any) => any;
-    /** Function returning accessibility label for a route */
-    getAccessibilityLabel?: (scene: any) => any;
-    /** Function returning testID for a route */
-    getTestID?: (scene: any) => any;
+    /** Test identifier for the tab view root */
+    testID?: string;
     /** Custom icon renderer for the tab bar */
     renderIcon?: (props: any) => ReactNode;
     /** Custom renderer for tab bar items */
@@ -89,12 +83,39 @@ export interface TabsProps {
     labelStyle?: StyleProp<ViewStyle>;
     /** Style applied to tab bar content container */
     contentContainerStyle?: StyleProp<ViewStyle>;
+    /** Per-route tab bar options */
+    options?: Record<string, TabsRouteOptions>;
+    /** Function returning label text for a route */
+    getLabelText?: (scene: any) => any;
+    /** Function returning aria-label for a route */
+    getAriaLabel?: (scene: any) => any;
+    /** Function returning testID for a route */
+    getTestID?: (scene: any) => any;
 }
 export interface TabsRoute {
     /** Route key used to identify the tab */
     key: string;
     /** Visible title displayed in the tab bar */
     title: string;
+    /** Accessible name override for the tab */
+    'aria-label'?: string;
+    /** Test identifier for the tab */
+    testID?: string;
+}
+export interface TabsRouteOptions {
+    /** Accessible name override for the tab */
+    'aria-label'?: string;
+    /** Test identifier for the tab */
+    testID?: string;
+    /** Label text displayed in the tab */
+    labelText?: string;
+    labelAllowFontScaling?: boolean;
+    href?: string;
+    label?: (props: any) => ReactNode;
+    labelStyle?: StyleProp<ViewStyle>;
+    icon?: (props: any) => ReactNode;
+    badge?: (props: any) => ReactNode;
+    sceneStyle?: StyleProp<ViewStyle>;
 }
 declare const ObservedTabs: any;
 export default ObservedTabs;

@@ -57,6 +57,8 @@ export interface CarouselProps {
   children?: any[]
   /** Callback fired when active slide changes */
   onChange?: (index: number) => void
+  /** Test identifier */
+  testID?: string
   /** Ref exposing active child and navigation helpers */
   ref?: Ref<any>
 }
@@ -76,6 +78,7 @@ function Carousel ({
   duration = 300,
   children = [],
   onChange,
+  testID,
   ref
 }: CarouselProps): ReactNode {
   arrowBackStyle = StyleSheet.flatten(arrowBackStyle)
@@ -503,7 +506,7 @@ function Carousel ({
   })
 
   return pug`
-    Div.wrapper(style=[style, { opacity: isRender ? 1 : 0 }])
+    Div.wrapper(style=[style, { opacity: isRender ? 1 : 0 }] testID=testID)
       Div.carousel(styleName=variant)
         if hasArrows
           Div.arrow.arrowBack(

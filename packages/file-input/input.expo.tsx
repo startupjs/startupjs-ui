@@ -22,6 +22,7 @@ function FileInput ({
   afterUpload,
   onChange = () => undefined,
   render,
+  testID,
   ref
 }: FileInputProps): ReactNode {
   let fileId = initialFileId
@@ -93,9 +94,10 @@ function FileInput ({
   }
 
   return pug`
-    if render
-      = render()
-    else
-      = renderDefault()
+    Div(testID=testID)
+      if render
+        = render()
+      else
+        = renderDefault()
   `
 }

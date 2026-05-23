@@ -32,7 +32,11 @@ export interface ObjectInputProps {
   /** Render as read-only */
   readonly?: boolean
   /** Custom wrapper renderer (used by Input layout wrappers) */
-  _renderWrapper?: (params: { style: StyleProp<ViewStyle> | undefined }, children: ReactNode) => ReactNode
+  _renderWrapper?: (params: { style: StyleProp<ViewStyle> | undefined, testID?: string, props?: Record<string, any> }, children: ReactNode) => ReactNode
+  /** Test identifier */
+  testID?: string
+  /** Additional props forwarded to the wrapper */
+  [key: string]: any
 }
 
 function ObjectInput ({
@@ -45,7 +49,9 @@ function ObjectInput ({
   row,
   disabled,
   readonly,
-  _renderWrapper
+  _renderWrapper,
+  testID,
+  ...props
 }: ObjectInputProps): ReactNode {
   if (!$value || !properties) {
     return null
@@ -77,15 +83,17 @@ function ObjectInput ({
   if (inputs.length === 0) return null
 
   if (!_renderWrapper) {
-    _renderWrapper = ({ style }, children): ReactNode => {
+    _renderWrapper = ({ style, props }, children): ReactNode => {
       return pug`
-        Div(style=style row=row)= children
+        Div(style=style testID=testID row=row ...props)= children
       `
     }
   }
 
   return _renderWrapper({
-    style: [style, inputStyle]
+    style: [style, inputStyle],
+    testID,
+    props
   }, inputs.map(({ key, ...inputProps }, index): ReactNode => pug`
     Input.input(
       key=key

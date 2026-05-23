@@ -25,21 +25,21 @@ export const States: Story = {
     <StoryStack>
       <StorySection title='Label variants'>
         <InlineRow>
-          <Div data-testid='badge-mentions'>
+          <Div testID='badge-mentions'>
             <Badge label={3} style={{ alignSelf: 'flex-start' }}>
               <Div style={{ padding: 12, minWidth: 88, borderRadius: 12, backgroundColor: '#f3f4f6' }}>
                 <Span bold>Mentions</Span>
               </Div>
             </Badge>
           </Div>
-          <Div data-testid='badge-inbox'>
+          <Div testID='badge-inbox'>
             <Badge label={18} max={9} style={{ alignSelf: 'flex-start' }}>
               <Div style={{ padding: 12, minWidth: 88, borderRadius: 12, backgroundColor: '#f3f4f6' }}>
                 <Span bold>Inbox</Span>
               </Div>
             </Badge>
           </Div>
-          <Div data-testid='badge-live'>
+          <Div testID='badge-live'>
             <Badge variant='dot' style={{ alignSelf: 'flex-start' }}>
               <Div style={{ padding: 12, minWidth: 88, borderRadius: 12, backgroundColor: '#f3f4f6' }}>
                 <Span bold>Live</Span>
@@ -50,7 +50,7 @@ export const States: Story = {
       </StorySection>
 
       <StorySection title='Icon badge'>
-        <Div data-testid='badge-search'>
+        <Div testID='badge-search'>
           <Badge label='2' icon={faHeart}>
             <Button onPress={() => {}}>Search</Button>
           </Badge>
@@ -58,7 +58,7 @@ export const States: Story = {
       </StorySection>
 
       <StorySection title='Host targeting follow-up'>
-        <Badge data-testid='badge-self-testid' label={1}>
+        <Badge testID='badge-self-testid' label={1}>
           <Div style={{ padding: 12, minWidth: 88, borderRadius: 12, backgroundColor: '#f3f4f6' }}>
             <Span bold>Direct target</Span>
           </Div>
@@ -66,7 +66,7 @@ export const States: Story = {
       </StorySection>
 
       <StorySection title='Nested content'>
-        <Div data-testid='badge-messages'>
+        <Div testID='badge-messages'>
           <Badge label={7} style={{ alignSelf: 'flex-start' }}>
             <Div row gap={1} style={{ padding: 16, borderRadius: 12, backgroundColor: '#f9fafb' }}>
               <Span>Messages</Span>

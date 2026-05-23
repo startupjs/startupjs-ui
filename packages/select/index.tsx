@@ -20,14 +20,12 @@ export interface SelectProps extends Omit<UITextInputProps, 'value' | 'onChangeT
   emptyValueLabel?: string | number
   /** Ref forwarded to underlying TextInput */
   ref?: RefObject<any>
-  /** Test identifier passed to wrapper; on web the native `<select>` overlay also receives `data-testid="{testID}-combobox"` when set */
+  /** Test identifier passed to wrapper */
   testID?: string
   /** Cross-platform accessible name */
   'aria-label'?: string
   /** Web-only control id forwarded to the native select overlay */
   id?: string
-  /** Native id alias forwarded to the native select overlay */
-  nativeID?: string
   /** Web-only labelled-by relationship */
   'aria-labelledby'?: string
   /** Web-only described-by relationship */
@@ -36,6 +34,8 @@ export interface SelectProps extends Omit<UITextInputProps, 'value' | 'onChangeT
   'aria-errormessage'?: string
   /** Web-only invalid state */
   'aria-invalid'?: boolean
+  /** Web-only required state */
+  'aria-required'?: boolean
   /** Fired when selected value changes */
   onChange?: (value: any) => void
 }
@@ -49,11 +49,11 @@ function Select ({
   testID,
   'aria-label': ariaLabel,
   id,
-  nativeID,
   'aria-labelledby': ariaLabelledBy,
   'aria-describedby': ariaDescribedBy,
   'aria-errormessage': ariaErrorMessage,
   'aria-invalid': ariaInvalid,
+  'aria-required': ariaRequired,
   onChange,
   ref,
   ...props
@@ -73,11 +73,12 @@ function Select ({
         emptyValueLabel=emptyValueLabel
         testID=testID
         aria-label=ariaLabel
-        id=id || nativeID
+        id=id
         aria-labelledby=ariaLabelledBy
         aria-describedby=ariaDescribedBy
         aria-errormessage=ariaErrorMessage
         aria-invalid=ariaInvalid
+        aria-required=ariaRequired
       )= children
     `
   }

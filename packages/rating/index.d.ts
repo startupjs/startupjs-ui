@@ -15,4 +15,6 @@ export interface RatingProps {
     readonly?: boolean;
     /** Handler called when user selects a value */
     onChange?: (value: number) => void;
+    /** Test identifier */
+    testID?: string;
 }

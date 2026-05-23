@@ -14,4 +14,6 @@ export interface DividerProps {
     size?: 'm' | 'l';
     /** Divider length in lines (1 line is 16px) @default 1 */
     lines?: number;
+    /** Test identifier */
+    testID?: string;
 }

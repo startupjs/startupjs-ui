@@ -14,8 +14,8 @@ type Story = StoryObj<typeof meta>
 type PlayContext = Parameters<NonNullable<Story['play']>>[0]
 
 async function failingFollowup ({ canvas }: PlayContext) {
-  const defaultDividerHost = canvas.getByTestId('divider-horizontal-default').firstElementChild as HTMLElement | null
-  const verticalDividerHost = canvas.getByTestId('divider-vertical').firstElementChild as HTMLElement | null
+  const defaultDividerHost = canvas.getByTestId('divider-horizontal-default')
+  const verticalDividerHost = canvas.getByTestId('divider-vertical')
 
   await expect(defaultDividerHost).toHaveAttribute('role', 'separator')
   await expect(verticalDividerHost).toHaveAttribute('aria-orientation', 'vertical')
@@ -29,31 +29,25 @@ export const States: Story = {
       <StorySection title='Horizontal'>
         <Div gap={1}>
           <Span description>Above</Span>
-          <Div data-testid='divider-horizontal-default'>
-            <Divider />
-          </Div>
+          <Divider testID='divider-horizontal-default' />
           <Span description>Below</Span>
-          <Div data-testid='divider-horizontal-large'>
-            <Divider size='l' lines={2} />
-          </Div>
+          <Divider testID='divider-horizontal-large' size='l' lines={2} />
         </Div>
       </StorySection>
 
       <StorySection title='Vertical'>
         <Div row vAlign='center' gap={1}>
           <Span description>Left</Span>
-          <Div data-testid='divider-vertical' style={{ height: 48 }}>
-            <Divider variant='vertical' lines={3} />
-          </Div>
+          <Divider testID='divider-vertical' variant='vertical' lines={3} style={{ height: 48 }} />
           <Span description>Right</Span>
         </Div>
       </StorySection>
     </StoryStack>
   ),
   play: async ({ canvas }) => {
-    const defaultDividerHost = canvas.getByTestId('divider-horizontal-default').firstElementChild as HTMLElement | null
-    const largeDividerHost = canvas.getByTestId('divider-horizontal-large').firstElementChild as HTMLElement | null
-    const verticalDividerHost = canvas.getByTestId('divider-vertical').firstElementChild as HTMLElement | null
+    const defaultDividerHost = canvas.getByTestId('divider-horizontal-default')
+    const largeDividerHost = canvas.getByTestId('divider-horizontal-large')
+    const verticalDividerHost = canvas.getByTestId('divider-vertical')
 
     await expect(canvas.getByText('Above', { exact: true })).toBeVisible()
     await expect(canvas.getByText('Below', { exact: true })).toBeVisible()

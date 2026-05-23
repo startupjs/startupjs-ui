@@ -63,6 +63,8 @@ export interface DropdownProps {
   onChange?: (value: string | number | undefined) => void
   /** Called when dropdown is dismissed via overlay/cancel */
   onDismiss?: () => void
+  /** Test identifier for the dropdown trigger */
+  testID?: string
   /** Test id for the desktop/tablet popover surface (passed to `AbstractPopover`) */
   popoverTestID?: string
 }
@@ -95,6 +97,7 @@ function Dropdown ({
   showDrawerResponder,
   onChange,
   onDismiss,
+  testID,
   popoverTestID,
   ref
 }: DropdownProps): ReactNode {
@@ -283,6 +286,7 @@ function Dropdown ({
         testID=popoverTestID
       )
         TouchableOpacity(
+          testID=testID
           disabled=disabled
           role='button'
           aria-label=captionLabel
@@ -300,6 +304,7 @@ function Dropdown ({
   return pug`
     if caption
       TouchableOpacity.caption(
+        testID=testID
         disabled=disabled
         role='button'
         aria-label=captionLabel

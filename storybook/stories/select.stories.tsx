@@ -31,7 +31,7 @@ function SelectStates () {
           description='Wrapped select should be targetable by the visible label on web.'
           options={OPTIONS}
           value={value}
-          testId='role-select'
+          testID='role-select'
           onChange={setValue}
         />
       </StorySection>
@@ -50,7 +50,7 @@ function SelectStates () {
             label='Disabled role'
             options={OPTIONS}
             value='guest'
-            testId='disabled-role-select'
+            testID='disabled-role-select'
             disabled
             onChange={() => {}}
           />
@@ -93,7 +93,7 @@ type Story = StoryObj<typeof meta>
 type PlayContext = Parameters<NonNullable<Story['play']>>[0]
 
 async function failingFollowup ({ canvas }: PlayContext) {
-  await expect(canvas.getByTestId('role-select-combobox')).toBeVisible()
+  await expect(canvas.getByTestId('role-select')).toBeVisible()
 }
 void failingFollowup
 
@@ -104,12 +104,12 @@ export const States: Story = {
     const wrappedSelect = canvas.getByLabelText('Role')
     const optionalSelect = canvas.getByLabelText('Optional role')
     const lowLevelSelect = canvas.getByLabelText('Role low level')
-    const lowLevelSelectByTestId = canvas.getByTestId('low-level-role-select-combobox')
+    const lowLevelSelectByTestId = canvas.getByTestId('low-level-role-select')
     const disabledSelect = canvas.getByLabelText('Disabled role')
     const typedSelect = canvas.getByLabelText('Typed role')
 
-    await expect(canvas.getByTestId('role-select-combobox')).toBe(wrappedSelect)
-    await expect(lowLevelSelectByTestId).toBe(lowLevelSelect)
+    expect(canvas.getByTestId('role-select')).toContainElement(wrappedSelect)
+    expect(lowLevelSelectByTestId).toContainElement(lowLevelSelect)
     await expect(disabledSelect).toBeDisabled()
     await expect(optionalSelect).toHaveDisplayValue('Choose a role')
     await expect(disabledSelect).toHaveDisplayValue('Guest')
