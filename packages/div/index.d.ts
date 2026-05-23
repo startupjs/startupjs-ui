@@ -2,11 +2,12 @@
 // DO NOT MODIFY THIS FILE - IT IS AUTOMATICALLY GENERATED ON COMMITS.
 
 import { type ReactNode, type RefObject } from 'react';
-import { type StyleProp, type ViewStyle, type ViewProps, type AccessibilityRole } from 'react-native';
+import { type StyleProp, type ViewStyle, type ViewProps } from 'react-native';
+type LegacyAccessibilityProp = 'accessibilityActions' | 'accessibilityElementsHidden' | 'accessibilityHint' | 'accessibilityLabel' | 'accessibilityLanguage' | 'accessibilityLiveRegion' | 'accessibilityRole' | 'accessibilityState' | 'accessibilityValue' | 'accessibilityViewIsModal' | 'importantForAccessibility' | 'onAccessibilityAction' | 'onAccessibilityEscape' | 'onAccessibilityTap' | 'onMagicTap';
 declare const _default: import("react").ComponentType<DivProps>;
 export default _default;
 export declare const _PropsJsonSchema: {};
-export interface DivProps extends ViewProps {
+export interface DivProps extends Omit<ViewProps, LegacyAccessibilityProp> {
     /** Ref to access underlying <View> or <Pressable> */
     ref?: RefObject<any>;
     /** Custom styles applied to the root view */
@@ -59,8 +60,6 @@ export interface DivProps extends ViewProps {
     onPressOut?: (e: any) => void;
     /** Whether view is accessible and focusable (if you can press it it's focusable by default) */
     accessible?: boolean;
-    /** Accessibility role passed to native view (if you can press it it's a 'button') */
-    accessibilityRole?: AccessibilityRole;
     /** Deprecated custom tooltip renderer @deprecated */
     renderTooltip?: any;
     /** Internal: render a native <button> host on web when the resolved role is button */

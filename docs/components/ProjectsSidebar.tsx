@@ -102,7 +102,7 @@ function ProjectButton ({ project, isActive, colorScheme }: { project: Project, 
 
   const buttonStyle = StyleSheet.flatten([styles.button, { backgroundColor: buttonBg }])
   return (
-    <Link asChild href={project.url as ExternalPathString} accessibilityLabel={project.fullName}>
+    <Link asChild href={project.url as ExternalPathString} aria-label={project.fullName}>
       <Pressable
         onHoverIn={onHoverIn}
         onHoverOut={onHoverOut}

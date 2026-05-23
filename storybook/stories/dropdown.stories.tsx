@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-native'
-import { expect, screen, waitFor } from 'storybook/test'
+import { expect, screen, waitFor, within } from 'storybook/test'
 import { Card, Div, Dropdown, Span } from 'startupjs-ui'
 import { PERSON_OPTIONS, StorySection, StoryStack } from './helpers'
 
@@ -13,15 +13,22 @@ function DropdownStates () {
         title='Default caption'
         description='On desktop this opens as a popover. On smaller screens the same component can switch to the drawer variant.'
       >
-        <Dropdown value={value} onChange={setValue} style={{ width: 280 }}>
+        <Dropdown
+          value={value}
+          aria-label='Speaker dropdown'
+          popoverTestID='speaker-dropdown-popover'
+          onChange={setValue}
+          style={{ width: 280 }}
+        >
           {PERSON_OPTIONS.map(person => (
             <Dropdown.Item
               key={person.value}
               value={person.value}
               label={person.label}
+              testID={`speaker-option-${person.value}`}
             />
           ))}
-          <Dropdown.Item value='removed' label='Removed option' disabled />
+          <Dropdown.Item value='removed' label='Removed option' testID='speaker-option-removed' disabled />
         </Dropdown>
       </StorySection>
       <StorySection
@@ -68,7 +75,7 @@ async function failingFollowup ({ canvas, userEvent }: PlayContext) {
 
   expect(customTrigger.querySelector('button')).toBeNull()
   await userEvent.click(customTrigger)
-  await expect(screen.getByRole('menu')).toBeVisible()
+  await expect(screen.getByRole('listbox')).toBeVisible()
 }
 void failingFollowup
 
@@ -76,21 +83,27 @@ export const States: Story = {
   tags: ['interaction'],
   render: () => <DropdownStates />,
   play: async ({ canvas, userEvent }) => {
-    const defaultTrigger = canvas.getByText('Grace Hopper')
-    const customTrigger = canvas.getByText('Choose a speaker')
+    const defaultTrigger = canvas.getByRole('button', { name: 'Speaker dropdown' })
+    const customTrigger = canvas.getByRole('button', { name: 'Choose a speaker' })
 
     await expect(defaultTrigger).toBeVisible()
+    await expect(defaultTrigger).toHaveAttribute('aria-haspopup', 'listbox')
+    await expect(defaultTrigger).toHaveAttribute('aria-expanded', 'false')
     await expect(customTrigger).toBeVisible()
     await expect(canvas.getByText('grace')).toBeVisible()
 
     await userEvent.click(defaultTrigger)
-    await waitFor(() => expect(screen.getByText('Ada Lovelace')).toBeVisible())
-    await userEvent.click(screen.getAllByText('Ada Lovelace').at(-1) as HTMLElement)
+    await waitFor(() => expect(screen.getByTestId('speaker-dropdown-popover')).toBeVisible())
+    const listbox = screen.getByRole('listbox')
+    const adaOption = within(listbox).getByRole('option', { name: 'Ada Lovelace' })
+    await expect(adaOption).toBe(screen.getByTestId('speaker-option-ada'))
+    await expect(adaOption).toHaveAttribute('aria-selected', 'false')
+    await userEvent.click(adaOption)
     await waitFor(() => expect(canvas.getByText('ada')).toBeVisible())
 
     await userEvent.click(defaultTrigger)
-    await waitFor(() => expect(screen.getByText('Removed option')).toBeVisible())
-    await userEvent.click(screen.getAllByText('Removed option').at(-1) as HTMLElement)
+    await waitFor(() => expect(screen.getByTestId('speaker-option-removed')).toBeVisible())
+    await userEvent.click(screen.getByRole('option', { name: 'Removed option' }))
     await expect(canvas.getByText('ada')).toBeVisible()
 
     await userEvent.click(customTrigger)

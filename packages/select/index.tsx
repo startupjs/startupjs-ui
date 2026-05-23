@@ -24,10 +24,6 @@ export interface SelectProps extends Omit<UITextInputProps, 'value' | 'onChangeT
   testID?: string
   /** Cross-platform accessible name */
   'aria-label'?: string
-  /** Accessible label forwarded to the web select overlay */
-  accessibilityLabel?: string
-  /** Accessible hint forwarded to the web select overlay */
-  accessibilityHint?: string
   /** Web-only control id forwarded to the native select overlay */
   id?: string
   /** Native id alias forwarded to the native select overlay */
@@ -52,8 +48,6 @@ function Select ({
   emptyValueLabel,
   testID,
   'aria-label': ariaLabel,
-  accessibilityLabel,
-  accessibilityHint,
   id,
   nativeID,
   'aria-labelledby': ariaLabelledBy,
@@ -78,7 +72,7 @@ function Select ({
         showEmptyValue=showEmptyValue
         emptyValueLabel=emptyValueLabel
         testID=testID
-        aria-label=ariaLabel ?? accessibilityLabel
+        aria-label=ariaLabel
         id=id || nativeID
         aria-labelledby=ariaLabelledBy
         aria-describedby=ariaDescribedBy

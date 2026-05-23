@@ -70,7 +70,7 @@ function Span ({
 
   const tag = h1 ? 'h1' : h2 ? 'h2' : h3 ? 'h3' : h4 ? 'h4' : h5 ? 'h5' : h6 ? 'h6' : undefined
 
-  const accessibilityProps: any = tag
+  const semanticProps: any = tag
     ? { role: 'heading', 'aria-level': Number(tag.replace(/^h/, '')) }
     : {}
 
@@ -88,7 +88,7 @@ function Span ({
         tag,
         { bold, italic, full, description }
       ]
-      ...accessibilityProps
+      ...semanticProps
       ...props
     )= children
   `

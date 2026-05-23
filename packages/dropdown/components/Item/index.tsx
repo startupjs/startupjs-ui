@@ -90,7 +90,7 @@ function DropdownItem ({
         testID=testID
         role='option'
         aria-selected=(_activeValue === value)
-        accessibilityLabel=label
+        aria-label=label
       )= label
     `
   }

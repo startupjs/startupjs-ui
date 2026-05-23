@@ -1,0 +1,54 @@
+# Accessibility
+
+StartupJS UI components expose web accessibility semantics through the modern React Native and React Native Web props: `role` and `aria-*`.
+
+These props are also the preferred way to make components easy to locate in Playwright tests. In most cases, a test should be able to use the same locator a user would expect:
+
+```ts
+await page.getByRole('button', { name: 'Save' }).click()
+await page.getByLabel('Email').fill('ada@example.com')
+await page.getByRole('dialog', { name: 'Publish results' })
+await page.getByRole('option', { name: 'Organizer' }).click()
+```
+
+## Use `role` And `aria-*`
+
+Use `role` for the semantic role and `aria-*` props for names, relationships, and state:
+
+```jsx
+<Button aria-label='Delete participant' icon={faTrash} onPress={remove} />
+
+<Div
+  role='button'
+  aria-label='Open participant card'
+  aria-expanded={isOpen}
+  onPress={open}
+/>
+```
+
+Do not use legacy React Native accessibility props such as `accessibilityLabel`, `accessibilityRole`, or other `accessibility*` props in StartupJS UI APIs. They are not the documented accessibility surface for this library.
+
+## Prefer Inferred Semantics
+
+Most components infer useful accessibility props from their normal public props:
+
+- `Input`, `Select`, `NumberInput`, `PasswordInput`, and other wrapped inputs use `label` as the default accessible name.
+- `Modal` and dialogs use their title/header text as the dialog name.
+- `Button`, `Link`, and pressable surfaces usually get their accessible name from visible text.
+- Select-like components expose option labels through `role="option"` where the component controls the popup surface.
+
+Only pass `aria-label`, `aria-labelledby`, `aria-describedby`, or related props when the visible UI is not enough, such as icon-only buttons or custom-rendered rows.
+
+## Testing Guidance
+
+Use semantic locators first:
+
+```ts
+await page.getByRole('button', { name: 'Open filters' }).click()
+await page.getByLabel('Role').selectOption({ label: 'Organizer' })
+await page.getByRole('listbox').getByRole('option', { name: 'Ada Lovelace' }).click()
+```
+
+Use `testID` / `data-testid` only when a semantic locator is not a good fit, for example when asserting a low-level wrapper, portal surface, generated calendar cell, or non-user-facing debug hook.
+
+When a component is hard to locate semantically, treat that as an accessibility bug first and a test-selector problem second.

@@ -22,10 +22,6 @@ export interface SelectProps extends Omit<UITextInputProps, 'value' | 'onChangeT
     testID?: string;
     /** Cross-platform accessible name */
     'aria-label'?: string;
-    /** Accessible label forwarded to the web select overlay */
-    accessibilityLabel?: string;
-    /** Accessible hint forwarded to the web select overlay */
-    accessibilityHint?: string;
     /** Web-only control id forwarded to the native select overlay */
     id?: string;
     /** Native id alias forwarded to the native select overlay */

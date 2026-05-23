@@ -39,6 +39,7 @@ function AbstractPopoverStates () {
             attachment='start'
             arrow
             matchAnchorWidth
+            testID='abstract-popover-surface'
             renderWrapper={node => <Div data-testid='abstract-popover-portal'>{node}</Div>}
             onRequestOpen={() => { setRequestOpenCount(count => count + 1) }}
             onRequestClose={() => {
@@ -87,6 +88,7 @@ type PlayContext = Parameters<NonNullable<Story['play']>>[0]
 
 async function failingFollowup ({ canvas }: PlayContext) {
   await expect(canvas.getByRole('button', { name: 'Show popover' })).toBeVisible()
+  await expect(screen.getByTestId('abstract-popover-surface')).toBeVisible()
   await expect(screen.getByRole('dialog')).toBeVisible()
 }
 void failingFollowup

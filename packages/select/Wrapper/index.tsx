@@ -33,10 +33,6 @@ export interface SelectWrapperProps {
   testID?: string
   /** Cross-platform accessible name */
   'aria-label'?: string
-  /** Accessible label for the web select overlay */
-  accessibilityLabel?: string
-  /** Accessible hint for the web select overlay */
-  accessibilityHint?: string
   /** Web-only control id for label association */
   id?: string
   /** Web-only labelled-by relationship */
@@ -67,8 +63,6 @@ function SelectWrapperWeb ({
   emptyValueLabel,
   testID,
   'aria-label': ariaLabel,
-  accessibilityLabel,
-  accessibilityHint,
   id,
   'aria-labelledby': ariaLabelledBy,
   'aria-describedby': ariaDescribedBy,
@@ -88,28 +82,28 @@ function SelectWrapperWeb ({
   return pug`
     Div.root(style=style testID=testID)
       = children
-      if !disabled
-        select(
-          id=id
-          style=STYLES.overlay
-          value=selectedKey
-          onChange=onSelectChange
-          role='combobox'
-          aria-haspopup='listbox'
-          aria-label=ariaLabel ?? accessibilityLabel
-          aria-labelledby=ariaLabelledBy
-          aria-describedby=ariaDescribedBy
-          aria-errormessage=ariaErrorMessage
-          aria-invalid=ariaInvalid
-          'data-testid'=comboboxTestId
-        )
-          each entry in optionEntries
-            option(
-              key=entry.key
-              value=entry.key
-              aria-selected=entry.key === selectedKey
-            )
-              = entry.label
+      select(
+        id=id
+        style=STYLES.overlay
+        value=selectedKey
+        disabled=disabled
+        onChange=onSelectChange
+        role='combobox'
+        aria-haspopup='listbox'
+        aria-label=ariaLabel
+        aria-labelledby=ariaLabelledBy
+        aria-describedby=ariaDescribedBy
+        aria-errormessage=ariaErrorMessage
+        aria-invalid=ariaInvalid
+        'data-testid'=comboboxTestId
+      )
+        each entry in optionEntries
+          option(
+            key=entry.key
+            value=entry.key
+            aria-selected=entry.key === selectedKey
+          )
+            = entry.label
   `
 }
 
