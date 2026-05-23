@@ -36,6 +36,8 @@ export interface FormProps {
   disabled?: boolean
   /** Render as read-only */
   readonly?: boolean
+  /** Test identifier */
+  testID?: string
   /** Model binding for form values */
   $value: any
   /** Do not use; pass `fields` instead (will throw if set) */
@@ -135,6 +137,7 @@ function Form ({
           errors=errors || $errors.get()
           style=style
           inputStyle=inputStyle
+          testID=props.testID
           _renderWrapper=_renderWrapper
           disabled=disabled
           readonly=readonly

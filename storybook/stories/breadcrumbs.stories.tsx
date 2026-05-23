@@ -31,28 +31,26 @@ export const States: Story = {
         title='Linked trail'
         description='Breadcrumbs expose route links and leave the last item as the current page.'
       >
-        <Div data-testid='breadcrumbs-linked'>
-          <Breadcrumbs
-            routes={[
-              { name: 'Navigation', to: '/', icon: faSearch },
-              { name: 'Breadcrumbs', icon: faCircleInfo }
-            ]}
-          />
-        </Div>
+        <Breadcrumbs
+          testID='breadcrumbs-linked'
+          routes={[
+            { name: 'Navigation', to: '/', icon: faSearch },
+            { name: 'Breadcrumbs', icon: faCircleInfo }
+          ]}
+        />
       </StorySection>
 
       <StorySection title='Custom separator and icon placement'>
-        <Div data-testid='breadcrumbs-custom'>
-          <Breadcrumbs
-            routes={[
-              { name: 'StartupJS', to: '#startupjs', icon: faSearch },
-              { name: 'UI', to: '#ui', icon: faCircleInfo },
-              { name: 'Breadcrumbs', icon: faCircleInfo }
-            ]}
-            iconPosition='right'
-            separator='>'
-          />
-        </Div>
+        <Breadcrumbs
+          testID='breadcrumbs-custom'
+          routes={[
+            { name: 'StartupJS', to: '#startupjs', icon: faSearch },
+            { name: 'UI', to: '#ui', icon: faCircleInfo },
+            { name: 'Breadcrumbs', icon: faCircleInfo }
+          ]}
+          iconPosition='right'
+          separator='>'
+        />
       </StorySection>
 
       <Div gap={0.5}>

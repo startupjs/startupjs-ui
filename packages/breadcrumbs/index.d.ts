@@ -29,4 +29,6 @@ export interface BreadcrumbsProps {
     replace?: boolean;
     /** Icon position relative to the label @default 'left' */
     iconPosition?: 'left' | 'right';
+    /** Test identifier */
+    testID?: string;
 }

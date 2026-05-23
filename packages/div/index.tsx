@@ -28,28 +28,11 @@ const {
   }
 } = STYLES
 
-type LegacyAccessibilityProp =
-  | 'accessibilityActions'
-  | 'accessibilityElementsHidden'
-  | 'accessibilityHint'
-  | 'accessibilityLabel'
-  | 'accessibilityLanguage'
-  | 'accessibilityLiveRegion'
-  | 'accessibilityRole'
-  | 'accessibilityState'
-  | 'accessibilityValue'
-  | 'accessibilityViewIsModal'
-  | 'importantForAccessibility'
-  | 'onAccessibilityAction'
-  | 'onAccessibilityEscape'
-  | 'onAccessibilityTap'
-  | 'onMagicTap'
-
 export default observer(themed('Div', Div))
 
 export const _PropsJsonSchema = {/* DivProps */}
 
-export interface DivProps extends Omit<ViewProps, LegacyAccessibilityProp> {
+export interface DivProps extends ViewProps {
   /** Ref to access underlying <View> or <Pressable> */
   ref?: RefObject<any>
   /** Custom styles applied to the root view */
@@ -106,8 +89,6 @@ export interface DivProps extends Omit<ViewProps, LegacyAccessibilityProp> {
   renderTooltip?: any // Deprecated
   /** Internal: render a native <button> host on web when the resolved role is button */
   _webNativeButton?: boolean
-  /** Test ID for testing purposes */
-  'data-testid'?: string
 }
 
 function Div ({
@@ -202,7 +183,6 @@ function Div ({
   const Component = isPressable
     ? (isAnimated ? AnimatedPressable : Pressable)
     : (isAnimated ? Animated.View : View)
-  const testID = props.testID ?? props['data-testid']
   const divElement = pug`
     Component.root(
       ref=rootRef
@@ -227,7 +207,6 @@ function Div ({
         levelModifier
       ]
       accessible=accessible
-      testID=testID
       ...props
     )= children
   `

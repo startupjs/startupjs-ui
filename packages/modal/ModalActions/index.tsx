@@ -24,6 +24,8 @@ export interface ModalActionsProps {
   onCancel?: (event: any) => void | Promise<void>
   /** Confirm button handler */
   onConfirm?: (event: any) => void | Promise<void>
+  /** Test identifier */
+  testID?: string
 }
 
 function ModalActions ({
@@ -32,10 +34,11 @@ function ModalActions ({
   cancelLabel = DEFAULT_CANCEL_LABEL,
   confirmLabel = DEFAULT_CONFIRM_LABEL,
   onCancel,
-  onConfirm
+  onConfirm,
+  testID
 }: ModalActionsProps): ReactNode {
   return pug`
-    Div.root(row style=style align='right')
+    Div.root(row style=style testID=testID align='right')
       if children
         = children
       else

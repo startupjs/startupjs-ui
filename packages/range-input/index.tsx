@@ -2,6 +2,7 @@ import { useMemo, type ReactNode } from 'react'
 import MultiSlider, { type MultiSliderProps } from '@startupjs-ui/react-native-multi-slider'
 import { pug, observer } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
+import Div from '@startupjs-ui/div'
 import Label from './Label'
 import './index.cssx.styl'
 
@@ -52,6 +53,25 @@ export interface RangeInputProps {
   onChangeStart?: MultiSliderProps['onValuesChangeStart']
   /** Handler triggered when sliding ends */
   onChangeFinish?: MultiSliderProps['onValuesChangeFinish']
+  /** Test identifier */
+  testID?: string
+  /** Web id for label association */
+  id?: string
+  /** Accessible name */
+  'aria-label'?: string
+  /** Element ids that label this slider */
+  'aria-labelledby'?: string
+  /** Element ids that describe this slider */
+  'aria-describedby'?: string
+  /** Whether the slider value is invalid */
+  'aria-invalid'?: boolean | 'true' | 'false'
+  /** Element id for the related error message */
+  'aria-errormessage'?: string
+  /** Whether a value is required */
+  'aria-required'?: boolean
+  /** Whether the slider is disabled */
+  disabled?: boolean
+  [key: string]: any
 }
 
 function RangeInput ({
@@ -69,6 +89,15 @@ function RangeInput ({
   onChange,
   onChangeFinish,
   onChangeStart,
+  testID,
+  id,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  'aria-describedby': ariaDescribedBy,
+  'aria-invalid': ariaInvalid,
+  'aria-errormessage': ariaErrorMessage,
+  'aria-required': ariaRequired,
+  disabled,
   ...props
 }: RangeInputProps): ReactNode {
   useMemo(() => {
@@ -87,30 +116,47 @@ function RangeInput ({
 
   // vendor component requires an array in any case
   const values = Array.isArray(value) ? value : [value as any]
+  const ariaValueText = values.filter(value => value != null).join(' - ') || undefined
 
   function onValuesChange (nextValues: number[]) {
     onChange && onChange(range ? nextValues : nextValues[0])
   }
 
   return pug`
-    MultiSlider.root(
-      ...props
-      part='root'
-      customLabel=customLabel
-      enableLabel=showLabel
-      enabledTwo=range
-      min=min
-      max=max
-      showSteps=showSteps
-      showStepLabels=showStepLabels
-      showStepMarkers=showStepMarkers
-      sliderLength=width
-      snapped
-      step=step
-      values=values
-      onValuesChange=onValuesChange
-      onValuesChangeFinish=onChangeFinish
-      onValuesChangeStart=onChangeStart
+    Div.root(
+      id=id
+      testID=testID
+      role='slider'
+      aria-label=ariaLabel
+      aria-labelledby=ariaLabelledBy
+      aria-describedby=ariaDescribedBy
+      aria-invalid=ariaInvalid
+      aria-errormessage=ariaErrorMessage
+      aria-required=ariaRequired
+      aria-disabled=disabled
+      aria-valuemin=min
+      aria-valuemax=max
+      aria-valuenow=!range && values[0] != null ? values[0] : undefined
+      aria-valuetext=ariaValueText
     )
+      MultiSlider(
+        ...props
+        customLabel=customLabel
+        enableLabel=showLabel
+        enabledOne=!disabled
+        enabledTwo=range && !disabled
+        min=min
+        max=max
+        showSteps=showSteps
+        showStepLabels=showStepLabels
+        showStepMarkers=showStepMarkers
+        sliderLength=width
+        snapped
+        step=step
+        values=values
+        onValuesChange=onValuesChange
+        onValuesChangeFinish=onChangeFinish
+        onValuesChangeStart=onChangeStart
+      )
   `
 }

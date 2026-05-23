@@ -29,8 +29,8 @@ export interface InputProps {
     disabled?: boolean;
     /** Render as read-only */
     readonly?: boolean;
-    /** Test id for generated testID */
-    testId?: string;
+    /** Test identifier */
+    testID?: string;
     /** Placeholder text */
     placeholder?: string;
     /** Options for select-like inputs */

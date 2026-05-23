@@ -1,10 +1,10 @@
 export default function getInputTestId (props: {
-  testId?: string
+  testID?: string
   label?: unknown
   description?: unknown
   placeholder?: unknown
 } & Record<string, any>): string | undefined {
-  if (props.testId) return props.testId
+  if (props.testID) return props.testID
 
   const inputName =
     (typeof props.label === 'string' && props.label !== '' ? props.label : null) ??

@@ -3,11 +3,10 @@
 
 import { type ReactNode, type RefObject } from 'react';
 import { type StyleProp, type ViewStyle, type ViewProps } from 'react-native';
-type LegacyAccessibilityProp = 'accessibilityActions' | 'accessibilityElementsHidden' | 'accessibilityHint' | 'accessibilityLabel' | 'accessibilityLanguage' | 'accessibilityLiveRegion' | 'accessibilityRole' | 'accessibilityState' | 'accessibilityValue' | 'accessibilityViewIsModal' | 'importantForAccessibility' | 'onAccessibilityAction' | 'onAccessibilityEscape' | 'onAccessibilityTap' | 'onMagicTap';
 declare const _default: import("react").ComponentType<DivProps>;
 export default _default;
 export declare const _PropsJsonSchema: {};
-export interface DivProps extends Omit<ViewProps, LegacyAccessibilityProp> {
+export interface DivProps extends ViewProps {
     /** Ref to access underlying <View> or <Pressable> */
     ref?: RefObject<any>;
     /** Custom styles applied to the root view */
@@ -64,6 +63,4 @@ export interface DivProps extends Omit<ViewProps, LegacyAccessibilityProp> {
     renderTooltip?: any;
     /** Internal: render a native <button> host on web when the resolved role is button */
     _webNativeButton?: boolean;
-    /** Test ID for testing purposes */
-    'data-testid'?: string;
 }

@@ -24,7 +24,9 @@ export interface ArrayInputProps {
   /** Input metadata for array items (must include `input` or `type`) */
   items: Record<string, any>
   /** Custom wrapper renderer (used by Input layout wrappers) */
-  _renderWrapper?: (style: any, children: ReactNode) => ReactNode
+  _renderWrapper?: (params: { style?: any, testID?: string, props?: Record<string, any> }, children: ReactNode) => ReactNode
+  /** Test identifier */
+  testID?: string
   [key: string]: any
 }
 
@@ -33,7 +35,9 @@ function ArrayInput ({
   inputStyle,
   $value,
   items,
-  _renderWrapper
+  _renderWrapper,
+  testID,
+  ...props
 }: ArrayInputProps): ReactNode {
   if (!$value || !items) return null
 
@@ -51,9 +55,9 @@ function ArrayInput ({
   const inputs = getInputs()
 
   if (!_renderWrapper) {
-    _renderWrapper = (style, children): ReactNode => {
+    _renderWrapper = ({ style, testID, props }, children): ReactNode => {
       return pug`
-        Div(style=style)= children
+        Div(style=style testID=testID ...props)= children
       `
     }
   }
@@ -65,7 +69,9 @@ function ArrayInput ({
   //         - add new item before
   //         - add new item after
   return _renderWrapper({
-    style: [style, inputStyle]
+    style: [style, inputStyle],
+    testID,
+    props
   }, pug`
     each inputProps, index in inputs
       Div.item(key=index styleName={ pushTop: index !== 0 })

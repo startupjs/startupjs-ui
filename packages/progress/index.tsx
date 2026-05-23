@@ -29,6 +29,8 @@ export interface ProgressProps {
   progressStyle?: DivProps['style']
   /** Style overrides for the filler part */
   fillerStyle?: StyleProp<ViewStyle>
+  /** Test identifier */
+  testID?: string
 }
 
 function Progress ({
@@ -37,13 +39,14 @@ function Progress ({
   children,
   variant = 'linear',
   shape = 'rounded',
-  width = u(0.5)
+  width = u(0.5),
+  testID
 }: ProgressProps): ReactNode {
   const isCircular = variant === 'circular'
   const extraStyle = isCircular ? {} : { height: width }
 
   return pug`
-    View(style=style)
+    View(style=style testID=testID)
       Div.progress(
         part='progress'
         style=extraStyle

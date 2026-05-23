@@ -18,13 +18,13 @@ export const States: Story = {
     <StoryStack>
       <StorySection title='Width presets'>
         <StoryStack>
-          <Content data-testid='content-mobile' padding width='mobile' style={{ borderRadius: 12, backgroundColor: '#f3f4f6' }}>
+          <Content testID='content-mobile' padding width='mobile' style={{ borderRadius: 12, backgroundColor: '#f3f4f6' }}>
             <Span bold>Mobile width</Span>
           </Content>
-          <Content data-testid='content-tablet' padding width='tablet' style={{ borderRadius: 12, backgroundColor: '#f3f4f6' }}>
+          <Content testID='content-tablet' padding width='tablet' style={{ borderRadius: 12, backgroundColor: '#f3f4f6' }}>
             <Span bold>Tablet width</Span>
           </Content>
-          <Content data-testid='content-desktop-pure' padding width='desktop' pure style={{ borderRadius: 12, backgroundColor: '#f3f4f6' }}>
+          <Content testID='content-desktop-pure' padding width='desktop' pure style={{ borderRadius: 12, backgroundColor: '#f3f4f6' }}>
             <Span bold>Desktop width, pure</Span>
           </Content>
         </StoryStack>
@@ -32,7 +32,7 @@ export const States: Story = {
 
       <StorySection title='Full height content'>
         <Div style={{ height: 220, borderRadius: 12, backgroundColor: '#f9fafb', overflow: 'hidden' }}>
-          <Content data-testid='content-full' full padding={3}>
+          <Content testID='content-full' full padding={3}>
             <Div gap={0.5}>
               <Span bold>Nested content keeps the horizontal rhythm.</Span>
               <Span description>Use this for page-level sections and documents.</Span>

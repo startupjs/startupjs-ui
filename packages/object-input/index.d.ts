@@ -29,5 +29,11 @@ export interface ObjectInputProps {
     /** Custom wrapper renderer (used by Input layout wrappers) */
     _renderWrapper?: (params: {
         style: StyleProp<ViewStyle> | undefined;
+        testID?: string;
+        props?: Record<string, any>;
     }, children: ReactNode) => ReactNode;
+    /** Test identifier */
+    testID?: string;
+    /** Additional props forwarded to the wrapper */
+    [key: string]: any;
 }

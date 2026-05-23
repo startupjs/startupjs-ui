@@ -17,6 +17,12 @@ export interface ArrayInputProps {
     /** Input metadata for array items (must include `input` or `type`) */
     items: Record<string, any>;
     /** Custom wrapper renderer (used by Input layout wrappers) */
-    _renderWrapper?: (style: any, children: ReactNode) => ReactNode;
+    _renderWrapper?: (params: {
+        style?: any;
+        testID?: string;
+        props?: Record<string, any>;
+    }, children: ReactNode) => ReactNode;
+    /** Test identifier */
+    testID?: string;
     [key: string]: any;
 }

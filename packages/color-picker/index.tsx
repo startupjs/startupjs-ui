@@ -30,8 +30,12 @@ export interface ColorPickerProps {
   size?: 's' | 'm' | 'l'
   /** Called with the selected hex color */
   onChangeColor?: (color: string) => void
+  /** Test identifier */
+  testID?: string
   /** Imperative ref to open/close picker */
   ref?: RefObject<any>
+  /** Additional props forwarded to the color button */
+  [key: string]: any
 }
 
 function ColorPicker ({
@@ -40,7 +44,9 @@ function ColorPicker ({
   value = '#fff',
   disabled = false,
   onChangeColor = () => {},
-  ref
+  testID,
+  ref,
+  ...props
 }: ColorPickerProps): ReactNode {
   const [shown, setShown] = useState(false)
   const pickerRef = useRef<any>(null)
@@ -52,7 +58,7 @@ function ColorPicker ({
   }, [disabled, shown])
 
   return pug`
-    Div(style=style)
+    Div(style=style testID=testID)
       Picker(
         ref=pickerRef
         onChangeColor=(color) => {
@@ -61,6 +67,7 @@ function ColorPicker ({
         }
       )
       Button.button(
+        ...props
         disabled=disabled
         style={ backgroundColor: value }
         variant='flat'

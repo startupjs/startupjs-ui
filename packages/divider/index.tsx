@@ -22,13 +22,16 @@ export interface DividerProps {
   size?: 'm' | 'l'
   /** Divider length in lines (1 line is 16px) @default 1 */
   lines?: number
+  /** Test identifier */
+  testID?: string
 }
 
 function Divider ({
   style,
   size = 'm',
   lines = 1,
-  variant = 'horizontal'
+  variant = 'horizontal',
+  testID
 }: DividerProps): ReactNode {
   const lineWidth = heights[size]
   const width = LINE_HEIGHT * lines
@@ -51,6 +54,6 @@ function Divider ({
   }
 
   return pug`
-    View.root(style=[extraStyle, style] styleName=[size, variant])
+    View.root(style=[extraStyle, style] styleName=[size, variant] testID=testID)
   `
 }

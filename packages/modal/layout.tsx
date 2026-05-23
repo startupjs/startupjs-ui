@@ -38,6 +38,8 @@ export interface ModalLayoutProps {
   title?: string
   /** Accessible role for the modal surface on web @default 'dialog' */
   role?: ViewProps['role']
+  /** Test identifier for the modal surface */
+  testID?: string
   /** DEPRECATED: use cancelLabel instead */
   dismissLabel?: string
   /** Cancel action label @default 'Cancel' */
@@ -69,6 +71,7 @@ function Modal ({
   variant,
   title,
   role,
+  testID,
   dismissLabel,
   cancelLabel = DEFAULT_CANCEL_LABEL,
   confirmLabel = DEFAULT_CONFIRM_LABEL,
@@ -231,6 +234,7 @@ function Modal ({
         style=modalStyle
         styleName=[variant]
         role=role ?? 'dialog'
+        testID=testID
         aria-modal
         aria-label=dialogTitle
         aria-labelledby=titleId

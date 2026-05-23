@@ -23,16 +23,19 @@ export interface RatingProps {
   readonly?: boolean
   /** Handler called when user selects a value */
   onChange?: (value: number) => void
+  /** Test identifier */
+  testID?: string
 }
 
 function Rating ({
   style,
   value = 0,
   readonly = false,
-  onChange
+  onChange,
+  testID
 }: RatingProps): ReactNode {
   return pug`
-    Div(style=style vAlign='center' row)
+    Div(style=style testID=testID vAlign='center' row)
       if readonly
         Star(active)
         Span.value(bold h6)= value.toFixed(1)

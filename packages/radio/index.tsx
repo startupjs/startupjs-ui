@@ -35,6 +35,8 @@ export interface RadioProps {
   onChange?: (value: any) => void
   /** Error flag @private */
   _hasError?: boolean
+  /** Additional props forwarded to the radio group */
+  [key: string]: any
 }
 
 function Radio ({
@@ -45,11 +47,18 @@ function Radio ({
   row = false,
   disabled = false,
   readonly = false,
+  onChange,
   _hasError,
   ...props
 }: RadioProps): ReactNode {
   return pug`
-    Div.root(style=style styleName={ row })
+    Div.root(
+      ...props
+      style=style
+      styleName={ row }
+      role='radiogroup'
+      aria-disabled=disabled || readonly
+    )
       each option, index in options
         - const optionValue = stringifyValue(option)
         - const checked = optionValue === stringifyValue(value)
@@ -65,7 +74,7 @@ function Radio ({
           error=error
           disabled=disabled
           readonly=readonly
-          ...props
+          onChange=onChange
         )= getOptionLabel(option)
   `
 }

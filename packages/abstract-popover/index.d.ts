@@ -41,7 +41,7 @@ export interface AbstractPopoverProps {
     onCloseComplete?: (finished?: boolean) => void;
     /** Popover content */
     children?: ReactNode;
-    /** Stable test id for the popover surface (portal root); maps to `data-testid` on web */
+    /** Stable test id for the popover surface (portal root) */
     testID?: string;
 }
 declare const _default: import("react").ComponentType<AbstractPopoverProps>;

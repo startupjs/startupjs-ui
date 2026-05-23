@@ -38,6 +38,8 @@ export interface BadgeProps {
   variant?: 'default' | 'dot'
   /** Maximum number to display before adding "+" */
   max?: number
+  /** Test identifier */
+  testID?: string
 }
 
 function Badge ({
@@ -50,7 +52,8 @@ function Badge ({
   position = 'top',
   size = 'm',
   variant = 'default',
-  max
+  max,
+  testID
 }: BadgeProps): ReactNode {
   const [right, setRight] = useState(0)
   const getColor = useColors()
@@ -80,7 +83,7 @@ function Badge ({
   }
 
   return pug`
-    Div.root(style=style)
+    Div.root(style=style testID=testID)
       = children
       if hasLabel || variant === 'dot'
         Div.badge(

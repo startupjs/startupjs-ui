@@ -18,6 +18,10 @@ export interface ColorPickerProps {
     size?: 's' | 'm' | 'l';
     /** Called with the selected hex color */
     onChangeColor?: (color: string) => void;
+    /** Test identifier */
+    testID?: string;
     /** Imperative ref to open/close picker */
     ref?: RefObject<any>;
+    /** Additional props forwarded to the color button */
+    [key: string]: any;
 }

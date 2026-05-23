@@ -25,6 +25,8 @@ export interface FileInputProps {
     render?: () => ReactNode;
     /** Custom styles (reserved for future use) */
     style?: any;
+    /** Test identifier */
+    testID?: string;
 }
 export interface FileInputRef {
     /** Opens the native picker and (optionally) uploads the selected file */
