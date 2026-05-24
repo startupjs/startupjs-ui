@@ -21,6 +21,8 @@ export interface DrawerSidebarProps {
     width?: number;
     /** Renderer for drawer content */
     renderContent?: () => ReactNode;
+    /** Test identifier applied to the drawer content scroll view */
+    testID?: string;
 }
 declare const _default: React.ComponentType<DrawerSidebarProps>;
 export default _default;
