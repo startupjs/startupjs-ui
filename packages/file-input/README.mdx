@@ -63,6 +63,7 @@ return (
 - **afterUpload** -- a hook called after the upload finishes (can be async)
 - **render** -- a custom render function to replace the default Upload/Change/Delete buttons
 - **style** -- custom styles for the component
+- **testID** -- forwarded to the default Upload/Change action button. The Delete button receives `${testID}-delete`. When using `render`, place the passed `testID` on your custom control.
 - **ref** -- a ref object to access imperative methods (see below)
 
 ## Imperative methods

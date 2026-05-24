@@ -3,7 +3,6 @@ import { ScrollView, StyleSheet, type StyleProp, type ViewStyle } from 'react-na
 import DrawerLayoutModule from 'react-native-drawer-layout-polyfill'
 import { pug, observer, $, useDidUpdate } from 'startupjs'
 import { themed, useColors } from '@startupjs-ui/core'
-import Div from '@startupjs-ui/div'
 
 const DrawerLayout = DrawerLayoutModule.default || DrawerLayoutModule
 if (!DrawerLayout) throw Error("> Can't load DrawerLayout module. Issues with bundling.")
@@ -29,8 +28,6 @@ export interface DrawerSidebarProps {
   width?: number
   /** Renderer for drawer content */
   renderContent?: () => ReactNode
-  /** Test identifier for the drawer layout root */
-  testID?: string
 }
 
 function DrawerSidebar ({
@@ -42,7 +39,6 @@ function DrawerSidebar ({
   disabled = false,
   width = 264,
   renderContent,
-  testID,
   ...props
 }: DrawerSidebarProps): ReactNode {
   const getColor = useColors()
@@ -88,18 +84,18 @@ function DrawerSidebar ({
   }
 
   return pug`
-    Div.root(testID=testID style=[{ flex: 1 }, restStyle])
-      DrawerLayout(
-        drawerPosition=position
-        drawerWidth=width
-        drawerBackgroundColor=backgroundColor
-        ref=drawerRef
-        renderNavigationView=renderNavigationView
-        onDrawerClose=() => onDrawerCallback(false)
-        onDrawerOpen=() => onDrawerCallback(true)
-        drawerLockMode=disabled ? 'locked-closed' : undefined
-        ...props
-      )= children
+    DrawerLayout.root(
+      style=restStyle
+      drawerPosition=position
+      drawerWidth=width
+      drawerBackgroundColor=backgroundColor
+      ref=drawerRef
+      renderNavigationView=renderNavigationView
+      onDrawerClose=() => onDrawerCallback(false)
+      onDrawerOpen=() => onDrawerCallback(true)
+      drawerLockMode=disabled ? 'locked-closed' : undefined
+      ...props
+    )= children
   `
 }
 

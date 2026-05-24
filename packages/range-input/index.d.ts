@@ -49,22 +49,8 @@ export interface RangeInputProps {
     onChangeStart?: MultiSliderProps['onValuesChangeStart'];
     /** Handler triggered when sliding ends */
     onChangeFinish?: MultiSliderProps['onValuesChangeFinish'];
-    /** Test identifier */
+    /** Test identifier forwarded to the underlying slider */
     testID?: string;
-    /** Web id for label association */
-    id?: string;
-    /** Accessible name */
-    'aria-label'?: string;
-    /** Element ids that label this slider */
-    'aria-labelledby'?: string;
-    /** Element ids that describe this slider */
-    'aria-describedby'?: string;
-    /** Whether the slider value is invalid */
-    'aria-invalid'?: boolean | 'true' | 'false';
-    /** Element id for the related error message */
-    'aria-errormessage'?: string;
-    /** Whether a value is required */
-    'aria-required'?: boolean;
     /** Whether the slider is disabled */
     disabled?: boolean;
     [key: string]: any;

@@ -22,10 +22,12 @@ export interface FileInputProps {
     /** Called with new fileId after successful upload */
     onChange?: (fileId?: string) => void;
     /** Custom renderer instead of the default Upload/Change/Delete buttons */
-    render?: () => ReactNode;
+    render?: (props?: {
+        testID?: string;
+    }) => ReactNode;
     /** Custom styles (reserved for future use) */
     style?: any;
-    /** Test identifier */
+    /** Test identifier for the default primary action button */
     testID?: string;
 }
 export interface FileInputRef {

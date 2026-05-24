@@ -206,7 +206,6 @@ export const States: Story = {
       ['Start datetime', 'input-start-datetime'],
       ['People', 'input-people'],
       ['Favorite color', 'input-color'],
-      ['Capacity', 'input-capacity'],
       ['Priority order', 'input-priority'],
       ['Aliases', 'input-aliases'],
       ['Profile', 'input-profile']
@@ -226,6 +225,7 @@ export const States: Story = {
 
     await expect(canvas.getByRole('radiogroup', { name: 'Contact method' })).toBeVisible()
     await expect(canvas.getByTestId('input-contact-method')).toBeVisible()
+    await expect(canvas.getByTestId('input-capacity')).toBeVisible()
 
     await userEvent.clear(nameField)
     await userEvent.type(nameField, 'Grace Hopper')
