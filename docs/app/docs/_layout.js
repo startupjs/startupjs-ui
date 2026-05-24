@@ -22,6 +22,9 @@ export default observer(({ children }) => {
   const component = pathname.startsWith('/docs/')
     ? pathname.replace(/^\/docs\//, '').replace(/[^\w].*$/, '')
     : undefined
+  const componentTitle = component
+    ? getItemName(getDocItemByPath(component)) || component
+    : undefined
   useEffect(() => {
     setSearch('')
   }, [component])
@@ -32,7 +35,7 @@ export default observer(({ children }) => {
     return DOC_COMPONENT_CATEGORIES
       .map(cat => ({
         ...cat,
-        items: cat.items.filter(name => name.toLowerCase().includes(lower))
+        items: cat.items.filter(item => getItemName(item).toLowerCase().includes(lower))
       }))
       .filter(cat => cat.items.length > 0)
   }, [search])
@@ -42,7 +45,7 @@ export default observer(({ children }) => {
       ProjectsSidebar(colorScheme=colorScheme)
       View.main
         Stack.Screen(
-          options={ title: 'Docs' + (component ? ' / ' + component : '') }
+          options={ title: 'Docs' + (componentTitle ? ' / ' + componentTitle : '') }
         )
         Pressable.toggleSidebar(styleName={ showSidebar } onPress=toggleSidebar)
           View.line
@@ -61,8 +64,8 @@ export default observer(({ children }) => {
           ScrollView.items
             each cat in filteredCategories
               Category(key=cat.name name=cat.name defaultOpen)
-                each component in cat.items
-                  Item(key=component path=component setShowSidebar=setShowSidebar)= component
+                each item in cat.items
+                  Item(key=getItemPath(item) path=getItemPath(item) setShowSidebar=setShowSidebar)= getItemName(item)
         ScrollView.contentWrapper
           View.content
             Slot
@@ -262,7 +265,7 @@ const Item = observer(({ children, path, setShowSidebar }) => {
 const DOC_COMPONENT_CATEGORIES = [
   {
     name: 'Guides',
-    items: ['Accessibility']
+    items: ['Accessibility', { name: 'E2E Testing', path: 'E2ETesting' }]
   },
   {
     name: 'Layout & Structure',
@@ -301,3 +304,17 @@ const DOC_COMPONENT_CATEGORIES = [
     items: ['Dialogs']
   }
 ]
+
+function getItemName (item) {
+  return typeof item === 'string' ? item : item?.name
+}
+
+function getItemPath (item) {
+  return typeof item === 'string' ? item : item?.path
+}
+
+function getDocItemByPath (path) {
+  return DOC_COMPONENT_CATEGORIES
+    .flatMap(category => category.items)
+    .find(item => getItemPath(item) === path)
+}
