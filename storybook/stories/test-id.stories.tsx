@@ -89,6 +89,7 @@ const CANVAS_TEST_IDS = [
   'tid-date-time-picker',
   'tid-div',
   'tid-divider',
+  'tid-drawer-sidebar',
   'tid-dropdown',
   'tid-flat-list',
   'tid-form',
@@ -396,6 +397,7 @@ const TestIdMatrix = observer(function TestIdMatrix () {
           </Card>
         </Drawer>
         <DrawerSidebar
+          testID='tid-drawer-sidebar'
           $open={$open}
           width={180}
           renderContent={() => <Span>Drawer sidebar content</Span>}

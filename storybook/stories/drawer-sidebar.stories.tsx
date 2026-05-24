@@ -25,6 +25,7 @@ const DrawerSidebarStates = observer(function DrawerSidebarStates () {
           <DrawerSidebar
             $open={$open}
             width={280}
+            testID='drawer-sidebar-panel'
             renderContent={() => (
               <Div gap={1.5} style={{ padding: 16 }}>
                 <Span h4>Organizer menu</Span>
@@ -87,6 +88,7 @@ export const MobileDrawer: Story = {
     await expect(canvas.getByText('Sidebar open: false')).toBeVisible()
 
     await userEvent.click(canvas.getByRole('button', { name: 'Open sidebar' }))
+    await waitFor(() => expect(screen.getByTestId('drawer-sidebar-panel')).toBeVisible())
     await waitFor(() => expect(screen.getByText('Organizer menu')).toBeVisible())
     await waitFor(() => expect(canvas.getByText('Sidebar open: true')).toBeVisible())
     await expect(screen.getByText('Dashboard')).toBeVisible()

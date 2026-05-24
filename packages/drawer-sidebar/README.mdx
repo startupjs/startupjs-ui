@@ -106,10 +106,11 @@ return (
 - **width** -- the drawer width in density-independent pixels (default `264`)
 - **disabled** -- set to `true` to lock the drawer closed and prevent user interaction
 - **renderContent** -- a function that returns the content to render inside the drawer panel
+- **testID** -- forwarded to the existing drawer content `ScrollView`
 
 ## Testing
 
-`DrawerSidebar` does not add a wrapper around the third-party drawer layout solely to host a `testID`. Prefer locating the open/close controls by role and name, and put `testID` on stable elements inside `renderContent` when a semantic locator is not enough.
+`DrawerSidebar` does not add a wrapper around the third-party drawer layout solely to host a `testID`. The underlying drawer library requires `DrawerSidebar` to provide an internal `renderNavigationView`, and the public `renderContent` prop exists to fill that drawer panel. When you pass `testID`, it is applied to the panel `ScrollView`; put more specific `testID` values directly inside `renderContent` only when a semantic locator is not enough.
 
 ## Complex example
 

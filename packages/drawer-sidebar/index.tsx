@@ -28,6 +28,8 @@ export interface DrawerSidebarProps {
   width?: number
   /** Renderer for drawer content */
   renderContent?: () => ReactNode
+  /** Test identifier applied to the drawer content scroll view */
+  testID?: string
 }
 
 function DrawerSidebar ({
@@ -39,6 +41,7 @@ function DrawerSidebar ({
   disabled = false,
   width = 264,
   renderContent,
+  testID,
   ...props
 }: DrawerSidebarProps): ReactNode {
   const getColor = useColors()
@@ -70,7 +73,7 @@ function DrawerSidebar ({
     const render = lazy ? open : true
     if (!render) return null
     return pug`
-      ScrollView(contentContainerStyle={ flex: 1 })
+      ScrollView(testID=testID contentContainerStyle={ flex: 1 })
         = renderContent && renderContent()
     `
   }
