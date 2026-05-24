@@ -4,7 +4,7 @@ StartupJS UI components expose web accessibility semantics through the modern Re
 
 These props are also the preferred way to make components easy to locate in Playwright tests. In most cases, a test should be able to use the same locator a user would expect:
 
-```ts
+```js
 await page.getByRole('button', { name: 'Save' }).click()
 await page.getByLabel('Email').fill('ada@example.com')
 await page.getByRole('dialog', { name: 'Publish results' })
@@ -43,7 +43,7 @@ Only pass `aria-label`, `aria-labelledby`, `aria-describedby`, or related props 
 
 Use semantic locators first:
 
-```ts
+```js
 await page.getByRole('button', { name: 'Open filters' }).click()
 await page.getByLabel('Role').selectOption({ label: 'Organizer' })
 await page.getByRole('listbox').getByRole('option', { name: 'Ada Lovelace' }).click()

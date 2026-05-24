@@ -74,7 +74,7 @@ yarn playwright install chromium
 
 A good baseline `playwright.config.ts` for StartupJS:
 
-```ts
+```js
 import { defineConfig, devices } from '@playwright/test'
 
 const baseURL = 'http://127.0.0.1:3000'
@@ -123,7 +123,7 @@ Keep the E2E tests in a stable folder such as `tests/` or `e2e/`, and add a scri
 
 Example test:
 
-```ts
+```js
 import { expect, test } from '@playwright/test'
 
 test('creates a participant', async ({ page }) => {
@@ -189,7 +189,7 @@ The target is that a test reads the way a human would describe the interaction.
 
 Good:
 
-```ts
+```js
 await page.getByLabel('Email').fill('ada@example.com')
 await page.getByRole('button', { name: 'Save' }).click()
 await page.getByRole('dialog', { name: 'Publish results' })
@@ -198,7 +198,7 @@ await page.getByRole('tab', { name: 'Participants' }).click()
 
 Avoid:
 
-```ts
+```js
 await page.locator('.css-19x').click()
 await page.locator('div > div:nth-child(3) button').click()
 await page.getByText('Save').click()
@@ -294,7 +294,7 @@ StartupJS `Input` fields and low-level input components should be locatable by l
 
 Example:
 
-```ts
+```js
 await page.getByLabel('Email').fill('ada@example.com')
 await page.getByLabel('Billing country').selectOption({ label: 'United States' })
 await page.getByLabel('Birthday').click()
@@ -327,7 +327,7 @@ If the visible label is not the right accessible name, use `aria-label` or `aria
 
 Example:
 
-```ts
+```js
 await page.getByLabel('Billing country').selectOption({ label: 'United States' })
 await page.getByRole('listbox').getByRole('option', { name: 'Create new' }).click()
 ```
@@ -347,7 +347,7 @@ When using `@startupjs-ui/date-time-picker` or `Input` with `type='date'`:
 
 Example:
 
-```ts
+```js
 await page.getByLabel('Starting balance date').click()
 
 const popover = page.getByTestId('starting-balance-date-popover')
@@ -366,7 +366,7 @@ await popover.getByRole('gridcell', { name: 'May 21, 2026' }).click()
 
 Example:
 
-```ts
+```js
 const presetModal = page.getByRole('dialog', { name: 'Create Preset', exact: true }).last()
 await presetModal.getByRole('button', { name: 'Save', exact: true }).click()
 ```
@@ -398,13 +398,13 @@ Use it only when accessible names are genuinely ambiguous for substring matching
 
 Prefer:
 
-```ts
+```js
 await expect.poll(() => readThingFromDb()).not.toBeNull()
 ```
 
 instead of:
 
-```ts
+```js
 await page.waitForTimeout(2000)
 ```
 
