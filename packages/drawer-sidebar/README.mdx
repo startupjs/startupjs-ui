@@ -107,6 +107,10 @@ return (
 - **disabled** -- set to `true` to lock the drawer closed and prevent user interaction
 - **renderContent** -- a function that returns the content to render inside the drawer panel
 
+## Testing
+
+`DrawerSidebar` does not add a wrapper around the third-party drawer layout solely to host a `testID`. Prefer locating the open/close controls by role and name, and put `testID` on stable elements inside `renderContent` when a semantic locator is not enough.
+
 ## Complex example
 
 ```jsx example noscroll

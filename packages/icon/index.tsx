@@ -3,7 +3,6 @@ import { StyleSheet, Platform } from 'react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { pug, observer, u } from 'startupjs'
 import { Colors, themed, useColors } from '@startupjs-ui/core'
-import Div from '@startupjs-ui/div'
 import { customIcons } from './globalCustomIcons'
 
 const SIZES = {
@@ -34,7 +33,6 @@ function Icon ({
   style,
   icon,
   size = 'm',
-  testID,
   ...props
 }: IconProps): ReactNode {
   const getColor = useColors()
@@ -54,7 +52,7 @@ function Icon ({
 
   if (CustomIcon) {
     const { color: fill, width = _size, height = _size, ...iconStyle } = style
-    const customIcon = pug`
+    return pug`
       CustomIcon(
         style=iconStyle
         width=width
@@ -63,17 +61,13 @@ function Icon ({
         ...props
       )
     `
-    return testID
-      ? pug`Div(testID=testID)= customIcon`
-      : customIcon
   }
 
-  let fontAwesomeIcon
   if (Platform.OS === 'web') {
     style.width ??= _size
     style.height ??= _size
     style.outline ??= 'none'
-    fontAwesomeIcon = pug`
+    return pug`
       FontAwesomeIcon(
         style=style
         icon=icon
@@ -81,7 +75,7 @@ function Icon ({
       )
     `
   } else {
-    fontAwesomeIcon = pug`
+    return pug`
       FontAwesomeIcon(
         style=style
         icon=icon
@@ -90,8 +84,4 @@ function Icon ({
       )
     `
   }
-
-  return testID
-    ? pug`Div(testID=testID)= fontAwesomeIcon`
-    : fontAwesomeIcon
 }

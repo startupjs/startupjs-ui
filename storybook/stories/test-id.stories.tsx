@@ -89,11 +89,9 @@ const CANVAS_TEST_IDS = [
   'tid-date-time-picker',
   'tid-div',
   'tid-divider',
-  'tid-drawer-sidebar',
   'tid-dropdown',
   'tid-flat-list',
   'tid-form',
-  'tid-icon',
   'tid-input',
   'tid-item',
   'tid-layout',
@@ -123,7 +121,6 @@ const CANVAS_TEST_IDS = [
   'tid-thead',
   'tid-toast',
   'tid-tr',
-  'tid-tabs',
   'tid-tag',
   'tid-user'
 ] as const
@@ -216,7 +213,7 @@ const TestIdMatrix = observer(function TestIdMatrix () {
           data={['FlatList row']}
           renderItem={({ item }) => <Span>{item}</Span>}
         />
-        <Icon testID='tid-icon' icon={faHeart} />
+        <Icon icon={faHeart} />
         <Item testID='tid-item' onPress={() => {}}>Item</Item>
         <Layout testID='tid-layout'>
           <Span>Layout</Span>
@@ -263,7 +260,6 @@ const TestIdMatrix = observer(function TestIdMatrix () {
           </Tbody>
         </Table>
         <Tabs
-          testID='tid-tabs'
           routes={routes}
           renderScene={() => <Span>Tab scene</Span>}
           initialKey='overview'
@@ -353,7 +349,6 @@ const TestIdMatrix = observer(function TestIdMatrix () {
         <RangeInput
           testID='tid-range-input'
           value={$value.range.get()}
-          aria-label='Range'
           onChange={() => {}}
         />
         <Rank
@@ -401,7 +396,6 @@ const TestIdMatrix = observer(function TestIdMatrix () {
           </Card>
         </Drawer>
         <DrawerSidebar
-          testID='tid-drawer-sidebar'
           $open={$open}
           width={180}
           renderContent={() => <Span>Drawer sidebar content</Span>}
@@ -439,7 +433,7 @@ const TestIdMatrix = observer(function TestIdMatrix () {
 
       <InlineRow>
         <Span description>
-          This story verifies that standard RN testID passes through as the public test hook.
+          This story verifies standard RN testID where the component can expose it without adding structural wrappers.
         </Span>
       </InlineRow>
     </StoryStack>

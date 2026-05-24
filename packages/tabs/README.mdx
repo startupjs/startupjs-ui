@@ -14,6 +14,7 @@ Tabs let you switch between different views. Built on top of [react-native-tab-v
 - `onChange` fires when the active tab changes, receiving the new tab key. It replaces `onIndexChange`.
 - TabBar props such as `activeColor`, `inactiveColor`, `scrollEnabled`, `tabStyle`, `indicatorStyle`, `labelStyle`, `contentContainerStyle`, `indicatorContainerStyle`, `bounces`, `pressColor`, `pressOpacity`, `renderIcon`, `renderTabBarItem`, `renderIndicator`, `renderBadge`, `onTabPress`, and `onTabLongPress` can be passed directly to the `Tabs` component.
 - Per-tab semantics can be set with route `aria-label`/`testID`, route `options`, or `getAriaLabel`/`getTestID`.
+- `Tabs` does not add a wrapper solely for a root `testID`; locate the tablist/tabs semantically, or use route-level `testID` for individual tabs.
 
 The `renderScene` prop is used to render the content for each tab based on the route key.
 

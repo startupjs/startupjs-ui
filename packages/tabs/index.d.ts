@@ -45,8 +45,6 @@ export interface TabsProps {
     swipeEnabled?: boolean;
     /** Position of the tab bar */
     tabBarPosition?: 'top' | 'bottom';
-    /** Test identifier for the tab view root */
-    testID?: string;
     /** Custom icon renderer for the tab bar */
     renderIcon?: (props: any) => ReactNode;
     /** Custom renderer for tab bar items */

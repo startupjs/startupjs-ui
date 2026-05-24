@@ -3,7 +3,6 @@ import { type StyleProp, type ViewStyle } from 'react-native'
 import { TabView } from 'react-native-tab-view'
 import { pug, styl, observer, $ } from 'startupjs'
 import { themed, useColors } from '@startupjs-ui/core'
-import Div from '@startupjs-ui/div'
 import findIndex from 'lodash/findIndex'
 import pick from 'lodash/pick'
 import Bar, { TAB_BAR_PROP_NAMES } from './Bar'
@@ -67,8 +66,6 @@ export interface TabsProps {
   swipeEnabled?: boolean
   /** Position of the tab bar */
   tabBarPosition?: 'top' | 'bottom'
-  /** Test identifier for the tab view root */
-  testID?: string
   /** Custom icon renderer for the tab bar */
   renderIcon?: (props: any) => ReactNode
   /** Custom renderer for tab bar items */
@@ -153,7 +150,6 @@ function Tabs ({
   inactiveColor = 'text-description',
   onChange,
   onIndexChange, // skip property
-  testID,
   getLabelText,
   getAriaLabel,
   getTestID,
@@ -219,7 +215,7 @@ function Tabs ({
     }
   }
 
-  const tabView = pug`
+  return pug`
     TabView(
       part='root'
       style=tabsStyle
@@ -229,7 +225,6 @@ function Tabs ({
       ...tabViewProps
     )
   `
-  return testID ? pug`Div(testID=testID)= tabView` : tabView
   styl`
     .bar
       background-color transparent

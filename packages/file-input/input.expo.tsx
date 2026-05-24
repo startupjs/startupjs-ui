@@ -83,21 +83,22 @@ function FileInput ({
   }
 
   function renderDefault (): ReactNode {
+    const deleteTestID = testID ? `${testID}-delete` : undefined
+
     return pug`
       if fileId
         Div(row)
-          Button(onPress=pickFile) Change
-          Button(pushed onPress=handleDeleteFile variant='text' icon=faTrashAlt)
+          Button(testID=testID onPress=pickFile) Change
+          Button(testID=deleteTestID pushed onPress=handleDeleteFile variant='text' icon=faTrashAlt)
       else
-        Button(onPress=pickFile) Upload file
+        Button(testID=testID onPress=pickFile) Upload file
     `
   }
 
   return pug`
-    Div(testID=testID)
-      if render
-        = render()
-      else
-        = renderDefault()
+    if render
+      = render({ testID })
+    else
+      = renderDefault()
   `
 }
