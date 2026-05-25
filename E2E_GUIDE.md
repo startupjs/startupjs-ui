@@ -68,14 +68,14 @@ If the repo runs `npx eslint .`, generated files may also need ESLint ignores.
 Install the Playwright test runner in the app workspace:
 
 ```bash
-yarn add -D @playwright/test
+yarn add -D playwright
 yarn playwright install chromium
 ```
 
 A good baseline `playwright.config.ts` for StartupJS:
 
 ```js
-import { defineConfig, devices } from '@playwright/test'
+import { defineConfig, devices } from 'playwright/test'
 
 const baseURL = 'http://127.0.0.1:3000'
 
@@ -124,7 +124,7 @@ Keep the E2E tests in a stable folder such as `tests/` or `e2e/`, and add a scri
 Example test:
 
 ```js
-import { expect, test } from '@playwright/test'
+import { expect, test } from 'playwright/test'
 
 test('creates a participant', async ({ page }) => {
   await page.goto('/')
