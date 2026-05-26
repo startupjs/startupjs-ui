@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { pug, observer, u, useDidUpdate } from 'startupjs'
-import { colorToRGBA, getCssVariable, themed } from '@startupjs-ui/core'
+import { colorToRGBA, getCssVariable, themed, type UIRole } from '@startupjs-ui/core'
 import { useDecorateTooltipProps } from './useTooltip'
 import STYLES from './index.cssx.styl'
 
@@ -32,9 +32,11 @@ export default observer(themed('Div', Div))
 
 export const _PropsJsonSchema = {/* DivProps */}
 
-export interface DivProps extends ViewProps {
+export interface DivProps extends Omit<ViewProps, 'role'> {
   /** Ref to access underlying <View> or <Pressable> */
   ref?: RefObject<any>
+  /** Accessibility role. Includes RN roles plus web-only ARIA roles used by RNW. */
+  role?: UIRole
   /** Custom styles applied to the root view */
   style?: StyleProp<ViewStyle>
   /** Content rendered inside Div */
@@ -147,8 +149,7 @@ function Div ({
 
   ;({
     props,
-    accessible,
-    deferredRole
+    accessible
   } = useDecorateAccessibilityProps({
     props,
     rootRef,
@@ -183,6 +184,7 @@ function Div ({
   const Component = isPressable
     ? (isAnimated ? AnimatedPressable : Pressable)
     : (isAnimated ? Animated.View : View)
+  const renderProps = props as Omit<typeof props, 'role'> & { role?: ViewProps['role'] }
   const divElement = pug`
     Component.root(
       ref=rootRef
@@ -207,7 +209,7 @@ function Div ({
         levelModifier
       ]
       accessible=accessible
-      ...props
+      ...renderProps
     )= children
   `
 
@@ -217,6 +219,10 @@ function Div ({
       = tooltipElement
     `
   } else return divElement
+}
+
+function isWebOnlyRole (role: unknown): role is Exclude<UIRole, ViewProps['role']> {
+  return role === 'listbox' || role === 'gridcell'
 }
 
 function hasAnimatedProperty (style: any): boolean {
@@ -243,7 +249,6 @@ function useDecorateAccessibilityProps ({
 }): {
     props: Record<string, any>
     accessible?: boolean
-    deferredRole?: string
   } {
   if (accessible == null && isPressable) accessible = true
   if (accessible === false) {
@@ -254,6 +259,8 @@ function useDecorateAccessibilityProps ({
   if (props['aria-disabled'] == null && disabled != null) {
     props['aria-disabled'] = disabled
   }
+
+  if (isNative && isWebOnlyRole(props.role)) delete props.role
 
   const roleProp = props.role
   const ariaDisabled = props['aria-disabled']
@@ -284,7 +291,7 @@ function useDecorateAccessibilityProps ({
     }
   }, [rootRef, deferredRole, roleProp, ariaDisabled, webNativeButton, disabled])
 
-  return { props, accessible, deferredRole }
+  return { props, accessible }
 }
 
 function useDecoratePressableProps ({

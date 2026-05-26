@@ -10,6 +10,7 @@
   "dependencies": {
     "@startupjs-ui/abstract-popover": "^0.2.0",
     "@startupjs-ui/core": "^0.2.0",
+    "@startupjs-ui/div": "^0.2.0",
     "@startupjs-ui/flat-list": "^0.2.0",
     "@startupjs-ui/loader": "^0.2.0",
     "@startupjs-ui/menu": "^0.2.0",

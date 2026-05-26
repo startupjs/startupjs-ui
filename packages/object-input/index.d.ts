@@ -3,7 +3,22 @@
 
 import { type ReactNode } from 'react';
 import { type StyleProp, type ViewStyle } from 'react-native';
+import { type UIRole } from '@startupjs-ui/core';
 import './index.cssx.styl';
+type ObjectInputWrapperProps = {
+    style: StyleProp<ViewStyle> | undefined;
+    testID?: string;
+    id?: string;
+    role?: UIRole;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
+    'aria-describedby'?: string;
+    'aria-errormessage'?: string;
+    'aria-invalid'?: boolean;
+    'aria-required'?: boolean;
+    'aria-disabled'?: boolean;
+    'aria-readonly'?: boolean;
+};
 declare const _default: import("react").ComponentType<ObjectInputProps>;
 export default _default;
 export declare const _PropsJsonSchema: {};
@@ -27,13 +42,29 @@ export interface ObjectInputProps {
     /** Render as read-only */
     readonly?: boolean;
     /** Custom wrapper renderer (used by Input layout wrappers) */
-    _renderWrapper?: (params: {
-        style: StyleProp<ViewStyle> | undefined;
-        testID?: string;
-        props?: Record<string, any>;
-    }, children: ReactNode) => ReactNode;
+    _renderWrapper?: (params: ObjectInputWrapperProps, children: ReactNode) => ReactNode;
     /** Test identifier */
     testID?: string;
-    /** Additional props forwarded to the wrapper */
+    /** Web id for the wrapper */
+    id?: string;
+    /** ARIA role for the wrapper */
+    role?: UIRole;
+    /** Accessible name for the wrapper */
+    'aria-label'?: string;
+    /** Id of the element that labels the wrapper */
+    'aria-labelledby'?: string;
+    /** Id of the element that describes the wrapper */
+    'aria-describedby'?: string;
+    /** Id of the element that describes the wrapper error */
+    'aria-errormessage'?: string;
+    /** Invalid state for the wrapper */
+    'aria-invalid'?: boolean;
+    /** Required state for the wrapper */
+    'aria-required'?: boolean;
+    /** Disabled state for the wrapper */
+    'aria-disabled'?: boolean;
+    /** Readonly state for the wrapper */
+    'aria-readonly'?: boolean;
+    /** Additional props */
     [key: string]: any;
 }

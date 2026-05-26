@@ -10,6 +10,7 @@ import {
 import { pug, observer } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
 import AbstractPopover from '@startupjs-ui/abstract-popover'
+import Div from '@startupjs-ui/div'
 import FlatList from '@startupjs-ui/flat-list'
 import Loader from '@startupjs-ui/loader'
 import Menu from '@startupjs-ui/menu'
@@ -73,7 +74,7 @@ export interface AutoSuggestProps {
   /** Element id that describes the combobox input */
   'aria-describedby'?: string
   /** Whether the combobox input value is invalid */
-  'aria-invalid'?: boolean | 'true' | 'false'
+  'aria-invalid'?: boolean
   /** Change handler for selected value */
   onChange?: (value?: any) => void | Promise<void>
   /** Called after the list is closed */
@@ -274,7 +275,7 @@ function AutoSuggest ({
         View.loaderCase
           Loader(size='s')
       else
-        View.contentCase(role='listbox')
+        Div.contentCase(role='listbox')
           FlatList.content(
             style=style
             data=_options

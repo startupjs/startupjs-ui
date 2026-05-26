@@ -3,6 +3,21 @@
 
 import { type ReactNode } from 'react';
 import { type StyleProp, type ViewStyle } from 'react-native';
+import { type UIRole } from '@startupjs-ui/core';
+type FormWrapperProps = {
+    style: StyleProp<ViewStyle> | undefined;
+    testID?: string;
+    id?: string;
+    role?: UIRole;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
+    'aria-describedby'?: string;
+    'aria-errormessage'?: string;
+    'aria-invalid'?: boolean;
+    'aria-required'?: boolean;
+    'aria-disabled'?: boolean;
+    'aria-readonly'?: boolean;
+};
 export declare const _PropsJsonSchema: {};
 export interface FormProps {
     /** Schema describing form fields (json-schema compatible) */
@@ -24,9 +39,7 @@ export interface FormProps {
     /** Custom inputs by type key */
     customInputs?: Record<string, any>;
     /** Custom wrapper renderer for inputs */
-    _renderWrapper?: (params: {
-        style: StyleProp<ViewStyle> | undefined;
-    }, children: ReactNode) => ReactNode;
+    _renderWrapper?: (params: FormWrapperProps, children: ReactNode) => ReactNode;
     /** Enable validation or pass validate hook from useValidate */
     validate?: boolean | any;
     /** Disable interactions */
@@ -35,6 +48,26 @@ export interface FormProps {
     readonly?: boolean;
     /** Test identifier */
     testID?: string;
+    /** Web id for the wrapper */
+    id?: string;
+    /** ARIA role for the wrapper */
+    role?: UIRole;
+    /** Accessible name for the wrapper */
+    'aria-label'?: string;
+    /** Id of the element that labels the wrapper */
+    'aria-labelledby'?: string;
+    /** Id of the element that describes the wrapper */
+    'aria-describedby'?: string;
+    /** Id of the element that describes the wrapper error */
+    'aria-errormessage'?: string;
+    /** Invalid state for the wrapper */
+    'aria-invalid'?: boolean;
+    /** Required state for the wrapper */
+    'aria-required'?: boolean;
+    /** Disabled state for the wrapper */
+    'aria-disabled'?: boolean;
+    /** Readonly state for the wrapper */
+    'aria-readonly'?: boolean;
     /** Model binding for form values */
     $value: any;
     /** Do not use; pass `fields` instead (will throw if set) */

@@ -3,7 +3,6 @@ import {
   Dimensions,
   UIManager,
   Platform,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -15,6 +14,7 @@ import { pug, observer, $ } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
 import Drawer from '@startupjs-ui/drawer'
 import Popover, { type PopoverRef } from '@startupjs-ui/popover'
+import ScrollView from '@startupjs-ui/scroll-view'
 import DropdownCaption from './components/Caption'
 import DropdownItem from './components/Item'
 import { useKeyboard } from './helpers'

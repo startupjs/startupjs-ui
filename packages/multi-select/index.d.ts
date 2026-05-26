@@ -35,7 +35,7 @@ export interface MultiSelectProps {
     /** Element id that describes the combobox trigger */
     'aria-describedby'?: string;
     /** Whether the combobox trigger value is invalid */
-    'aria-invalid'?: boolean | 'true' | 'false';
+    'aria-invalid'?: boolean;
     /** Element id for the related error message */
     'aria-errormessage'?: string;
     /** Whether a value is required */

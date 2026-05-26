@@ -3,12 +3,15 @@
 
 import { type ReactNode, type RefObject } from 'react';
 import { type StyleProp, type ViewStyle, type ViewProps } from 'react-native';
+import { type UIRole } from '@startupjs-ui/core';
 declare const _default: import("react").ComponentType<DivProps>;
 export default _default;
 export declare const _PropsJsonSchema: {};
-export interface DivProps extends ViewProps {
+export interface DivProps extends Omit<ViewProps, 'role'> {
     /** Ref to access underlying <View> or <Pressable> */
     ref?: RefObject<any>;
+    /** Accessibility role. Includes RN roles plus web-only ARIA roles used by RNW. */
+    role?: UIRole;
     /** Custom styles applied to the root view */
     style?: StyleProp<ViewStyle>;
     /** Content rendered inside Div */

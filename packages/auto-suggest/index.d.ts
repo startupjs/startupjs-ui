@@ -45,7 +45,7 @@ export interface AutoSuggestProps {
     /** Element id that describes the combobox input */
     'aria-describedby'?: string;
     /** Whether the combobox input value is invalid */
-    'aria-invalid'?: boolean | 'true' | 'false';
+    'aria-invalid'?: boolean;
     /** Change handler for selected value */
     onChange?: (value?: any) => void | Promise<void>;
     /** Called after the list is closed */

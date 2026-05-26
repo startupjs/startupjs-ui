@@ -1,10 +1,25 @@
 import { type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
 import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { themed, type UIRole } from '@startupjs-ui/core'
 import Div from '@startupjs-ui/div'
 import Input from '@startupjs-ui/input'
 import './index.cssx.styl'
+
+type ObjectInputWrapperProps = {
+  style: StyleProp<ViewStyle> | undefined
+  testID?: string
+  id?: string
+  role?: UIRole
+  'aria-label'?: string
+  'aria-labelledby'?: string
+  'aria-describedby'?: string
+  'aria-errormessage'?: string
+  'aria-invalid'?: boolean
+  'aria-required'?: boolean
+  'aria-disabled'?: boolean
+  'aria-readonly'?: boolean
+}
 
 export default observer(
   themed('ObjectInput', ObjectInput)
@@ -32,10 +47,30 @@ export interface ObjectInputProps {
   /** Render as read-only */
   readonly?: boolean
   /** Custom wrapper renderer (used by Input layout wrappers) */
-  _renderWrapper?: (params: { style: StyleProp<ViewStyle> | undefined, testID?: string, props?: Record<string, any> }, children: ReactNode) => ReactNode
+  _renderWrapper?: (params: ObjectInputWrapperProps, children: ReactNode) => ReactNode
   /** Test identifier */
   testID?: string
-  /** Additional props forwarded to the wrapper */
+  /** Web id for the wrapper */
+  id?: string
+  /** ARIA role for the wrapper */
+  role?: UIRole
+  /** Accessible name for the wrapper */
+  'aria-label'?: string
+  /** Id of the element that labels the wrapper */
+  'aria-labelledby'?: string
+  /** Id of the element that describes the wrapper */
+  'aria-describedby'?: string
+  /** Id of the element that describes the wrapper error */
+  'aria-errormessage'?: string
+  /** Invalid state for the wrapper */
+  'aria-invalid'?: boolean
+  /** Required state for the wrapper */
+  'aria-required'?: boolean
+  /** Disabled state for the wrapper */
+  'aria-disabled'?: boolean
+  /** Readonly state for the wrapper */
+  'aria-readonly'?: boolean
+  /** Additional props */
   [key: string]: any
 }
 
@@ -51,7 +86,16 @@ function ObjectInput ({
   readonly,
   _renderWrapper,
   testID,
-  ...props
+  id,
+  role,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  'aria-describedby': ariaDescribedBy,
+  'aria-errormessage': ariaErrorMessage,
+  'aria-invalid': ariaInvalid,
+  'aria-required': ariaRequired,
+  'aria-disabled': ariaDisabled,
+  'aria-readonly': ariaReadonly
 }: ObjectInputProps): ReactNode {
   if (!$value || !properties) {
     return null
@@ -83,9 +127,36 @@ function ObjectInput ({
   if (inputs.length === 0) return null
 
   if (!_renderWrapper) {
-    _renderWrapper = ({ style, props }, children): ReactNode => {
+    _renderWrapper = ({
+      style,
+      testID,
+      id,
+      role,
+      'aria-label': ariaLabel,
+      'aria-labelledby': ariaLabelledBy,
+      'aria-describedby': ariaDescribedBy,
+      'aria-errormessage': ariaErrorMessage,
+      'aria-invalid': ariaInvalid,
+      'aria-required': ariaRequired,
+      'aria-disabled': ariaDisabled,
+      'aria-readonly': ariaReadonly
+    }, children): ReactNode => {
       return pug`
-        Div(style=style testID=testID row=row ...props)= children
+        Div(
+          style=style
+          testID=testID
+          id=id
+          role=role
+          aria-label=ariaLabel
+          aria-labelledby=ariaLabelledBy
+          aria-describedby=ariaDescribedBy
+          aria-errormessage=ariaErrorMessage
+          aria-invalid=ariaInvalid
+          aria-required=ariaRequired
+          aria-disabled=ariaDisabled
+          aria-readonly=ariaReadonly
+          row=row
+        )= children
       `
     }
   }
@@ -93,7 +164,16 @@ function ObjectInput ({
   return _renderWrapper({
     style: [style, inputStyle],
     testID,
-    props
+    id,
+    role,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
+    'aria-describedby': ariaDescribedBy,
+    'aria-errormessage': ariaErrorMessage,
+    'aria-invalid': ariaInvalid,
+    'aria-required': ariaRequired,
+    'aria-disabled': ariaDisabled,
+    'aria-readonly': ariaReadonly
   }, inputs.map(({ key, ...inputProps }, index): ReactNode => pug`
     Input.input(
       key=key
