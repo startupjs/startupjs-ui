@@ -138,7 +138,7 @@ export default function wrapInput (Component: any, configuration: InputWrapperCo
     ]
     const requiredAsterisk = required === true
       ? pug`
-        Text.required(aria-hidden=IS_WEB ? true : undefined)= ' *'
+        Text.required(aria-hidden)= ' *'
       `
       : null
     const WebLabelElement = 'label'

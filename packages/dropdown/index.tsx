@@ -2,7 +2,6 @@ import React, { useState, useRef, useImperativeHandle, useEffect, type ReactNode
 import {
   Dimensions,
   UIManager,
-  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -259,7 +258,7 @@ function Dropdown ({
       ScrollView(
         ref=refScroll
         showsVerticalScrollIndicator=false
-        role=Platform.OS === 'web' ? 'listbox' : undefined
+        role='listbox'
       )= renderContent.current
     `
 

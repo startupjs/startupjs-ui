@@ -198,9 +198,9 @@ function MultiSelect ({
         key=itemValue
         vAlign='center'
         disabled=selected ? false : shouldDisableSelection
-        role=IS_WEB ? 'option' : undefined
-        aria-label=IS_WEB ? optionLabel : undefined
-        aria-selected=IS_WEB ? selected : undefined
+        role='option'
+        aria-label=optionLabel
+        aria-selected=selected
         onPress=() => onPress(!selected)
       )
         if renderListItem
@@ -216,7 +216,7 @@ function MultiSelect ({
 
   function renderContent (): ReactNode {
     return pug`
-      ScrollView.suggestions-web(role=IS_WEB ? 'listbox' : undefined)
+      ScrollView.suggestions-web(role='listbox')
         each option, index in normalizedOptions
           = _renderListItem({ item: option, index })
     `
@@ -457,7 +457,7 @@ function DefaultInput ({
         style=style
         styleName={ disabled, focused, readonly, error: _hasError }
         id=id
-        role=IS_WEB ? 'combobox' : 'button'
+        role='combobox'
         aria-label=ariaLabel
         aria-labelledby=ariaLabelledBy
         aria-describedby=ariaDescribedBy
@@ -465,8 +465,8 @@ function DefaultInput ({
         aria-errormessage=ariaErrorMessage
         aria-required=ariaRequired
         testID=testID
-        aria-expanded=IS_WEB ? !!focused : undefined
-        aria-haspopup=IS_WEB ? 'listbox' : undefined
+        aria-expanded=!!focused
+        aria-haspopup='listbox'
         aria-disabled=disabled
         aria-readonly=readonly
         onPress=disabled || readonly ? undefined : onOpen

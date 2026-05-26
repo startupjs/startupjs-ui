@@ -16,6 +16,8 @@ import STYLES from './index.cssx.styl'
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 
+type AriaHasPopup = boolean | 'dialog' | 'grid' | 'listbox' | 'menu' | 'tree'
+
 const DEPRECATED_PUSHED_VALUES = ['xs', 'xl', 'xxl']
 const PRESSABLE_PROPS = ['onPress', 'onLongPress', 'onPressIn', 'onPressOut']
 const isWeb = Platform.OS === 'web'
@@ -37,6 +39,8 @@ export interface DivProps extends Omit<ViewProps, 'role'> {
   ref?: RefObject<any>
   /** Accessibility role. Includes RN roles plus web-only ARIA roles used by RNW. */
   role?: UIRole
+  /** Web popup type exposed through aria-haspopup */
+  'aria-haspopup'?: AriaHasPopup
   /** Custom styles applied to the root view */
   style?: StyleProp<ViewStyle>
   /** Content rendered inside Div */
@@ -261,6 +265,7 @@ function useDecorateAccessibilityProps ({
   }
 
   if (isNative && isWebOnlyRole(props.role)) delete props.role
+  if (isNative) delete props['aria-haspopup']
 
   const roleProp = props.role
   const ariaDisabled = props['aria-disabled']
