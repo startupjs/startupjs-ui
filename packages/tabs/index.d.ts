@@ -15,6 +15,10 @@ export interface TabsProps {
     onChange?: (key: string) => void;
     /** Handler called when the tab index changes @deprecated use onChange instead */
     onIndexChange?: (index: number) => void;
+    /** Handler called when a tab is selected */
+    onTabSelect?: (props: {
+        index: number;
+    }) => void;
     /** Custom TabBar renderer */
     renderTabBar?: (props: any) => ReactNode;
     /** Custom navigation state passed directly to TabView */
@@ -37,6 +41,8 @@ export interface TabsProps {
     renderLazyPlaceholder?: (props: any) => ReactNode;
     /** Style applied to scene container */
     sceneContainerStyle?: StyleProp<ViewStyle>;
+    /** Style applied to the pager */
+    pagerStyle?: StyleProp<ViewStyle>;
     /** Custom styles applied to the root TabView */
     style?: StyleProp<ViewStyle>;
     /** Deprecated alias for style applied to TabView root */
@@ -45,6 +51,12 @@ export interface TabsProps {
     swipeEnabled?: boolean;
     /** Position of the tab bar */
     tabBarPosition?: 'top' | 'bottom';
+    /** Locale direction passed to TabView */
+    direction?: 'ltr' | 'rtl';
+    /** Enable page transition animation */
+    animationEnabled?: boolean;
+    /** Android overscroll mode */
+    overScrollMode?: 'auto' | 'always' | 'never';
     /** Custom icon renderer for the tab bar */
     renderIcon?: (props: any) => ReactNode;
     /** Custom renderer for tab bar items */
@@ -81,39 +93,20 @@ export interface TabsProps {
     labelStyle?: StyleProp<ViewStyle>;
     /** Style applied to tab bar content container */
     contentContainerStyle?: StyleProp<ViewStyle>;
-    /** Per-route tab bar options */
-    options?: Record<string, TabsRouteOptions>;
-    /** Function returning label text for a route */
-    getLabelText?: (scene: any) => any;
-    /** Function returning aria-label for a route */
-    getAriaLabel?: (scene: any) => any;
-    /** Function returning testID for a route */
-    getTestID?: (scene: any) => any;
+    /** Per-route options passed through to react-native-tab-view */
+    options?: Record<string, any>;
+    /** Shared route options passed through to react-native-tab-view */
+    commonOptions?: Record<string, any>;
 }
 export interface TabsRoute {
     /** Route key used to identify the tab */
     key: string;
     /** Visible title displayed in the tab bar */
     title: string;
-    /** Accessible name override for the tab */
-    'aria-label'?: string;
     /** Test identifier for the tab */
     testID?: string;
-}
-export interface TabsRouteOptions {
-    /** Accessible name override for the tab */
-    'aria-label'?: string;
-    /** Test identifier for the tab */
-    testID?: string;
-    /** Label text displayed in the tab */
-    labelText?: string;
-    labelAllowFontScaling?: boolean;
-    href?: string;
-    label?: (props: any) => ReactNode;
-    labelStyle?: StyleProp<ViewStyle>;
-    icon?: (props: any) => ReactNode;
-    badge?: (props: any) => ReactNode;
-    sceneStyle?: StyleProp<ViewStyle>;
+    /** Additional route metadata passed through to react-native-tab-view */
+    [key: string]: any;
 }
 declare const ObservedTabs: any;
 export default ObservedTabs;

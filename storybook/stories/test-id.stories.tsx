@@ -157,9 +157,13 @@ const TestIdMatrix = observer(function TestIdMatrix () {
     measure: (callback: any) => callback(0, 0, 220, 64, 40, 120)
   })
   const routes = [
-    { key: 'overview', title: 'Overview', 'aria-label': 'Overview tab', testID: 'tid-tabs-overview' },
-    { key: 'notes', title: 'Notes', 'aria-label': 'Notes tab', testID: 'tid-tabs-notes' }
+    { key: 'overview', title: 'Overview', testID: 'tid-tabs-overview' },
+    { key: 'notes', title: 'Notes', testID: 'tid-tabs-notes' }
   ]
+  const tabOptions = {
+    overview: { accessibilityLabel: 'Overview tab' },
+    notes: { accessibilityLabel: 'Notes tab' }
+  }
 
   return (
     <StoryStack>
@@ -262,6 +266,7 @@ const TestIdMatrix = observer(function TestIdMatrix () {
         </Table>
         <Tabs
           routes={routes}
+          options={tabOptions}
           renderScene={() => <Span>Tab scene</Span>}
           initialKey='overview'
         />

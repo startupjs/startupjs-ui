@@ -1,4 +1,4 @@
-import { useMemo, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
 import { TabView } from 'react-native-tab-view'
 import { pug, styl, observer, $ } from 'startupjs'
@@ -12,6 +12,7 @@ export const _PropsJsonSchema = {/* TabsProps */} // used in docs generation
 const TAB_VIEW_PROP_NAMES = [
   'navigationState',
   'renderScene',
+  'onTabSelect',
   'initialLayout',
   'keyboardDismissMode',
   'lazy',
@@ -20,9 +21,15 @@ const TAB_VIEW_PROP_NAMES = [
   'onSwipeEnd',
   'renderLazyPlaceholder',
   'sceneContainerStyle',
+  'pagerStyle',
   'style',
   'swipeEnabled',
-  'tabBarPosition'
+  'tabBarPosition',
+  'direction',
+  'animationEnabled',
+  'overScrollMode',
+  'options',
+  'commonOptions'
 ]
 
 export interface TabsProps {
@@ -36,6 +43,8 @@ export interface TabsProps {
   onChange?: (key: string) => void
   /** Handler called when the tab index changes @deprecated use onChange instead */
   onIndexChange?: (index: number) => void
+  /** Handler called when a tab is selected */
+  onTabSelect?: (props: { index: number }) => void
   /** Custom TabBar renderer */
   renderTabBar?: (props: any) => ReactNode
   /** Custom navigation state passed directly to TabView */
@@ -58,6 +67,8 @@ export interface TabsProps {
   renderLazyPlaceholder?: (props: any) => ReactNode
   /** Style applied to scene container */
   sceneContainerStyle?: StyleProp<ViewStyle>
+  /** Style applied to the pager */
+  pagerStyle?: StyleProp<ViewStyle>
   /** Custom styles applied to the root TabView */
   style?: StyleProp<ViewStyle>
   /** Deprecated alias for style applied to TabView root */
@@ -66,6 +77,12 @@ export interface TabsProps {
   swipeEnabled?: boolean
   /** Position of the tab bar */
   tabBarPosition?: 'top' | 'bottom'
+  /** Locale direction passed to TabView */
+  direction?: 'ltr' | 'rtl'
+  /** Enable page transition animation */
+  animationEnabled?: boolean
+  /** Android overscroll mode */
+  overScrollMode?: 'auto' | 'always' | 'never'
   /** Custom icon renderer for the tab bar */
   renderIcon?: (props: any) => ReactNode
   /** Custom renderer for tab bar items */
@@ -102,14 +119,10 @@ export interface TabsProps {
   labelStyle?: StyleProp<ViewStyle>
   /** Style applied to tab bar content container */
   contentContainerStyle?: StyleProp<ViewStyle>
-  /** Per-route tab bar options */
-  options?: Record<string, TabsRouteOptions>
-  /** Function returning label text for a route */
-  getLabelText?: (scene: any) => any
-  /** Function returning aria-label for a route */
-  getAriaLabel?: (scene: any) => any
-  /** Function returning testID for a route */
-  getTestID?: (scene: any) => any
+  /** Per-route options passed through to react-native-tab-view */
+  options?: Record<string, any>
+  /** Shared route options passed through to react-native-tab-view */
+  commonOptions?: Record<string, any>
 }
 
 export interface TabsRoute {
@@ -117,26 +130,10 @@ export interface TabsRoute {
   key: string
   /** Visible title displayed in the tab bar */
   title: string
-  /** Accessible name override for the tab */
-  'aria-label'?: string
   /** Test identifier for the tab */
   testID?: string
-}
-
-export interface TabsRouteOptions {
-  /** Accessible name override for the tab */
-  'aria-label'?: string
-  /** Test identifier for the tab */
-  testID?: string
-  /** Label text displayed in the tab */
-  labelText?: string
-  labelAllowFontScaling?: boolean
-  href?: string
-  label?: (props: any) => ReactNode
-  labelStyle?: StyleProp<ViewStyle>
-  icon?: (props: any) => ReactNode
-  badge?: (props: any) => ReactNode
-  sceneStyle?: StyleProp<ViewStyle>
+  /** Additional route metadata passed through to react-native-tab-view */
+  [key: string]: any
 }
 
 function Tabs ({
@@ -150,9 +147,6 @@ function Tabs ({
   inactiveColor = 'text-description',
   onChange,
   onIndexChange, // skip property
-  getLabelText,
-  getAriaLabel,
-  getTestID,
   ...props
 }: TabsProps): ReactNode {
   if (renderLabel) throw Error('[@startupjs/ui -> Tabs] `renderLabel` prop is deprecated and no longer supported. Use `renderTabBarItem` instead.')
@@ -162,37 +156,13 @@ function Tabs ({
   const $localValue = $value ?? $(initialKey ?? routes[0]?.key)
   const tabBarProps = pick(props, TAB_BAR_PROP_NAMES)
   const tabViewProps = pick(props, TAB_VIEW_PROP_NAMES)
-  const normalizedOptions = useMemo(() => {
-    return routes.reduce((result: Record<string, any>, route) => {
-      const routeOptions = props.options?.[route.key] ?? {}
-      const {
-        'aria-label': optionAriaLabel,
-        accessibilityLabel: _accessibilityLabel,
-        accessible: _accessible,
-        ...optionRest
-      } = routeOptions as any
-      const scene = { route }
-      const labelText = getLabelText?.(scene) ?? optionRest.labelText
-      const ariaLabel = getAriaLabel?.(scene) ?? route['aria-label'] ?? optionAriaLabel
-      const routeTestID = getTestID?.(scene) ?? route.testID ?? optionRest.testID
-      const option: Record<string, any> = { ...optionRest }
-
-      if (labelText != null) option.labelText = labelText
-      if (ariaLabel != null) option.accessibilityLabel = ariaLabel
-      if (routeTestID != null) option.testID = routeTestID
-
-      result[route.key] = option
-      return result
-    }, {})
-  }, [routes, props.options, getLabelText, getAriaLabel, getTestID])
 
   const tabIndex = findIndex(routes, { key: $localValue.get() })
 
   function _renderTabBar (tabBarViewProps: any): ReactNode {
     const resolvedTabBarProps = {
       ...tabBarProps,
-      ...tabBarViewProps,
-      options: normalizedOptions
+      ...tabBarViewProps
     }
 
     if (renderTabBar) return renderTabBar(resolvedTabBarProps)
