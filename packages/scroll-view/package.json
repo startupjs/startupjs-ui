@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/scroll-view",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "publishConfig": {
     "access": "public"
   },
@@ -8,7 +8,7 @@
   "types": "index.d.ts",
   "type": "module",
   "dependencies": {
-    "@startupjs-ui/core": "^0.2.0"
+    "@startupjs-ui/core": "^0.3.0"
   },
   "peerDependencies": {
     "react": "*",

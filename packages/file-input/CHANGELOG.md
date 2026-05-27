@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/startupjs/startupjs-ui/compare/v0.2.3...v0.3.0) (2026-05-27)
+
+
+### Features
+
+* [BREAKING] [0.3] improve accessibility props for E2E tests. Support testID everywhere ([#31](https://github.com/startupjs/startupjs-ui/issues/31)) ([882588c](https://github.com/startupjs/startupjs-ui/commit/882588ca37d5e1fd14b5717b5697cf9ed47042e4))
+
+
+
+
+
 ## [0.2.2](https://github.com/startupjs/startupjs-ui/compare/v0.2.1...v0.2.2) (2026-05-11)
 
 
