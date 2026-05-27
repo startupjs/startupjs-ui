@@ -16,6 +16,8 @@ export interface RankProps {
     readonly?: boolean;
     /** Fired when order changes; receives array of option values */
     onChange?: (value: any[]) => void;
+    /** Test identifier */
+    testID?: string;
 }
 declare const _default: import("react").ComponentType<RankProps>;
 export default _default;

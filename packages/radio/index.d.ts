@@ -26,4 +26,6 @@ export interface RadioProps {
     onChange?: (value: any) => void;
     /** Error flag @private */
     _hasError?: boolean;
+    /** Additional props forwarded to the radio group */
+    [key: string]: any;
 }

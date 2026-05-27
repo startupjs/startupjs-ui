@@ -1,4 +1,7 @@
 import type * as React from 'react'
+import type { ViewProps } from 'react-native'
+
+export type UIRole = ViewProps['role'] | 'listbox' | 'gridcell'
 
 export function u (value?: number): number
 

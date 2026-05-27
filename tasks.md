@@ -86,6 +86,12 @@ Status legend:
      - `TouchableWithoutFeedback` where a safer modern replacement is obvious
      - invalid DOM prop warnings such as `transform-origin`
 
+7. [x] Public accessibility prop alignment
+   - Use `role` and `aria-*` as the documented StartupJS UI accessibility API.
+   - Remove explicit legacy `accessibility*` props from component interfaces and internal wiring.
+   - Keep semantic Playwright locators covered in Storybook for select-like popovers, inputs, and dialog/calendar surfaces.
+   - Add docs guidance under `/docs/Accessibility`.
+
 ### Medium difficulty / likely worth doing next, but requires component-specific work
 
 1. Overlay semantics normalization

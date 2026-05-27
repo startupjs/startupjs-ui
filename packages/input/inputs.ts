@@ -1,6 +1,7 @@
 import { type ReactNode, type RefObject } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
 import { pug, useBind } from 'startupjs'
+import { type UIRole } from '@startupjs-ui/core'
 import ArrayInput from '@startupjs-ui/array-input'
 import Card from '@startupjs-ui/card'
 import Checkbox from '@startupjs-ui/checkbox'
@@ -19,6 +20,21 @@ import TextInput from '@startupjs-ui/text-input'
 import wrapInput, { isWrapped } from './wrapInput'
 import useCustomInputs from './useCustomInputs'
 import { customInputs } from './globalCustomInputs'
+
+type CardWrapperProps = {
+  style?: StyleProp<ViewStyle>
+  testID?: string
+  id?: string
+  role?: UIRole
+  'aria-label'?: string
+  'aria-labelledby'?: string
+  'aria-describedby'?: string
+  'aria-errormessage'?: string
+  'aria-invalid'?: boolean
+  'aria-required'?: boolean
+  'aria-disabled'?: boolean
+  'aria-readonly'?: boolean
+}
 
 export type InputUseProps = (
   props: Record<string, any>,
@@ -85,7 +101,10 @@ const useDateProps = ({
   return {
     mode: 'date',
     date: value,
-    configuration: getLabelableConfiguration(props),
+    configuration: {
+      isLabelClickable: !props.disabled && !props.readonly,
+      _webLabelMode: 'aria' as const
+    },
     onChangeDate,
     _onLabelPress: () => ref?.current?.focus(),
     ...props
@@ -103,7 +122,10 @@ const useDateTimeProps = ({
   return {
     mode: 'datetime',
     date: value,
-    configuration: getLabelableConfiguration(props),
+    configuration: {
+      isLabelClickable: !props.disabled && !props.readonly,
+      _webLabelMode: 'aria' as const
+    },
     onChangeDate,
     _onLabelPress: () => ref?.current?.focus(),
     ...props
@@ -121,7 +143,10 @@ const useTimeProps = ({
   return {
     mode: 'time',
     date: value,
-    configuration: getLabelableConfiguration(props),
+    configuration: {
+      isLabelClickable: !props.disabled && !props.readonly,
+      _webLabelMode: 'aria' as const
+    },
     onChangeDate,
     _onLabelPress: () => ref?.current?.focus(),
     ...props
@@ -259,10 +284,34 @@ const useTextProps = ({
   }
 }
 
-function cardWrapper (style: StyleProp<ViewStyle> | undefined, children: ReactNode): ReactNode {
+function cardWrapper ({
+  style,
+  testID,
+  id,
+  role,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  'aria-describedby': ariaDescribedBy,
+  'aria-errormessage': ariaErrorMessage,
+  'aria-invalid': ariaInvalid,
+  'aria-required': ariaRequired,
+  'aria-disabled': ariaDisabled,
+  'aria-readonly': ariaReadonly
+}: CardWrapperProps, children: ReactNode): ReactNode {
   return pug`
     Card(
       style=style
+      testID=testID
+      id=id
+      role=role
+      aria-label=ariaLabel
+      aria-labelledby=ariaLabelledBy
+      aria-describedby=ariaDescribedBy
+      aria-errormessage=ariaErrorMessage
+      aria-invalid=ariaInvalid
+      aria-required=ariaRequired
+      aria-disabled=ariaDisabled
+      aria-readonly=ariaReadonly
       variant='outlined'
     )
       = children

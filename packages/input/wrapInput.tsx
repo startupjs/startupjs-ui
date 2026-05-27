@@ -117,8 +117,7 @@ export default function wrapInput (Component: any, configuration: InputWrapperCo
     const generatedTestID = props.testID ?? getInputTestId({
       ...props,
       label,
-      description,
-      testId: props.testID
+      description
     })
     const semanticBaseId = typeof generatedTestID === 'string' && generatedTestID !== ''
       ? generatedTestID
@@ -139,7 +138,7 @@ export default function wrapInput (Component: any, configuration: InputWrapperCo
     ]
     const requiredAsterisk = required === true
       ? pug`
-        Text.required(aria-hidden=IS_WEB ? true : undefined)= ' *'
+        Text.required(aria-hidden)= ' *'
       `
       : null
     const WebLabelElement = 'label'
@@ -190,13 +189,11 @@ export default function wrapInput (Component: any, configuration: InputWrapperCo
     const describedBy = [descriptionId].filter(Boolean).join(' ') || undefined
 
     if (props['aria-label'] == null) {
-      if (props.accessibilityLabel != null) inputAccessibilityProps['aria-label'] = props.accessibilityLabel
-      else if (label) inputAccessibilityProps['aria-label'] = label
+      if (label) inputAccessibilityProps['aria-label'] = label
     }
 
     if (inputId) {
       inputAccessibilityProps.id = inputId
-      inputAccessibilityProps.nativeID = inputId
     }
     if (required === true) inputAccessibilityProps['aria-required'] = true
     if (labelId) inputAccessibilityProps['aria-labelledby'] = labelId

@@ -7,6 +7,24 @@ import ModalContent from './ModalContent'
 import ModalActions, { DEFAULT_CANCEL_LABEL, DEFAULT_CONFIRM_LABEL } from './ModalActions'
 import './index.cssx.styl'
 
+function getTextFromChildren (children: ReactNode): string | undefined {
+  if (children == null || typeof children === 'boolean') return undefined
+  if (typeof children === 'string' || typeof children === 'number') {
+    const text = String(children).trim()
+    return text || undefined
+  }
+  if (Array.isArray(children)) {
+    const parts = children
+      .map(getTextFromChildren)
+      .filter((part): part is string => !!part)
+    return parts.length ? parts.join(' ').trim() : undefined
+  }
+  if (React.isValidElement(children)) {
+    return getTextFromChildren((children as any).props?.children)
+  }
+  return undefined
+}
+
 export interface ModalLayoutProps {
   /** Custom styles applied to the root view */
   style?: StyleProp<ViewStyle>
@@ -20,6 +38,8 @@ export interface ModalLayoutProps {
   title?: string
   /** Accessible role for the modal surface on web @default 'dialog' */
   role?: ViewProps['role']
+  /** Test identifier for the modal surface */
+  testID?: string
   /** DEPRECATED: use cancelLabel instead */
   dismissLabel?: string
   /** Cancel action label @default 'Cancel' */
@@ -51,6 +71,7 @@ function Modal ({
   variant,
   title,
   role,
+  testID,
   dismissLabel,
   cancelLabel = DEFAULT_CANCEL_LABEL,
   confirmLabel = DEFAULT_CONFIRM_LABEL,
@@ -108,8 +129,8 @@ function Modal ({
   const isWindowLayout = variant === 'window'
   const hasActions = !!onCancel || !!onConfirm
   const hasHeader = !!title || !!showCross
-  const headerTitle = !title && React.isValidElement(header) && typeof (header as any).props?.children === 'string'
-    ? (header as any).props.children as string
+  const headerTitle = !title && React.isValidElement(header)
+    ? getTextFromChildren((header as any).props?.children)
     : undefined
   const dialogTitle = title ?? headerTitle
 
@@ -153,8 +174,12 @@ function Modal ({
     cancelLabel = 'OK'
   }
 
+  const headerChildren = header && React.isValidElement(header)
+    ? (header as any).props?.children
+    : undefined
+  const hasStringHeaderChildren = typeof headerChildren === 'string'
   const modalTitleId = useId()
-  const titleId = dialogTitle ? modalTitleId : undefined
+  const titleId = dialogTitle && (title || hasStringHeaderChildren) ? modalTitleId : undefined
 
   // Handle <Modal.Header>
   const headerProps = {
@@ -209,8 +234,9 @@ function Modal ({
         style=modalStyle
         styleName=[variant]
         role=role ?? 'dialog'
+        testID=testID
         aria-modal
-        aria-label=titleId ? undefined : dialogTitle
+        aria-label=dialogTitle
         aria-labelledby=titleId
       )
         = header

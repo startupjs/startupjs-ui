@@ -2,13 +2,19 @@
 // DO NOT MODIFY THIS FILE - IT IS AUTOMATICALLY GENERATED ON COMMITS.
 
 import { type ReactNode, type RefObject } from 'react';
-import { type StyleProp, type ViewStyle, type ViewProps, type AccessibilityRole } from 'react-native';
+import { type StyleProp, type ViewStyle, type ViewProps } from 'react-native';
+import { type UIRole } from '@startupjs-ui/core';
+type AriaHasPopup = boolean | 'dialog' | 'grid' | 'listbox' | 'menu' | 'tree';
 declare const _default: import("react").ComponentType<DivProps>;
 export default _default;
 export declare const _PropsJsonSchema: {};
-export interface DivProps extends ViewProps {
+export interface DivProps extends Omit<ViewProps, 'role'> {
     /** Ref to access underlying <View> or <Pressable> */
     ref?: RefObject<any>;
+    /** Accessibility role. Includes RN roles plus web-only ARIA roles used by RNW. */
+    role?: UIRole;
+    /** Web popup type exposed through aria-haspopup */
+    'aria-haspopup'?: AriaHasPopup;
     /** Custom styles applied to the root view */
     style?: StyleProp<ViewStyle>;
     /** Content rendered inside Div */
@@ -59,12 +65,8 @@ export interface DivProps extends ViewProps {
     onPressOut?: (e: any) => void;
     /** Whether view is accessible and focusable (if you can press it it's focusable by default) */
     accessible?: boolean;
-    /** Accessibility role passed to native view (if you can press it it's a 'button') */
-    accessibilityRole?: AccessibilityRole;
     /** Deprecated custom tooltip renderer @deprecated */
     renderTooltip?: any;
     /** Internal: render a native <button> host on web when the resolved role is button */
     _webNativeButton?: boolean;
-    /** Test ID for testing purposes */
-    'data-testid'?: string;
 }

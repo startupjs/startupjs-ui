@@ -32,7 +32,11 @@ function Calendar ({
   const $uiDate = $(+moment(date).seconds(0).milliseconds(0))
 
   return pug`
-    Div(testID=testID)
+    Div(
+      testID=testID
+      role='grid'
+      aria-label='Calendar'
+    )
       Header(
         uiDate=$uiDate.get()
         exactLocale=exactLocale

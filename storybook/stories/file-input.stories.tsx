@@ -32,6 +32,7 @@ function FileInputStates () {
             >
               <FileInput
                 value={fileId}
+                testID='file-input-document'
                 onChange={setFileId}
               />
             </StorySection>
@@ -42,6 +43,7 @@ function FileInputStates () {
               <FileInput
                 image
                 value={avatarFileId}
+                testID='file-input-image'
                 onChange={setAvatarFileId}
               />
             </StorySection>

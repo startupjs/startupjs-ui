@@ -30,6 +30,8 @@ export interface SidebarProps {
   lazy?: boolean
   /** Custom renderer for sidebar content */
   renderContent?: () => ReactNode
+  /** Test identifier */
+  testID?: string
 }
 
 function Sidebar ({
@@ -42,7 +44,8 @@ function Sidebar ({
   disabled = false,
   width = 264,
   lazy = false,
-  renderContent
+  renderContent,
+  testID
 }: SidebarProps): ReactNode {
   const getColor = useColors()
 
@@ -58,7 +61,7 @@ function Sidebar ({
   }
 
   return pug`
-    Div.root(style=restStyle styleName=[position])
+    Div.root(style=restStyle styleName=[position] testID=testID)
       ScrollView.sidebar(
         contentContainerStyle=[{ flex: 1 }, sidebarStyle]
         styleName={ open }

@@ -11,4 +11,6 @@ export interface IconProps {
     icon: object | string | (() => any);
     /** Icon size preset or numeric value @default 'm' */
     size?: 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl' | number;
+    /** Additional props forwarded to the icon element */
+    [key: string]: any;
 }

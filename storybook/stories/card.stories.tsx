@@ -26,13 +26,13 @@ function CardStates () {
     <StoryStack>
       <StorySection title='Levels and variants'>
         <InlineRow>
-          <Card data-testid='card-outlined' level={0} variant='outlined' style={{ padding: 16, minWidth: 160 }}>
+          <Card testID='card-outlined' level={0} variant='outlined' style={{ padding: 16, minWidth: 160 }}>
             <Span bold>Outlined</Span>
           </Card>
-          <Card data-testid='card-level-1' level={1} style={{ padding: 16, minWidth: 160 }}>
+          <Card testID='card-level-1' level={1} style={{ padding: 16, minWidth: 160 }}>
             <Span bold>Level 1</Span>
           </Card>
-          <Card data-testid='card-level-4' level={4} style={{ padding: 16, minWidth: 160 }}>
+          <Card testID='card-level-4' level={4} style={{ padding: 16, minWidth: 160 }}>
             <Span bold>Level 4</Span>
           </Card>
         </InlineRow>
@@ -40,7 +40,7 @@ function CardStates () {
 
       <StorySection title='Pressable card'>
         <Card
-          data-testid='card-pressable'
+          testID='card-pressable'
           level={2}
           aria-label='Open participant details'
           style={{ padding: 16 }}

@@ -31,6 +31,7 @@ function SelectStates () {
           description='Wrapped select should be targetable by the visible label on web.'
           options={OPTIONS}
           value={value}
+          testID='role-select'
           onChange={setValue}
         />
       </StorySection>
@@ -49,6 +50,7 @@ function SelectStates () {
             label='Disabled role'
             options={OPTIONS}
             value='guest'
+            testID='disabled-role-select'
             disabled
             onChange={() => {}}
           />
@@ -58,6 +60,7 @@ function SelectStates () {
         <Select
           options={OPTIONS}
           value={value}
+          testID='low-level-role-select'
           onChange={setValue}
           aria-label='Role low level'
         />
@@ -90,7 +93,7 @@ type Story = StoryObj<typeof meta>
 type PlayContext = Parameters<NonNullable<Story['play']>>[0]
 
 async function failingFollowup ({ canvas }: PlayContext) {
-  await expect(canvas.getByLabelText('Disabled role')).toBeDisabled()
+  await expect(canvas.getByTestId('role-select')).toBeVisible()
 }
 void failingFollowup
 
@@ -101,10 +104,15 @@ export const States: Story = {
     const wrappedSelect = canvas.getByLabelText('Role')
     const optionalSelect = canvas.getByLabelText('Optional role')
     const lowLevelSelect = canvas.getByLabelText('Role low level')
+    const lowLevelSelectByTestId = canvas.getByTestId('low-level-role-select')
+    const disabledSelect = canvas.getByLabelText('Disabled role')
     const typedSelect = canvas.getByLabelText('Typed role')
 
+    expect(canvas.getByTestId('role-select')).toContainElement(wrappedSelect)
+    expect(lowLevelSelectByTestId).toContainElement(lowLevelSelect)
+    await expect(disabledSelect).toBeDisabled()
     await expect(optionalSelect).toHaveDisplayValue('Choose a role')
-    await expect(canvas.getByDisplayValue('Guest')).toBeVisible()
+    await expect(disabledSelect).toHaveDisplayValue('Guest')
 
     await userEvent.selectOptions(wrappedSelect, within(wrappedSelect).getByRole('option', { name: 'Guest' }))
     await expect(wrappedSelect).toHaveDisplayValue('Guest')

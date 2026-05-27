@@ -2,7 +2,6 @@ import React, { useState, useRef, useImperativeHandle, useEffect, type ReactNode
 import {
   Dimensions,
   UIManager,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -14,6 +13,7 @@ import { pug, observer, $ } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
 import Drawer from '@startupjs-ui/drawer'
 import Popover, { type PopoverRef } from '@startupjs-ui/popover'
+import ScrollView from '@startupjs-ui/scroll-view'
 import DropdownCaption from './components/Caption'
 import DropdownItem from './components/Item'
 import { useKeyboard } from './helpers'
@@ -48,6 +48,12 @@ export interface DropdownProps {
   drawerCancelLabel?: string
   /** Disable caption press */
   disabled?: boolean
+  /** Accessible name for the dropdown trigger */
+  'aria-label'?: string
+  /** Element id that labels the dropdown trigger */
+  'aria-labelledby'?: string
+  /** Element id that describes the dropdown trigger */
+  'aria-describedby'?: string
   /** Enable drawer behavior on small screens @default true */
   hasDrawer?: boolean
   /** Show swipe responder zone in drawer */
@@ -56,6 +62,10 @@ export interface DropdownProps {
   onChange?: (value: string | number | undefined) => void
   /** Called when dropdown is dismissed via overlay/cancel */
   onDismiss?: () => void
+  /** Test identifier for the dropdown trigger */
+  testID?: string
+  /** Test id for the desktop/tablet popover surface (passed to `AbstractPopover`) */
+  popoverTestID?: string
 }
 
 export interface DropdownRef {
@@ -79,10 +89,15 @@ function Dropdown ({
   drawerListTitle = '',
   drawerCancelLabel = 'Cancel',
   disabled,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  'aria-describedby': ariaDescribedBy,
   hasDrawer = true,
   showDrawerResponder,
   onChange,
   onDismiss,
+  testID,
+  popoverTestID,
   ref
 }: DropdownProps): ReactNode {
   const popoverRef = useRef<PopoverRef>(null)
@@ -234,12 +249,16 @@ function Dropdown ({
   }
 
   const matchAnchorWidth = !(_popoverStyle as any)?.width && !(_popoverStyle as any)?.minWidth
+  const captionProps = (caption as any).props ?? {}
+  const inferredCaptionLabel = captionProps['aria-label'] ?? captionProps.placeholder ?? activeLabel
+  const captionLabel = (ariaLabel ?? (ariaLabelledBy ? undefined : inferredCaptionLabel)) || undefined
 
   if (isPopover) {
     const renderPopoverContent = (): ReactNode => pug`
       ScrollView(
         ref=refScroll
         showsVerticalScrollIndicator=false
+        role='listbox'
       )= renderContent.current
     `
 
@@ -263,9 +282,18 @@ function Dropdown ({
         onOpenComplete=onRequestOpen
         onCloseComplete=handlePopoverCloseComplete
         renderContent=renderPopoverContent
+        testID=popoverTestID
       )
         TouchableOpacity(
+          testID=testID
           disabled=disabled
+          role='button'
+          aria-label=captionLabel
+          aria-labelledby=ariaLabelledBy
+          aria-describedby=ariaDescribedBy
+          aria-haspopup='listbox'
+          aria-expanded=$isShow.get()
+          aria-disabled=disabled
           onPress=() => handleVisibleChange(!$isShow.get(), { reason: !$isShow.get() ? null : 'toggle' })
         )
           = caption
@@ -275,7 +303,15 @@ function Dropdown ({
   return pug`
     if caption
       TouchableOpacity.caption(
+        testID=testID
         disabled=disabled
+        role='button'
+        aria-label=captionLabel
+        aria-labelledby=ariaLabelledBy
+        aria-describedby=ariaDescribedBy
+        aria-haspopup='listbox'
+        aria-expanded=$isShow.get()
+        aria-disabled=disabled
         onPress=() => handleVisibleChange(!$isShow.get())
       )
         = caption

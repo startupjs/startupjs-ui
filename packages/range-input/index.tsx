@@ -52,6 +52,11 @@ export interface RangeInputProps {
   onChangeStart?: MultiSliderProps['onValuesChangeStart']
   /** Handler triggered when sliding ends */
   onChangeFinish?: MultiSliderProps['onValuesChangeFinish']
+  /** Test identifier forwarded to the underlying slider */
+  testID?: string
+  /** Whether the slider is disabled */
+  disabled?: boolean
+  [key: string]: any
 }
 
 function RangeInput ({
@@ -69,6 +74,8 @@ function RangeInput ({
   onChange,
   onChangeFinish,
   onChangeStart,
+  testID,
+  disabled,
   ...props
 }: RangeInputProps): ReactNode {
   useMemo(() => {
@@ -96,9 +103,11 @@ function RangeInput ({
     MultiSlider.root(
       ...props
       part='root'
+      testID=testID
       customLabel=customLabel
       enableLabel=showLabel
-      enabledTwo=range
+      enabledOne=!disabled
+      enabledTwo=range && !disabled
       min=min
       max=max
       showSteps=showSteps

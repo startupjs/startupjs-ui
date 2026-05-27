@@ -55,9 +55,9 @@ export interface DateTimePickerProps extends Omit<UITextInputProps, 'value' | 'o
     visible?: boolean;
     /** Scoped model controlling visibility */
     $visible?: any;
-    /** Test identifier for the input */
+    /** Test identifier for the input; on tablet/web the anchored popover also gets `{testID}-popover` when set */
     testID?: string;
-    /** Test identifier for calendar root */
+    /** Test identifier for calendar root; if `testID` is unset, the popover uses `{calendarTestID}-popover` when set */
     calendarTestID?: string;
     /** Called when user presses input (native) */
     onPressIn?: (...args: any[]) => void;

@@ -26,6 +26,22 @@ export interface MultiSelectProps {
     disabled?: boolean;
     /** Render non-editable value @default false */
     readonly?: boolean;
+    /** Web id for label association */
+    id?: string;
+    /** Accessible name for the combobox trigger */
+    'aria-label'?: string;
+    /** Element id that labels the combobox trigger */
+    'aria-labelledby'?: string;
+    /** Element id that describes the combobox trigger */
+    'aria-describedby'?: string;
+    /** Whether the combobox trigger value is invalid */
+    'aria-invalid'?: boolean;
+    /** Element id for the related error message */
+    'aria-errormessage'?: string;
+    /** Whether a value is required */
+    'aria-required'?: boolean;
+    /** Test identifier for the combobox trigger */
+    testID?: string;
     /** Maximum number of visible tags (extra tags are collapsed) */
     tagLimit?: number;
     /** Behavior when tags are limited (legacy prop) @default 'hidden' */

@@ -14,9 +14,8 @@ type Story = StoryObj<typeof meta>
 type PlayContext = Parameters<NonNullable<Story['play']>>[0]
 
 async function failingFollowup ({ canvas }: PlayContext) {
-  const spacer = canvas.getByTestId('br-default').firstElementChild as HTMLElement | null
+  const spacer = canvas.getByTestId('br-default')
 
-  await expect(spacer).not.toBeNull()
   await expect(spacer).toHaveAttribute('aria-hidden', 'true')
 }
 void failingFollowup
@@ -28,9 +27,7 @@ export const States: Story = {
       <StorySection title='Standard spacing'>
         <Div style={{ padding: 16, borderRadius: 12, backgroundColor: '#f3f4f6' }}>
           <Span bold>Top line</Span>
-          <Div data-testid='br-default'>
-            <Br />
-          </Div>
+          <Br testID='br-default' />
           <Span description>Bottom line</Span>
         </Div>
       </StorySection>
@@ -38,22 +35,18 @@ export const States: Story = {
       <StorySection title='Half and multi-line spacing'>
         <Div gap={0.5} style={{ padding: 16, borderRadius: 12, backgroundColor: '#f3f4f6' }}>
           <Span bold>Half step</Span>
-          <Div data-testid='br-half'>
-            <Br half />
-          </Div>
+          <Br testID='br-half' half />
           <Span description>Next line</Span>
-          <Div data-testid='br-double'>
-            <Br lines={2} />
-          </Div>
+          <Br testID='br-double' lines={2} />
           <Span description>Two-line gap</Span>
         </Div>
       </StorySection>
     </StoryStack>
   ),
   play: async ({ canvas }) => {
-    const defaultSpacer = canvas.getByTestId('br-default').firstElementChild as HTMLElement | null
-    const halfSpacer = canvas.getByTestId('br-half').firstElementChild as HTMLElement | null
-    const doubleSpacer = canvas.getByTestId('br-double').firstElementChild as HTMLElement | null
+    const defaultSpacer = canvas.getByTestId('br-default')
+    const halfSpacer = canvas.getByTestId('br-half')
+    const doubleSpacer = canvas.getByTestId('br-double')
 
     await expect(canvas.getByText('Top line', { exact: true })).toBeVisible()
     await expect(canvas.getByText('Bottom line', { exact: true })).toBeVisible()

@@ -28,4 +28,6 @@ export interface BadgeProps {
     variant?: 'default' | 'dot';
     /** Maximum number to display before adding "+" */
     max?: number;
+    /** Test identifier */
+    testID?: string;
 }

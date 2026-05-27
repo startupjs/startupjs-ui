@@ -11,11 +11,13 @@ export interface TableProps {
   style?: StyleProp<ViewStyle>
   /** Table content rendered inside */
   children?: ReactNode
+  /** Test identifier */
+  testID?: string
 }
 
-function Table ({ style, children }: TableProps): ReactNode {
+function Table ({ style, children, testID }: TableProps): ReactNode {
   return pug`
-    View.root(style=style)= children
+    View.root(style=style testID=testID)= children
   `
 }
 

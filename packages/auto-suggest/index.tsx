@@ -10,6 +10,7 @@ import {
 import { pug, observer } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
 import AbstractPopover from '@startupjs-ui/abstract-popover'
+import Div from '@startupjs-ui/div'
 import FlatList from '@startupjs-ui/flat-list'
 import Loader from '@startupjs-ui/loader'
 import Menu from '@startupjs-ui/menu'
@@ -66,6 +67,14 @@ export interface AutoSuggestProps {
   disabled?: boolean
   /** Render as non-interactive */
   readonly?: boolean
+  /** Accessible name for the combobox input */
+  'aria-label'?: string
+  /** Element id that labels the combobox input */
+  'aria-labelledby'?: string
+  /** Element id that describes the combobox input */
+  'aria-describedby'?: string
+  /** Whether the combobox input value is invalid */
+  'aria-invalid'?: boolean
   /** Change handler for selected value */
   onChange?: (value?: any) => void | Promise<void>
   /** Called after the list is closed */
@@ -111,6 +120,10 @@ function AutoSuggest ({
   isLoading = false,
   disabled,
   readonly,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  'aria-describedby': ariaDescribedBy,
+  'aria-invalid': ariaInvalid,
   onChange,
   onDismiss,
   onChangeText,
@@ -175,13 +188,19 @@ function AutoSuggest ({
       `
     }
 
+    const optionLabel = getOptionLabel(item)
+    const isSelected = stringifyValue(item) === stringifyValue(value)
+
     return pug`
       Menu.Item.item(
         key=index
         styleName={ selectMenu: selectIndexValue === index }
         onPress=() => { _onPress(item) }
-        active=stringifyValue(item) === stringifyValue(value)
-      )= getLabelFromValue(item, options)
+        active=isSelected
+        role='option'
+        aria-selected=isSelected
+        aria-label=optionLabel != null ? String(optionLabel) : undefined
+      )= optionLabel
     `
   }
 
@@ -212,6 +231,8 @@ function AutoSuggest ({
   }
 
   const matchAnchorWidth = !(style as ViewStyle)?.width && !(style as ViewStyle)?.maxWidth
+  const inputAccessibleName = ariaLabel ??
+    (ariaLabelledBy ? undefined : placeholder != null ? String(placeholder) : undefined)
 
   return pug`
     TextInput(
@@ -226,6 +247,13 @@ function AutoSuggest ({
       placeholder=placeholder
       disabled=disabled
       readonly=readonly
+      role='combobox'
+      aria-label=inputAccessibleName
+      aria-labelledby=ariaLabelledBy
+      aria-describedby=ariaDescribedBy
+      aria-invalid=ariaInvalid
+      aria-expanded=isShow
+      aria-haspopup='listbox'
       onChangeText=_onChangeText
       onFocus=() => setIsShow(true)
       onKeyPress=onKeyPress
@@ -247,7 +275,7 @@ function AutoSuggest ({
         View.loaderCase
           Loader(size='s')
       else
-        View.contentCase
+        Div.contentCase(role='listbox')
           FlatList.content(
             style=style
             data=_options

@@ -38,6 +38,14 @@ export interface AutoSuggestProps {
     disabled?: boolean;
     /** Render as non-interactive */
     readonly?: boolean;
+    /** Accessible name for the combobox input */
+    'aria-label'?: string;
+    /** Element id that labels the combobox input */
+    'aria-labelledby'?: string;
+    /** Element id that describes the combobox input */
+    'aria-describedby'?: string;
+    /** Whether the combobox input value is invalid */
+    'aria-invalid'?: boolean;
     /** Change handler for selected value */
     onChange?: (value?: any) => void | Promise<void>;
     /** Called after the list is closed */

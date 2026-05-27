@@ -6233,6 +6233,7 @@ __metadata:
   dependencies:
     "@startupjs-ui/abstract-popover": "npm:^0.2.0"
     "@startupjs-ui/core": "npm:^0.2.0"
+    "@startupjs-ui/div": "npm:^0.2.0"
     "@startupjs-ui/flat-list": "npm:^0.2.0"
     "@startupjs-ui/loader": "npm:^0.2.0"
     "@startupjs-ui/menu": "npm:^0.2.0"
@@ -6565,6 +6566,7 @@ __metadata:
     "@startupjs-ui/link": "npm:^0.2.0"
     "@startupjs-ui/menu": "npm:^0.2.0"
     "@startupjs-ui/popover": "npm:^0.2.0"
+    "@startupjs-ui/scroll-view": "npm:^0.2.0"
     "@startupjs-ui/span": "npm:^0.2.0"
   peerDependencies:
     react: "*"

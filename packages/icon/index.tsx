@@ -25,6 +25,8 @@ export interface IconProps {
   icon: object | string | (() => any)
   /** Icon size preset or numeric value @default 'm' */
   size?: 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl' | number
+  /** Additional props forwarded to the icon element */
+  [key: string]: any
 }
 
 function Icon ({
@@ -56,6 +58,7 @@ function Icon ({
         width=width
         height=height
         fill=fill
+        ...props
       )
     `
   }
@@ -68,15 +71,17 @@ function Icon ({
       FontAwesomeIcon(
         style=style
         icon=icon
+        ...props
+      )
+    `
+  } else {
+    return pug`
+      FontAwesomeIcon(
+        style=style
+        icon=icon
+        size=_size
+        ...props
       )
     `
   }
-
-  return pug`
-    FontAwesomeIcon(
-      style=style
-      icon=icon
-      size=_size
-    )
-  `
 }

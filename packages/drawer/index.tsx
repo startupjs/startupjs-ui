@@ -58,6 +58,8 @@ export interface DrawerProps {
   onDismiss: () => void
   /** Called after drawer becomes visible (after show animation completes) */
   onRequestOpen?: () => void
+  /** Test identifier for the drawer content */
+  testID?: string
 }
 
 // TODO: more test for work responder with ScrollView
@@ -74,7 +76,8 @@ function Drawer ({
   hasOverlay = true,
   showResponder = true,
   onDismiss,
-  onRequestOpen
+  onRequestOpen,
+  testID
 }: DrawerProps): ReactNode {
   const isHorizontal = position === 'left' || position === 'right'
   const isInvertPosition = position === 'left' || position === 'top'
@@ -173,6 +176,7 @@ function Drawer ({
 
             Animated.View(
               ref=refContent
+              testID=testID
               styleName={
                 contentDefault: isShow,
                 contentBottom: isShow && position === 'bottom',

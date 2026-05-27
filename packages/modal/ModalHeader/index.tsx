@@ -23,6 +23,8 @@ export interface ModalHeaderProps {
   iconStyle?: StyleProp<ViewStyle>
   /** Web-only title id for dialog naming */
   titleId?: string
+  /** Test identifier */
+  testID?: string
 }
 
 function ModalHeader ({
@@ -31,10 +33,11 @@ function ModalHeader ({
   onCrossPress, // @private
   closeIcon = faTimes,
   iconStyle,
-  titleId
+  titleId,
+  testID
 }: ModalHeaderProps): ReactNode {
   return pug`
-    Div.root(row style=style styleName=children ? 'between' : 'right' vAlign='center')
+    Div.root(row style=style testID=testID styleName=children ? 'between' : 'right' vAlign='center')
       if typeof children === 'string'
         Span.title(id=titleId numberOfLines=1)= children
       else

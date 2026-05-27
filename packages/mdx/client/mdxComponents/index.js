@@ -22,9 +22,15 @@ import Code from '../Code'
 
 // const RowComponent = props => pug`Div(...props row)`
 const ALPHABET = 'abcdefghigklmnopqrstuvwxyz'
+const INLINE_COMPONENT = Symbol('startupjs.mdx.inlineComponent')
 const ListLevelContext = React.createContext()
 const BlockquoteContext = React.createContext()
 const PreContext = React.createContext()
+
+function markInline (Component) {
+  Component[INLINE_COMPONENT] = true
+  return Component
+}
 
 function getOrderedListMark (index, level) {
   switch (level) {
@@ -39,6 +45,130 @@ function P (props) {
   return pug`
     Span.p(style=props.style ...props)
   `
+}
+
+const Strong = markInline(function Strong ({ children }) {
+  return pug`
+    Text(style={ fontWeight: 'bold' })= children
+  `
+})
+
+const Em = markInline(function Em ({ children }) {
+  return pug`
+    Text(style={ fontStyle: 'italic' })= children
+  `
+})
+
+const MdxLink = markInline(function MdxLink ({ children, href }) {
+  // function onPress (event) {
+  //   const { url, hash } = $root.get('$render')
+  //   const [_url, _hash] = href.split('#')
+  //   if (url === _url && hash === `#${_hash}`) {
+  //     event.preventDefault()
+  //     // scrollTo({ anchorId: _hash })
+  //   }
+  // }
+
+  // TODO: handle Anchor click with onPress
+  return pug`
+    Link.link(
+      to=href
+      size='l'
+      color='primary'
+    )= children
+  `
+})
+
+const MdxCode = markInline(observer(function MdxCode ({ children, className }) {
+  const isBlockCode = useContext(PreContext)
+  const language = (className || 'language-txt').replace(/language-/, '')
+  const [open, setOpen] = useState(false)
+  const $copyText = $('Copy code')
+
+  if (!isBlockCode) {
+    return pug`
+      Span.inlineCodeWrapper
+        Span.inlineCodeSpacer &#160;
+        Span.inlineCode(style={
+          fontFamily: Platform.OS === 'ios' ? 'Menlo-Regular' : 'monospace'
+        })= children
+        Span.inlineCodeSpacer &#160;
+    `
+  }
+
+  async function copyHandler () {
+    await setStringAsync(children)
+    $copyText.set('Copied')
+  }
+
+  function onMouseEnter () {
+    // we need to reutrn default text if it was copied
+    $copyText.set('Copy code')
+  }
+
+  let example
+
+  if (typeof children === 'string' && children.includes('[HACK EXAMPLE CODE]')) {
+    children = children.replace('[HACK EXAMPLE CODE]', '')
+    example = true
+  }
+
+  return pug`
+    Div.code(styleName={ 'code-example': example })
+      if example
+        Collapse.code-collapse(open=open variant='pure')
+          Collapse.Header.code-collapse-header(icon=false onPress=null)
+            Div.code-actions(align='right' row)
+              Div.code-action(
+                tooltip=open ? 'Hide code' : 'Show code'
+                onPress=() => setOpen(!open)
+              )
+                Icon.code-action-collapse(icon=faCode color='error')
+              Div.code-action(
+                tooltip=$copyText.get()
+                onPress=copyHandler
+                onMouseEnter=onMouseEnter
+              )
+                Icon.code-action-copy(icon=faCopy)
+          Collapse.Content.code-collapse-content
+            Code(language=language)= children
+      else
+        Code(language=language)= children
+  `
+}))
+
+function isInlineChild (child) {
+  if (typeof child === 'string' || typeof child === 'number') return true
+  if (!React.isValidElement(child)) return false
+  if (child.type === React.Fragment) {
+    return React.Children.toArray(child.props.children).every(isInlineChild)
+  }
+  return Boolean(child.type?.[INLINE_COMPONENT])
+}
+
+function wrapInlineListChildren (children) {
+  const wrappedChildren = []
+  let inlineChildren = []
+
+  function flushInlineChildren () {
+    if (!inlineChildren.length) return
+    wrappedChildren.push(pug`
+      P(key='inline-' + wrappedChildren.length size='l')= inlineChildren
+    `)
+    inlineChildren = []
+  }
+
+  children.forEach(child => {
+    if (isInlineChild(child)) {
+      inlineChildren.push(child)
+    } else {
+      flushInlineChildren()
+      wrappedChildren.push(child)
+    }
+  })
+
+  flushInlineChildren()
+  return wrappedChildren
 }
 
 // function getTextChildren (children) {
@@ -111,12 +241,8 @@ export default {
       P= children
     `
   },
-  strong: ({ children }) => pug`
-    Text(style={ fontWeight: 'bold' })= children
-  `,
-  em: ({ children }) => pug`
-    Text(style={ fontStyle: 'italic' })= children
-  `,
+  strong: Strong,
+  em: Em,
   hr: ({ children }) => pug`
     Divider(size='l')
   `,
@@ -138,25 +264,7 @@ export default {
   td: Td,
   th: Th,
   delete: P,
-  a: ({ children, href }) => {
-    // function onPress (event) {
-    //   const { url, hash } = $root.get('$render')
-    //   const [_url, _hash] = href.split('#')
-    //   if (url === _url && hash === `#${_hash}`) {
-    //     event.preventDefault()
-    //     // scrollTo({ anchorId: _hash })
-    //   }
-    // }
-
-    // TODO: handle Anchor click with onPress
-    return pug`
-      Link.link(
-        to=href
-        size='l'
-        color='primary'
-      )= children
-    `
-  },
+  a: MdxLink,
   ul: ({ children }) => children,
   ol: ({ children }) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -176,24 +284,15 @@ export default {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const level = useContext(ListLevelContext)
     const listIndex = index == null ? '•' : getOrderedListMark(index, level)
-    let hasTextChild = false
     children = React.Children
       .toArray(children)
       .filter(child => child !== '\n')
-      .map(child => {
-        if (typeof child === 'string') {
-          hasTextChild = true
-        }
-        return child
-      })
+    const wrappedChildren = wrapInlineListChildren(children)
     return pug`
       Div(row)
         Span.listIndex= listIndex
         Div.listContent
-          if hasTextChild
-            P(size='l')= children
-          else
-            = children
+          = wrappedChildren
     `
   },
   blockquote: ({ children }) => {
@@ -258,62 +357,5 @@ export default {
         = children
     `
   },
-  code: observer(({ children, className, ...props }) => {
-    const isBlockCode = useContext(PreContext)
-
-    if (!isBlockCode) {
-      return pug`
-        Span.inlineCodeWrapper
-          Span.inlineCodeSpacer &#160;
-          Span.inlineCode(style={
-            fontFamily: Platform.OS === 'ios' ? 'Menlo-Regular' : 'monospace'
-          })= children
-          Span.inlineCodeSpacer &#160;
-      `
-    }
-
-    const language = (className || 'language-txt').replace(/language-/, '')
-    const [open, setOpen] = useState(false)
-    const $copyText = $('Copy code')
-
-    async function copyHandler () {
-      await setStringAsync(children)
-      $copyText.set('Copied')
-    }
-
-    function onMouseEnter () {
-      // we need to reutrn default text if it was copied
-      $copyText.set('Copy code')
-    }
-
-    let example
-
-    if (typeof children === 'string' && children.includes('[HACK EXAMPLE CODE]')) {
-      children = children.replace('[HACK EXAMPLE CODE]', '')
-      example = true
-    }
-
-    return pug`
-      Div.code(styleName={ 'code-example': example })
-        if example
-          Collapse.code-collapse(open=open variant='pure')
-            Collapse.Header.code-collapse-header(icon=false onPress=null)
-              Div.code-actions(align='right' row)
-                Div.code-action(
-                  tooltip=open ? 'Hide code' : 'Show code'
-                  onPress=() => setOpen(!open)
-                )
-                  Icon.code-action-collapse(icon=faCode color='error')
-                Div.code-action(
-                  tooltip=$copyText.get()
-                  onPress=copyHandler
-                  onMouseEnter=onMouseEnter
-                )
-                  Icon.code-action-copy(icon=faCopy)
-            Collapse.Content.code-collapse-content
-              Code(language=language)= children
-        else
-          Code(language=language)= children
-    `
-  })
+  code: MdxCode
 }

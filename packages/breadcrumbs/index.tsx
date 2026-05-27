@@ -38,6 +38,8 @@ export interface BreadcrumbsProps {
   replace?: boolean
   /** Icon position relative to the label @default 'left' */
   iconPosition?: 'left' | 'right'
+  /** Test identifier */
+  testID?: string
 }
 
 function Breadcrumbs ({
@@ -46,7 +48,8 @@ function Breadcrumbs ({
   separator = '/',
   size = 'm',
   replace = false,
-  iconPosition = 'left'
+  iconPosition = 'left',
+  testID
 }: BreadcrumbsProps): ReactNode {
   if (DEPRECATED_SIZE_VALUES.includes(size)) {
     console.warn(
@@ -81,7 +84,7 @@ function Breadcrumbs ({
   }
 
   return pug`
-    Div(style=style wrap row)
+    Div(style=style testID=testID wrap row)
       each route, index in routes
         - const { name, icon, to } = route
         - const isLastRoute = index === routes.length - 1

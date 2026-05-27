@@ -16,6 +16,8 @@ Icons are visual symbols used to represent ideas, objects, or actions. They comm
 
 The `icon` prop accepts a FontAwesome icon definition, a custom SVG component, or a registered icon name. You can apply custom `style` to control the icon's appearance (including color).
 
+`Icon` does not add a wrapper solely for `testID`. For E2E tests, put `testID` or semantic labels on the parent interactive element, such as `Button`, `Div`, or `Item`.
+
 ```jsx
 import { Icon } from 'startupjs-ui'
 ```

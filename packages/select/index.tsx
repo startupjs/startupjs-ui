@@ -24,14 +24,8 @@ export interface SelectProps extends Omit<UITextInputProps, 'value' | 'onChangeT
   testID?: string
   /** Cross-platform accessible name */
   'aria-label'?: string
-  /** Accessible label forwarded to the web select overlay */
-  accessibilityLabel?: string
-  /** Accessible hint forwarded to the web select overlay */
-  accessibilityHint?: string
   /** Web-only control id forwarded to the native select overlay */
   id?: string
-  /** Native id alias forwarded to the native select overlay */
-  nativeID?: string
   /** Web-only labelled-by relationship */
   'aria-labelledby'?: string
   /** Web-only described-by relationship */
@@ -40,6 +34,8 @@ export interface SelectProps extends Omit<UITextInputProps, 'value' | 'onChangeT
   'aria-errormessage'?: string
   /** Web-only invalid state */
   'aria-invalid'?: boolean
+  /** Web-only required state */
+  'aria-required'?: boolean
   /** Fired when selected value changes */
   onChange?: (value: any) => void
 }
@@ -52,14 +48,12 @@ function Select ({
   emptyValueLabel,
   testID,
   'aria-label': ariaLabel,
-  accessibilityLabel,
-  accessibilityHint,
   id,
-  nativeID,
   'aria-labelledby': ariaLabelledBy,
   'aria-describedby': ariaDescribedBy,
   'aria-errormessage': ariaErrorMessage,
   'aria-invalid': ariaInvalid,
+  'aria-required': ariaRequired,
   onChange,
   ref,
   ...props
@@ -78,12 +72,13 @@ function Select ({
         showEmptyValue=showEmptyValue
         emptyValueLabel=emptyValueLabel
         testID=testID
-        aria-label=ariaLabel ?? accessibilityLabel
-        id=id || nativeID
+        aria-label=ariaLabel
+        id=id
         aria-labelledby=ariaLabelledBy
         aria-describedby=ariaDescribedBy
         aria-errormessage=ariaErrorMessage
         aria-invalid=ariaInvalid
+        aria-required=ariaRequired
       )= children
     `
   }

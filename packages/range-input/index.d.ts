@@ -49,4 +49,9 @@ export interface RangeInputProps {
     onChangeStart?: MultiSliderProps['onValuesChangeStart'];
     /** Handler triggered when sliding ends */
     onChangeFinish?: MultiSliderProps['onValuesChangeFinish'];
+    /** Test identifier forwarded to the underlying slider */
+    testID?: string;
+    /** Whether the slider is disabled */
+    disabled?: boolean;
+    [key: string]: any;
 }

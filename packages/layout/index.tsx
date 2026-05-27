@@ -13,11 +13,13 @@ export interface LayoutProps {
   style?: StyleProp<ViewStyle>
   /** Content rendered inside layout */
   children?: ReactNode
+  /** Test identifier */
+  testID?: string
 }
 
-function Layout ({ children }: LayoutProps): ReactNode {
+function Layout ({ style, children, testID }: LayoutProps): ReactNode {
   return pug`
-    SafeAreaView.root(part='root')
+    SafeAreaView.root(part='root' style=style testID=testID)
       StatusBar(
         backgroundColor=bgColor
         barStyle='dark-content'

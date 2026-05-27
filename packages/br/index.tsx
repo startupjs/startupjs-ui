@@ -15,16 +15,19 @@ export interface BrProps {
   half?: boolean
   /** Number of spacer lines @default 1 */
   lines?: number
+  /** Test identifier */
+  testID?: string
 }
 
 function Br ({
   style,
   half = false,
-  lines = 1
+  lines = 1,
+  testID
 }: BrProps): ReactNode {
   const height = half ? LINE_HEIGHT / 2 : LINE_HEIGHT * lines
   return pug`
-    Text.root(style=[{ height }, style])
+    Text.root(style=[{ height }, style] testID=testID)
   `
 }
 

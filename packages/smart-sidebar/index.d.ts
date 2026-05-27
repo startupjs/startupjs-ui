@@ -27,6 +27,8 @@ export interface SmartSidebarProps {
     children?: ReactNode;
     /** Renderer for sidebar content */
     renderContent?: () => ReactNode;
+    /** Test identifier forwarded to the active sidebar implementation */
+    testID?: string;
 }
 declare const _default: React.ComponentType<SmartSidebarProps>;
 export default _default;

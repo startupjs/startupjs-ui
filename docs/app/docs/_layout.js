@@ -22,6 +22,9 @@ export default observer(({ children }) => {
   const component = pathname.startsWith('/docs/')
     ? pathname.replace(/^\/docs\//, '').replace(/[^\w].*$/, '')
     : undefined
+  const componentTitle = component
+    ? getItemName(getDocItemByPath(component)) || component
+    : undefined
   useEffect(() => {
     setSearch('')
   }, [component])
@@ -32,7 +35,7 @@ export default observer(({ children }) => {
     return DOC_COMPONENT_CATEGORIES
       .map(cat => ({
         ...cat,
-        items: cat.items.filter(name => name.toLowerCase().includes(lower))
+        items: cat.items.filter(item => getItemName(item).toLowerCase().includes(lower))
       }))
       .filter(cat => cat.items.length > 0)
   }, [search])
@@ -42,7 +45,7 @@ export default observer(({ children }) => {
       ProjectsSidebar(colorScheme=colorScheme)
       View.main
         Stack.Screen(
-          options={ title: 'Docs' + (component ? ' / ' + component : '') }
+          options={ title: 'Docs' + (componentTitle ? ' / ' + componentTitle : '') }
         )
         Pressable.toggleSidebar(styleName={ showSidebar } onPress=toggleSidebar)
           View.line
@@ -60,9 +63,14 @@ export default observer(({ children }) => {
           )
           ScrollView.items
             each cat in filteredCategories
-              Category(key=cat.name name=cat.name defaultOpen)
-                each component in cat.items
-                  Item(key=component path=component setShowSidebar=setShowSidebar)= component
+              Category(
+                key=cat.name
+                name=cat.name
+                defaultOpen=cat.defaultOpen ?? true
+                forceOpen=!!search
+              )
+                each item in cat.items
+                  Item(key=getItemPath(item) path=getItemPath(item) setShowSidebar=setShowSidebar)= getItemName(item)
         ScrollView.contentWrapper
           View.content
             Slot
@@ -161,7 +169,7 @@ const GitHubLink = observer(() => {
   const onHoverOut = useCallback(() => setIsHover(false), [])
   return pug`
     AnimatedPressable.show(styleName={ isHover } onHoverIn=onHoverIn onHoverOut=onHoverOut)
-      Link(href='https://github.com/startupjs/startupjs-ui' target='_blank' accessibilityLabel='GitHub repository')
+      Link(href='https://github.com/startupjs/startupjs-ui' target='_blank' aria-label='GitHub repository')
         GitHubIcon(width=24 height=24)
   `
   styl`
@@ -173,18 +181,19 @@ const GitHubLink = observer(() => {
   `
 })
 
-const Category = observer(({ children, name, defaultOpen = false }) => {
+const Category = observer(({ children, name, defaultOpen = false, forceOpen = false }) => {
   const [open, setOpen] = useState(defaultOpen)
   const [isHover, setIsHover] = useState(false)
   const onHoverIn = useCallback(() => setIsHover(true), [])
   const onHoverOut = useCallback(() => setIsHover(false), [])
+  const isOpen = forceOpen || open
   return pug`
     View.root
       Pressable.header(onPress=() => setOpen(!open) onHoverIn=onHoverIn onHoverOut=onHoverOut)
         View.header-content(styleName={ isHover })
-          Text.arrow(selectable=false)= open ? '-' : '+'
+          Text.arrow(selectable=false)= isOpen ? '-' : '+'
           Text.title(selectable=false)= name.toUpperCase()
-      if open
+      if isOpen
         View.items
           = children
   `
@@ -261,6 +270,10 @@ const Item = observer(({ children, path, setShowSidebar }) => {
 
 const DOC_COMPONENT_CATEGORIES = [
   {
+    name: 'Guides',
+    items: ['Accessibility', { name: 'E2E Testing', path: 'E2ETesting' }]
+  },
+  {
     name: 'Layout & Structure',
     items: ['Div', 'Content', 'Card', 'Layout', 'Sidebar', 'SmartSidebar', 'DrawerSidebar', 'Drawer', 'ScrollView', 'FlatList', 'Portal', 'Divider', 'Br']
   },
@@ -295,5 +308,24 @@ const DOC_COMPONENT_CATEGORIES = [
   {
     name: 'Providers',
     items: ['Dialogs']
+  },
+  {
+    name: 'Migration Guides',
+    defaultOpen: false,
+    items: [{ name: '0.3', path: 'MigrationGuides03' }]
   }
 ]
+
+function getItemName (item) {
+  return typeof item === 'string' ? item : item?.name
+}
+
+function getItemPath (item) {
+  return typeof item === 'string' ? item : item?.path
+}
+
+function getDocItemByPath (path) {
+  return DOC_COMPONENT_CATEGORIES
+    .flatMap(category => category.items)
+    .find(item => getItemPath(item) === path)
+}

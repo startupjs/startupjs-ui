@@ -68,6 +68,8 @@ export interface ModalProps {
   statusBarTranslucent?: boolean
   /** Allowed screen orientations */
   supportedOrientations?: SupportedOrientation[]
+  /** Test identifier for the modal surface */
+  testID?: string
   /** Callback fired after modal becomes visible */
   onShow?: () => void
   /** Called when user clicks on the cross */
@@ -107,6 +109,7 @@ function ModalRoot ({
   transparent = true,
   supportedOrientations = SUPPORTED_ORIENTATIONS,
   statusBarTranslucent,
+  testID,
   onChange, // DEPRECATED
   onRequestClose,
   onDismiss,
@@ -179,6 +182,7 @@ function ModalRoot ({
             variant=variant
             title=title
             role=role
+            testID=testID
             cancelLabel=cancelLabel
             confirmLabel=confirmLabel
             showCross=showCross

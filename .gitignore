@@ -27,6 +27,7 @@ yarn-error.log
 doc_build
 docs/dist
 storybook/dist
+storybook/storybook-static
 storybook/test-results
 storybook-web/storybook-static
 

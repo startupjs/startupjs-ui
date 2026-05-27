@@ -34,6 +34,8 @@ export interface CarouselProps {
     children?: any[];
     /** Callback fired when active slide changes */
     onChange?: (index: number) => void;
+    /** Test identifier */
+    testID?: string;
     /** Ref exposing active child and navigation helpers */
     ref?: Ref<any>;
 }

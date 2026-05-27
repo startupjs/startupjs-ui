@@ -25,6 +25,8 @@ export interface DropdownItemProps {
   onPress?: () => void
   /** Custom content when used as a pure/custom item */
   children?: ReactNode
+  /** Test id forwarded to the interactive root (menu row or touchable wrapper) */
+  testID?: string
   /** @private Active value injected by Dropdown */
   _activeValue?: any
   /** @private Selected index for keyboard navigation */
@@ -52,6 +54,7 @@ function DropdownItem ({
   disabled,
   onPress,
   children,
+  testID,
   _activeValue,
   _selectIndexValue,
   _variant,
@@ -84,6 +87,10 @@ function DropdownItem ({
         styleName={ selectMenu: _selectIndexValue === _index }
         onPress=handlePress
         icon=icon
+        testID=testID
+        role='option'
+        aria-selected=(_activeValue === value)
+        aria-label=label
       )= label
     `
   }
@@ -94,6 +101,7 @@ function DropdownItem ({
       to=to
       style=style
       onPress=handlePress
+      testID=testID
     )
       View.item(
         style=(!isPure && _activeValue === value) ? _styleActiveItem : undefined

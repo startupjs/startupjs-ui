@@ -16,6 +16,7 @@
     "@startupjs-ui/link": "^0.2.0",
     "@startupjs-ui/menu": "^0.2.0",
     "@startupjs-ui/popover": "^0.2.0",
+    "@startupjs-ui/scroll-view": "^0.2.0",
     "@startupjs-ui/span": "^0.2.0"
   },
   "peerDependencies": {

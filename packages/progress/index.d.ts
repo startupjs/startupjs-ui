@@ -25,4 +25,6 @@ export interface ProgressProps {
     progressStyle?: DivProps['style'];
     /** Style overrides for the filler part */
     fillerStyle?: StyleProp<ViewStyle>;
+    /** Test identifier */
+    testID?: string;
 }

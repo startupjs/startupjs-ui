@@ -9,6 +9,8 @@ export interface LayoutProps {
     style?: StyleProp<ViewStyle>;
     /** Content rendered inside layout */
     children?: ReactNode;
+    /** Test identifier */
+    testID?: string;
 }
 declare const _default: import("react").ComponentType<LayoutProps>;
 export default _default;

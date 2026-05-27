@@ -31,6 +31,12 @@ export interface DropdownProps {
     drawerCancelLabel?: string;
     /** Disable caption press */
     disabled?: boolean;
+    /** Accessible name for the dropdown trigger */
+    'aria-label'?: string;
+    /** Element id that labels the dropdown trigger */
+    'aria-labelledby'?: string;
+    /** Element id that describes the dropdown trigger */
+    'aria-describedby'?: string;
     /** Enable drawer behavior on small screens @default true */
     hasDrawer?: boolean;
     /** Show swipe responder zone in drawer */
@@ -39,6 +45,10 @@ export interface DropdownProps {
     onChange?: (value: string | number | undefined) => void;
     /** Called when dropdown is dismissed via overlay/cancel */
     onDismiss?: () => void;
+    /** Test identifier for the dropdown trigger */
+    testID?: string;
+    /** Test id for the desktop/tablet popover surface (passed to `AbstractPopover`) */
+    popoverTestID?: string;
 }
 export interface DropdownRef {
     /** Open dropdown programmatically */

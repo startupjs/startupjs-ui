@@ -58,6 +58,8 @@ export interface AbstractPopoverProps {
   onCloseComplete?: (finished?: boolean) => void
   /** Popover content */
   children?: ReactNode
+  /** Stable test id for the popover surface (portal root) */
+  testID?: string
 }
 
 function AbstractPopover ({
@@ -121,7 +123,8 @@ const Tether = observer(function TetherComponent ({
   onRequestClose,
   onOpenComplete,
   onCloseComplete,
-  children
+  children,
+  testID
 }: AbstractPopoverProps): ReactNode {
   const flattenedStyle = StyleSheet.flatten(style) as ViewStyle | undefined
   if (!renderWrapper) renderWrapper = (node): ReactNode => node
@@ -208,6 +211,7 @@ const Tether = observer(function TetherComponent ({
       style=[flattenedStyle, rootStyle]
       styleName=styleName
       onLayout=calculateGeometry
+      testID=testID
     )
       if arrow && !!geometry
         View.arrow(

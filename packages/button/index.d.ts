@@ -33,12 +33,8 @@ export interface ButtonProps {
     hoverStyle?: StyleProp<ViewStyle>;
     /** custom styles for active state */
     activeStyle?: StyleProp<ViewStyle>;
-    /** cross-platform accessible name for icon-only or custom-content buttons */
+    /** Accessible name for icon-only or custom-content buttons */
     'aria-label'?: string;
-    /** legacy alias for aria-label */
-    accessibilityLabel?: string;
-    /** accessible hint text */
-    accessibilityHint?: string;
     /** onPress handler */
     onPress?: (event: GestureResponderEvent) => void | Promise<void>;
     /** Additional props forwarded to the root pressable */

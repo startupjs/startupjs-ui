@@ -29,14 +29,10 @@ export interface SelectWrapperProps {
   showEmptyValue?: boolean
   /** Label for empty/none option */
   emptyValueLabel?: string | number
-  /** Test identifier */
+  /** Test identifier passed to wrapper root */
   testID?: string
   /** Cross-platform accessible name */
   'aria-label'?: string
-  /** Accessible label for the web select overlay */
-  accessibilityLabel?: string
-  /** Accessible hint for the web select overlay */
-  accessibilityHint?: string
   /** Web-only control id for label association */
   id?: string
   /** Web-only labelled-by relationship */
@@ -47,6 +43,8 @@ export interface SelectWrapperProps {
   'aria-errormessage'?: string
   /** Web-only invalid state */
   'aria-invalid'?: boolean
+  /** Web-only required state */
+  'aria-required'?: boolean
   /** Fired when selected value changes */
   onChange?: (value: any) => void
 }
@@ -67,18 +65,16 @@ function SelectWrapperWeb ({
   emptyValueLabel,
   testID,
   'aria-label': ariaLabel,
-  accessibilityLabel,
-  accessibilityHint,
   id,
   'aria-labelledby': ariaLabelledBy,
   'aria-describedby': ariaDescribedBy,
   'aria-errormessage': ariaErrorMessage,
   'aria-invalid': ariaInvalid,
+  'aria-required': ariaRequired,
   onChange
 }: SelectWrapperProps): ReactNode {
   const optionEntries = getOptionEntries(options, showEmptyValue, emptyValueLabel)
   const selectedKey = getOptionKeyFromValue(value, options, showEmptyValue, emptyValueLabel) ?? PICKER_NULL
-
   function onSelectChange (event: any) {
     if (onChange) onChange(getValueFromKey(event.target.value, options, showEmptyValue, emptyValueLabel))
   }
@@ -86,21 +82,28 @@ function SelectWrapperWeb ({
   return pug`
     Div.root(style=style testID=testID)
       = children
-      if !disabled
-        select(
-          id=id
-          style=STYLES.overlay
-          value=selectedKey
-          onChange=onSelectChange
-          aria-label=ariaLabel ?? accessibilityLabel
-          aria-labelledby=ariaLabelledBy
-          aria-describedby=ariaDescribedBy
-          aria-errormessage=ariaErrorMessage
-          aria-invalid=ariaInvalid
-        )
-          each entry in optionEntries
-            option(key=entry.key value=entry.key)
-              = entry.label
+      select(
+        id=id
+        style=STYLES.overlay
+        value=selectedKey
+        disabled=disabled
+        onChange=onSelectChange
+        role='combobox'
+        aria-haspopup='listbox'
+        aria-label=ariaLabel
+        aria-labelledby=ariaLabelledBy
+        aria-describedby=ariaDescribedBy
+        aria-errormessage=ariaErrorMessage
+        aria-invalid=ariaInvalid
+        aria-required=ariaRequired
+      )
+        each entry in optionEntries
+          option(
+            key=entry.key
+            value=entry.key
+            aria-selected=entry.key === selectedKey
+          )
+            = entry.label
   `
 }
 

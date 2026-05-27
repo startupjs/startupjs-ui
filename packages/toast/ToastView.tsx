@@ -51,6 +51,8 @@ export interface ToastProps {
   actionLabel?: string
   /** Action button press handler */
   onAction?: () => void
+  /** Test identifier for the toast surface */
+  testID?: string
   /** Called after the toast is closed and removed */
   onClose?: () => void
   /** Layout callback used to measure toast height */
@@ -67,6 +69,7 @@ function Toast ({
   title,
   actionLabel = 'View',
   onAction,
+  testID,
   onClose,
   onLayout
 }: ToastProps): ReactNode {
@@ -107,6 +110,7 @@ function Toast ({
         top: topAnimation
       }
       onLayout=e => onLayout(e.nativeEvent.layout)
+      testID=testID
     )
       Div.toast(styleName=[type])
         Div.header(vAlign='center' row)

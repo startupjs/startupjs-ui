@@ -1,11 +1,27 @@
 import { useMemo, useCallback, useState, useId, useRef, type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
 import { pug, observer, $ } from 'startupjs'
+import { type UIRole } from '@startupjs-ui/core'
 import ObjectInput from '@startupjs-ui/object-input'
 import { CustomInputsContext } from '@startupjs-ui/input'
 import _debounce from 'lodash/debounce'
 import { FormPropsContext } from './useFormProps'
 import { Validator } from './useValidate'
+
+type FormWrapperProps = {
+  style: StyleProp<ViewStyle> | undefined
+  testID?: string
+  id?: string
+  role?: UIRole
+  'aria-label'?: string
+  'aria-labelledby'?: string
+  'aria-describedby'?: string
+  'aria-errormessage'?: string
+  'aria-invalid'?: boolean
+  'aria-required'?: boolean
+  'aria-disabled'?: boolean
+  'aria-readonly'?: boolean
+}
 
 export const _PropsJsonSchema = {/* FormProps */}
 
@@ -29,13 +45,35 @@ export interface FormProps {
   /** Custom inputs by type key */
   customInputs?: Record<string, any>
   /** Custom wrapper renderer for inputs */
-  _renderWrapper?: (params: { style: StyleProp<ViewStyle> | undefined }, children: ReactNode) => ReactNode
+  _renderWrapper?: (params: FormWrapperProps, children: ReactNode) => ReactNode
   /** Enable validation or pass validate hook from useValidate */
   validate?: boolean | any
   /** Disable interactions */
   disabled?: boolean
   /** Render as read-only */
   readonly?: boolean
+  /** Test identifier */
+  testID?: string
+  /** Web id for the wrapper */
+  id?: string
+  /** ARIA role for the wrapper */
+  role?: UIRole
+  /** Accessible name for the wrapper */
+  'aria-label'?: string
+  /** Id of the element that labels the wrapper */
+  'aria-labelledby'?: string
+  /** Id of the element that describes the wrapper */
+  'aria-describedby'?: string
+  /** Id of the element that describes the wrapper error */
+  'aria-errormessage'?: string
+  /** Invalid state for the wrapper */
+  'aria-invalid'?: boolean
+  /** Required state for the wrapper */
+  'aria-required'?: boolean
+  /** Disabled state for the wrapper */
+  'aria-disabled'?: boolean
+  /** Readonly state for the wrapper */
+  'aria-readonly'?: boolean
   /** Model binding for form values */
   $value: any
   /** Do not use; pass `fields` instead (will throw if set) */
@@ -135,6 +173,17 @@ function Form ({
           errors=errors || $errors.get()
           style=style
           inputStyle=inputStyle
+          testID=props.testID
+          id=props.id
+          role=props.role
+          aria-label=props['aria-label']
+          aria-labelledby=props['aria-labelledby']
+          aria-describedby=props['aria-describedby']
+          aria-errormessage=props['aria-errormessage']
+          aria-invalid=props['aria-invalid']
+          aria-required=props['aria-required']
+          aria-disabled=props['aria-disabled']
+          aria-readonly=props['aria-readonly']
           _renderWrapper=_renderWrapper
           disabled=disabled
           readonly=readonly

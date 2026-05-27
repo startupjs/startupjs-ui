@@ -8,6 +8,8 @@ A slider control that lets users select a value (or a range of values) by draggi
 
 The component also supports style overrides for individual parts: `containerStyle`, `trackStyle`, `selectedStyle`, `markerStyle`, `stepStyle`, `stepLabelStyle`, and `stepMarkerStyle`. Use `customLabel` to replace the default marker label component, or `onChangeStart` and `onChangeFinish` to respond to the start and end of a drag gesture.
 
+`testID` is forwarded to the underlying slider. The third-party slider does not currently expose `role` or `aria-*` props without adding an extra wrapper, so tests should use `testID` or surrounding visible text for this component.
+
 ```jsx
 import { RangeInput } from 'startupjs-ui'
 ```

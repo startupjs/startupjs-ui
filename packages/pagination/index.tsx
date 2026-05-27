@@ -62,6 +62,8 @@ export interface PaginationProps {
   onChangePage?: (page: number) => void
   /** Called when the page size changes */
   onChangeLimit?: (limit: number) => void
+  /** Test identifier */
+  testID?: string
 }
 
 function Pagination ({
@@ -83,7 +85,8 @@ function Pagination ({
   showNextButton = true,
   disabled = false,
   onChangePage,
-  onChangeLimit
+  onChangeLimit,
+  testID
 }: PaginationProps): ReactNode {
   const items = usePagination({
     variant,
@@ -107,7 +110,7 @@ function Pagination ({
   })
 
   return pug`
-    Div(row style=style)
+    Div(row style=style testID=testID)
       each item, index in items
         React.Fragment(key=index)
           - const { type, value, selected, disabled, ...itemProps } = item

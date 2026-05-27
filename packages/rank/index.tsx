@@ -26,6 +26,8 @@ export interface RankProps {
   readonly?: boolean
   /** Fired when order changes; receives array of option values */
   onChange?: (value: any[]) => void
+  /** Test identifier */
+  testID?: string
 }
 
 function Rank (props: RankProps): ReactNode {
@@ -46,7 +48,7 @@ function Rank (props: RankProps): ReactNode {
 
   return pug`
     if readonly
-      RankReadonly(value=sortedValue style=style)
+      RankReadonly(value=sortedValue style=style testID=props.testID)
     else
       RankInput(...props value=sortedValue)
   `
@@ -56,12 +58,16 @@ const RankInput = observer(function RankInput ({
   value,
   onChange,
   disabled,
-  style
+  style,
+  testID,
+  ...props
 }: {
   value: any[]
   onChange?: (value: any[]) => void
   disabled?: boolean
   style?: StyleProp<ViewStyle>
+  testID?: string
+  [key: string]: any
 }): ReactNode {
   const $width: any = $()
   const dropId = useMemo(() => $.id(), [])
@@ -130,7 +136,9 @@ const RankInput = observer(function RankInput ({
 
   return pug`
     Div(
+      ...props
       style=style
+      testID=testID
       onLayout=onLayout
     )
       Span.hint(italic) To rank the listed items drag and drop each item
@@ -143,13 +151,17 @@ const RankInput = observer(function RankInput ({
 
 const RankReadonly = observer(function RankReadonly ({
   value,
-  style
+  style,
+  testID,
+  ...props
 }: {
   value: any[]
   style?: StyleProp<ViewStyle>
+  testID?: string
+  [key: string]: any
 }): ReactNode {
   return pug`
-    Div(style=style)
+    Div(style=style testID=testID ...props)
       each option, index in value
         Div.readonly(key=index row)
           Div.readonly-index

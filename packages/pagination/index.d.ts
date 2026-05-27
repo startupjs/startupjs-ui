@@ -46,4 +46,6 @@ export interface PaginationProps {
     onChangePage?: (page: number) => void;
     /** Called when the page size changes */
     onChangeLimit?: (limit: number) => void;
+    /** Test identifier */
+    testID?: string;
 }

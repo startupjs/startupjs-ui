@@ -46,6 +46,22 @@ export interface MultiSelectProps {
   disabled?: boolean
   /** Render non-editable value @default false */
   readonly?: boolean
+  /** Web id for label association */
+  id?: string
+  /** Accessible name for the combobox trigger */
+  'aria-label'?: string
+  /** Element id that labels the combobox trigger */
+  'aria-labelledby'?: string
+  /** Element id that describes the combobox trigger */
+  'aria-describedby'?: string
+  /** Whether the combobox trigger value is invalid */
+  'aria-invalid'?: boolean
+  /** Element id for the related error message */
+  'aria-errormessage'?: string
+  /** Whether a value is required */
+  'aria-required'?: boolean
+  /** Test identifier for the combobox trigger */
+  testID?: string
   /** Maximum number of visible tags (extra tags are collapsed) */
   tagLimit?: number
   /** Behavior when tags are limited (legacy prop) @default 'hidden' */
@@ -84,6 +100,14 @@ function MultiSelect ({
   placeholder = 'Select',
   disabled = false,
   readonly = false,
+  id,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  'aria-describedby': ariaDescribedBy,
+  'aria-invalid': ariaInvalid,
+  'aria-errormessage': ariaErrorMessage,
+  'aria-required': ariaRequired,
+  testID,
   tagLimitVariant = 'hidden',
   TagComponent = DefaultTag,
   InputComponent,
@@ -167,12 +191,16 @@ function MultiSelect ({
     const { label, value: itemValue } = item
     const selected = value.includes(itemValue)
     const onPress = onItemPress(itemValue, selected)
+    const optionLabel = label != null ? String(label) : String(itemValue)
 
     return pug`
       Div(
         key=itemValue
         vAlign='center'
         disabled=selected ? false : shouldDisableSelection
+        role='option'
+        aria-label=optionLabel
+        aria-selected=selected
         onPress=() => onPress(!selected)
       )
         if renderListItem
@@ -188,7 +216,7 @@ function MultiSelect ({
 
   function renderContent (): ReactNode {
     return pug`
-      ScrollView.suggestions-web
+      ScrollView.suggestions-web(role='listbox')
         each option, index in normalizedOptions
           = _renderListItem({ item: option, index })
     `
@@ -214,6 +242,14 @@ function MultiSelect ({
           focused=focused
           value=value
           placeholder=placeholder
+          id=id
+          aria-label=ariaLabel
+          aria-labelledby=ariaLabelledBy
+          aria-describedby=ariaDescribedBy
+          aria-invalid=ariaInvalid
+          aria-errormessage=ariaErrorMessage
+          aria-required=ariaRequired
+          testID=testID
           tagLimit=tagLimit
           tagLimitVariant=tagLimitVariant
           options=normalizedOptions
@@ -235,6 +271,14 @@ function MultiSelect ({
         focused=focused
         value=value
         placeholder=placeholder
+        id=id
+        aria-label=ariaLabel
+        aria-labelledby=ariaLabelledBy
+        aria-describedby=ariaDescribedBy
+        aria-invalid=ariaInvalid
+        aria-errormessage=ariaErrorMessage
+        aria-required=ariaRequired
+        testID=testID
         tagLimit=tagLimit
         tagLimitVariant=tagLimitVariant
         options=normalizedOptions
@@ -261,6 +305,14 @@ function MultiSelectInput ({
   value,
   placeholder,
   options,
+  id,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  'aria-describedby': ariaDescribedBy,
+  'aria-invalid': ariaInvalid,
+  'aria-errormessage': ariaErrorMessage,
+  'aria-required': ariaRequired,
+  testID,
   disabled,
   readonly,
   focused,
@@ -276,6 +328,14 @@ function MultiSelectInput ({
   value: any[]
   placeholder?: string
   options: MultiSelectOption[]
+  id?: string
+  'aria-label'?: string
+  'aria-labelledby'?: string
+  'aria-describedby'?: string
+  'aria-invalid'?: boolean
+  'aria-errormessage'?: string
+  'aria-required'?: boolean
+  testID?: string
   disabled?: boolean
   readonly?: boolean
   focused?: boolean
@@ -293,6 +353,12 @@ function MultiSelectInput ({
     : 0
 
   const EffectiveInputComponent = InputComponent ?? DefaultInput
+  const inferredAccessibleName = value.length
+    ? value
+      .map(value => options.find(option => option.value === value)?.label ?? value)
+      .join(', ')
+    : placeholder
+  const accessibleName = ariaLabel ?? (ariaLabelledBy ? undefined : inferredAccessibleName)
 
   return pug`
     EffectiveInputComponent(
@@ -300,6 +366,14 @@ function MultiSelectInput ({
       style=style
       value=values
       placeholder=placeholder
+      id=id
+      aria-label=accessibleName != null ? String(accessibleName) : undefined
+      aria-labelledby=ariaLabelledBy
+      aria-describedby=ariaDescribedBy
+      aria-invalid=ariaInvalid
+      aria-errormessage=ariaErrorMessage
+      aria-required=ariaRequired
+      testID=testID
       disabled=disabled
       focused=focused
       readonly=readonly
@@ -329,6 +403,14 @@ function DefaultInput ({
   style,
   value = [],
   placeholder,
+  id,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  'aria-describedby': ariaDescribedBy,
+  'aria-invalid': ariaInvalid,
+  'aria-errormessage': ariaErrorMessage,
+  'aria-required': ariaRequired,
+  testID,
   disabled,
   focused,
   readonly,
@@ -341,6 +423,14 @@ function DefaultInput ({
   style?: StyleProp<ViewStyle>
   value?: any[]
   placeholder?: string
+  id?: string
+  'aria-label'?: string
+  'aria-labelledby'?: string
+  'aria-describedby'?: string
+  'aria-invalid'?: boolean
+  'aria-errormessage'?: string
+  'aria-required'?: boolean
+  testID?: string
   disabled?: boolean
   focused?: boolean
   readonly?: boolean
@@ -366,7 +456,17 @@ function DefaultInput ({
       Div.input(
         style=style
         styleName={ disabled, focused, readonly, error: _hasError }
-        role='button'
+        id=id
+        role='combobox'
+        aria-label=ariaLabel
+        aria-labelledby=ariaLabelledBy
+        aria-describedby=ariaDescribedBy
+        aria-invalid=ariaInvalid
+        aria-errormessage=ariaErrorMessage
+        aria-required=ariaRequired
+        testID=testID
+        aria-expanded=!!focused
+        aria-haspopup='listbox'
         aria-disabled=disabled
         aria-readonly=readonly
         onPress=disabled || readonly ? undefined : onOpen
