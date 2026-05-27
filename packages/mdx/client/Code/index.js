@@ -5,7 +5,10 @@ import Span from '@startupjs-ui/span'
 import ScrollView from '@startupjs-ui/scroll-view'
 import refractor from 'refractor/core.js'
 // Supported languages
+import languageJavascript from 'refractor/lang/javascript.js'
 import languageJsx from 'refractor/lang/jsx.js'
+import languageTypescript from 'refractor/lang/typescript.js'
+import languageTsx from 'refractor/lang/tsx.js'
 import languageStyl from 'refractor/lang/stylus.js'
 import languagePug from 'refractor/lang/pug.js'
 import languageMarkdown from 'refractor/lang/markdown.js'
@@ -14,9 +17,13 @@ import languageBash from 'refractor/lang/bash.js'
 import './index.cssx.styl'
 
 const SUB_LANGUAGE_REGEX = /(^|\W)(pug|styl|css)(`\s*\n)([^`]*\s*\n)(`)/
+const TEMPLATE_LANGUAGE_ROOTS = new Set(['js', 'javascript', 'jsx', 'ts', 'typescript', 'tsx'])
 
 // Register all supported languages
+refractor.register(languageJavascript)
 refractor.register(languageJsx)
+refractor.register(languageTypescript)
+refractor.register(languageTsx)
 refractor.register(languageStyl)
 refractor.register(languagePug)
 refractor.register(languageMarkdown)
@@ -24,6 +31,7 @@ refractor.register(languageJson)
 refractor.register(languageBash)
 
 // Register aliases
+refractor.alias({ javascript: ['js'] })
 refractor.alias({ stylus: ['styl'] })
 refractor.alias({ bash: ['sh'] })
 
@@ -74,27 +82,27 @@ function getLines (code, language) {
 }
 
 function highlight (code, language) {
-  if (language === 'jsx') {
+  if (TEMPLATE_LANGUAGE_ROOTS.has(language)) {
     const match = code.match(SUB_LANGUAGE_REGEX)
     if (match) {
       const splitIndex = match.index + match[0].length
       const start = code.slice(0, splitIndex)
       const next = code.slice(splitIndex + 1)
 
-      const jsx = start.replace(SUB_LANGUAGE_REGEX, '$1$2$3$5')
-      const highlightedJsx = getLines(jsx, 'jsx')
+      const rootCode = start.replace(SUB_LANGUAGE_REGEX, '$1$2$3$5')
+      const highlightedRoot = getLines(rootCode, language)
 
       const subLanguageName = match[2]
       const bodySubLanguage = match[4]
-      const closingBacktick = modifyAndGetLastBacktick(highlightedJsx)
+      const closingBacktick = modifyAndGetLastBacktick(highlightedRoot)
 
       const merge = [
-        ...highlightedJsx, // without trailing ` sign
+        ...highlightedRoot, // without trailing ` sign
         ...highlight(bodySubLanguage, subLanguageName),
         closingBacktick // the trailing ` sign
       ]
 
-      if (next) merge.push(...highlight(next, 'jsx'))
+      if (next) merge.push(...highlight(next, language))
       return merge
     }
   }

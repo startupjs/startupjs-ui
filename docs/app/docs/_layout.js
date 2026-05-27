@@ -63,7 +63,12 @@ export default observer(({ children }) => {
           )
           ScrollView.items
             each cat in filteredCategories
-              Category(key=cat.name name=cat.name defaultOpen)
+              Category(
+                key=cat.name
+                name=cat.name
+                defaultOpen=cat.defaultOpen ?? true
+                forceOpen=!!search
+              )
                 each item in cat.items
                   Item(key=getItemPath(item) path=getItemPath(item) setShowSidebar=setShowSidebar)= getItemName(item)
         ScrollView.contentWrapper
@@ -176,18 +181,19 @@ const GitHubLink = observer(() => {
   `
 })
 
-const Category = observer(({ children, name, defaultOpen = false }) => {
+const Category = observer(({ children, name, defaultOpen = false, forceOpen = false }) => {
   const [open, setOpen] = useState(defaultOpen)
   const [isHover, setIsHover] = useState(false)
   const onHoverIn = useCallback(() => setIsHover(true), [])
   const onHoverOut = useCallback(() => setIsHover(false), [])
+  const isOpen = forceOpen || open
   return pug`
     View.root
       Pressable.header(onPress=() => setOpen(!open) onHoverIn=onHoverIn onHoverOut=onHoverOut)
         View.header-content(styleName={ isHover })
-          Text.arrow(selectable=false)= open ? '-' : '+'
+          Text.arrow(selectable=false)= isOpen ? '-' : '+'
           Text.title(selectable=false)= name.toUpperCase()
-      if open
+      if isOpen
         View.items
           = children
   `
@@ -302,6 +308,11 @@ const DOC_COMPONENT_CATEGORIES = [
   {
     name: 'Providers',
     items: ['Dialogs']
+  },
+  {
+    name: 'Migration Guides',
+    defaultOpen: false,
+    items: [{ name: '0.3', path: 'MigrationGuides03' }]
   }
 ]
 
