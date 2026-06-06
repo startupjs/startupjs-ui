@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState, useRef, type ReactNode, type RefObject } from 'react'
+import { useContext, useLayoutEffect, useState, useRef, type ReactNode, type RefObject } from 'react'
 import {
   View,
   Pressable,
@@ -11,6 +11,13 @@ import {
 import Animated from 'react-native-reanimated'
 import { pug, observer, u, useDidUpdate } from 'startupjs'
 import { colorToRGBA, getCssVariable, themed, type UIRole } from '@startupjs-ui/core'
+import {
+  TextStyleContext,
+  getInheritedTextStyle,
+  mergeInheritedTextStyles,
+  omitInheritedTextStyle,
+  type DivStyle
+} from '@startupjs-ui/span/textStyleContext'
 import { useDecorateTooltipProps } from './useTooltip'
 import STYLES from './index.cssx.styl'
 
@@ -34,7 +41,7 @@ export default observer(themed('Div', Div))
 
 export const _PropsJsonSchema = {/* DivProps */}
 
-export interface DivProps extends Omit<ViewProps, 'role'> {
+export interface DivProps extends Omit<ViewProps, 'role' | 'style'> {
   /** Ref to access underlying <View> or <Pressable> */
   ref?: RefObject<any>
   /** Accessibility role. Includes RN roles plus web-only ARIA roles used by RNW. */
@@ -42,7 +49,7 @@ export interface DivProps extends Omit<ViewProps, 'role'> {
   /** Web popup type exposed through aria-haspopup */
   'aria-haspopup'?: AriaHasPopup
   /** Custom styles applied to the root view */
-  style?: StyleProp<ViewStyle>
+  style?: StyleProp<DivStyle>
   /** Content rendered inside Div */
   children?: ReactNode
   /** Visual feedback variant @default 'opacity' */
@@ -125,9 +132,15 @@ function Div ({
   ...props
 }: DivProps): ReactNode {
   assertDeprecatedValues({ pushed, renderTooltip })
-  style = StyleSheet.flatten(style)
+  const inheritedTextStyle = useContext(TextStyleContext)
+  const ownTextStyle = getInheritedTextStyle(style)
+  const nextInheritedTextStyle = ownTextStyle
+    ? mergeInheritedTextStyles(inheritedTextStyle, ownTextStyle)
+    : undefined
+
+  let viewStyle = omitInheritedTextStyle<ViewStyle>(style)
   // on RN row-reverse switches margins and paddings sides, so we switch them back
-  if (isNative && reverse) style = reverseMarginPaddingSides(style)
+  if (isNative && reverse) viewStyle = reverseMarginPaddingSides(viewStyle)
   if (gap === true) gap = 2
   const isPressable = hasPressHandler(props)
   const fallbackRef = useRef<any>(null)
@@ -141,7 +154,7 @@ function Div ({
     deferredRole
   } = useDecoratePressableProps({
     props,
-    style,
+    style: viewStyle,
     activeStyle,
     hoverStyle,
     variant,
@@ -184,7 +197,7 @@ function Div ({
   let levelModifier
   if (level) levelModifier = `shadow-${level}`
 
-  const isAnimated = hasAnimatedProperty(style) || hasAnimatedProperty(pressableStyle)
+  const isAnimated = hasAnimatedProperty(viewStyle) || hasAnimatedProperty(pressableStyle)
   const Component = isPressable
     ? (isAnimated ? AnimatedPressable : Pressable)
     : (isAnimated ? Animated.View : View)
@@ -194,7 +207,7 @@ function Div ({
       ref=rootRef
       style=[
         gap ? { gap: u(gap) } : undefined,
-        style,
+        viewStyle,
         pressableStyle
       ]
       styleName=[
@@ -216,13 +229,19 @@ function Div ({
       ...renderProps
     )= children
   `
+  const styledDivElement = nextInheritedTextStyle
+    ? pug`
+      TextStyleContext.Provider(value=nextInheritedTextStyle)
+        = divElement
+    `
+    : divElement
 
   if (tooltipElement) {
     return pug`
-      = divElement
+      = styledDivElement
       = tooltipElement
     `
-  } else return divElement
+  } else return styledDivElement
 }
 
 function isWebOnlyRole (role: unknown): role is Exclude<UIRole, ViewProps['role']> {
@@ -438,6 +457,7 @@ function hasPressHandler (props: Record<string, any>): boolean {
 
 function reverseMarginPaddingSides (style: StyleProp<ViewStyle>) {
   style = StyleSheet.flatten(style)
+  if (!style) return style
   const { paddingLeft, paddingRight, marginLeft, marginRight } = style
   style.marginLeft = marginRight
   style.marginRight = marginLeft

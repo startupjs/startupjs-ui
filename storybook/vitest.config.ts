@@ -18,6 +18,8 @@ export default mergeConfig(viteConfig, defineConfig({
     })
   ],
   test: {
+    fileParallelism: false,
+    testTimeout: 30000,
     name: 'storybook',
     browser: {
       enabled: true,

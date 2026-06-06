@@ -1,19 +1,34 @@
-import { type ReactNode, type RefObject, useMemo } from 'react'
+import { type ReactNode, type RefObject, useContext, useMemo } from 'react'
 import { StyleSheet, Text, type TextStyle, type StyleProp, type TextProps } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { pug, observer } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
+import {
+  TextStyleContext,
+  getInheritedTextStyle,
+  omitInheritedTextStyle,
+  resolveSpanLineHeight,
+  type SpanStyle
+} from './textStyleContext'
 import './index.cssx.styl'
+
+export type {
+  DivStyle,
+  InheritedTextStyle,
+  RelativeLineHeight,
+  SpanStyle,
+  UniversalTextStyle
+} from './textStyleContext'
 
 export default observer(themed('Span', Span))
 
 export const _PropsJsonSchema = {/* SpanProps */}
 
-export interface SpanProps extends TextProps {
+export interface SpanProps extends Omit<TextProps, 'style'> {
   /** Ref to access underlying <Text> */
   ref?: RefObject<any>
   /** Custom styles applied to the root view */
-  style?: StyleProp<TextStyle>
+  style?: StyleProp<SpanStyle>
   /** Content rendered inside Span */
   children?: ReactNode
   /** bold text */
@@ -78,10 +93,24 @@ function Span ({
     return hasAnimatedProperty(StyleSheet.flatten(style)) ? Animated.Text : Text
   }, [style])
 
-  return pug`
+  const inheritedTextStyle = useContext(TextStyleContext)
+  const ownTextStyle = getInheritedTextStyle(style)
+  const remainingStyle = omitInheritedTextStyle<TextStyle>(style)
+  const boundaryTextStyle = inheritedTextStyle || ownTextStyle
+    ? resolveSpanLineHeight({
+      ...inheritedTextStyle,
+      ...ownTextStyle
+    })
+    : undefined
+
+  const textStyle = boundaryTextStyle
+    ? [boundaryTextStyle, remainingStyle]
+    : style
+
+  const spanElement = pug`
     Component.root(
       ref=ref
-      style=style
+      style=textStyle
       styleName=[
         theme,
         variant,
@@ -92,6 +121,15 @@ function Span ({
       ...props
     )= children
   `
+
+  if (inheritedTextStyle) {
+    return pug`
+      TextStyleContext.Provider(value=undefined)
+        = spanElement
+    `
+  }
+
+  return spanElement
 }
 
 function hasAnimatedProperty (style: any): boolean {
