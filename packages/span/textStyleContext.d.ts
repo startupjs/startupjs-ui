@@ -1,13 +1,7 @@
-import { type TextStyle, type ViewStyle } from 'react-native'
-
-export type RelativeLineHeight = number | `${number}%` | `${number}`
-
-export type UniversalTextStyle = Omit<TextStyle, 'lineHeight'> & {
-  lineHeight?: TextStyle['lineHeight'] | RelativeLineHeight
-}
+import { type TextStyle } from 'react-native'
 
 export type InheritedTextStyle = Pick<
-  UniversalTextStyle,
+  TextStyle,
   | 'color'
   | 'fontFamily'
   | 'fontSize'
@@ -23,12 +17,9 @@ export type InheritedTextStyle = Pick<
   | 'writingDirection'
 >
 
-export type DivStyle = ViewStyle & InheritedTextStyle
-export type SpanStyle = UniversalTextStyle
-
 export declare const TextStyleContext: import('react').Context<InheritedTextStyle | undefined>
 
-export declare function getInheritedTextStyle (style: unknown): InheritedTextStyle | undefined
-export declare function omitInheritedTextStyle<TStyle = ViewStyle> (style: unknown): TStyle | undefined
+export declare function getInheritedTextStyle (style: object | undefined): InheritedTextStyle | undefined
+export declare function omitInheritedTextStyle<TStyle extends object> (style: TStyle | undefined): TStyle | undefined
 export declare function mergeInheritedTextStyles (parentStyle: InheritedTextStyle | undefined, ownStyle: InheritedTextStyle): InheritedTextStyle
-export declare function resolveSpanLineHeight (style: InheritedTextStyle): InheritedTextStyle
+export declare function resolveSpanLineHeight<TStyle extends TextStyle | undefined> (style: TStyle): TStyle

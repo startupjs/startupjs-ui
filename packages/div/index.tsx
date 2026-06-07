@@ -1,4 +1,4 @@
-import { useContext, useLayoutEffect, useState, useRef, type ReactNode, type RefObject } from 'react'
+import { useContext, useLayoutEffect, useMemo, useState, useRef, type ReactNode, type RefObject } from 'react'
 import {
   View,
   Pressable,
@@ -15,8 +15,7 @@ import {
   TextStyleContext,
   getInheritedTextStyle,
   mergeInheritedTextStyles,
-  omitInheritedTextStyle,
-  type DivStyle
+  omitInheritedTextStyle
 } from '@startupjs-ui/span/textStyleContext'
 import { useDecorateTooltipProps } from './useTooltip'
 import STYLES from './index.cssx.styl'
@@ -41,7 +40,7 @@ export default observer(themed('Div', Div))
 
 export const _PropsJsonSchema = {/* DivProps */}
 
-export interface DivProps extends Omit<ViewProps, 'role' | 'style'> {
+export interface DivProps extends Omit<ViewProps, 'role'> {
   /** Ref to access underlying <View> or <Pressable> */
   ref?: RefObject<any>
   /** Accessibility role. Includes RN roles plus web-only ARIA roles used by RNW. */
@@ -49,7 +48,7 @@ export interface DivProps extends Omit<ViewProps, 'role' | 'style'> {
   /** Web popup type exposed through aria-haspopup */
   'aria-haspopup'?: AriaHasPopup
   /** Custom styles applied to the root view */
-  style?: StyleProp<DivStyle>
+  style?: StyleProp<ViewStyle>
   /** Content rendered inside Div */
   children?: ReactNode
   /** Visual feedback variant @default 'opacity' */
@@ -105,7 +104,7 @@ export interface DivProps extends Omit<ViewProps, 'role' | 'style'> {
 }
 
 function Div ({
-  style = [],
+  style: rawStyle = [],
   children,
   variant = 'opacity',
   row,
@@ -132,15 +131,19 @@ function Div ({
   ...props
 }: DivProps): ReactNode {
   assertDeprecatedValues({ pushed, renderTooltip })
+  let style = StyleSheet.flatten(rawStyle) as ViewStyle | undefined
+  // on RN row-reverse switches margins and paddings sides, so we switch them back
+  if (isNative && reverse) style = reverseMarginPaddingSides(style)
+
   const inheritedTextStyle = useContext(TextStyleContext)
   const ownTextStyle = getInheritedTextStyle(style)
-  const nextInheritedTextStyle = ownTextStyle
-    ? mergeInheritedTextStyles(inheritedTextStyle, ownTextStyle)
-    : undefined
+  const nextInheritedTextStyleKey = simpleNumericHash(JSON.stringify([inheritedTextStyle, ownTextStyle]))
+  const nextInheritedTextStyle = useMemo(() => {
+    if (!ownTextStyle) return undefined
+    return mergeInheritedTextStyles(inheritedTextStyle, ownTextStyle)
+  }, [nextInheritedTextStyleKey]) // eslint-disable-line react-hooks/exhaustive-deps
+  omitInheritedTextStyle(style)
 
-  let viewStyle = omitInheritedTextStyle<ViewStyle>(style)
-  // on RN row-reverse switches margins and paddings sides, so we switch them back
-  if (isNative && reverse) viewStyle = reverseMarginPaddingSides(viewStyle)
   if (gap === true) gap = 2
   const isPressable = hasPressHandler(props)
   const fallbackRef = useRef<any>(null)
@@ -154,7 +157,7 @@ function Div ({
     deferredRole
   } = useDecoratePressableProps({
     props,
-    style: viewStyle,
+    style,
     activeStyle,
     hoverStyle,
     variant,
@@ -197,7 +200,7 @@ function Div ({
   let levelModifier
   if (level) levelModifier = `shadow-${level}`
 
-  const isAnimated = hasAnimatedProperty(viewStyle) || hasAnimatedProperty(pressableStyle)
+  const isAnimated = hasAnimatedProperty(style) || hasAnimatedProperty(pressableStyle)
   const Component = isPressable
     ? (isAnimated ? AnimatedPressable : Pressable)
     : (isAnimated ? Animated.View : View)
@@ -207,7 +210,7 @@ function Div ({
       ref=rootRef
       style=[
         gap ? { gap: u(gap) } : undefined,
-        viewStyle,
+        style,
         pressableStyle
       ]
       styleName=[
@@ -455,8 +458,7 @@ function hasPressHandler (props: Record<string, any>): boolean {
   return PRESSABLE_PROPS.some(prop => props[prop])
 }
 
-function reverseMarginPaddingSides (style: StyleProp<ViewStyle>) {
-  style = StyleSheet.flatten(style)
+function reverseMarginPaddingSides (style: ViewStyle | undefined): ViewStyle | undefined {
   if (!style) return style
   const { paddingLeft, paddingRight, marginLeft, marginRight } = style
   style.marginLeft = marginRight
@@ -464,6 +466,12 @@ function reverseMarginPaddingSides (style: StyleProp<ViewStyle>) {
   style.paddingLeft = paddingRight
   style.paddingRight = paddingLeft
   return style
+}
+
+function simpleNumericHash (s: string): number {
+  let h = 0
+  for (let i = 0; i < s.length; i++) h = Math.imul(31, h) + s.charCodeAt(i) | 0
+  return h
 }
 
 function assertDeprecatedValues ({ pushed, renderTooltip }: { pushed?: any, renderTooltip?: any }) {

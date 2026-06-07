@@ -4,12 +4,11 @@
 import { type ReactNode, type RefObject } from 'react';
 import { type StyleProp, type ViewStyle, type ViewProps } from 'react-native';
 import { type UIRole } from '@startupjs-ui/core';
-import { type DivStyle } from '@startupjs-ui/span/textStyleContext';
 type AriaHasPopup = boolean | 'dialog' | 'grid' | 'listbox' | 'menu' | 'tree';
 declare const _default: import("react").ComponentType<DivProps>;
 export default _default;
 export declare const _PropsJsonSchema: {};
-export interface DivProps extends Omit<ViewProps, 'role' | 'style'> {
+export interface DivProps extends Omit<ViewProps, 'role'> {
     /** Ref to access underlying <View> or <Pressable> */
     ref?: RefObject<any>;
     /** Accessibility role. Includes RN roles plus web-only ARIA roles used by RNW. */
@@ -17,7 +16,7 @@ export interface DivProps extends Omit<ViewProps, 'role' | 'style'> {
     /** Web popup type exposed through aria-haspopup */
     'aria-haspopup'?: AriaHasPopup;
     /** Custom styles applied to the root view */
-    style?: StyleProp<DivStyle>;
+    style?: StyleProp<ViewStyle>;
     /** Content rendered inside Div */
     children?: ReactNode;
     /** Visual feedback variant @default 'opacity' */

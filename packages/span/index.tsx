@@ -1,34 +1,23 @@
-import { type ReactNode, type RefObject, useContext, useMemo } from 'react'
+import { type ReactNode, type RefObject, useContext } from 'react'
 import { StyleSheet, Text, type TextStyle, type StyleProp, type TextProps } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { pug, observer } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
 import {
   TextStyleContext,
-  getInheritedTextStyle,
-  omitInheritedTextStyle,
-  resolveSpanLineHeight,
-  type SpanStyle
+  resolveSpanLineHeight
 } from './textStyleContext'
 import './index.cssx.styl'
-
-export type {
-  DivStyle,
-  InheritedTextStyle,
-  RelativeLineHeight,
-  SpanStyle,
-  UniversalTextStyle
-} from './textStyleContext'
 
 export default observer(themed('Span', Span))
 
 export const _PropsJsonSchema = {/* SpanProps */}
 
-export interface SpanProps extends Omit<TextProps, 'style'> {
+export interface SpanProps extends TextProps {
   /** Ref to access underlying <Text> */
   ref?: RefObject<any>
   /** Custom styles applied to the root view */
-  style?: StyleProp<SpanStyle>
+  style?: StyleProp<TextStyle>
   /** Content rendered inside Span */
   children?: ReactNode
   /** bold text */
@@ -89,28 +78,22 @@ function Span ({
     ? { role: 'heading', 'aria-level': Number(tag.replace(/^h/, '')) }
     : {}
 
-  const Component = useMemo(() => {
-    return hasAnimatedProperty(StyleSheet.flatten(style)) ? Animated.Text : Text
-  }, [style])
+  style = StyleSheet.flatten(style)
 
   const inheritedTextStyle = useContext(TextStyleContext)
-  const ownTextStyle = getInheritedTextStyle(style)
-  const remainingStyle = omitInheritedTextStyle<TextStyle>(style)
-  const boundaryTextStyle = inheritedTextStyle || ownTextStyle
-    ? resolveSpanLineHeight({
+  if (inheritedTextStyle) {
+    style = {
       ...inheritedTextStyle,
-      ...ownTextStyle
-    })
-    : undefined
-
-  const textStyle = boundaryTextStyle
-    ? [boundaryTextStyle, remainingStyle]
-    : style
+      ...style
+    }
+  }
+  style = resolveSpanLineHeight(style)
+  const Component = hasAnimatedProperty(style) ? Animated.Text : Text
 
   const spanElement = pug`
     Component.root(
       ref=ref
-      style=textStyle
+      style=style
       styleName=[
         theme,
         variant,

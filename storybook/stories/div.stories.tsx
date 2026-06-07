@@ -132,7 +132,7 @@ function DivTextStyleInheritance () {
             fontSize: 20,
             fontWeight: '700',
             letterSpacing: 2,
-            lineHeight: '150%',
+            lineHeight: 1.5,
             textAlign: 'center',
             textTransform: 'uppercase',
             padding: 16,
@@ -155,7 +155,7 @@ function DivTextStyleInheritance () {
             <Span>Nested div override</Span>
           </Div>
 
-          <Span testID='span-override-owner' style={{ color: '#16a34a', fontSize: 18, lineHeight: '1.25' }}>
+          <Span testID='span-override-owner' style={{ color: '#16a34a', fontSize: 18, lineHeight: 1.25 }}>
             Span override owner
           </Span>
         </Div>

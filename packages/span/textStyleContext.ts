@@ -1,26 +1,8 @@
 import { createContext } from 'react'
-import { StyleSheet, type StyleProp, type TextStyle, type ViewStyle } from 'react-native'
-
-export type RelativeLineHeight = number | `${number}%` | `${number}`
-
-export type UniversalTextStyle = Omit<TextStyle, 'lineHeight'> & {
-  /**
-   * RN normally expects absolute numeric lineHeight.
-   *
-   * Span additionally supports:
-   *   lineHeight: 1.5    -> fontSize * 1.5
-   *   lineHeight: '1.5'  -> fontSize * 1.5
-   *   lineHeight: '150%' -> fontSize * 1.5
-   *
-   * Convention:
-   *   numbers <= 4 are treated as multipliers
-   *   numbers > 4 are treated as absolute RN lineHeight values
-   */
-  lineHeight?: TextStyle['lineHeight'] | RelativeLineHeight
-}
+import { type TextStyle } from 'react-native'
 
 export type InheritedTextStyle = Pick<
-  UniversalTextStyle,
+  TextStyle,
   | 'color'
   | 'fontFamily'
   | 'fontSize'
@@ -35,9 +17,6 @@ export type InheritedTextStyle = Pick<
   | 'textTransform'
   | 'writingDirection'
 >
-
-export type DivStyle = ViewStyle & InheritedTextStyle
-export type SpanStyle = UniversalTextStyle
 
 export const TextStyleContext = createContext<InheritedTextStyle | undefined>(undefined)
 
@@ -57,15 +36,15 @@ const inheritedTextStyleKeys = [
   'writingDirection'
 ] as const satisfies (keyof InheritedTextStyle)[]
 
-export function getInheritedTextStyle (style: unknown): InheritedTextStyle | undefined {
-  const flatStyle = StyleSheet.flatten(style as StyleProp<Record<string, unknown>>)
-  if (!flatStyle) return undefined
+export function getInheritedTextStyle (style: object | undefined): InheritedTextStyle | undefined {
+  if (!style) return undefined
 
+  const styleRecord = style as Record<string, any>
   const textStyle: Partial<InheritedTextStyle> = {}
   let hasTextStyle = false
 
   for (const key of inheritedTextStyleKeys) {
-    const value = flatStyle[key]
+    const value = styleRecord[key]
 
     if (value != null) {
       ;(textStyle as Record<string, unknown>)[key] = value
@@ -76,17 +55,15 @@ export function getInheritedTextStyle (style: unknown): InheritedTextStyle | und
   return hasTextStyle ? textStyle as InheritedTextStyle : undefined
 }
 
-export function omitInheritedTextStyle<TStyle = ViewStyle> (style: unknown): TStyle | undefined {
-  const flatStyle = StyleSheet.flatten(style as StyleProp<Record<string, unknown>>)
-  if (!flatStyle) return undefined
+export function omitInheritedTextStyle<TStyle extends object> (style: TStyle | undefined): TStyle | undefined {
+  if (!style) return undefined
 
-  const styleWithoutInheritedText = { ...flatStyle }
-
+  const styleRecord = style as Record<string, any>
   for (const key of inheritedTextStyleKeys) {
-    delete styleWithoutInheritedText[key]
+    delete styleRecord[key]
   }
 
-  return styleWithoutInheritedText as TStyle
+  return style
 }
 
 export function mergeInheritedTextStyles (
@@ -99,7 +76,9 @@ export function mergeInheritedTextStyles (
   }
 }
 
-export function resolveSpanLineHeight (style: InheritedTextStyle): InheritedTextStyle {
+export function resolveSpanLineHeight<TStyle extends TextStyle | undefined> (style: TStyle): TStyle {
+  if (!style) return style
+
   const fontSize = typeof style.fontSize === 'number'
     ? style.fontSize
     : undefined
@@ -113,34 +92,10 @@ export function resolveSpanLineHeight (style: InheritedTextStyle): InheritedText
       return {
         ...style,
         lineHeight: Math.round(fontSize * lineHeight)
-      }
+      } as TStyle
     }
 
     return style
-  }
-
-  if (typeof lineHeight === 'string') {
-    if (lineHeight.endsWith('%')) {
-      const percent = Number(lineHeight.slice(0, -1))
-
-      if (Number.isFinite(percent)) {
-        return {
-          ...style,
-          lineHeight: Math.round((fontSize * percent) / 100)
-        }
-      }
-
-      return style
-    }
-
-    const multiplier = Number(lineHeight)
-
-    if (Number.isFinite(multiplier)) {
-      return {
-        ...style,
-        lineHeight: Math.round(fontSize * multiplier)
-      }
-    }
   }
 
   return style

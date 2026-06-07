@@ -2,18 +2,16 @@
 // DO NOT MODIFY THIS FILE - IT IS AUTOMATICALLY GENERATED ON COMMITS.
 
 import { type ReactNode, type RefObject } from 'react';
-import { type StyleProp, type TextProps } from 'react-native';
-import { type SpanStyle } from './textStyleContext';
+import { type TextStyle, type StyleProp, type TextProps } from 'react-native';
 import './index.cssx.styl';
-export type { DivStyle, InheritedTextStyle, RelativeLineHeight, SpanStyle, UniversalTextStyle } from './textStyleContext';
 declare const _default: import("react").ComponentType<SpanProps>;
 export default _default;
 export declare const _PropsJsonSchema: {};
-export interface SpanProps extends Omit<TextProps, 'style'> {
+export interface SpanProps extends TextProps {
     /** Ref to access underlying <Text> */
     ref?: RefObject<any>;
     /** Custom styles applied to the root view */
-    style?: StyleProp<SpanStyle>;
+    style?: StyleProp<TextStyle>;
     /** Content rendered inside Span */
     children?: ReactNode;
     /** bold text */
