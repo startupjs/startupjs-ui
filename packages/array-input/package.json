@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/array-input",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "publishConfig": {
     "access": "public"
   },
@@ -8,10 +8,10 @@
   "types": "index.d.ts",
   "type": "module",
   "dependencies": {
-    "@startupjs-ui/button": "^0.3.0",
+    "@startupjs-ui/button": "^0.3.1",
     "@startupjs-ui/core": "^0.3.0",
-    "@startupjs-ui/div": "^0.3.0",
-    "@startupjs-ui/input": "^0.3.0"
+    "@startupjs-ui/div": "^0.3.1",
+    "@startupjs-ui/input": "^0.3.1"
   },
   "peerDependencies": {
     "react": "*",

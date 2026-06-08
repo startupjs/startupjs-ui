@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/startupjs/startupjs-ui/compare/v0.3.0...v0.3.1) (2026-06-08)
+
+
+### Features
+
+* support inherited text styles from Div, support relative lineHeight ([#32](https://github.com/startupjs/startupjs-ui/issues/32)) ([47b56ab](https://github.com/startupjs/startupjs-ui/commit/47b56abca03b1d3ef1d977309deffd95a2de709d))
+
+
+
+
+
 # [0.3.0](https://github.com/startupjs/startupjs-ui/compare/v0.2.3...v0.3.0) (2026-05-27)
 
 

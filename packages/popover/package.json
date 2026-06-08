@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/popover",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "publishConfig": {
     "access": "public"
   },
@@ -10,7 +10,7 @@
   "dependencies": {
     "@startupjs-ui/abstract-popover": "^0.3.0",
     "@startupjs-ui/core": "^0.3.0",
-    "@startupjs-ui/div": "^0.3.0"
+    "@startupjs-ui/div": "^0.3.1"
   },
   "peerDependencies": {
     "react": "*",
