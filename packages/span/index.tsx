@@ -1,8 +1,12 @@
-import { type ReactNode, type RefObject, useMemo } from 'react'
+import { type ReactNode, type RefObject, useContext } from 'react'
 import { StyleSheet, Text, type TextStyle, type StyleProp, type TextProps } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { pug, observer } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
+import {
+  TextStyleContext,
+  resolveSpanLineHeight
+} from './textStyleContext'
 import './index.cssx.styl'
 
 export default observer(themed('Span', Span))
@@ -74,11 +78,19 @@ function Span ({
     ? { role: 'heading', 'aria-level': Number(tag.replace(/^h/, '')) }
     : {}
 
-  const Component = useMemo(() => {
-    return hasAnimatedProperty(StyleSheet.flatten(style)) ? Animated.Text : Text
-  }, [style])
+  style = StyleSheet.flatten(style)
 
-  return pug`
+  const inheritedTextStyle = useContext(TextStyleContext)
+  if (inheritedTextStyle) {
+    style = {
+      ...inheritedTextStyle,
+      ...style
+    }
+  }
+  style = resolveSpanLineHeight(style)
+  const Component = hasAnimatedProperty(style) ? Animated.Text : Text
+
+  const spanElement = pug`
     Component.root(
       ref=ref
       style=style
@@ -92,6 +104,15 @@ function Span ({
       ...props
     )= children
   `
+
+  if (inheritedTextStyle) {
+    return pug`
+      TextStyleContext.Provider(value=undefined)
+        = spanElement
+    `
+  }
+
+  return spanElement
 }
 
 function hasAnimatedProperty (style: any): boolean {

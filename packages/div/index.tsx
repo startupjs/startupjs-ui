@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState, useRef, type ReactNode, type RefObject } from 'react'
+import { useContext, useLayoutEffect, useMemo, useState, useRef, type ReactNode, type RefObject } from 'react'
 import {
   View,
   Pressable,
@@ -11,6 +11,12 @@ import {
 import Animated from 'react-native-reanimated'
 import { pug, observer, u, useDidUpdate } from 'startupjs'
 import { colorToRGBA, getCssVariable, themed, type UIRole } from '@startupjs-ui/core'
+import {
+  TextStyleContext,
+  getInheritedTextStyle,
+  mergeInheritedTextStyles,
+  omitInheritedTextStyle
+} from '@startupjs-ui/span/textStyleContext'
 import { useDecorateTooltipProps } from './useTooltip'
 import STYLES from './index.cssx.styl'
 
@@ -98,7 +104,7 @@ export interface DivProps extends Omit<ViewProps, 'role'> {
 }
 
 function Div ({
-  style = [],
+  style: rawStyle = [],
   children,
   variant = 'opacity',
   row,
@@ -125,9 +131,19 @@ function Div ({
   ...props
 }: DivProps): ReactNode {
   assertDeprecatedValues({ pushed, renderTooltip })
-  style = StyleSheet.flatten(style)
+  let style = StyleSheet.flatten(rawStyle) as ViewStyle | undefined
   // on RN row-reverse switches margins and paddings sides, so we switch them back
   if (isNative && reverse) style = reverseMarginPaddingSides(style)
+
+  const inheritedTextStyle = useContext(TextStyleContext)
+  const ownTextStyle = getInheritedTextStyle(style)
+  const nextInheritedTextStyleKey = simpleNumericHash(JSON.stringify([inheritedTextStyle, ownTextStyle]))
+  const nextInheritedTextStyle = useMemo(() => {
+    if (!ownTextStyle) return undefined
+    return mergeInheritedTextStyles(inheritedTextStyle, ownTextStyle)
+  }, [nextInheritedTextStyleKey]) // eslint-disable-line react-hooks/exhaustive-deps
+  omitInheritedTextStyle(style)
+
   if (gap === true) gap = 2
   const isPressable = hasPressHandler(props)
   const fallbackRef = useRef<any>(null)
@@ -216,13 +232,19 @@ function Div ({
       ...renderProps
     )= children
   `
+  const styledDivElement = nextInheritedTextStyle
+    ? pug`
+      TextStyleContext.Provider(value=nextInheritedTextStyle)
+        = divElement
+    `
+    : divElement
 
   if (tooltipElement) {
     return pug`
-      = divElement
+      = styledDivElement
       = tooltipElement
     `
-  } else return divElement
+  } else return styledDivElement
 }
 
 function isWebOnlyRole (role: unknown): role is Exclude<UIRole, ViewProps['role']> {
@@ -436,14 +458,20 @@ function hasPressHandler (props: Record<string, any>): boolean {
   return PRESSABLE_PROPS.some(prop => props[prop])
 }
 
-function reverseMarginPaddingSides (style: StyleProp<ViewStyle>) {
-  style = StyleSheet.flatten(style)
+function reverseMarginPaddingSides (style: ViewStyle | undefined): ViewStyle | undefined {
+  if (!style) return style
   const { paddingLeft, paddingRight, marginLeft, marginRight } = style
   style.marginLeft = marginRight
   style.marginRight = marginLeft
   style.paddingLeft = paddingRight
   style.paddingRight = paddingLeft
   return style
+}
+
+function simpleNumericHash (s: string): number {
+  let h = 0
+  for (let i = 0; i < s.length; i++) h = Math.imul(31, h) + s.charCodeAt(i) | 0
+  return h
 }
 
 function assertDeprecatedValues ({ pushed, renderTooltip }: { pushed?: any, renderTooltip?: any }) {
