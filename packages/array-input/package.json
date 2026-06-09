@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/array-input",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "publishConfig": {
     "access": "public"
   },
@@ -11,7 +11,7 @@
     "@startupjs-ui/button": "^0.3.1",
     "@startupjs-ui/core": "^0.3.0",
     "@startupjs-ui/div": "^0.3.1",
-    "@startupjs-ui/input": "^0.3.1"
+    "@startupjs-ui/input": "^0.3.2"
   },
   "peerDependencies": {
     "react": "*",
