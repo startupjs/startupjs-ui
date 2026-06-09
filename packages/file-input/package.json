@@ -26,13 +26,13 @@
     "@startupjs-ui/dialogs": "^0.3.1",
     "@startupjs-ui/div": "^0.3.1",
     "busboy": "^1.6.0",
-    "expo-document-picker": ">=14.0.0",
-    "expo-image-picker": ">=17.0.0",
     "sharp": "^0.34.5"
   },
   "peerDependencies": {
     "@aws-sdk/client-s3": "*",
     "@azure/storage-blob": "*",
+    "expo-document-picker": "*",
+    "expo-image-picker": "*",
     "mongodb": "*",
     "react": "*",
     "react-native": "*",
