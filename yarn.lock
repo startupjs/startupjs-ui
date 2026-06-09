@@ -6585,12 +6585,12 @@ __metadata:
     "@startupjs-ui/dialogs": "npm:^0.3.1"
     "@startupjs-ui/div": "npm:^0.3.1"
     busboy: "npm:^1.6.0"
-    expo-document-picker: "npm:>=14.0.0"
-    expo-image-picker: "npm:>=17.0.0"
     sharp: "npm:^0.34.5"
   peerDependencies:
     "@aws-sdk/client-s3": "*"
     "@azure/storage-blob": "*"
+    expo-document-picker: "*"
+    expo-image-picker: "*"
     mongodb: "*"
     react: "*"
     react-native: "*"
@@ -12887,7 +12887,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-document-picker@npm:>=14.0.0, expo-document-picker@npm:~55.0.11":
+"expo-document-picker@npm:~55.0.11":
   version: 55.0.11
   resolution: "expo-document-picker@npm:55.0.11"
   peerDependencies:
@@ -12948,7 +12948,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-image-picker@npm:>=17.0.0, expo-image-picker@npm:~55.0.16":
+"expo-image-picker@npm:~55.0.16":
   version: 55.0.16
   resolution: "expo-image-picker@npm:55.0.16"
   dependencies:
