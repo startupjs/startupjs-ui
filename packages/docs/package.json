@@ -1,7 +1,7 @@
 {
   "name": "@startupjs-ui/docs",
   "description": "MDX documentation generator",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "publishConfig": {
     "access": "public"
   },
@@ -14,7 +14,7 @@
     "@startupjs-ui/button": "^0.3.1",
     "@startupjs-ui/core": "^0.3.0",
     "@startupjs-ui/div": "^0.3.1",
-    "@startupjs-ui/input": "^0.3.2",
+    "@startupjs-ui/input": "^0.3.3",
     "@startupjs-ui/scroll-view": "^0.3.0",
     "@startupjs-ui/span": "^0.3.1",
     "@startupjs-ui/tag": "^0.3.1",
