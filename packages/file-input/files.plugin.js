@@ -233,6 +233,20 @@ export default createPlugin({
             mimeType = 'image/jpeg'
           }
 
+          // Surface stream errors (e.g. sharp failing to decode a corrupt or
+          // forged "image/*" upload) as a 400 instead of letting an unhandled
+          // 'error' event crash the whole server process. This is essential for
+          // public/untrusted uploads, where a single garbage payload with an
+          // image mime type would otherwise take the server down. Attach to the
+          // source busboy stream and, for images, the sharp stream too — an
+          // unhandled 'error' on either is fatal.
+          const onStreamError = err => {
+            console.error('[StartupJS Files] Upload stream error:', err)
+            if (!res.headersSent) res.status(400).send('Invalid file data')
+          }
+          file.on('error', onStreamError)
+          if (stream !== file) stream.on('error', onStreamError)
+
           // Regardless of whether it's an image or not, collect the data
           stream.on('data', data => buffers.push(data))
 
