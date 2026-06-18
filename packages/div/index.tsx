@@ -1,4 +1,4 @@
-import { useContext, useLayoutEffect, useMemo, useState, useRef, type ReactNode, type RefObject } from 'react'
+import { Children, cloneElement, createElement, Fragment, isValidElement, useContext, useLayoutEffect, useMemo, useState, useRef, type ReactNode, type RefObject } from 'react'
 import {
   View,
   Pressable,
@@ -17,6 +17,7 @@ import {
   mergeInheritedTextStyles,
   omitInheritedTextStyle
 } from '@startupjs-ui/span/textStyleContext'
+import Span from '@startupjs-ui/span'
 import { useDecorateTooltipProps } from './useTooltip'
 import STYLES from './index.cssx.styl'
 
@@ -51,6 +52,13 @@ export interface DivProps extends Omit<ViewProps, 'role'> {
   style?: StyleProp<ViewStyle>
   /** Content rendered inside Div */
   children?: ReactNode
+  /** Auto-wrap bare text children. When true, runs of consecutive string/number
+   * children (including those inside arrays/fragments) are each wrapped into a
+   * single text node so they render correctly in a non-text container. @default false */
+  supportTextNodes?: boolean
+  /** How to render an auto-wrapped text run (only used with supportTextNodes).
+   * Receives the merged text; should return a text element. Defaults to <Span/>. */
+  renderTextNode?: (text: string) => ReactNode
   /** Visual feedback variant @default 'opacity' */
   variant?: 'opacity' | 'highlight'
   /** Render children in a horizontal row */
@@ -106,6 +114,8 @@ export interface DivProps extends Omit<ViewProps, 'role'> {
 function Div ({
   style: rawStyle = [],
   children,
+  supportTextNodes = false,
+  renderTextNode,
   variant = 'opacity',
   row,
   wrap,
@@ -131,6 +141,7 @@ function Div ({
   ...props
 }: DivProps): ReactNode {
   assertDeprecatedValues({ pushed, renderTooltip })
+  const renderedChildren = supportTextNodes ? wrapTextChildren(children, renderTextNode) : children
   let style = StyleSheet.flatten(rawStyle) as ViewStyle | undefined
   // on RN row-reverse switches margins and paddings sides, so we switch them back
   if (isNative && reverse) style = reverseMarginPaddingSides(style)
@@ -230,7 +241,7 @@ function Div ({
       ]
       accessible=accessible
       ...renderProps
-    )= children
+    )= renderedChildren
   `
   const styledDivElement = nextInheritedTextStyle
     ? pug`
@@ -245,6 +256,35 @@ function Div ({
       = tooltipElement
     `
   } else return styledDivElement
+}
+
+// Auto-wrap bare text so it renders in a non-text container. Each maximal run of
+// consecutive string/number children is merged into one text node (so 'a {x} b'
+// becomes one line, not three stacked nodes); element children break a run;
+// fragments are traversed inline; arrays are already flattened by React.Children.
+function wrapTextChildren (children: ReactNode, renderTextNode?: (text: string) => ReactNode): ReactNode {
+  const out: ReactNode[] = []
+  let run = ''
+  let key = 0
+  const flush = () => {
+    if (run === '') return
+    const text = run
+    run = ''
+    const node = renderTextNode ? renderTextNode(text) : createElement(Span, null, text)
+    out.push(isValidElement(node) ? cloneElement(node, { key: `__t${key++}` }) : node)
+  }
+  const walk = (nodes: ReactNode) => {
+    Children.forEach(nodes, child => {
+      if (child == null || typeof child === 'boolean') return
+      if (typeof child === 'string' || typeof child === 'number') { run += String(child); return }
+      if (isValidElement(child) && child.type === Fragment) { walk((child.props as { children?: ReactNode }).children); return }
+      flush()
+      out.push(isValidElement(child) && child.key == null ? cloneElement(child, { key: `__e${key++}` }) : child)
+    })
+  }
+  walk(children)
+  flush()
+  return out
 }
 
 function isWebOnlyRole (role: unknown): role is Exclude<UIRole, ViewProps['role']> {

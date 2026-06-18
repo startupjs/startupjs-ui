@@ -22,6 +22,10 @@ export interface SpanProps extends TextProps {
     full?: boolean;
     /** description text color */
     description?: boolean;
+    /** Omit the default root typography (font size/family/weight and base color)
+     * while still applying inherited text styles and animation handling. Useful
+     * when the surrounding stylesheet fully controls typography. @default false */
+    pure?: boolean;
     /** theme name */
     theme?: string;
     /** h1 header */

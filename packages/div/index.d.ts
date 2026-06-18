@@ -19,6 +19,13 @@ export interface DivProps extends Omit<ViewProps, 'role'> {
     style?: StyleProp<ViewStyle>;
     /** Content rendered inside Div */
     children?: ReactNode;
+    /** Auto-wrap bare text children. When true, runs of consecutive string/number
+     * children (including those inside arrays/fragments) are each wrapped into a
+     * single text node so they render correctly in a non-text container. @default false */
+    supportTextNodes?: boolean;
+    /** How to render an auto-wrapped text run (only used with supportTextNodes).
+     * Receives the merged text; should return a text element. Defaults to <Span/>. */
+    renderTextNode?: (text: string) => ReactNode;
     /** Visual feedback variant @default 'opacity' */
     variant?: 'opacity' | 'highlight';
     /** Render children in a horizontal row */
