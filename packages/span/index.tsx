@@ -28,6 +28,10 @@ export interface SpanProps extends TextProps {
   full?: boolean
   /** description text color */
   description?: boolean
+  /** Omit the default root typography (font size/family/weight and base color)
+   * while still applying inherited text styles and animation handling. Useful
+   * when the surrounding stylesheet fully controls typography. @default false */
+  pure?: boolean
   /** theme name */
   theme?: string
   /** h1 header */
@@ -55,6 +59,7 @@ function Span ({
   italic,
   full,
   description,
+  pure,
   theme,
   h1,
   h2,
@@ -91,10 +96,11 @@ function Span ({
   const Component = hasAnimatedProperty(style) ? Animated.Text : Text
 
   const spanElement = pug`
-    Component.root(
+    Component(
       ref=ref
       style=style
       styleName=[
+        pure ? undefined : 'root',
         theme,
         variant,
         tag,
