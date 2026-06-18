@@ -1,7 +1,7 @@
 {
   "name": "@startupjs-ui/docs",
   "description": "MDX documentation generator",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "publishConfig": {
     "access": "public"
   },
@@ -9,15 +9,15 @@
   "main": "index.js",
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
-    "@startupjs-ui/alert": "^0.3.1",
+    "@startupjs-ui/alert": "^0.3.4",
     "@startupjs-ui/br": "^0.3.0",
-    "@startupjs-ui/button": "^0.3.1",
+    "@startupjs-ui/button": "^0.3.4",
     "@startupjs-ui/core": "^0.3.0",
-    "@startupjs-ui/div": "^0.3.1",
-    "@startupjs-ui/input": "^0.3.3",
+    "@startupjs-ui/div": "^0.3.4",
+    "@startupjs-ui/input": "^0.3.4",
     "@startupjs-ui/scroll-view": "^0.3.0",
-    "@startupjs-ui/span": "^0.3.1",
-    "@startupjs-ui/tag": "^0.3.1",
+    "@startupjs-ui/span": "^0.3.4",
+    "@startupjs-ui/tag": "^0.3.4",
     "lodash": "^4.17.20"
   },
   "peerDependencies": {

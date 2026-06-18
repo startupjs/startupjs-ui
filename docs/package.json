@@ -1,7 +1,7 @@
 {
   "name": "docs",
   "main": "expo-router/entry",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
@@ -26,8 +26,8 @@
     "@react-navigation/bottom-tabs": "^7.4.0",
     "@react-navigation/elements": "^2.6.3",
     "@react-navigation/native": "^7.1.8",
-    "@startupjs-ui/docs": "^0.3.3",
-    "@startupjs-ui/mdx": "^0.3.1",
+    "@startupjs-ui/docs": "^0.3.4",
+    "@startupjs-ui/mdx": "^0.3.4",
     "@startupjs/router": "^0.62.0",
     "expo": "~55.0.11",
     "expo-clipboard": "~55.0.11",

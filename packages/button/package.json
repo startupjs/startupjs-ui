@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/button",
-  "version": "0.3.1",
+  "version": "0.3.4",
   "publishConfig": {
     "access": "public"
   },
@@ -9,10 +9,10 @@
   "type": "module",
   "dependencies": {
     "@startupjs-ui/core": "^0.3.0",
-    "@startupjs-ui/div": "^0.3.1",
+    "@startupjs-ui/div": "^0.3.4",
     "@startupjs-ui/icon": "^0.3.0",
     "@startupjs-ui/loader": "^0.3.0",
-    "@startupjs-ui/span": "^0.3.1"
+    "@startupjs-ui/span": "^0.3.4"
   },
   "peerDependencies": {
     "react": "*",

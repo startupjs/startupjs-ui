@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/multi-select",
-  "version": "0.3.1",
+  "version": "0.3.4",
   "publishConfig": {
     "access": "public"
   },
@@ -9,13 +9,13 @@
   "type": "module",
   "dependencies": {
     "@startupjs-ui/core": "^0.3.0",
-    "@startupjs-ui/div": "^0.3.1",
+    "@startupjs-ui/div": "^0.3.4",
     "@startupjs-ui/drawer": "^0.3.0",
     "@startupjs-ui/icon": "^0.3.0",
-    "@startupjs-ui/popover": "^0.3.1",
+    "@startupjs-ui/popover": "^0.3.4",
     "@startupjs-ui/scroll-view": "^0.3.0",
-    "@startupjs-ui/span": "^0.3.1",
-    "@startupjs-ui/tag": "^0.3.1"
+    "@startupjs-ui/span": "^0.3.4",
+    "@startupjs-ui/tag": "^0.3.4"
   },
   "peerDependencies": {
     "react": "*",

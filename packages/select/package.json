@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/select",
-  "version": "0.3.1",
+  "version": "0.3.4",
   "publishConfig": {
     "access": "public"
   },
@@ -10,9 +10,9 @@
   "dependencies": {
     "@react-native-picker/picker": "^2.11.1",
     "@startupjs-ui/core": "^0.3.0",
-    "@startupjs-ui/div": "^0.3.1",
-    "@startupjs-ui/span": "^0.3.1",
-    "@startupjs-ui/text-input": "^0.3.1"
+    "@startupjs-ui/div": "^0.3.4",
+    "@startupjs-ui/span": "^0.3.4",
+    "@startupjs-ui/text-input": "^0.3.4"
   },
   "peerDependencies": {
     "react": "*",

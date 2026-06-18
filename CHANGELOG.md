@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.4](https://github.com/startupjs/startupjs-ui/compare/v0.3.3...v0.3.4) (2026-06-18)
+
+
+### Features
+
+* **div, span:** supportTextNodes auto-wrap on Div + pure mode on Span ([#35](https://github.com/startupjs/startupjs-ui/issues/35)) ([d7bf159](https://github.com/startupjs/startupjs-ui/commit/d7bf159e73060a2531f2a1d66ec1932e9ddc3e6f))
+
+
+
+
+
 ## [0.3.3](https://github.com/startupjs/startupjs-ui/compare/v0.3.2...v0.3.3) (2026-06-13)
 
 
