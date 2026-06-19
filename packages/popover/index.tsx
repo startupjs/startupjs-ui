@@ -1,4 +1,4 @@
-import { useMemo, useRef, useCallback, useImperativeHandle, type ReactNode, type RefObject } from 'react'
+import { Children, isValidElement, useMemo, useRef, useCallback, useImperativeHandle, type ReactNode, type RefObject } from 'react'
 import { View, TouchableWithoutFeedback, type StyleProp, type ViewStyle } from 'react-native'
 import { pug, observer, useBind, $ } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
@@ -94,6 +94,17 @@ function Popover ({
     onCloseComplete?.(...args)
     onDismiss?.()
   }, [onCloseComplete, onDismiss])
+  const shouldOpenOnAnchorPress = useMemo(() => {
+    if (!openOnAnchorPress) return false
+
+    const childArray = Children.toArray(children)
+    if (childArray.length !== 1) return true
+
+    const child = childArray[0]
+    if (!isValidElement<{ onPress?: unknown }>(child)) return true
+
+    return typeof child.props.onPress !== 'function'
+  }, [children, openOnAnchorPress])
 
   const renderOverlayWrapper = (node: ReactNode): ReactNode => {
     const wrappedNode = renderWrapper ? renderWrapper(node) : node
@@ -109,7 +120,7 @@ function Popover ({
     Div(
       style=style
       ref=anchorRef
-      onPress=openOnAnchorPress ? setVisibleTrue : null
+      onPress=shouldOpenOnAnchorPress ? setVisibleTrue : null
     )= children
     AbstractPopover.attachment(
       ...props
