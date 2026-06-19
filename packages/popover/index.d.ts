@@ -21,6 +21,8 @@ export interface PopoverProps extends Omit<AbstractPopoverProps, 'anchorRef' | '
     $visible?: any;
     /** Called when visibility should change */
     onChange?: (visible: boolean) => void;
+    /** Called when popover finishes closing */
+    onDismiss?: () => void;
     /** Open the popover when the anchor wrapper is pressed @default true */
     openOnAnchorPress?: boolean;
     /** Anchor content */

@@ -3,7 +3,6 @@
 
 import React, { type ReactNode } from 'react';
 import { type StyleProp, type ViewStyle } from 'react-native';
-import './index.cssx.styl';
 type BreadcrumbsSize = 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
 declare const _default: React.ComponentType<BreadcrumbsProps>;
 export default _default;

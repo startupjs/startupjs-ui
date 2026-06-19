@@ -1,7 +1,14 @@
+// ----- CONFIG: $UI.NumberInput
+
+$this = merge({
+  buttonBorderColor: var(--color-border-main)
+}, $UI.NumberInput, true)
+
+// ----- COMPONENT
+
 $sizes = 'l' 'm' 's'
 // border color should be taken from text input config
 // because the input border and the button border overlap each other
-$inputBorderColor = var(--color-border-main)
 $padding = {
   l: 6u,
   m: 5u,
@@ -53,7 +60,7 @@ $padding = {
 
 .input-button
   position absolute
-  border-color $inputBorderColor
+  border-color $this.buttonBorderColor
 
   &.vertical
     right 0
@@ -85,3 +92,8 @@ $padding = {
       left 0
       border-top-right-radius 0
       border-bottom-right-radius 0
+
+// ----- JS EXPORTS
+
+:export
+  config: $this

@@ -6,10 +6,15 @@ import { themed } from '@startupjs-ui/core'
 import Button from '@startupjs-ui/button'
 import Div, { type DivProps } from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
-import './index.cssx.styl'
+import STYLES from './index.cssx.styl'
 
 const isWeb = Platform.OS === 'web'
 const EXTERNAL_LINK_REGEXP = /^(https?:\/\/|\/\/|mailto:)/i
+const {
+  config: {
+    color: defaultColor
+  }
+} = STYLES
 
 export default observer(themed('Link', Link))
 
@@ -45,7 +50,7 @@ function Link ({
   style,
   to,
   href,
-  color = 'default',
+  color = defaultColor,
   theme,
   display,
   push,

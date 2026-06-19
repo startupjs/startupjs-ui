@@ -6,7 +6,15 @@ import Div from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
 import Link from '@startupjs-ui/link'
 import Span from '@startupjs-ui/span'
-import './index.cssx.styl'
+import STYLES from './index.cssx.styl'
+
+const {
+  config: {
+    currentColor,
+    linkColor,
+    separatorColor
+  }
+} = STYLES
 
 type BreadcrumbsSize = 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl'
 
@@ -57,6 +65,10 @@ function Breadcrumbs ({
     )
   }
   const getColor = useColors()
+  const resolveColor = (color: string): string => getColor(color) || color
+  const resolvedCurrentColor = resolveColor(currentColor)
+  const resolvedLinkColor = resolveColor(linkColor)
+  const resolvedSeparatorColor = resolveColor(separatorColor)
 
   function renderItem ({
     icon,
@@ -90,16 +102,16 @@ function Breadcrumbs ({
         - const isLastRoute = index === routes.length - 1
         React.Fragment(key=index)
           if isLastRoute
-            = renderItem({ icon, color: getColor('text-secondary'), bold: true, children: name })
+            = renderItem({ icon, color: resolvedCurrentColor, bold: true, children: name })
           else
             Div.item(row)
               Link(
                 replace=replace
                 to=to
               )
-                = renderItem({ icon, color: getColor('text-description'), children: name })
+                = renderItem({ icon, color: resolvedLinkColor, children: name })
               if typeof separator === 'string'
-                Span.separator(styleName=[size])
+                Span.separator(style={ color: resolvedSeparatorColor } styleName=[size])
                   | &nbsp#{separator}&nbsp
               else
                 = separator

@@ -1,4 +1,4 @@
-import { useMemo, useRef, useCallback, useImperativeHandle, type ReactNode, type RefObject } from 'react'
+import { Children, isValidElement, useMemo, useRef, useCallback, useImperativeHandle, type ReactNode, type RefObject } from 'react'
 import { View, TouchableWithoutFeedback, type StyleProp, type ViewStyle } from 'react-native'
 import { pug, observer, useBind, $ } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
@@ -23,6 +23,8 @@ export interface PopoverProps extends Omit<AbstractPopoverProps, 'anchorRef' | '
   $visible?: any
   /** Called when visibility should change */
   onChange?: (visible: boolean) => void
+  /** Called when popover finishes closing */
+  onDismiss?: () => void
   /** Open the popover when the anchor wrapper is pressed @default true */
   openOnAnchorPress?: boolean
   /** Anchor content */
@@ -46,6 +48,8 @@ function Popover ({
   children,
   renderContent,
   onChange,
+  onCloseComplete,
+  onDismiss,
   openOnAnchorPress = true,
   renderWrapper,
   overlayStyle,
@@ -86,6 +90,21 @@ function Popover ({
 
   const setVisibleTrue = useCallback(() => { handleChange(true) }, [handleChange])
   const setVisibleFalse = useCallback(() => { handleChange(false) }, [handleChange])
+  const handleCloseComplete = useCallback((...args: any[]) => {
+    onCloseComplete?.(...args)
+    onDismiss?.()
+  }, [onCloseComplete, onDismiss])
+  const shouldOpenOnAnchorPress = useMemo(() => {
+    if (!openOnAnchorPress) return false
+
+    const childArray = Children.toArray(children)
+    if (childArray.length !== 1) return true
+
+    const child = childArray[0]
+    if (!isValidElement<{ onPress?: unknown }>(child)) return true
+
+    return typeof child.props.onPress !== 'function'
+  }, [children, openOnAnchorPress])
 
   const renderOverlayWrapper = (node: ReactNode): ReactNode => {
     const wrappedNode = renderWrapper ? renderWrapper(node) : node
@@ -101,7 +120,7 @@ function Popover ({
     Div(
       style=style
       ref=anchorRef
-      onPress=!isUncontrolled && openOnAnchorPress ? setVisibleTrue : null
+      onPress=shouldOpenOnAnchorPress ? setVisibleTrue : null
     )= children
     AbstractPopover.attachment(
       ...props
@@ -109,6 +128,7 @@ function Popover ({
       style=[attachmentStyle]
       anchorRef=anchorRef
       renderWrapper=renderOverlayWrapper
+      onCloseComplete=handleCloseComplete
     )= renderContent && renderContent()
   `
 }

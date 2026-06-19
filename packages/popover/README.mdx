@@ -13,7 +13,7 @@ A floating panel that appears near an anchor element when triggered. Use it to d
 
 The `visible` prop controls whether the popover is shown, and `onChange` is called when visibility should change. You can also use `$visible` for two-way data binding. Pass `children` as the anchor (the always-visible element) and `renderContent` to render the popover content. A `ref` can be used to programmatically call `open()` and `close()`.
 
-The component also supports lifecycle callbacks inherited from AbstractPopover: `onRequestOpen`, `onRequestClose`, `onOpenComplete`, and `onCloseComplete`. Use `renderWrapper` to wrap the popover node with custom markup.
+The component also supports lifecycle callbacks inherited from AbstractPopover: `onRequestOpen`, `onRequestClose`, `onOpenComplete`, and `onCloseComplete`. Use `onDismiss` when you need to react after the popover finishes closing. Use `renderWrapper` to wrap the popover node with custom markup.
 
 ```jsx
 import { Popover } from 'startupjs-ui'
