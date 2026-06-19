@@ -1,3 +1,7 @@
+$this = merge({
+  activeColor: var(--color-text-main)
+}, $UI.DropdownCaption, true)
+
 .select
   background-color var(--color-bg-main-strong)
   height 4u
@@ -14,4 +18,4 @@
   color var(--color-text-placeholder)
 
 .active
-  color var(--color-text-main)
+  color $this.activeColor

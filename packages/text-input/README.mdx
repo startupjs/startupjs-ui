@@ -3,7 +3,7 @@ import TextInput, { _PropsJsonSchema as TextInputPropsJsonSchema } from './index
 import Div from '@startupjs-ui/div'
 import Br from '@startupjs-ui/br'
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch'
-import { faTimesCircle } from '@fortawesome/free-solid-svg-icons/faTimesCircle'
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { Sandbox } from '@startupjs-ui/docs'
 import './index.mdx.cssx.styl'
 
@@ -121,6 +121,15 @@ return (
   </Div>
 )
 ```
+
+## Custom styles and theme configuration
+
+Use `style` for the wrapper, `inputStyle` for the underlying input element, `iconStyle` for the primary icon, and `secondaryIconStyle` for the secondary icon.
+
+TextInput also exposes CSSX theme configuration for app-wide visual tuning:
+
+- **$UI.TextInput.iconColor** -- default icon color. It uses `var(--color-text-secondary)` by default.
+- **$UI.TextInput.lineHeights** -- optional per-size line heights. When both `heights[size]` and `lineHeights[size]` are numeric, TextInput uses them to calculate vertical padding and multiline height.
 
 ## Number of lines
 
