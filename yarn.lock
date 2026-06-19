@@ -6212,14 +6212,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/array-input@npm:^0.3.5, @startupjs-ui/array-input@workspace:packages/array-input":
+"@startupjs-ui/array-input@npm:^0.3.6, @startupjs-ui/array-input@workspace:packages/array-input":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/array-input@workspace:packages/array-input"
   dependencies:
     "@startupjs-ui/button": "npm:^0.3.5"
     "@startupjs-ui/core": "npm:^0.3.0"
     "@startupjs-ui/div": "npm:^0.3.4"
-    "@startupjs-ui/input": "npm:^0.3.5"
+    "@startupjs-ui/input": "npm:^0.3.6"
   peerDependencies:
     react: "*"
     react-native: "*"
@@ -6227,7 +6227,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/auto-suggest@npm:^0.3.5, @startupjs-ui/auto-suggest@workspace:packages/auto-suggest":
+"@startupjs-ui/auto-suggest@npm:^0.3.6, @startupjs-ui/auto-suggest@workspace:packages/auto-suggest":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/auto-suggest@workspace:packages/auto-suggest"
   dependencies:
@@ -6236,7 +6236,7 @@ __metadata:
     "@startupjs-ui/div": "npm:^0.3.4"
     "@startupjs-ui/flat-list": "npm:^0.3.0"
     "@startupjs-ui/loader": "npm:^0.3.0"
-    "@startupjs-ui/menu": "npm:^0.3.5"
+    "@startupjs-ui/menu": "npm:^0.3.6"
     "@startupjs-ui/text-input": "npm:^0.3.5"
   peerDependencies:
     react: "*"
@@ -6287,14 +6287,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/breadcrumbs@npm:^0.3.5, @startupjs-ui/breadcrumbs@workspace:packages/breadcrumbs":
+"@startupjs-ui/breadcrumbs@npm:^0.3.6, @startupjs-ui/breadcrumbs@workspace:packages/breadcrumbs":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/breadcrumbs@workspace:packages/breadcrumbs"
   dependencies:
     "@startupjs-ui/core": "npm:^0.3.0"
     "@startupjs-ui/div": "npm:^0.3.4"
     "@startupjs-ui/icon": "npm:^0.3.5"
-    "@startupjs-ui/link": "npm:^0.3.5"
+    "@startupjs-ui/link": "npm:^0.3.6"
     "@startupjs-ui/span": "npm:^0.3.4"
   peerDependencies:
     react: "*"
@@ -6423,7 +6423,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/date-time-picker@npm:^0.3.5, @startupjs-ui/date-time-picker@workspace:packages/date-time-picker":
+"@startupjs-ui/date-time-picker@npm:^0.3.6, @startupjs-ui/date-time-picker@workspace:packages/date-time-picker":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/date-time-picker@workspace:packages/date-time-picker"
   dependencies:
@@ -6437,7 +6437,7 @@ __metadata:
     "@startupjs-ui/drawer": "npm:^0.3.0"
     "@startupjs-ui/flat-list": "npm:^0.3.0"
     "@startupjs-ui/icon": "npm:^0.3.5"
-    "@startupjs-ui/popover": "npm:^0.3.4"
+    "@startupjs-ui/popover": "npm:^0.3.6"
     "@startupjs-ui/span": "npm:^0.3.4"
     "@startupjs-ui/text-input": "npm:^0.3.5"
     moment-timezone: "npm:^0.5.31"
@@ -6492,7 +6492,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/docs@npm:^0.3.5, @startupjs-ui/docs@workspace:packages/docs":
+"@startupjs-ui/docs@npm:^0.3.6, @startupjs-ui/docs@workspace:packages/docs":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/docs@workspace:packages/docs"
   dependencies:
@@ -6502,7 +6502,7 @@ __metadata:
     "@startupjs-ui/button": "npm:^0.3.5"
     "@startupjs-ui/core": "npm:^0.3.0"
     "@startupjs-ui/div": "npm:^0.3.4"
-    "@startupjs-ui/input": "npm:^0.3.5"
+    "@startupjs-ui/input": "npm:^0.3.6"
     "@startupjs-ui/scroll-view": "npm:^0.3.0"
     "@startupjs-ui/span": "npm:^0.3.4"
     "@startupjs-ui/tag": "npm:^0.3.5"
@@ -6554,7 +6554,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/dropdown@npm:^0.3.5, @startupjs-ui/dropdown@workspace:packages/dropdown":
+"@startupjs-ui/dropdown@npm:^0.3.6, @startupjs-ui/dropdown@workspace:packages/dropdown":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/dropdown@workspace:packages/dropdown"
   dependencies:
@@ -6563,9 +6563,9 @@ __metadata:
     "@startupjs-ui/div": "npm:^0.3.4"
     "@startupjs-ui/drawer": "npm:^0.3.0"
     "@startupjs-ui/icon": "npm:^0.3.5"
-    "@startupjs-ui/link": "npm:^0.3.5"
-    "@startupjs-ui/menu": "npm:^0.3.5"
-    "@startupjs-ui/popover": "npm:^0.3.4"
+    "@startupjs-ui/link": "npm:^0.3.6"
+    "@startupjs-ui/menu": "npm:^0.3.6"
+    "@startupjs-ui/popover": "npm:^0.3.6"
     "@startupjs-ui/scroll-view": "npm:^0.3.0"
     "@startupjs-ui/span": "npm:^0.3.4"
   peerDependencies:
@@ -6617,13 +6617,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/form@npm:^0.3.5, @startupjs-ui/form@workspace:packages/form":
+"@startupjs-ui/form@npm:^0.3.6, @startupjs-ui/form@workspace:packages/form":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/form@workspace:packages/form"
   dependencies:
     "@startupjs-ui/core": "npm:^0.3.0"
-    "@startupjs-ui/input": "npm:^0.3.5"
-    "@startupjs-ui/object-input": "npm:^0.3.5"
+    "@startupjs-ui/input": "npm:^0.3.6"
+    "@startupjs-ui/object-input": "npm:^0.3.6"
     lodash: "npm:^4.17.20"
   peerDependencies:
     react: "*"
@@ -6647,28 +6647,28 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/input@npm:^0.3.5, @startupjs-ui/input@workspace:packages/input":
+"@startupjs-ui/input@npm:^0.3.6, @startupjs-ui/input@workspace:packages/input":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/input@workspace:packages/input"
   dependencies:
     "@fortawesome/free-solid-svg-icons": "npm:^7.1.0"
-    "@startupjs-ui/array-input": "npm:^0.3.5"
+    "@startupjs-ui/array-input": "npm:^0.3.6"
     "@startupjs-ui/card": "npm:^0.3.4"
     "@startupjs-ui/checkbox": "npm:^0.3.5"
     "@startupjs-ui/color-picker": "npm:^0.3.5"
     "@startupjs-ui/core": "npm:^0.3.0"
-    "@startupjs-ui/date-time-picker": "npm:^0.3.5"
+    "@startupjs-ui/date-time-picker": "npm:^0.3.6"
     "@startupjs-ui/div": "npm:^0.3.4"
     "@startupjs-ui/file-input": "npm:^0.3.5"
     "@startupjs-ui/icon": "npm:^0.3.5"
-    "@startupjs-ui/multi-select": "npm:^0.3.5"
-    "@startupjs-ui/number-input": "npm:^0.3.5"
-    "@startupjs-ui/object-input": "npm:^0.3.5"
+    "@startupjs-ui/multi-select": "npm:^0.3.6"
+    "@startupjs-ui/number-input": "npm:^0.3.6"
+    "@startupjs-ui/object-input": "npm:^0.3.6"
     "@startupjs-ui/password-input": "npm:^0.3.5"
     "@startupjs-ui/radio": "npm:^0.3.4"
     "@startupjs-ui/range-input": "npm:^0.3.4"
-    "@startupjs-ui/rank": "npm:^0.3.5"
-    "@startupjs-ui/select": "npm:^0.3.5"
+    "@startupjs-ui/rank": "npm:^0.3.6"
+    "@startupjs-ui/select": "npm:^0.3.6"
     "@startupjs-ui/span": "npm:^0.3.4"
     "@startupjs-ui/text-input": "npm:^0.3.5"
     lodash: "npm:^4.17.20"
@@ -6679,14 +6679,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/item@npm:^0.3.5, @startupjs-ui/item@workspace:packages/item":
+"@startupjs-ui/item@npm:^0.3.6, @startupjs-ui/item@workspace:packages/item":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/item@workspace:packages/item"
   dependencies:
     "@startupjs-ui/core": "npm:^0.3.0"
     "@startupjs-ui/div": "npm:^0.3.4"
     "@startupjs-ui/icon": "npm:^0.3.5"
-    "@startupjs-ui/link": "npm:^0.3.5"
+    "@startupjs-ui/link": "npm:^0.3.6"
     "@startupjs-ui/span": "npm:^0.3.4"
   peerDependencies:
     react: "*"
@@ -6707,7 +6707,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/link@npm:^0.3.5, @startupjs-ui/link@workspace:packages/link":
+"@startupjs-ui/link@npm:^0.3.6, @startupjs-ui/link@workspace:packages/link":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/link@workspace:packages/link"
   dependencies:
@@ -6734,7 +6734,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/mdx@npm:^0.3.5, @startupjs-ui/mdx@workspace:packages/mdx":
+"@startupjs-ui/mdx@npm:^0.3.6, @startupjs-ui/mdx@workspace:packages/mdx":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/mdx@workspace:packages/mdx"
   dependencies:
@@ -6746,7 +6746,7 @@ __metadata:
     "@startupjs-ui/div": "npm:^0.3.4"
     "@startupjs-ui/divider": "npm:^0.3.0"
     "@startupjs-ui/icon": "npm:^0.3.5"
-    "@startupjs-ui/link": "npm:^0.3.5"
+    "@startupjs-ui/link": "npm:^0.3.6"
     "@startupjs-ui/scroll-view": "npm:^0.3.0"
     "@startupjs-ui/span": "npm:^0.3.4"
     "@startupjs-ui/table": "npm:^0.3.4"
@@ -6759,14 +6759,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/menu@npm:^0.3.5, @startupjs-ui/menu@workspace:packages/menu":
+"@startupjs-ui/menu@npm:^0.3.6, @startupjs-ui/menu@workspace:packages/menu":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/menu@workspace:packages/menu"
   dependencies:
     "@startupjs-ui/core": "npm:^0.3.0"
     "@startupjs-ui/div": "npm:^0.3.4"
     "@startupjs-ui/icon": "npm:^0.3.5"
-    "@startupjs-ui/item": "npm:^0.3.5"
+    "@startupjs-ui/item": "npm:^0.3.6"
     "@startupjs-ui/span": "npm:^0.3.4"
   peerDependencies:
     react: "*"
@@ -6793,7 +6793,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/multi-select@npm:^0.3.5, @startupjs-ui/multi-select@workspace:packages/multi-select":
+"@startupjs-ui/multi-select@npm:^0.3.6, @startupjs-ui/multi-select@workspace:packages/multi-select":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/multi-select@workspace:packages/multi-select"
   dependencies:
@@ -6801,7 +6801,7 @@ __metadata:
     "@startupjs-ui/div": "npm:^0.3.4"
     "@startupjs-ui/drawer": "npm:^0.3.0"
     "@startupjs-ui/icon": "npm:^0.3.5"
-    "@startupjs-ui/popover": "npm:^0.3.4"
+    "@startupjs-ui/popover": "npm:^0.3.6"
     "@startupjs-ui/scroll-view": "npm:^0.3.0"
     "@startupjs-ui/span": "npm:^0.3.4"
     "@startupjs-ui/tag": "npm:^0.3.5"
@@ -6812,7 +6812,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/number-input@npm:^0.3.5, @startupjs-ui/number-input@workspace:packages/number-input":
+"@startupjs-ui/number-input@npm:^0.3.6, @startupjs-ui/number-input@workspace:packages/number-input":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/number-input@workspace:packages/number-input"
   dependencies:
@@ -6828,13 +6828,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/object-input@npm:^0.3.5, @startupjs-ui/object-input@workspace:packages/object-input":
+"@startupjs-ui/object-input@npm:^0.3.6, @startupjs-ui/object-input@workspace:packages/object-input":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/object-input@workspace:packages/object-input"
   dependencies:
     "@startupjs-ui/core": "npm:^0.3.0"
     "@startupjs-ui/div": "npm:^0.3.4"
-    "@startupjs-ui/input": "npm:^0.3.5"
+    "@startupjs-ui/input": "npm:^0.3.6"
   peerDependencies:
     react: "*"
     react-native: "*"
@@ -6870,7 +6870,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/popover@npm:^0.3.4, @startupjs-ui/popover@workspace:packages/popover":
+"@startupjs-ui/popover@npm:^0.3.6, @startupjs-ui/popover@workspace:packages/popover":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/popover@workspace:packages/popover"
   dependencies:
@@ -6939,7 +6939,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/rank@npm:^0.3.5, @startupjs-ui/rank@workspace:packages/rank":
+"@startupjs-ui/rank@npm:^0.3.6, @startupjs-ui/rank@workspace:packages/rank":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/rank@workspace:packages/rank"
   dependencies:
@@ -6947,7 +6947,7 @@ __metadata:
     "@startupjs-ui/div": "npm:^0.3.4"
     "@startupjs-ui/draggable": "npm:^0.3.0"
     "@startupjs-ui/icon": "npm:^0.3.5"
-    "@startupjs-ui/select": "npm:^0.3.5"
+    "@startupjs-ui/select": "npm:^0.3.6"
     "@startupjs-ui/span": "npm:^0.3.4"
   peerDependencies:
     react: "*"
@@ -6993,7 +6993,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/select@npm:^0.3.5, @startupjs-ui/select@workspace:packages/select":
+"@startupjs-ui/select@npm:^0.3.6, @startupjs-ui/select@workspace:packages/select":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/select@workspace:packages/select"
   dependencies:
@@ -11615,8 +11615,8 @@ __metadata:
     "@react-navigation/bottom-tabs": "npm:^7.4.0"
     "@react-navigation/elements": "npm:^2.6.3"
     "@react-navigation/native": "npm:^7.1.8"
-    "@startupjs-ui/docs": "npm:^0.3.5"
-    "@startupjs-ui/mdx": "npm:^0.3.5"
+    "@startupjs-ui/docs": "npm:^0.3.6"
+    "@startupjs-ui/mdx": "npm:^0.3.6"
     "@startupjs/router": "npm:^0.62.0"
     "@types/react": "npm:~19.2.10"
     eslint-config-expo: "npm:~55.0.0"
@@ -22423,12 +22423,12 @@ __metadata:
   dependencies:
     "@startupjs-ui/abstract-popover": "npm:^0.3.0"
     "@startupjs-ui/alert": "npm:^0.3.5"
-    "@startupjs-ui/array-input": "npm:^0.3.5"
-    "@startupjs-ui/auto-suggest": "npm:^0.3.5"
+    "@startupjs-ui/array-input": "npm:^0.3.6"
+    "@startupjs-ui/auto-suggest": "npm:^0.3.6"
     "@startupjs-ui/avatar": "npm:^0.3.4"
     "@startupjs-ui/badge": "npm:^0.3.5"
     "@startupjs-ui/br": "npm:^0.3.0"
-    "@startupjs-ui/breadcrumbs": "npm:^0.3.5"
+    "@startupjs-ui/breadcrumbs": "npm:^0.3.6"
     "@startupjs-ui/button": "npm:^0.3.5"
     "@startupjs-ui/card": "npm:^0.3.4"
     "@startupjs-ui/carousel": "npm:^0.3.5"
@@ -22437,39 +22437,39 @@ __metadata:
     "@startupjs-ui/color-picker": "npm:^0.3.5"
     "@startupjs-ui/content": "npm:^0.3.4"
     "@startupjs-ui/core": "npm:^0.3.0"
-    "@startupjs-ui/date-time-picker": "npm:^0.3.5"
+    "@startupjs-ui/date-time-picker": "npm:^0.3.6"
     "@startupjs-ui/dialogs": "npm:^0.3.5"
     "@startupjs-ui/div": "npm:^0.3.4"
     "@startupjs-ui/divider": "npm:^0.3.0"
     "@startupjs-ui/draggable": "npm:^0.3.0"
     "@startupjs-ui/drawer": "npm:^0.3.0"
     "@startupjs-ui/drawer-sidebar": "npm:^0.3.0"
-    "@startupjs-ui/dropdown": "npm:^0.3.5"
+    "@startupjs-ui/dropdown": "npm:^0.3.6"
     "@startupjs-ui/file-input": "npm:^0.3.5"
     "@startupjs-ui/flat-list": "npm:^0.3.0"
-    "@startupjs-ui/form": "npm:^0.3.5"
+    "@startupjs-ui/form": "npm:^0.3.6"
     "@startupjs-ui/icon": "npm:^0.3.5"
-    "@startupjs-ui/input": "npm:^0.3.5"
-    "@startupjs-ui/item": "npm:^0.3.5"
+    "@startupjs-ui/input": "npm:^0.3.6"
+    "@startupjs-ui/item": "npm:^0.3.6"
     "@startupjs-ui/layout": "npm:^0.3.0"
-    "@startupjs-ui/link": "npm:^0.3.5"
+    "@startupjs-ui/link": "npm:^0.3.6"
     "@startupjs-ui/loader": "npm:^0.3.0"
-    "@startupjs-ui/menu": "npm:^0.3.5"
+    "@startupjs-ui/menu": "npm:^0.3.6"
     "@startupjs-ui/modal": "npm:^0.3.5"
-    "@startupjs-ui/multi-select": "npm:^0.3.5"
-    "@startupjs-ui/number-input": "npm:^0.3.5"
-    "@startupjs-ui/object-input": "npm:^0.3.5"
+    "@startupjs-ui/multi-select": "npm:^0.3.6"
+    "@startupjs-ui/number-input": "npm:^0.3.6"
+    "@startupjs-ui/object-input": "npm:^0.3.6"
     "@startupjs-ui/pagination": "npm:^0.3.5"
     "@startupjs-ui/password-input": "npm:^0.3.5"
-    "@startupjs-ui/popover": "npm:^0.3.4"
+    "@startupjs-ui/popover": "npm:^0.3.6"
     "@startupjs-ui/portal": "npm:^0.3.0"
     "@startupjs-ui/progress": "npm:^0.3.4"
     "@startupjs-ui/radio": "npm:^0.3.4"
     "@startupjs-ui/range-input": "npm:^0.3.4"
-    "@startupjs-ui/rank": "npm:^0.3.5"
+    "@startupjs-ui/rank": "npm:^0.3.6"
     "@startupjs-ui/rating": "npm:^0.3.5"
     "@startupjs-ui/scroll-view": "npm:^0.3.0"
-    "@startupjs-ui/select": "npm:^0.3.5"
+    "@startupjs-ui/select": "npm:^0.3.6"
     "@startupjs-ui/sidebar": "npm:^0.3.4"
     "@startupjs-ui/smart-sidebar": "npm:^0.3.4"
     "@startupjs-ui/span": "npm:^0.3.4"
