@@ -89,7 +89,6 @@ export default defineConfig({
       '@fortawesome/free-solid-svg-icons/faMinus',
       '@fortawesome/free-solid-svg-icons/faPlus',
       '@fortawesome/free-solid-svg-icons/faStar',
-      '@fortawesome/free-solid-svg-icons/faTimesCircle',
       '@fortawesome/react-native-fontawesome',
       '@startupjs-ui/react-native-multi-slider',
       '@react-native-picker/picker',

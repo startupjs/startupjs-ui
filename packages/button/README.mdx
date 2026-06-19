@@ -173,6 +173,14 @@ You can fine-tune the button's appearance using style props:
 - **hoverStyle** -- custom styles applied on hover
 - **activeStyle** -- custom styles applied when pressed
 
+## Theme configuration
+
+Button also exposes CSSX theme configuration for app-wide visual tuning:
+
+- **$UI.Button.outlinedBorderColor** -- override the border color used by the `outlined` variant. By default the border uses the button color with opacity.
+- **$UI.Button.useBgColorForFlat** -- when enabled, the `flat` variant first tries `bg-${color}` before falling back to the regular color token.
+- **$UI.Button.webNativeButton** -- controls whether the web root renders with native button semantics. It is enabled by default.
+
 ## Call to Action
 
 Try to keep the variety of button combinations you use in your app to a minimum.

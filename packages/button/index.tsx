@@ -10,9 +10,18 @@ import STYLES from './index.cssx.styl'
 
 const {
   config: {
-    heights, outlinedBorderWidth, iconMargins
+    heights,
+    outlinedBorderWidth,
+    outlinedBorderColor,
+    useBgColorForFlat,
+    webNativeButton,
+    iconMargins
   }
 } = STYLES
+
+function isConfigEnabled (value: unknown): boolean {
+  return value !== false && value !== 0 && value !== '0'
+}
 
 export default observer(themed('Button', Button))
 
@@ -98,6 +107,8 @@ function Button ({
   if (!getColor(color)) console.error('Button component: Color for color property is incorrect. Use colors from Colors')
 
   const isFlat = variant === 'flat'
+  const shouldUseBgColorForFlat = isConfigEnabled(useBgColorForFlat)
+  const shouldUseWebNativeButton = isConfigEnabled(webNativeButton)
   const _color = getColor(color) as string | undefined
   const textColor = isFlat ? getFlatTextColorName() : color
   const _textColor = getColor(textColor) as string | undefined
@@ -121,11 +132,11 @@ function Button ({
 
   switch (variant) {
     case 'flat':
-      rootStyle.backgroundColor = _color
+      rootStyle.backgroundColor = (shouldUseBgColorForFlat ? getColor(`bg-${color}`) : null) || _color
       break
     case 'outlined':
       rootStyle.borderWidth = outlinedBorderWidth
-      rootStyle.borderColor = colorToRGBA(_colorString, 0.5)
+      rootStyle.borderColor = outlinedBorderColor || colorToRGBA(_colorString, 0.5)
       extraHoverStyle = { backgroundColor: colorToRGBA(_colorString, 0.05) }
       extraActiveStyle = { backgroundColor: colorToRGBA(_colorString, 0.25) }
       break
@@ -163,7 +174,7 @@ function Button ({
   return pug`
     Div.root(
       row
-      _webNativeButton
+      _webNativeButton=shouldUseWebNativeButton
       shape=shape
       style=[rootStyle, style]
       styleName=[

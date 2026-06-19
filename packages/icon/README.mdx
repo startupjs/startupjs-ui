@@ -123,6 +123,13 @@ return (
 )
 ```
 
+## Theme configuration
+
+Icon also exposes CSSX theme configuration for app-wide visual tuning:
+
+- **$UI.Icon.color** -- default icon color. It uses `var(--color-text-secondary)` by default.
+- **$UI.Icon.forceWebSize** -- when enabled, web FontAwesome icons always use the `size` prop for width and height. By default, explicit `style.width` and `style.height` can still override the size.
+
 ## Sandbox
 
 <Sandbox

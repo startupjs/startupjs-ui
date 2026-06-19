@@ -2,8 +2,16 @@ import { type ReactNode } from 'react'
 import { StyleSheet, Platform } from 'react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { pug, observer, u } from 'startupjs'
-import { Colors, themed, useColors } from '@startupjs-ui/core'
+import { themed, useColors } from '@startupjs-ui/core'
 import { customIcons } from './globalCustomIcons'
+import STYLES from './index.cssx.styl'
+
+const {
+  config: {
+    color: defaultColor,
+    forceWebSize
+  }
+} = STYLES
 
 const SIZES = {
   xs: u(1),
@@ -29,6 +37,10 @@ export interface IconProps {
   [key: string]: any
 }
 
+function isConfigEnabled (value: unknown): boolean {
+  return value !== false && value !== 0 && value !== '0'
+}
+
 function Icon ({
   style,
   icon,
@@ -42,7 +54,7 @@ function Icon ({
 
   let CustomIcon
 
-  style = StyleSheet.flatten([{ color: getColor(Colors['text-secondary']) }, style])
+  style = StyleSheet.flatten([{ color: getColor(defaultColor) || defaultColor }, style])
 
   if (typeof icon === 'function') {
     CustomIcon = icon
@@ -52,9 +64,11 @@ function Icon ({
 
   if (CustomIcon) {
     const { color: fill, width = _size, height = _size, ...iconStyle } = style
+    iconStyle.color ??= fill
     return pug`
       CustomIcon(
         style=iconStyle
+        color=fill
         width=width
         height=height
         fill=fill
@@ -64,8 +78,13 @@ function Icon ({
   }
 
   if (Platform.OS === 'web') {
-    style.width ??= _size
-    style.height ??= _size
+    if (isConfigEnabled(forceWebSize)) {
+      style.width = _size
+      style.height = _size
+    } else {
+      style.width ??= _size
+      style.height ??= _size
+    }
     style.outline ??= 'none'
     return pug`
       FontAwesomeIcon(

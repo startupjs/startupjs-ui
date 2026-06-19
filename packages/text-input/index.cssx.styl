@@ -1,6 +1,7 @@
 // ----- CONFIG: $UI.TextInput
 $this = merge({
   textColor: var(--TextInput-text-color),
+  iconColor: var(--color-text-secondary),
   borderWidth: 1,
   heights: {
     s: 2u,
@@ -16,7 +17,8 @@ $this = merge({
     s: 0.5u,
     m: 0.75u,
     l: 1u
-  }
+  },
+  lineHeights: null
 }, $UI.TextInput, true)
 
 $this.caretColor = $this.textColor

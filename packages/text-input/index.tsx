@@ -23,7 +23,10 @@ import STYLES from './index.cssx.styl'
 const {
   config: {
     caretColor,
+    iconColor,
+    borderWidth,
     heights,
+    lineHeights,
     paddings
   }
 } = STYLES
@@ -92,6 +95,9 @@ export interface UITextInputProps extends Omit<TextInputProps, 'placeholder' | '
 function TextInput ({
   ref,
   style,
+  inputStyle,
+  iconStyle,
+  secondaryIconStyle,
   placeholder,
   value = '',
   size = 'm',
@@ -174,9 +180,29 @@ function TextInput ({
     return resize || numberOfLines > 1
   }, [resize, numberOfLines])
 
-  const fullHeight = useMemo(() => {
-    return currentNumberOfLines * (heights[size] as number) + (paddings[size] as number) * 2
+  const legacySizing = useMemo(() => {
+    const inputHeight = heights[size]
+    const lineHeight = lineHeights?.[size]
+    if (typeof inputHeight !== 'number' || typeof lineHeight !== 'number') return
+
+    const inputBorderWidth = typeof borderWidth === 'number' ? borderWidth : 0
+    const verticalPadding = Math.max((inputHeight - lineHeight) / 2 - inputBorderWidth, 0)
+    const fullHeight = currentNumberOfLines * lineHeight + 2 * (verticalPadding + inputBorderWidth)
+
+    return {
+      fullHeight,
+      inputStyle: {
+        lineHeight,
+        paddingTop: verticalPadding,
+        paddingBottom: verticalPadding
+      }
+    }
   }, [currentNumberOfLines, size])
+
+  const fullHeight = useMemo(() => {
+    if (legacySizing) return legacySizing.fullHeight
+    return currentNumberOfLines * (heights[size] as number) + (paddings[size] as number) * 2
+  }, [currentNumberOfLines, legacySizing, size])
 
   function onLayoutIcon (e: any) {
     if (IS_WEB) {
@@ -187,6 +213,8 @@ function TextInput ({
 
   const inputExtraProps: Record<string, any> = {}
   if (IS_ANDROID && multiline) inputExtraProps.textAlignVertical = 'top'
+  const inputMinHeightStyle = legacySizing ? null : { minHeight: fullHeight }
+  const resolvedIconColor = getColor(iconColor) || iconColor
 
   const inputStyleName = [
     size,
@@ -206,7 +234,7 @@ function TextInput ({
   }
 
   return _renderWrapper({
-    style: [style]
+    style: legacySizing ? [{ minHeight: fullHeight }, style] : [style]
   }, pug`
     RNTextInput.input-input(
       part=['input', {
@@ -214,7 +242,7 @@ function TextInput ({
         inputIconRight: icon && iconPosition === 'right'
       }]
       ref=inputRef
-      style={ minHeight: fullHeight }
+      style=[inputMinHeightStyle, legacySizing?.inputStyle, inputStyle]
       styleName=inputStyleName
       selectionColor=caretColor
       placeholder=placeholder
@@ -241,6 +269,7 @@ function TextInput ({
           part='icon'
           icon=icon
           size=ICON_SIZES[size]
+          style=[{ color: resolvedIconColor }, iconStyle]
         )
     if secondaryIcon
       Div.input-icon(
@@ -254,6 +283,7 @@ function TextInput ({
           part='secondaryIcon'
           icon=secondaryIcon
           size=ICON_SIZES[size]
+          style=[{ color: resolvedIconColor }, secondaryIconStyle]
         )
   `)
 }
