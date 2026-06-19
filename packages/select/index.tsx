@@ -4,6 +4,18 @@ import TextInput, { type UITextInputProps } from '@startupjs-ui/text-input'
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons/faAngleDown'
 import Wrapper from './Wrapper'
 import { getLabelFromValue, type SelectOption } from './Wrapper/helpers'
+import STYLES from './index.cssx.styl'
+
+const {
+  config: {
+    emptyValueLabel: defaultEmptyValueLabel,
+    multiline: defaultMultiline
+  }
+} = STYLES
+
+function isConfigEnabled (value: unknown): boolean {
+  return value !== false && value !== 0 && value !== '0'
+}
 
 export default observer(Select)
 
@@ -56,8 +68,12 @@ function Select ({
   'aria-required': ariaRequired,
   onChange,
   ref,
+  multiline,
   ...props
 }: SelectProps): ReactNode {
+  const resolvedEmptyValueLabel = emptyValueLabel ?? defaultEmptyValueLabel ?? undefined
+  const resolvedMultiline = multiline ?? isConfigEnabled(defaultMultiline)
+
   function renderWrapper (
     { style }: { style?: any },
     children: ReactNode
@@ -70,7 +86,7 @@ function Select ({
         value=value
         onChange=onChange
         showEmptyValue=showEmptyValue
-        emptyValueLabel=emptyValueLabel
+        emptyValueLabel=resolvedEmptyValueLabel
         testID=testID
         aria-label=ariaLabel
         id=id
@@ -88,12 +104,13 @@ function Select ({
     //- Add onKeyPress to 'keyDown' key that opens select dropdown
     TextInput(
       ref=ref
-      value=getLabelFromValue(value, options, emptyValueLabel)
+      value=getLabelFromValue(value, options, resolvedEmptyValueLabel)
       disabled=disabled
       icon=faAngleDown
       iconPosition='right'
       _renderWrapper=renderWrapper
       editable=false /* HACK: Fixes cursor visibility when focusing on Select because we're focusing on TextInput */
+      multiline=resolvedMultiline
       ...props
     )
   `

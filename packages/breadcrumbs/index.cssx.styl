@@ -1,3 +1,13 @@
+// ----- CONFIG: $UI.Breadcrumbs
+
+$this = merge({
+  currentColor: 'text-secondary',
+  linkColor: 'text-description',
+  separatorColor: 'text-description'
+}, $UI.Breadcrumbs, true)
+
+// ----- COMPONENT
+
 _iconMargin = 0.5u
 
 .iconWrapper
@@ -51,3 +61,8 @@ _iconMargin = 0.5u
 
   &.xxl
     font(h4)
+
+// ----- JS EXPORTS
+
+:export
+  config: $this
