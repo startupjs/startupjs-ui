@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/password-input",
-  "version": "0.3.5",
+  "version": "0.3.7",
   "publishConfig": {
     "access": "public"
   },
@@ -9,7 +9,7 @@
   "type": "module",
   "dependencies": {
     "@startupjs-ui/core": "^0.3.0",
-    "@startupjs-ui/text-input": "^0.3.5"
+    "@startupjs-ui/text-input": "^0.3.7"
   },
   "peerDependencies": {
     "react": "*",

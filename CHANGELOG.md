@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.7](https://github.com/startupjs/startupjs-ui/compare/v0.3.6...v0.3.7) (2026-06-20)
+
+
+### Bug Fixes
+
+* **div:** support row alignment values ([#38](https://github.com/startupjs/startupjs-ui/issues/38)) ([cc9f405](https://github.com/startupjs/startupjs-ui/commit/cc9f40539f3c8c4fb2a26fa71d5cdc847cd945c5))
+
+
+
+
+
 ## [0.3.6](https://github.com/startupjs/startupjs-ui/compare/v0.3.5...v0.3.6) (2026-06-19)
 
 **Note:** Version bump only for package startupjs-ui

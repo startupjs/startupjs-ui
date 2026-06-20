@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/breadcrumbs",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "publishConfig": {
     "access": "public"
   },
@@ -9,9 +9,9 @@
   "type": "module",
   "dependencies": {
     "@startupjs-ui/core": "^0.3.0",
-    "@startupjs-ui/div": "^0.3.4",
+    "@startupjs-ui/div": "^0.3.7",
     "@startupjs-ui/icon": "^0.3.5",
-    "@startupjs-ui/link": "^0.3.6",
+    "@startupjs-ui/link": "^0.3.7",
     "@startupjs-ui/span": "^0.3.4"
   },
   "peerDependencies": {
