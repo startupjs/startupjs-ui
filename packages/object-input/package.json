@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/object-input",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "publishConfig": {
     "access": "public"
   },
@@ -10,7 +10,7 @@
   "dependencies": {
     "@startupjs-ui/core": "^0.3.0",
     "@startupjs-ui/div": "^0.3.7",
-    "@startupjs-ui/input": "^0.3.7"
+    "@startupjs-ui/input": "^0.3.8"
   },
   "peerDependencies": {
     "react": "*",
