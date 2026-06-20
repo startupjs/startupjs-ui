@@ -100,6 +100,7 @@
     "./Palette": "./exports/Palette.tsx",
     "./palette": "./exports/_palette.tsx",
     "./Colors": "./exports/Colors.tsx",
+    "./u": "./exports/u.tsx",
     "./themed": "./exports/themed.tsx",
     "./ThemeProvider": "./exports/ThemeProvider.tsx",
     "./ThemeContext": "./exports/ThemeContext.tsx",

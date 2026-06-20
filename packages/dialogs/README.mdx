@@ -71,10 +71,11 @@ return pug`
 
 Asks the user to confirm or cancel an action. The dialog shows `Cancel` and `OK` buttons. Returns `true` if the user clicks `OK`, or `false` if they click `Cancel`.
 
-You can pass either a plain string or an options object with `title` and `message`.
+You can pass either a plain string or an options object with `title`, `message`,
+`cancelLabel`, and `confirmLabel`.
 
 ```js
-const result = await confirm(message | { title?, message })
+const result = await confirm(message | { title?, message, cancelLabel?, confirmLabel? })
 ```
 
 ```jsx example
@@ -140,7 +141,7 @@ return pug`
 
 <Sandbox
   Component={ConfirmSandbox}
-  props={{ title: 'Confirm', message: 'Press a button' }}
+  props={{ title: 'Confirm', message: 'Press a button', cancelLabel: 'Cancel', confirmLabel: 'OK' }}
   propsJsonSchema={ConfirmOptionsPropsJsonSchema}
 />
 

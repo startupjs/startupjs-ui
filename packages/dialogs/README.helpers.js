@@ -39,11 +39,11 @@ export function AlertSandbox ({ title, message }) {
   `
 }
 
-export function ConfirmSandbox ({ title, message }) {
+export function ConfirmSandbox ({ title, message, cancelLabel, confirmLabel }) {
   const [pressedButtonText, setPressedButtonText] = useState()
 
   async function onPress () {
-    const isConfirmed = await confirm({ title, message })
+    const isConfirmed = await confirm({ title, message, cancelLabel, confirmLabel })
     setPressedButtonText(isConfirmed ? 'OK' : 'Cancel')
   }
 
