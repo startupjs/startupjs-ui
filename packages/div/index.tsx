@@ -67,10 +67,10 @@ export interface DivProps extends Omit<ViewProps, 'role'> {
   wrap?: boolean
   /** Reverse children order for row layouts */
   reverse?: boolean
-  /** Horizontal alignment when using row/column */
-  align?: 'left' | 'center' | 'right'
-  /** Vertical alignment when using row/column */
-  vAlign?: 'top' | 'center' | 'bottom'
+  /** Horizontal alignment when using row/column. Row also supports Row-compatible distribution values. */
+  align?: 'left' | 'center' | 'right' | 'around' | 'between'
+  /** Vertical alignment when using row/column. Row also supports Row-compatible cross-axis values. */
+  vAlign?: 'top' | 'center' | 'bottom' | 'stretch' | 'start' | 'end'
   /** Spacing between children (true maps to default gap) */
   gap?: boolean | number
   /** Enable press feedback styles (hover and active states) @default true */
