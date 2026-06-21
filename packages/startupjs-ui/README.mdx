@@ -11,7 +11,7 @@ import Form from 'startupjs-ui/Form'
 
 ## UiProvider
 
-UiProvider wires up theming and shared UI infrastructure (CSS variables, portal, toasts, dialogs). It is plugged in automatically as a plugin into `StartupjsProvider`, so the only thing you need at the root of your app is:
+UiProvider wires up CSSX theming and shared UI infrastructure (portal, toasts, dialogs). It is plugged in automatically as a plugin into `StartupjsProvider`, so the only thing you need at the root of your app is:
 
 ```jsx
 import { StartupjsProvider } from 'startupjs'
@@ -26,39 +26,37 @@ export default function RootLayout () {
 }
 ```
 
-You can pass UiProvider options via `StartupjsProvider` props:
+You can pass CSSX theme overrides through `StartupjsProvider style`:
 
 ```jsx
-import styleOverrides from './style.cssx.styl'
+import styleOverrides from './style.cssx.css'
 
 <StartupjsProvider
   style={styleOverrides}
-  palette={palette}
-  colors={colors}
-  componentColors={componentColors}
   routerPortal
 >
   <Stack />
 </StartupjsProvider>
 ```
 
-```styl
-// style.cssx.styl
+```css
+/* style.cssx.css */
 
-:root
-  --color-primary #0000ff
-  --color-error #ff0000
+:root {
+  --color-primary: #0000ff;
+  --color-error: #ff0000;
+}
 
-.Button
-  border-radius 12px
-  &:part(hover)
-    background-color #0000cc
+Button {
+  border-radius: 12px;
+}
+
+Button:part(hover) {
+  background-color: #0000cc;
+}
 ```
 
 ### Options
 
-- `style` -- CSSX style overrides for UI components. You can also override static CSS variables by specifying them inside the `:root` section of `style`.
-- `palette` -- theme palette overrides.
-- `colors` -- theme color overrides.
-- `componentColors` -- component-level color overrides.
+- `style` -- CSSX style overrides for UI components. Use `:root` for theme variables, utility classes for shared styles, and component tag selectors such as `Button` plus `:part()` for component defaults.
 - `routerPortal` -- when `true`, mounts an additional `Portal.Provider` inside the router tree. Use it when portal content can render router-aware components such as links or navigation actions.

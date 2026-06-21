@@ -14,7 +14,7 @@ import {
   type TextInputProps
 } from 'react-native'
 import { pug, observer, useIsomorphicLayoutEffect } from 'startupjs'
-import { themed, useColors } from '@startupjs-ui/core'
+import { themed, useThemeColor } from '@startupjs-ui/core'
 import Div from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
 import Span from '@startupjs-ui/span'
@@ -121,7 +121,8 @@ function TextInput ({
   const fallbackRef = useRef<any>(null)
   const inputRef = ref ?? fallbackRef
 
-  const getColor = useColors()
+  const resolvedIconColor = useThemeColor(iconColor) || iconColor
+  const placeholderTextColor = useThemeColor('text-placeholder')
 
   function handleFocus (...args: any[]) {
     onFocus && onFocus(...args)
@@ -214,8 +215,6 @@ function TextInput ({
   const inputExtraProps: Record<string, any> = {}
   if (IS_ANDROID && multiline) inputExtraProps.textAlignVertical = 'top'
   const inputMinHeightStyle = legacySizing ? null : { minHeight: fullHeight }
-  const resolvedIconColor = getColor(iconColor) || iconColor
-
   const inputStyleName = [
     size,
     {
@@ -246,7 +245,7 @@ function TextInput ({
       styleName=inputStyleName
       selectionColor=caretColor
       placeholder=placeholder
-      placeholderTextColor=getColor('text-placeholder')
+      placeholderTextColor=placeholderTextColor
       value=value
       disabled=IS_WEB ? disabled : undefined
       editable=IS_WEB ? undefined : !disabled

@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
 import { StyleSheet, type GestureResponderEvent, type StyleProp, type TextStyle, type ViewStyle } from 'react-native'
 import { pug, observer } from 'startupjs'
-import { Colors, colorToRGBA, themed, useColors } from '@startupjs-ui/core'
+import { colorToRGBA, themed, useThemeColor } from '@startupjs-ui/core'
 import Div, { type DivProps } from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
 import Span from '@startupjs-ui/span'
@@ -57,7 +57,7 @@ function Tag ({
   style,
   textStyle,
   children,
-  color = Colors.primary,
+  color = 'primary',
   variant = 'flat',
   size = 'm',
   icon,
@@ -73,31 +73,29 @@ function Tag ({
   shape = 'circle',
   ...props
 }: TagProps): ReactNode {
-  const getColor = useColors()
+  const resolvedColor = useThemeColor(color)
+  const colorText = useThemeColor(`text-on-${color}`)
+  const fallbackText = useThemeColor('text-on-color')
+  const flatTextColor = colorText ?? fallbackText
 
-  if (!getColor(color)) {
-    console.error(
-      'Tag component: Color for color property is incorrect. ' +
-      'Use colors from Colors'
-    )
-  }
+  if (!resolvedColor) console.error(`Tag component: Unknown color token "${color}"`)
 
   const isFlat = variant === 'flat'
-  const _color = getColor(color) ?? color
+  const _color = resolvedColor ?? color
   const rootStyle: StyleProp<ViewStyle> = {}
   let extraHoverStyle
   let extraActiveStyle
 
   textStyle = StyleSheet.flatten([
-    { color: isFlat ? getFlatTextColor() : _color },
+    { color: isFlat ? flatTextColor : _color },
     textStyle
   ]) as StyleProp<TextStyle>
   iconStyle = StyleSheet.flatten([
-    { color: isFlat ? getFlatTextColor() : _color },
+    { color: isFlat ? flatTextColor : _color },
     iconStyle
   ]) as StyleProp<TextStyle>
   secondaryIconStyle = StyleSheet.flatten([
-    { color: isFlat ? getFlatTextColor() : _color },
+    { color: isFlat ? flatTextColor : _color },
     secondaryIconStyle
   ]) as StyleProp<TextStyle>
 
@@ -116,10 +114,6 @@ function Tag ({
       extraHoverStyle = { backgroundColor: colorToRGBA(_color, 0.05) }
       extraActiveStyle = { backgroundColor: colorToRGBA(_color, 0.25) }
       break
-  }
-
-  function getFlatTextColor () {
-    return getColor(`text-on-${color}`) ?? getColor('text-on-color')
   }
 
   return pug`

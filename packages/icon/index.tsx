@@ -2,7 +2,7 @@ import { type ReactNode } from 'react'
 import { StyleSheet, Platform } from 'react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { pug, observer, u } from 'startupjs'
-import { themed, useColors } from '@startupjs-ui/core'
+import { themed, useThemeColor } from '@startupjs-ui/core'
 import { customIcons } from './globalCustomIcons'
 import STYLES from './index.cssx.styl'
 
@@ -47,14 +47,14 @@ function Icon ({
   size = 'm',
   ...props
 }: IconProps): ReactNode {
-  const getColor = useColors()
   const _size = typeof size === 'string' ? SIZES[size] : size
+  const color = useThemeColor(defaultColor) || defaultColor
 
   if (!icon) return null
 
   let CustomIcon
 
-  style = StyleSheet.flatten([{ color: getColor(defaultColor) || defaultColor }, style])
+  style = StyleSheet.flatten([{ color }, style])
 
   if (typeof icon === 'function') {
     CustomIcon = icon

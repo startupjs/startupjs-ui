@@ -1,7 +1,7 @@
 import { useContext, type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
 import { pug, observer } from 'startupjs'
-import { themed, useColors } from '@startupjs-ui/core'
+import { themed, useThemeColor } from '@startupjs-ui/core'
 import Div from '@startupjs-ui/div'
 import Icon, { type IconProps } from '@startupjs-ui/icon'
 import Item, { type ItemProps } from '@startupjs-ui/item'
@@ -54,21 +54,23 @@ function MenuItem ({
   ...props
 }: MenuItemProps): ReactNode {
   const context = useContext(MenuContext)
-  const getColor = useColors()
 
   // TODO
   // we should think about a better api
   // and remove color, activeColor, activeBorder props
   let color: string | undefined = props.color ?? context.color
-  color = getColor(color) ?? color
+  color = useThemeColor(color) ?? color
   let activeColor = props.activeColor ?? context.activeColor
-  activeColor = getColor(activeColor) ?? activeColor
+  activeColor = useThemeColor(activeColor) ?? activeColor
+  const textPrimaryColor = useThemeColor('text-primary')
+  const textMainColor = useThemeColor('text-main')
+  const borderPrimaryColor = useThemeColor('border-primary')
   const activeBorder = props.activeBorder ?? context.activeBorder ?? 'none'
   const iconPosition = props.iconPosition ?? context.iconPosition ?? 'left'
 
   // TODO: prevent click if already active (for link and for div)
-  color = active ? (activeColor ?? getColor('text-primary')) : (color ?? getColor('text-main'))
-  const borderStyle: StyleProp<ViewStyle> = { backgroundColor: activeColor ?? getColor('border-primary') }
+  color = active ? (activeColor ?? textPrimaryColor) : (color ?? textMainColor)
+  const borderStyle: StyleProp<ViewStyle> = { backgroundColor: activeColor ?? borderPrimaryColor }
 
   const optionLabel = ariaLabel ??
     (typeof children === 'string' || typeof children === 'number' ? String(children) : undefined)

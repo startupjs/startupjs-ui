@@ -1,10 +1,10 @@
-import { variables as singletonVariables, defaultVariables } from 'startupjs'
+import { getCssVariable as getCssxVariable } from 'startupjs'
 
 export default function getCssVariable (cssVarName, { convertToString = true } = {}) {
   if (!/^--/.test(cssVarName)) throw Error('[getCssVariable]: Incorrect name format - must begin with --')
 
-  const colorInstance = singletonVariables[cssVarName] || defaultVariables[cssVarName]
-  if (!colorInstance) return
+  const value = getCssxVariable(cssVarName)
+  if (value == null) return
 
-  return convertToString ? colorInstance.toString() : colorInstance
+  return convertToString ? String(value) : value
 }

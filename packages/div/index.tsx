@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { pug, observer, u, useDidUpdate } from 'startupjs'
-import { colorToRGBA, getCssVariable, themed, type UIRole } from '@startupjs-ui/core'
+import { colorToRGBA, themed, useThemeColor, type UIRole } from '@startupjs-ui/core'
 import {
   TextStyleContext,
   getInheritedTextStyle,
@@ -159,6 +159,8 @@ function Div ({
   const isPressable = hasPressHandler(props)
   const fallbackRef = useRef<any>(null)
   const rootRef = ref ?? fallbackRef
+  const defaultHoverBg = useThemeColor('--Div-hoverBg')
+  const defaultActiveBg = useThemeColor('--Div-activeBg')
 
   let pressableStyle: StyleProp<ViewStyle> = {}
   let deferredRole: string | undefined
@@ -175,7 +177,9 @@ function Div ({
     isPressable,
     disabled,
     feedback,
-    webNativeButton: _webNativeButton
+    webNativeButton: _webNativeButton,
+    defaultHoverBg,
+    defaultActiveBg
   }))
 
   ;({
@@ -370,7 +374,9 @@ function useDecoratePressableProps ({
   isPressable,
   disabled,
   feedback,
-  webNativeButton
+  webNativeButton,
+  defaultHoverBg,
+  defaultActiveBg
 }: {
   props: Record<string, any>
   style: StyleProp<ViewStyle>
@@ -381,6 +387,8 @@ function useDecoratePressableProps ({
   disabled?: boolean
   feedback?: boolean
   webNativeButton?: boolean
+  defaultHoverBg?: string
+  defaultActiveBg?: string
 }): {
     props: Record<string, any>
     pressableStyle?: StyleProp<ViewStyle>
@@ -442,9 +450,9 @@ function useDecoratePressableProps ({
     // hover or active state styles
     // active state takes precedence over hover state
     if (active) {
-      pressableStyle = activeStyle ?? getDefaultStyle(style, 'active', variant)
+      pressableStyle = activeStyle ?? getDefaultStyle(style, 'active', variant, defaultActiveBg)
     } else if (hover) {
-      pressableStyle = hoverStyle ?? getDefaultStyle(style, 'hover', variant)
+      pressableStyle = hoverStyle ?? getDefaultStyle(style, 'hover', variant, defaultHoverBg)
     }
   }
 
@@ -464,7 +472,8 @@ function useDecoratePressableProps ({
 function getDefaultStyle (
   style: StyleProp<ViewStyle>,
   type: 'hover' | 'active',
-  variant?: 'opacity' | 'highlight'
+  variant?: 'opacity' | 'highlight',
+  fallbackBackgroundColor?: string
 ): StyleProp<ViewStyle> | undefined {
   if (variant === 'opacity') {
     if (type === 'hover') return { opacity: defaultHoverOpacity }
@@ -479,7 +488,7 @@ function getDefaultStyle (
         return { backgroundColor: colorToRGBA(backgroundColor as string, defaultHoverOpacity) }
       } else {
         // If no color exists, we treat it as a light background and just dim it a bit
-        return { backgroundColor: getCssVariable('--Div-hoverBg') as string | undefined }
+        return { backgroundColor: fallbackBackgroundColor }
       }
     }
 
@@ -488,7 +497,7 @@ function getDefaultStyle (
         return { backgroundColor: colorToRGBA(backgroundColor as string, defaultActiveOpacity) }
       } else {
         // If no color exists, we treat it as a light background and just dim it a bit
-        return { backgroundColor: getCssVariable('--Div-activeBg') as string | undefined }
+        return { backgroundColor: fallbackBackgroundColor }
       }
     }
   }

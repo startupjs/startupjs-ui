@@ -1,7 +1,7 @@
 import { Children, useState, type ReactNode } from 'react'
 import { StyleSheet, type GestureResponderEvent, type StyleProp, type TextStyle, type ViewStyle } from 'react-native'
 import { pug, observer, useIsMountedRef } from 'startupjs'
-import { Colors, colorToRGBA, themed, useColors } from '@startupjs-ui/core'
+import { colorToRGBA, themed, useThemeColor } from '@startupjs-ui/core'
 import Div from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
 import Loader from '@startupjs-ui/loader'
@@ -65,7 +65,7 @@ function Button ({
   iconStyle,
   textStyle,
   children,
-  color = Colors.secondary,
+  color = 'secondary',
   variant = 'outlined',
   size = 'm',
   shape = 'rounded',
@@ -79,11 +79,13 @@ function Button ({
 }: ButtonProps): ReactNode {
   const isMountedRef = useIsMountedRef()
   const [asyncActive, setAsyncActive] = useState(false)
-  const getColor = useColors()
-
-  function getFlatTextColorName () {
-    return getColor(`text-on-${color}`) ? `text-on-${color}` : 'text-on-color'
-  }
+  const isFlat = variant === 'flat'
+  const _color = useThemeColor(color)
+  const _flatBgColor = useThemeColor(`bg-${color}`)
+  const _flatTextColor = useThemeColor(`text-on-${color}`)
+  const _textOnColor = useThemeColor('text-on-color')
+  const textColor = isFlat && _flatTextColor ? `text-on-${color}` : isFlat ? 'text-on-color' : color
+  const _textColor = isFlat ? (_flatTextColor ?? _textOnColor) : _color
 
   async function _onPress (event: GestureResponderEvent) {
     if (!onPress) return
@@ -104,14 +106,10 @@ function Button ({
     }
   }
 
-  if (!getColor(color)) console.error('Button component: Color for color property is incorrect. Use colors from Colors')
+  if (!_color) console.error(`Button component: Unknown color token "${color}"`)
 
-  const isFlat = variant === 'flat'
   const shouldUseBgColorForFlat = isConfigEnabled(useBgColorForFlat)
   const shouldUseWebNativeButton = isConfigEnabled(webNativeButton)
-  const _color = getColor(color) as string | undefined
-  const textColor = isFlat ? getFlatTextColorName() : color
-  const _textColor = getColor(textColor) as string | undefined
   const _colorString = _color ?? ''
   const hasChildren = Children.count(children)
   const height = heights[size] as number
@@ -132,7 +130,7 @@ function Button ({
 
   switch (variant) {
     case 'flat':
-      rootStyle.backgroundColor = (shouldUseBgColorForFlat ? getColor(`bg-${color}`) : null) || _color
+      rootStyle.backgroundColor = (shouldUseBgColorForFlat ? _flatBgColor : null) || _color
       break
     case 'outlined':
       rootStyle.borderWidth = outlinedBorderWidth

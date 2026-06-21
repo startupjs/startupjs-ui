@@ -96,12 +96,10 @@ export { default as User } from '@startupjs-ui/user'
 // theming
 export {
   colorToRGBA,
-  CssVariables,
-  palette,
-  generateColors,
   getCssVariable,
-  Palette,
-  Colors,
+  getThemeColor,
+  getThemeColorVariableName,
+  useThemeColor,
   u,
   themed,
   ThemeProvider,
@@ -109,7 +107,7 @@ export {
 } from '@startupjs-ui/core'
 
 // hooks
-export { useMedia, useColors } from '@startupjs-ui/core'
+export { useMedia } from '@startupjs-ui/core'
 export { useFormFields, useFormFields$, useValidate } from '@startupjs-ui/form'
 
 // UiProvider

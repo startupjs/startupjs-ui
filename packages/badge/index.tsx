@@ -1,7 +1,7 @@
 import { useMemo, useState, type ReactNode } from 'react'
 import { StyleSheet, type StyleProp, type ViewStyle } from 'react-native'
 import { pug, observer } from 'startupjs'
-import { Colors, themed, useColors } from '@startupjs-ui/core'
+import { themed, useThemeColor } from '@startupjs-ui/core'
 import Div from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
 import Span from '@startupjs-ui/span'
@@ -46,7 +46,7 @@ function Badge ({
   style,
   badgeStyle,
   children,
-  color = Colors.primary,
+  color = 'primary',
   label,
   icon,
   position = 'top',
@@ -56,14 +56,15 @@ function Badge ({
   testID
 }: BadgeProps): ReactNode {
   const [right, setRight] = useState(0)
-  const getColor = useColors()
+  const backgroundColor = useThemeColor(color)
+  const colorText = useThemeColor(`text-on-${color}`)
+  const fallbackText = useThemeColor('text-on-color')
+  const textAndIconColor = colorText ?? fallbackText
 
   badgeStyle = StyleSheet.flatten([
-    { right, backgroundColor: getColor(color) },
+    { right, backgroundColor },
     badgeStyle
   ]) as StyleProp<ViewStyle>
-
-  const textAndIconColor = getColor(`text-on-${color}`) ?? getColor('text-on-color')
 
   const hasLabel = useMemo(() => {
     return variant === 'default'

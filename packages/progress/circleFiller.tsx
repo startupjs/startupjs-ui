@@ -2,7 +2,7 @@ import { useState, type ReactNode } from 'react'
 import { View, type StyleProp, type ViewStyle } from 'react-native'
 import Svg, { Circle } from 'react-native-svg'
 import { pug, observer, u } from 'startupjs'
-import { themed, getCssVariable } from '@startupjs-ui/core'
+import { themed, useThemeColor } from '@startupjs-ui/core'
 import STYLE from './index.cssx.styl'
 
 const { config: { filler: { backgroundColor, color } } } = STYLE
@@ -13,10 +13,9 @@ interface CircleFillerProps {
   width?: number
 }
 
-function resolveCssVarString (value: string) {
+function getCssVarName (value: string) {
   const match = String(value || '').match(/^var\((--[^)]+)\)$/)
-  if (!match) return value
-  return getCssVariable(match[1], { convertToString: true }) ?? value
+  return match?.[1]
 }
 
 function CircleFiller ({
@@ -25,6 +24,10 @@ function CircleFiller ({
   width = u(0.5)
 }: CircleFillerProps): ReactNode {
   const [layoutSize, setLayoutSize] = useState(0)
+  const trackColorVar = getCssVarName(backgroundColor)
+  const valueColorVar = getCssVarName(color)
+  const resolvedTrackColor = useThemeColor(trackColorVar)
+  const resolvedValueColor = useThemeColor(valueColorVar)
 
   const normalizedValue = Math.max(0, Math.min(100, value))
   const diameter = layoutSize > 0 ? layoutSize : u(5)
@@ -33,8 +36,8 @@ function CircleFiller ({
   const circumference = 2 * Math.PI * radius
   const strokeDashoffset = circumference * (1 - normalizedValue / 100)
 
-  const trackColor = resolveCssVarString(backgroundColor)
-  const valueColor = resolveCssVarString(color)
+  const trackColor = resolvedTrackColor ?? backgroundColor
+  const valueColor = resolvedValueColor ?? color
 
   return pug`
     View(

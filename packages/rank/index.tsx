@@ -1,7 +1,7 @@
 import { useMemo, type ReactNode } from 'react'
 import { StyleSheet, type StyleProp, type ViewStyle } from 'react-native'
 import { pug, observer, $, cssx } from 'startupjs'
-import { themed, useColors } from '@startupjs-ui/core'
+import { themed, useThemeColor } from '@startupjs-ui/core'
 import { DragDropProvider, Draggable, Droppable } from '@startupjs-ui/draggable'
 import Div from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
@@ -75,7 +75,9 @@ const RankInput = observer(function RankInput ({
   const $width: any = $()
   const dropId = useMemo(() => $.id(), [])
 
-  const getColor = useColors()
+  const bgMainSubtle = useThemeColor('bg-main-subtle')
+  const bgMainStrong = useThemeColor('bg-main-strong')
+  const borderMain = useThemeColor('border-main')
 
   const selectOptions = useMemo(() => {
     return value.map((_o, i) => ({ label: i + 1, value: i }))
@@ -105,9 +107,9 @@ const RankInput = observer(function RankInput ({
 
     // HACK: Draggable component has some visual bugs if styles are not passed
     // through style object
-    const extraStyle: any = disabled ? { backgroundColor: getColor('bg-main-subtle') } : CURSOR_STYLE
+    const extraStyle: any = disabled ? { backgroundColor: bgMainSubtle } : CURSOR_STYLE
     const itemStyle: any = [
-      { ...DRAGGABLE_STYLE, backgroundColor: getColor('bg-main-strong'), borderColor: getColor('border-main') },
+      { ...DRAGGABLE_STYLE, backgroundColor: bgMainStrong, borderColor: borderMain },
       { width: $width.get() },
       extraStyle
     ]

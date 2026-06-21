@@ -1,7 +1,7 @@
 import React, { type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
 import { pug, observer } from 'startupjs'
-import { themed, useColors } from '@startupjs-ui/core'
+import { themed, useThemeColor } from '@startupjs-ui/core'
 import Div from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
 import Link from '@startupjs-ui/link'
@@ -64,11 +64,9 @@ function Breadcrumbs ({
       `[@startupjs/ui] Breadcrumbs: size='${size}' is DEPRECATED, use one of 's', 'm', 'l' instead.`
     )
   }
-  const getColor = useColors()
-  const resolveColor = (color: string): string => getColor(color) || color
-  const resolvedCurrentColor = resolveColor(currentColor)
-  const resolvedLinkColor = resolveColor(linkColor)
-  const resolvedSeparatorColor = resolveColor(separatorColor)
+  const resolvedCurrentColor = useThemeColor(currentColor) || currentColor
+  const resolvedLinkColor = useThemeColor(linkColor) || linkColor
+  const resolvedSeparatorColor = useThemeColor(separatorColor) || separatorColor
 
   function renderItem ({
     icon,

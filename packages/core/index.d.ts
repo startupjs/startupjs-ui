@@ -18,59 +18,30 @@ export function getCssVariable (
   options?: GetCssVariableOptions
 ): CssVariableValue
 
-export interface CssVariablesMeta {
-  palette?: Record<string, any>
-  colors?: Record<string, any>
-  componentColors?: Record<string, any>
+export interface GetThemeColorOptions {
+  prefix?: string
 }
 
-export interface CssVariablesProps {
-  meta?: CssVariablesMeta
-  clear?: boolean
-  children?: React.ReactNode
-}
+export type ThemeColorValue = string | undefined
 
-export const CssVariables: React.ComponentType<CssVariablesProps>
+export function getThemeColor (
+  color?: string,
+  options?: GetThemeColorOptions
+): ThemeColorValue
 
-export const palette: Record<string, any>
+export function getThemeColorVariableName (
+  color?: string,
+  options?: GetThemeColorOptions
+): string | undefined
 
-export function generateColors (
-  palette: Record<string, any>,
-  overrides?: Record<string, any>
-): Record<string, any>
-
-export function useCssVariablesMeta (options: {
-  staticOverrides?: Record<string, any>
-  palette?: Record<string, any>
-  colors?: Record<string, any>
-  componentColors?: Record<string, any>
-}): CssVariablesMeta | undefined
-
-export const StyleContext: React.Context<any>
-
-export class Palette {
-  constructor (palette?: Record<string, any>)
-  colors: Record<string, any>
-  generateColors (overrides?: Record<string, any>, componentOverrides?: Record<string, any>): Record<string, any>
-  Color (name: string, level?: any, options?: { alpha?: number }): any
-}
-
-export const Colors: Record<string, string>
+export function useThemeColor (
+  color?: string,
+  options?: GetThemeColorOptions
+): ThemeColorValue
 
 export const ThemeProvider: React.Provider<any>
 
 export const ThemeContext: React.Context<any>
-
-export interface GetColorOptions {
-  prefix?: string
-  convertToString?: boolean
-}
-
-export type ColorValue = string | undefined
-
-export type GetColor = (color?: string, options?: GetColorOptions) => ColorValue
-
-export function useColors (): GetColor
 
 export function useMedia (): any
 
