@@ -36,6 +36,7 @@ import styleOverrides from './style.cssx.styl'
   palette={palette}
   colors={colors}
   componentColors={componentColors}
+  routerPortal
 >
   <Stack />
 </StartupjsProvider>
@@ -60,3 +61,4 @@ import styleOverrides from './style.cssx.styl'
 - `palette` -- theme palette overrides.
 - `colors` -- theme color overrides.
 - `componentColors` -- component-level color overrides.
+- `routerPortal` -- when `true`, mounts an additional `Portal.Provider` inside the router tree. Use it when portal content can render router-aware components such as links or navigation actions.
