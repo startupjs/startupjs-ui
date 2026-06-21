@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.9](https://github.com/startupjs/startupjs-ui/compare/v0.3.8...v0.3.9) (2026-06-21)
+
+
+### Features
+
+* **startupjs-ui:** support router portal provider ([#40](https://github.com/startupjs/startupjs-ui/issues/40)) ([f328713](https://github.com/startupjs/startupjs-ui/commit/f328713229d7fbac7ab49edc2519b03854190269))
+
+
+
+
+
 ## [0.3.8](https://github.com/startupjs/startupjs-ui/compare/v0.3.7...v0.3.8) (2026-06-20)
 
 **Note:** Version bump only for package startupjs-ui
