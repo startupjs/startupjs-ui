@@ -1,6 +1,6 @@
 import { useMemo, type ReactNode } from 'react'
 import { StyleSheet, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, $ } from 'startupjs'
+import { pug, observer, $, cssx } from 'startupjs'
 import { themed, useColors } from '@startupjs-ui/core'
 import { DragDropProvider, Draggable, Droppable } from '@startupjs-ui/draggable'
 import Div from '@startupjs-ui/div'
@@ -10,6 +10,9 @@ import Span from '@startupjs-ui/span'
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons/faGripVertical'
 import { getOptionLabel, getOptionValue, stringifyValue, move } from './helpers'
 import STYLES from './index.cssx.styl'
+
+const DRAGGABLE_STYLE: any = cssx('draggable', STYLES).style
+const CURSOR_STYLE: any = cssx('cursor', STYLES).style
 
 export const _PropsJsonSchema = {/* RankProps */} // used in docs generation
 
@@ -102,9 +105,9 @@ const RankInput = observer(function RankInput ({
 
     // HACK: Draggable component has some visual bugs if styles are not passed
     // through style object
-    const extraStyle: any = disabled ? { backgroundColor: getColor('bg-main-subtle') } : STYLES.cursor
+    const extraStyle: any = disabled ? { backgroundColor: getColor('bg-main-subtle') } : CURSOR_STYLE
     const itemStyle: any = [
-      { ...STYLES.draggable, backgroundColor: getColor('bg-main-strong'), borderColor: getColor('border-main') },
+      { ...DRAGGABLE_STYLE, backgroundColor: getColor('bg-main-strong'), borderColor: getColor('border-main') },
       { width: $width.get() },
       extraStyle
     ]

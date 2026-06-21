@@ -1,9 +1,11 @@
 import { type ReactNode } from 'react'
 import { type LabelProps as MultiSliderLabelProps } from '@startupjs-ui/react-native-multi-slider'
-import { pug } from 'startupjs'
+import { pug, cssx } from 'startupjs'
 import Div from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
 import STYLES from './index.cssx.styl'
+
+const LABEL_STYLE: any = cssx('label', STYLES).style
 
 function Label ({
   oneMarkerValue,
@@ -31,7 +33,7 @@ function Label ({
 
 function renderLabel (position: number, value: string | number): ReactNode {
   return pug`
-    Div.label(style={ left: position - STYLES.label.width / 2 })
+    Div.label(style={ left: position - LABEL_STYLE.width / 2 })
       // todo: implement common tooltip style
       Span.text= value
       Span.arrow

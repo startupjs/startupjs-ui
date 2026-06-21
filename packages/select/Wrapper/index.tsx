@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react'
 import { Modal, Platform } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
-import { pug, observer } from 'startupjs'
+import { pug, observer, cssx } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
 import Div from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
@@ -13,6 +13,8 @@ import {
   type SelectOption
 } from './helpers'
 import STYLES from './index.cssx.styl'
+
+const OVERLAY_STYLE: any = cssx('overlay', STYLES).style
 
 export interface SelectWrapperProps {
   /** Custom styles for wrapper */
@@ -84,7 +86,7 @@ function SelectWrapperWeb ({
       = children
       select(
         id=id
-        style=STYLES.overlay
+        style=OVERLAY_STYLE
         value=selectedKey
         disabled=disabled
         onChange=onSelectChange

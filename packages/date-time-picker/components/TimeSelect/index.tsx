@@ -7,12 +7,14 @@ import {
   type ReactNode,
   type RefObject
 } from 'react'
-import { pug, observer } from 'startupjs'
+import { pug, observer, cssx } from 'startupjs'
 import Div from '@startupjs-ui/div'
 import FlatList from '@startupjs-ui/flat-list'
 import Span from '@startupjs-ui/span'
 import { useMoment } from '../../helpers'
 import STYLES from './index.cssx.styl'
+
+const CELL_STYLE: any = cssx('cell', STYLES).style
 
 export interface TimeSelectRef {
   scrollToIndex: (date?: Date) => void
@@ -103,7 +105,7 @@ function TimeSelect ({
     `
   }
 
-  const length = STYLES.cell.height
+  const length = CELL_STYLE.height
 
   return pug`
     FlatList(

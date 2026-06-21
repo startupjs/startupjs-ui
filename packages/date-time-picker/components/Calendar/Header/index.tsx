@@ -1,5 +1,5 @@
 import { useCallback, useMemo, type ReactNode } from 'react'
-import { pug, observer, $ } from 'startupjs'
+import { pug, observer, $, cssx } from 'startupjs'
 import Button from '@startupjs-ui/button'
 import Div from '@startupjs-ui/div'
 import FlatList from '@startupjs-ui/flat-list'
@@ -12,7 +12,7 @@ import { faCaretDown } from '@fortawesome/free-solid-svg-icons/faCaretDown'
 import { useMoment } from '../../../helpers'
 import STYLES from './index.cssx.styl'
 
-const yearsItemStyle = STYLES['years-item']
+const yearsItemStyle: any = cssx('years-item', STYLES).style
 const YEAR_ITEM_HEIGHT = yearsItemStyle.height
 
 interface HeaderProps {
