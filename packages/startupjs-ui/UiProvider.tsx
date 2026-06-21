@@ -11,7 +11,9 @@ export interface UiProviderProps {
   /** App content rendered inside the provider */
   children?: ReactNode
   /** CSSX style overrides (use ':root' for static overrides) */
-  style?: Record<string, any>
+  style?: Record<string, any> & {
+    rootVariables?: Record<string, any>
+  }
   /** Theme palette overrides */
   palette?: Record<string, any>
   /** Color overrides */
@@ -27,7 +29,7 @@ function UiProvider ({
   colors,
   componentColors
 }: UiProviderProps): ReactNode {
-  const staticOverrides = style?.[':root']
+  const staticOverrides = style?.rootVariables ?? style?.[':root']
   const cssVariablesMeta = useCssVariablesMeta({
     staticOverrides,
     palette,
