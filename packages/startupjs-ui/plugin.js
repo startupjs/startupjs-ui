@@ -2,6 +2,7 @@ import { createElement as el } from 'react'
 import { createPlugin, ROOT_MODULE as MODULE } from 'startupjs/registry'
 import { setCustomInputs } from '@startupjs-ui/input/globalCustomInputs'
 import { setCustomIcons } from '@startupjs-ui/icon/globalCustomIcons'
+import Portal from '@startupjs-ui/portal'
 import UiProvider from './UiProvider'
 
 let hasCustomElementsInitialized = false
@@ -10,7 +11,7 @@ export default createPlugin({
   name: 'ui',
   enabled: true,
   order: 'system ui',
-  client: (props) => ({
+  client: ({ routerPortal = false, ...props } = {}) => ({
     renderRoot ({ children }) {
       if (!hasCustomElementsInitialized) {
         hasCustomElementsInitialized = true
@@ -30,6 +31,10 @@ export default createPlugin({
         mergePlugins('customInputs', ERRORS.inputAlreadyDefined, setCustomInputs)
       }
       return el(UiProvider, props, children)
+    },
+    renderRouter ({ children }) {
+      if (!routerPortal) return children
+      return el(Portal.Provider, null, children)
     }
   })
 })
