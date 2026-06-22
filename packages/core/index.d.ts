@@ -34,15 +34,6 @@ export function getCssVariable (
   options?: GetCssVariableOptions
 ): CssVariableValue
 
-export const ThemeProvider: React.Provider<any>
-
-export const ThemeContext: React.Context<any>
-
 export function useMedia (): any
 
-export interface ThemedOptions {
-  name?: string
-}
-
 export function themed<P> (name: string, component: React.ComponentType<P>): React.ComponentType<P>
-export function themed<P> (component: React.ComponentType<P>): React.ComponentType<P>

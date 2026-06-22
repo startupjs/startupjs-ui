@@ -4,7 +4,7 @@ import { themed } from '@startupjs-ui/core'
 import Div from '@startupjs-ui/div'
 import './index.styl'
 
-export default observer(themed(function Tr ({ children, style }) {
+export default observer(themed('DocsTr', function Tr ({ children, style }) {
   return pug`
     Div.root(style=style)= children
   `

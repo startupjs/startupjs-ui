@@ -97,8 +97,6 @@
     "./getCssVariable": "./exports/getCssVariable.tsx",
     "./u": "./exports/u.tsx",
     "./themed": "./exports/themed.tsx",
-    "./ThemeProvider": "./exports/ThemeProvider.tsx",
-    "./ThemeContext": "./exports/ThemeContext.tsx",
     "./useMedia": "./exports/useMedia.tsx",
     "./useFormFields": "./exports/useFormFields.tsx",
     "./useFormFields$": "./exports/useFormFields$.tsx",

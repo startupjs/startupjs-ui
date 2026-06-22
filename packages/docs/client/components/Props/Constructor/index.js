@@ -14,7 +14,7 @@ import TypeCell from './TypeCell'
 import ValueCell from './ValueCell'
 import './index.styl'
 
-export default observer(themed(function Constructor ({
+export default observer(themed('Constructor', function Constructor ({
   Component,
   extendedFrom,
   entries,

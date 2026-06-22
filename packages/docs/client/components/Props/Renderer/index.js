@@ -4,7 +4,7 @@ import { themed } from '@startupjs-ui/core'
 import Div from '@startupjs-ui/div'
 import GridVisualizer from './GridVisualizer'
 
-export default observer(themed(function Renderer ({
+export default observer(themed('Renderer', function Renderer ({
   Component,
   props: {
     children,

@@ -46,7 +46,7 @@ export default observer(function GridVisualizer ({
 `
 })
 
-const LeftBar = observer(themed(({ allowHalfUnit, validate, theme }) => {
+const LeftBar = observer(themed('GridVisualizerLeftBar', ({ allowHalfUnit, validate, theme }) => {
   const $height = $.session.Renderer.componentSize.height
   const height = $height.get() || 0
   const units = toUnits(height)
@@ -62,7 +62,7 @@ const LeftBar = observer(themed(({ allowHalfUnit, validate, theme }) => {
 }))
 
 // TODO: Bring back width check as an option. For now it's commented out.
-// const TopBar = observer(themed(({ allowHalfUnit, validate, theme }) => {
+// const TopBar = observer(themed('GridVisualizerTopBar', ({ allowHalfUnit, validate, theme }) => {
 //   let [width = 0] = useLocal('_session.Renderer.componentSize.width')
 //   let units = toUnits(width)
 //   let valid = validate ? validateGrid(width, allowHalfUnit) : true

@@ -77,7 +77,7 @@ function useInitDefaultProps ({ entries, $theProps }) {
   }
 }
 
-export default observer(themed(function PComponent ({
+export default observer(themed('PropsComponent', function PComponent ({
   style,
   rendererStyle,
   Component,

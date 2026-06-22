@@ -98,9 +98,7 @@ export {
   colorToRGBA,
   getCssVariable,
   u,
-  themed,
-  ThemeProvider,
-  ThemeContext
+  themed
 } from '@startupjs-ui/core'
 
 // hooks

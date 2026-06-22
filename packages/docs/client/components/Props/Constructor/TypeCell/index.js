@@ -7,7 +7,7 @@ import '../index.styl'
 
 const MAX_ITEMS = 10
 
-export default observer(themed(function TypeCell ({ possibleValues, theme, type }) {
+export default observer(themed('TypeCell', function TypeCell ({ possibleValues, theme, type }) {
   const $collapsed = $(true)
 
   const values = useMemo(() => {
