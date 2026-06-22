@@ -1,7 +1,7 @@
 import React, { type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, useBind } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, useBind, themed } from 'startupjs'
+
 import Div, { type DivProps } from '@startupjs-ui/div'
 import CollapseHeader, { type CollapseHeaderProps } from './CollapseHeader'
 import CollapseContent from './CollapseContent'
@@ -105,12 +105,12 @@ function Collapse ({
   }
   content = content
     ? React.cloneElement(content as any, { ...contentProps, ...(content as any).props })
-    : React.createElement(CollapseContent, contentProps, contentChildren)
+    : React.createElement(CollapseContent as any, contentProps, contentChildren)
 
   const headerProps = { open, variant, icon, onPress }
   header = header
     ? React.cloneElement(header as any, { ...headerProps, ...(header as any).props })
-    : React.createElement(CollapseHeader, headerProps, title ?? '')
+    : React.createElement(CollapseHeader as any, headerProps, title ?? '')
 
   function onPress () {
     onChange?.(!open)

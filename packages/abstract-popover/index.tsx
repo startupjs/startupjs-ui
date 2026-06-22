@@ -1,16 +1,9 @@
 import { useState, useCallback, useEffect, useRef, useMemo, type ReactNode } from 'react'
 import {
-  Animated,
-  Easing,
-  Dimensions,
-  StyleSheet,
-  View,
-  type LayoutChangeEvent,
-  type StyleProp,
-  type ViewStyle
+  Animated, Easing, Dimensions, StyleSheet, View, type LayoutChangeEvent, type StyleProp, type ViewStyle
 } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, themed } from 'startupjs'
+
 import Portal from '@startupjs-ui/portal'
 import getGeometry, { type PopoverGeometry } from './getGeometry'
 import {

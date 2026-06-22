@@ -1,7 +1,7 @@
 import React, { useId, type ReactNode, type ComponentType } from 'react'
 import { View, TouchableOpacity, type StyleProp, type ViewStyle, type ViewProps } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, themed } from 'startupjs'
+
 import ModalHeader from './ModalHeader'
 import ModalContent from './ModalContent'
 import ModalActions, { DEFAULT_CANCEL_LABEL, DEFAULT_CONFIRM_LABEL } from './ModalActions'
@@ -190,7 +190,7 @@ function Modal ({
   header = header
     ? React.cloneElement(header as any, { ...headerProps, ...(header as any).props })
     : hasHeader
-      ? React.createElement(ModalHeader, headerProps, title)
+      ? React.createElement(ModalHeader as any, headerProps, title)
       : null
 
   // Handle <Modal.Actions>
@@ -204,7 +204,7 @@ function Modal ({
   actions = actions
     ? React.cloneElement(actions as any, { ...actionsProps, ...(actions as any).props })
     : hasActions
-      ? React.createElement(ModalActions, actionsProps)
+      ? React.createElement(ModalActions as any, actionsProps)
       : null
 
   // Handle <Modal.Content>
@@ -218,7 +218,7 @@ function Modal ({
   // content part should always present
   content = content
     ? React.cloneElement(content as any, { ...contentProps, ...(content as any).props })
-    : React.createElement(ModalContent, contentProps, contentChildren)
+    : React.createElement(ModalContent as any, contentProps, contentChildren)
 
   return pug`
     View.root(

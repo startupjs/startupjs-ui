@@ -1,7 +1,7 @@
 import { Children, type ReactNode } from 'react'
 import { Image, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, themed } from 'startupjs'
+
 import Div, { type DivProps } from '@startupjs-ui/div'
 import Icon, { type IconProps } from '@startupjs-ui/icon'
 import Link from '@startupjs-ui/link'

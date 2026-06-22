@@ -1,8 +1,8 @@
 import React, { useRef, type ReactNode } from 'react'
 import { ScrollView, StyleSheet, type StyleProp, type ViewStyle } from 'react-native'
 import DrawerLayoutModule from 'react-native-drawer-layout-polyfill'
-import { pug, observer, $, useCssVariable, useDidUpdate } from 'startupjs'
-import { colorVariableRequest, themed } from '@startupjs-ui/core'
+import { pug, observer, $, useCssVariable, useDidUpdate, themed } from 'startupjs'
+import { colorVariableRequest } from '@startupjs-ui/core'
 
 const DrawerLayout = DrawerLayoutModule.default || DrawerLayoutModule
 if (!DrawerLayout) throw Error("> Can't load DrawerLayout module. Issues with bundling.")

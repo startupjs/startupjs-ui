@@ -1,8 +1,8 @@
 import { useImperativeHandle, type ReactNode } from 'react'
-import { pug, observer } from 'startupjs'
+import { pug, observer, themed } from 'startupjs'
 import Button from '@startupjs-ui/button'
 import Div from '@startupjs-ui/div'
-import { themed } from '@startupjs-ui/core'
+
 import confirm from '@startupjs-ui/dialogs/confirm'
 import * as DocumentPicker from 'expo-document-picker'
 import * as ImagePicker from 'expo-image-picker'

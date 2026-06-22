@@ -1,8 +1,8 @@
 import { type ReactNode, type RefObject, useContext } from 'react'
 import { StyleSheet, Text, type TextStyle, type StyleProp, type TextProps } from 'react-native'
 import Animated from 'react-native-reanimated'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, themed } from 'startupjs'
+
 import {
   TextStyleContext,
   resolveSpanLineHeight

@@ -1,10 +1,10 @@
 import { type ReactNode } from 'react'
 import { Text, View, TouchableOpacity, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
+import { pug, observer, themed } from 'startupjs'
 import Icon from '@startupjs-ui/icon'
 import Menu from '@startupjs-ui/menu'
 import Link from '@startupjs-ui/link'
-import { themed } from '@startupjs-ui/core'
+
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
 import './index.cssx.styl'
 

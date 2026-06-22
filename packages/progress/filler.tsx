@@ -1,12 +1,9 @@
 import { useState, type ReactNode } from 'react'
 import {
-  Animated,
-  Easing,
-  type StyleProp,
-  type ViewStyle
+  Animated, Easing, type StyleProp, type ViewStyle
 } from 'react-native'
-import { pug, observer, useDidUpdate } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, useDidUpdate, themed } from 'startupjs'
+
 import STYLES from './index.cssx.styl'
 
 const {

@@ -3,8 +3,8 @@ import {
   type ReactNode,
   type RefObject
 } from 'react'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, themed } from 'startupjs'
+
 import TextInput, { type UITextInputProps } from '@startupjs-ui/text-input'
 import { faEye } from '@fortawesome/free-solid-svg-icons/faEye'
 import { faEyeSlash } from '@fortawesome/free-solid-svg-icons/faEyeSlash'

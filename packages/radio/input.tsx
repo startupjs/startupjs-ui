@@ -1,9 +1,9 @@
 import { type ReactNode, useRef } from 'react'
 import { Animated, Easing, Platform, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, useDidUpdate } from 'startupjs'
+import { pug, observer, useDidUpdate, themed } from 'startupjs'
 import Div from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
-import { themed } from '@startupjs-ui/core'
+
 import { parseValue } from './helpers'
 import './index.cssx.styl'
 

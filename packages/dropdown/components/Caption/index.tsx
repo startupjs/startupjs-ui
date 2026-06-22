@@ -1,10 +1,10 @@
 import { type ReactNode } from 'react'
-import { pug, observer } from 'startupjs'
+import { pug, observer, themed } from 'startupjs'
 import Div from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
 import Icon from '@startupjs-ui/icon'
 import Button from '@startupjs-ui/button'
-import { themed } from '@startupjs-ui/core'
+
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons/faAngleDown'
 import './index.cssx.styl'
 

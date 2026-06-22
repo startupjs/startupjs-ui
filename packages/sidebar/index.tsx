@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
 import { ScrollView, View, StyleSheet, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, useCssVariable } from 'startupjs'
-import { colorVariableRequest, themed } from '@startupjs-ui/core'
+import { pug, observer, useCssVariable, themed } from 'startupjs'
+import { colorVariableRequest } from '@startupjs-ui/core'
 import Div from '@startupjs-ui/div'
 import './index.cssx.styl'
 

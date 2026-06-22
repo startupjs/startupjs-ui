@@ -1,7 +1,7 @@
 import { Children, isValidElement, useMemo, useRef, useCallback, useImperativeHandle, type ReactNode, type RefObject } from 'react'
 import { View, TouchableWithoutFeedback, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, useBind, $ } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, useBind, $, themed } from 'startupjs'
+
 import AbstractPopover, { type AbstractPopoverProps } from '@startupjs-ui/abstract-popover'
 import Div from '@startupjs-ui/div'
 import './index.cssx.styl'

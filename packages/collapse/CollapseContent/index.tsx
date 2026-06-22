@@ -1,7 +1,7 @@
 import React, { type ReactNode } from 'react'
 import Collapsible from 'react-native-collapsible'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, themed } from 'startupjs'
+
 import Span from '@startupjs-ui/span'
 import './index.cssx.styl'
 

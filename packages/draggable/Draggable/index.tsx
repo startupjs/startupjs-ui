@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useRef, type ReactNode } from 'react'
 import { View, StyleSheet, Platform, type StyleProp, type ViewStyle } from 'react-native'
 import { State, PanGestureHandler } from 'react-native-gesture-handler'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, themed } from 'startupjs'
+
 import Portal from '@startupjs-ui/portal'
 import { DragDropContext } from '../DragDropProvider'
 import '../index.cssx.styl'

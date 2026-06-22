@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
 import { View, type StyleProp, type TextStyle, type ViewStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, themed } from 'startupjs'
+
 import Avatar, { type AvatarProps } from '@startupjs-ui/avatar'
 import Div, { type DivProps } from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'

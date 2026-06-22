@@ -1,15 +1,9 @@
 import { useState, useEffect, useRef, type ComponentType, type ReactNode } from 'react'
 import {
-  SafeAreaView,
-  Animated,
-  View,
-  TouchableWithoutFeedback,
-  StyleSheet,
-  type StyleProp,
-  type ViewStyle
+  SafeAreaView, Animated, View, TouchableWithoutFeedback, StyleSheet, type StyleProp, type ViewStyle
 } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, themed } from 'startupjs'
+
 import Portal from '@startupjs-ui/portal'
 import Swipe from './Swipe'
 import animate, { type DrawerAnimateStates } from './animate'

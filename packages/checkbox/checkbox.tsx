@@ -1,7 +1,7 @@
 import { useState, useRef, type ReactNode } from 'react'
 import { Animated, Easing } from 'react-native'
-import { pug, observer, useDidUpdate } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, useDidUpdate, themed } from 'startupjs'
+
 import Div from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'

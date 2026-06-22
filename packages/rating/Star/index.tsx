@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, themed } from 'startupjs'
+
 import Icon, { type IconProps } from '@startupjs-ui/icon'
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'
 import './index.cssx.styl'

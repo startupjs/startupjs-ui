@@ -1,8 +1,8 @@
 import { type ReactNode } from 'react'
 import { StyleSheet, Platform } from 'react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { pug, observer, u, useCssVariable } from 'startupjs'
-import { colorVariableRequest, themed } from '@startupjs-ui/core'
+import { pug, observer, u, useCssVariable, themed } from 'startupjs'
+import { colorVariableRequest } from '@startupjs-ui/core'
 import { customIcons } from './globalCustomIcons'
 import STYLES from './index.cssx.styl'
 

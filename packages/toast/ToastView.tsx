@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState, type ReactNode } from 'react'
 import { Animated } from 'react-native'
-import { pug, observer } from 'startupjs'
+import { pug, observer, themed } from 'startupjs'
 import Button from '@startupjs-ui/button'
 import Div from '@startupjs-ui/div'
 import Icon, { type IconProps } from '@startupjs-ui/icon'
 import Span from '@startupjs-ui/span'
-import { themed } from '@startupjs-ui/core'
+
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle'
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle'

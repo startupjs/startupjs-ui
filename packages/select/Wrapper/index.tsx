@@ -1,8 +1,8 @@
 import { useState, type ReactNode } from 'react'
 import { Modal, Platform } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
-import { pug, observer, cssx } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, cssx, themed } from 'startupjs'
+
 import Div from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
 import {

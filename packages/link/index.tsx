@@ -1,8 +1,8 @@
 import { Children, cloneElement, type ReactNode } from 'react'
 import { Linking, Platform, type StyleProp, type TextStyle, type ViewStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
+import { pug, observer, themed } from 'startupjs'
 import useRouter from 'startupjs/useRouter'
-import { themed } from '@startupjs-ui/core'
+
 import Button from '@startupjs-ui/button'
 import Div, { type DivProps } from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'

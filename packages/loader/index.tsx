@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
 import { ActivityIndicator, type ActivityIndicatorProps } from 'react-native'
-import { pug, observer, useCssVariable } from 'startupjs'
-import { colorVariableRequest, themed } from '@startupjs-ui/core'
+import { pug, observer, useCssVariable, themed } from 'startupjs'
+import { colorVariableRequest } from '@startupjs-ui/core'
 
 const SIZES = { s: 'small', m: 'large' }
 

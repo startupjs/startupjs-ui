@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react'
-import { pug, observer, $, useId } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, $, useId, themed } from 'startupjs'
+
 import Button from '@startupjs-ui/button'
 import Div from '@startupjs-ui/div'
 import ScrollView from '@startupjs-ui/scroll-view'

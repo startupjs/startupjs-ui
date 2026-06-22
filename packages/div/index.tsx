@@ -1,16 +1,10 @@
 import { Children, cloneElement, createElement, Fragment, isValidElement, useContext, useLayoutEffect, useMemo, useState, useRef, type ReactNode, type RefObject } from 'react'
 import {
-  View,
-  Pressable,
-  Platform,
-  StyleSheet,
-  type StyleProp,
-  type ViewStyle,
-  type ViewProps
+  View, Pressable, Platform, StyleSheet, type StyleProp, type ViewStyle, type ViewProps
 } from 'react-native'
 import Animated from 'react-native-reanimated'
-import { pug, observer, u, useCssVariable, useDidUpdate } from 'startupjs'
-import { colorToRGBA, themed, type UIRole } from '@startupjs-ui/core'
+import { pug, observer, u, useCssVariable, useDidUpdate, themed } from 'startupjs'
+import { colorToRGBA, type UIRole } from '@startupjs-ui/core'
 import {
   TextStyleContext,
   getInheritedTextStyle,

@@ -1,8 +1,8 @@
 import { useRef, type ReactNode } from 'react'
 import { Animated, Easing } from 'react-native'
-import { pug, observer, useDidUpdate } from 'startupjs'
+import { pug, observer, useDidUpdate, themed } from 'startupjs'
 import Div from '@startupjs-ui/div'
-import { themed } from '@startupjs-ui/core'
+
 import STYLES from './index.cssx.styl'
 
 const {

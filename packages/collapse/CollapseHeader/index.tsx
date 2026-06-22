@@ -1,7 +1,7 @@
 import React, { useRef, type ReactNode } from 'react'
 import { Animated, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, useDidUpdate } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, useDidUpdate, themed } from 'startupjs'
+
 import Div from '@startupjs-ui/div'
 import Icon, { type IconProps } from '@startupjs-ui/icon'
 import Span from '@startupjs-ui/span'

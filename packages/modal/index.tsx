@@ -6,8 +6,8 @@ import React, {
   type RefObject
 } from 'react'
 import { SafeAreaView, Modal as RNModal, type StyleProp, type ViewStyle, type ViewProps } from 'react-native'
-import { pug, observer, $ } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, $, themed } from 'startupjs'
+
 import Portal from '@startupjs-ui/portal'
 import Layout from './layout'
 import ModalHeader from './ModalHeader'

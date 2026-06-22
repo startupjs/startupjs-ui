@@ -4,6 +4,4 @@ export {
   default as colorVariableRequest,
   isColorToken
 } from './helpers/colorVariableRequest.js'
-export { default as themed } from './theming/themed.js'
-export { default as getCssVariable } from './theming/getCssVariable.js'
 export { default as useMedia } from './hooks/useMedia.js'

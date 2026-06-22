@@ -8,8 +8,8 @@ import {
   type RefObject
 } from 'react'
 import { Platform, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, useDidUpdate } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, useDidUpdate, themed } from 'startupjs'
+
 import Div from '@startupjs-ui/div'
 import Drawer from '@startupjs-ui/drawer'
 import Icon from '@startupjs-ui/icon'

@@ -9,8 +9,8 @@ import {
   type StyleProp,
   type ViewStyle
 } from 'react-native'
-import { pug, observer, $ } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, $, themed } from 'startupjs'
+
 import Drawer from '@startupjs-ui/drawer'
 import Popover, { type PopoverRef } from '@startupjs-ui/popover'
 import ScrollView from '@startupjs-ui/scroll-view'
@@ -238,7 +238,8 @@ function Dropdown ({
   })
 
   if (!caption) {
-    caption = <DropdownCaption _activeLabel={activeLabel} />
+    const Caption = DropdownCaption as any
+    caption = <Caption _activeLabel={activeLabel} />
   } else {
     caption = React.cloneElement(caption as any, { _activeLabel: activeLabel })
   }

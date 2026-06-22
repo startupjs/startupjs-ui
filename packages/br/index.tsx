@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
 import { Text, type StyleProp, type TextStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed, u } from '@startupjs-ui/core'
+import { pug, observer, themed } from 'startupjs'
+import { u } from '@startupjs-ui/core'
 import './index.cssx.styl'
 
 const LINE_HEIGHT = u(2)

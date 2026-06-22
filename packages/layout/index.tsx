@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
 import { SafeAreaView, StatusBar, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, themed } from 'startupjs'
+
 import STYLES from './index.cssx.styl'
 
 const { config: { bgColor } } = STYLES

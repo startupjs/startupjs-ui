@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react'
-import { pug, observer, u } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, u, themed } from 'startupjs'
+
 import Div, { type DivProps } from '@startupjs-ui/div'
 import STYLES from './index.cssx.styl'
 

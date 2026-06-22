@@ -1,8 +1,8 @@
 import { useState, type ReactNode } from 'react'
 import { View, type StyleProp, type ViewStyle } from 'react-native'
 import Svg, { Circle } from 'react-native-svg'
-import { pug, observer, u, useCssVariable } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, u, useCssVariable, themed } from 'startupjs'
+
 import STYLE from './index.cssx.styl'
 
 const { config: { filler: { backgroundColor, color } } } = STYLE

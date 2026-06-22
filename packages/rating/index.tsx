@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, themed } from 'startupjs'
+
 import Div from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
 import Star from './Star'

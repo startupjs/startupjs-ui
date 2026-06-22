@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, themed } from 'startupjs'
+
 import Div, { type DivProps } from '@startupjs-ui/div'
 
 export const _PropsJsonSchema = {/* TrProps */} // used in docs generation

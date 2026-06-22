@@ -1,7 +1,7 @@
 import { type ReactNode, type Ref } from 'react'
 import { Platform, ScrollView as RNScrollView, type StyleProp, type ViewProps } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed, type UIRole } from '@startupjs-ui/core'
+import { pug, observer, themed } from 'startupjs'
+import { type UIRole } from '@startupjs-ui/core'
 import './index.cssx.styl'
 
 const IS_NATIVE = Platform.OS !== 'web'

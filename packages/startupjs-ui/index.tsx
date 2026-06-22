@@ -93,12 +93,10 @@ export { default as H6 } from './exports/_DEPRECATED_H6'
 
 export { default as User } from '@startupjs-ui/user'
 
-// theming
+// core helpers
 export {
   colorToRGBA,
-  getCssVariable,
-  u,
-  themed
+  u
 } from '@startupjs-ui/core'
 
 // hooks

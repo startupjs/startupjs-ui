@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
 import { View, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed, u } from '@startupjs-ui/core'
+import { pug, observer, themed } from 'startupjs'
+import { u } from '@startupjs-ui/core'
 import STYLES from './index.cssx.styl'
 
 const {

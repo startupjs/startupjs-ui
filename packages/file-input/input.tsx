@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react'
-import { observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { observer, themed } from 'startupjs'
+
 import type { FileInputProps } from './index'
 
 export default observer(themed('FileInput', FileInput))

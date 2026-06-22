@@ -1,4 +1,3 @@
-import type * as React from 'react'
 import type { ViewProps } from 'react-native'
 
 export type UIRole = ViewProps['role'] | 'listbox' | 'gridcell'
@@ -23,17 +22,4 @@ export function colorVariableRequest (
 
 export function isColorToken (color?: string): boolean
 
-export interface GetCssVariableOptions {
-  convertToString?: boolean
-}
-
-export type CssVariableValue = string | undefined | Record<string, any>
-
-export function getCssVariable (
-  cssVarName: string,
-  options?: GetCssVariableOptions
-): CssVariableValue
-
 export function useMedia (): any
-
-export function themed<P> (name: string, component: React.ComponentType<P>): React.ComponentType<P>

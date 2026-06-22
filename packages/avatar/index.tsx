@@ -1,7 +1,7 @@
 import { useState, type ComponentType, type ReactNode } from 'react'
 import { Image, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, useDidUpdate } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, useDidUpdate, themed } from 'startupjs'
+
 import Div, { type DivProps } from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
 import randomcolor from 'randomcolor'

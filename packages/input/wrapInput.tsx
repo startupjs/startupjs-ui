@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode, type RefObject } from 'react'
 import { Platform, Text } from 'react-native'
-import { pug, styl, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, styl, observer, themed } from 'startupjs'
+
 import Div from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
 import Span from '@startupjs-ui/span'

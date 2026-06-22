@@ -13,8 +13,8 @@ import {
   type ViewStyle,
   type TextInputProps
 } from 'react-native'
-import { pug, observer, useCssVariable, useIsomorphicLayoutEffect } from 'startupjs'
-import { colorVariableRequest, themed } from '@startupjs-ui/core'
+import { pug, observer, useCssVariable, useIsomorphicLayoutEffect, themed } from 'startupjs'
+import { colorVariableRequest } from '@startupjs-ui/core'
 import Div from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
 import Span from '@startupjs-ui/span'

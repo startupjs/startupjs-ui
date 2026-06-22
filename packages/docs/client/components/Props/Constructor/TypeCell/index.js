@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo } from 'react'
-import { pug, observer, $ } from 'startupjs'
+import { pug, observer, $, themed } from 'startupjs'
 import Button from '@startupjs-ui/button'
 import Span from '@startupjs-ui/span'
-import { themed } from '@startupjs-ui/core'
+
 import '../index.styl'
 
 const MAX_ITEMS = 10

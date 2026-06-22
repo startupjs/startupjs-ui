@@ -1,14 +1,9 @@
 import { useState, useRef, useEffect, useMemo, type ReactNode } from 'react'
 import {
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-  type StyleProp,
-  type TextStyle,
-  type ViewStyle
+  TouchableOpacity, TouchableWithoutFeedback, View, type StyleProp, type TextStyle, type ViewStyle
 } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, themed } from 'startupjs'
+
 import AbstractPopover from '@startupjs-ui/abstract-popover'
 import Div from '@startupjs-ui/div'
 import FlatList from '@startupjs-ui/flat-list'
