@@ -13,8 +13,8 @@ import {
   type ViewStyle,
   type TextInputProps
 } from 'react-native'
-import { pug, observer, useIsomorphicLayoutEffect } from 'startupjs'
-import { themed, useThemeColor } from '@startupjs-ui/core'
+import { pug, observer, useCssVariable, useIsomorphicLayoutEffect } from 'startupjs'
+import { colorVariableRequest, themed } from '@startupjs-ui/core'
 import Div from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
 import Span from '@startupjs-ui/span'
@@ -121,8 +121,10 @@ function TextInput ({
   const fallbackRef = useRef<any>(null)
   const inputRef = ref ?? fallbackRef
 
-  const resolvedIconColor = useThemeColor(iconColor) || iconColor
-  const placeholderTextColor = useThemeColor('text-placeholder')
+  const iconColorRequest = colorVariableRequest(iconColor)
+  const placeholderTextColorRequest = colorVariableRequest('text-placeholder')
+  const resolvedIconColor = useCssVariable(iconColorRequest.name, iconColorRequest.fallback) || iconColor
+  const placeholderTextColor = useCssVariable(placeholderTextColorRequest.name, placeholderTextColorRequest.fallback)
 
   function handleFocus (...args: any[]) {
     onFocus && onFocus(...args)

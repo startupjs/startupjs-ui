@@ -1,7 +1,7 @@
 import { useContext, type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed, useThemeColor } from '@startupjs-ui/core'
+import { pug, observer, useCssVariable } from 'startupjs'
+import { colorVariableRequest, themed } from '@startupjs-ui/core'
 import Div from '@startupjs-ui/div'
 import Icon, { type IconProps } from '@startupjs-ui/icon'
 import Item, { type ItemProps } from '@startupjs-ui/item'
@@ -59,12 +59,17 @@ function MenuItem ({
   // we should think about a better api
   // and remove color, activeColor, activeBorder props
   let color: string | undefined = props.color ?? context.color
-  color = useThemeColor(color) ?? color
+  const colorRequest = colorVariableRequest(color)
+  color = (useCssVariable(colorRequest.name, colorRequest.fallback) as string | undefined) ?? color
   let activeColor = props.activeColor ?? context.activeColor
-  activeColor = useThemeColor(activeColor) ?? activeColor
-  const textPrimaryColor = useThemeColor('text-primary')
-  const textMainColor = useThemeColor('text-main')
-  const borderPrimaryColor = useThemeColor('border-primary')
+  const activeColorRequest = colorVariableRequest(activeColor)
+  activeColor = (useCssVariable(activeColorRequest.name, activeColorRequest.fallback) as string | undefined) ?? activeColor
+  const textPrimaryColorRequest = colorVariableRequest('text-primary')
+  const textMainColorRequest = colorVariableRequest('text-main')
+  const borderPrimaryColorRequest = colorVariableRequest('border-primary')
+  const textPrimaryColor = useCssVariable(textPrimaryColorRequest.name, textPrimaryColorRequest.fallback) as string | undefined
+  const textMainColor = useCssVariable(textMainColorRequest.name, textMainColorRequest.fallback) as string | undefined
+  const borderPrimaryColor = useCssVariable(borderPrimaryColorRequest.name, borderPrimaryColorRequest.fallback) as string | undefined
   const activeBorder = props.activeBorder ?? context.activeBorder ?? 'none'
   const iconPosition = props.iconPosition ?? context.iconPosition ?? 'left'
 

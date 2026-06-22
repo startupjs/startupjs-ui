@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
 import { ActivityIndicator, type ActivityIndicatorProps } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed, useThemeColor } from '@startupjs-ui/core'
+import { pug, observer, useCssVariable } from 'startupjs'
+import { colorVariableRequest, themed } from '@startupjs-ui/core'
 
 const SIZES = { s: 'small', m: 'large' }
 
@@ -21,7 +21,8 @@ function Loader ({
   size = 'm',
   ...props
 }: LoaderProps): ReactNode {
-  const _color = useThemeColor(color)
+  const colorRequest = colorVariableRequest(color)
+  const _color = useCssVariable(colorRequest.name, colorRequest.fallback) as string | undefined
   if (!_color) console.error(`Loader component: Unknown color token "${color}"`)
 
   return pug`

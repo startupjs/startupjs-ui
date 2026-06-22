@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
 import { ScrollView, View, StyleSheet, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed, useThemeColor } from '@startupjs-ui/core'
+import { pug, observer, useCssVariable } from 'startupjs'
+import { colorVariableRequest, themed } from '@startupjs-ui/core'
 import Div from '@startupjs-ui/div'
 import './index.cssx.styl'
 
@@ -47,7 +47,8 @@ function Sidebar ({
   renderContent,
   testID
 }: SidebarProps): ReactNode {
-  const defaultBackgroundColor = useThemeColor('bg-main-strong')
+  const backgroundColorRequest = colorVariableRequest('bg-main-strong')
+  const defaultBackgroundColor = useCssVariable(backgroundColorRequest.name, backgroundColorRequest.fallback)
 
   const flattenedStyle = StyleSheet.flatten(style) || {}
   const { backgroundColor = defaultBackgroundColor, ...restStyle } = flattenedStyle

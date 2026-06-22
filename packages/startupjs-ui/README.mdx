@@ -11,7 +11,7 @@ import Form from 'startupjs-ui/Form'
 
 ## UiProvider
 
-UiProvider wires up CSSX theming and shared UI infrastructure (portal, toasts, dialogs). It is plugged in automatically as a plugin into `StartupjsProvider`, so the only thing you need at the root of your app is:
+UiProvider wires up CSSX theming and shared UI infrastructure (portal, toasts, dialogs). Its default theme is a CSSX CSS file with `:root` CSS variables, OKLCH palette channels, and semantic aliases. It is plugged in automatically as a plugin into `StartupjsProvider`, so the only thing you need at the root of your app is:
 
 ```jsx
 import { StartupjsProvider } from 'startupjs'
@@ -60,3 +60,5 @@ Button:part(hover) {
 
 - `style` -- CSSX style overrides for UI components. Use `:root` for theme variables, utility classes for shared styles, and component tag selectors such as `Button` plus `:part()` for component defaults.
 - `routerPortal` -- when `true`, mounts an additional `Portal.Provider` inside the router tree. Use it when portal content can render router-aware components such as links or navigation actions.
+
+Component color props accept CSSX color tokens such as `'primary'`, which map to variables like `--color-primary`. Use `var(--your-variable)` or normal CSS colors when a raw CSS value is clearer.

@@ -9,8 +9,8 @@ import {
   type ViewProps
 } from 'react-native'
 import Animated from 'react-native-reanimated'
-import { pug, observer, u, useDidUpdate } from 'startupjs'
-import { colorToRGBA, themed, useThemeColor, type UIRole } from '@startupjs-ui/core'
+import { pug, observer, u, useCssVariable, useDidUpdate } from 'startupjs'
+import { colorToRGBA, themed, type UIRole } from '@startupjs-ui/core'
 import {
   TextStyleContext,
   getInheritedTextStyle,
@@ -159,8 +159,8 @@ function Div ({
   const isPressable = hasPressHandler(props)
   const fallbackRef = useRef<any>(null)
   const rootRef = ref ?? fallbackRef
-  const defaultHoverBg = useThemeColor('--Div-hoverBg')
-  const defaultActiveBg = useThemeColor('--Div-activeBg')
+  const defaultHoverBg = useCssVariable('--Div-hoverBg') as string | undefined
+  const defaultActiveBg = useCssVariable('--Div-activeBg') as string | undefined
 
   let pressableStyle: StyleProp<ViewStyle> = {}
   let deferredRole: string | undefined

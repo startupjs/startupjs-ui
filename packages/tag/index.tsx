@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
 import { StyleSheet, type GestureResponderEvent, type StyleProp, type TextStyle, type ViewStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { colorToRGBA, themed, useThemeColor } from '@startupjs-ui/core'
+import { pug, observer, useCssVariable } from 'startupjs'
+import { colorToRGBA, colorVariableRequest, isColorToken, themed } from '@startupjs-ui/core'
 import Div, { type DivProps } from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
 import Span from '@startupjs-ui/span'
@@ -73,9 +73,12 @@ function Tag ({
   shape = 'circle',
   ...props
 }: TagProps): ReactNode {
-  const resolvedColor = useThemeColor(color)
-  const colorText = useThemeColor(`text-on-${color}`)
-  const fallbackText = useThemeColor('text-on-color')
+  const colorRequest = colorVariableRequest(color)
+  const colorTextRequest = colorVariableRequest(isColorToken(color) ? `text-on-${color}` : undefined)
+  const fallbackTextRequest = colorVariableRequest('text-on-color')
+  const resolvedColor = useCssVariable(colorRequest.name, colorRequest.fallback) as string | undefined
+  const colorText = useCssVariable(colorTextRequest.name, colorTextRequest.fallback) as string | undefined
+  const fallbackText = useCssVariable(fallbackTextRequest.name, fallbackTextRequest.fallback) as string | undefined
   const flatTextColor = colorText ?? fallbackText
 
   if (!resolvedColor) console.error(`Tag component: Unknown color token "${color}"`)

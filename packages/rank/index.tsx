@@ -1,7 +1,7 @@
 import { useMemo, type ReactNode } from 'react'
 import { StyleSheet, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, $, cssx } from 'startupjs'
-import { themed, useThemeColor } from '@startupjs-ui/core'
+import { pug, observer, $, cssx, useCssVariable } from 'startupjs'
+import { colorVariableRequest, themed } from '@startupjs-ui/core'
 import { DragDropProvider, Draggable, Droppable } from '@startupjs-ui/draggable'
 import Div from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
@@ -75,9 +75,12 @@ const RankInput = observer(function RankInput ({
   const $width: any = $()
   const dropId = useMemo(() => $.id(), [])
 
-  const bgMainSubtle = useThemeColor('bg-main-subtle')
-  const bgMainStrong = useThemeColor('bg-main-strong')
-  const borderMain = useThemeColor('border-main')
+  const bgMainSubtleRequest = colorVariableRequest('bg-main-subtle')
+  const bgMainStrongRequest = colorVariableRequest('bg-main-strong')
+  const borderMainRequest = colorVariableRequest('border-main')
+  const bgMainSubtle = useCssVariable(bgMainSubtleRequest.name, bgMainSubtleRequest.fallback)
+  const bgMainStrong = useCssVariable(bgMainStrongRequest.name, bgMainStrongRequest.fallback)
+  const borderMain = useCssVariable(borderMainRequest.name, borderMainRequest.fallback)
 
   const selectOptions = useMemo(() => {
     return value.map((_o, i) => ({ label: i + 1, value: i }))

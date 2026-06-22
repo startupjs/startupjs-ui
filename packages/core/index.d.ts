@@ -7,6 +7,22 @@ export function u (value?: number): number
 
 export function colorToRGBA (color: string, alpha?: number): string
 
+export interface ColorVariableRequestOptions {
+  prefix?: string
+}
+
+export interface ColorVariableRequest {
+  name: string
+  fallback?: string
+}
+
+export function colorVariableRequest (
+  color?: string,
+  options?: ColorVariableRequestOptions
+): ColorVariableRequest
+
+export function isColorToken (color?: string): boolean
+
 export interface GetCssVariableOptions {
   convertToString?: boolean
 }
@@ -17,27 +33,6 @@ export function getCssVariable (
   cssVarName: string,
   options?: GetCssVariableOptions
 ): CssVariableValue
-
-export interface GetThemeColorOptions {
-  prefix?: string
-}
-
-export type ThemeColorValue = string | undefined
-
-export function getThemeColor (
-  color?: string,
-  options?: GetThemeColorOptions
-): ThemeColorValue
-
-export function getThemeColorVariableName (
-  color?: string,
-  options?: GetThemeColorOptions
-): string | undefined
-
-export function useThemeColor (
-  color?: string,
-  options?: GetThemeColorOptions
-): ThemeColorValue
 
 export const ThemeProvider: React.Provider<any>
 

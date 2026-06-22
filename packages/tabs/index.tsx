@@ -1,8 +1,8 @@
 import { type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
 import { TabView } from 'react-native-tab-view'
-import { pug, styl, observer, $ } from 'startupjs'
-import { themed, useThemeColor } from '@startupjs-ui/core'
+import { pug, styl, observer, $, useCssVariable } from 'startupjs'
+import { colorVariableRequest, themed } from '@startupjs-ui/core'
 import findIndex from 'lodash/findIndex'
 import pick from 'lodash/pick'
 import Bar, { TAB_BAR_PROP_NAMES } from './Bar'
@@ -152,8 +152,10 @@ function Tabs ({
   if (renderLabel) throw Error('[@startupjs/ui -> Tabs] `renderLabel` prop is deprecated and no longer supported. Use `renderTabBarItem` instead.')
   if (tabsStyle) console.warn('[@startupjs/ui -> Tabs] `tabsStyle` prop is deprecated. Use `style` instead.')
 
-  const resolvedActiveColor = useThemeColor(activeColor) ?? activeColor
-  const resolvedInactiveColor = useThemeColor(inactiveColor) ?? inactiveColor
+  const activeColorRequest = colorVariableRequest(activeColor)
+  const inactiveColorRequest = colorVariableRequest(inactiveColor)
+  const resolvedActiveColor = (useCssVariable(activeColorRequest.name, activeColorRequest.fallback) as string | undefined) ?? activeColor
+  const resolvedInactiveColor = (useCssVariable(inactiveColorRequest.name, inactiveColorRequest.fallback) as string | undefined) ?? inactiveColor
   const $localValue = $value ?? $(initialKey ?? routes[0]?.key)
   const tabBarProps = pick(props, TAB_BAR_PROP_NAMES)
   const tabViewProps = pick(props, TAB_VIEW_PROP_NAMES)

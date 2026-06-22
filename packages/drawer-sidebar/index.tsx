@@ -1,8 +1,8 @@
 import React, { useRef, type ReactNode } from 'react'
 import { ScrollView, StyleSheet, type StyleProp, type ViewStyle } from 'react-native'
 import DrawerLayoutModule from 'react-native-drawer-layout-polyfill'
-import { pug, observer, $, useDidUpdate } from 'startupjs'
-import { themed, useThemeColor } from '@startupjs-ui/core'
+import { pug, observer, $, useCssVariable, useDidUpdate } from 'startupjs'
+import { colorVariableRequest, themed } from '@startupjs-ui/core'
 
 const DrawerLayout = DrawerLayoutModule.default || DrawerLayoutModule
 if (!DrawerLayout) throw Error("> Can't load DrawerLayout module. Issues with bundling.")
@@ -44,7 +44,8 @@ function DrawerSidebar ({
   testID,
   ...props
 }: DrawerSidebarProps): ReactNode {
-  const defaultBackgroundColor = useThemeColor('bg-main-strong')
+  const backgroundColorRequest = colorVariableRequest('bg-main-strong')
+  const defaultBackgroundColor = useCssVariable(backgroundColorRequest.name, backgroundColorRequest.fallback)
 
   if (!$open) $open = $()
 

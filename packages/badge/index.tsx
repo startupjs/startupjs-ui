@@ -1,7 +1,7 @@
 import { useMemo, useState, type ReactNode } from 'react'
 import { StyleSheet, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed, useThemeColor } from '@startupjs-ui/core'
+import { pug, observer, useCssVariable } from 'startupjs'
+import { colorVariableRequest, isColorToken, themed } from '@startupjs-ui/core'
 import Div from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
 import Span from '@startupjs-ui/span'
@@ -56,9 +56,12 @@ function Badge ({
   testID
 }: BadgeProps): ReactNode {
   const [right, setRight] = useState(0)
-  const backgroundColor = useThemeColor(color)
-  const colorText = useThemeColor(`text-on-${color}`)
-  const fallbackText = useThemeColor('text-on-color')
+  const backgroundColorRequest = colorVariableRequest(color)
+  const colorTextRequest = colorVariableRequest(isColorToken(color) ? `text-on-${color}` : undefined)
+  const fallbackTextRequest = colorVariableRequest('text-on-color')
+  const backgroundColor = useCssVariable(backgroundColorRequest.name, backgroundColorRequest.fallback) as string | undefined
+  const colorText = useCssVariable(colorTextRequest.name, colorTextRequest.fallback) as string | undefined
+  const fallbackText = useCssVariable(fallbackTextRequest.name, fallbackTextRequest.fallback) as string | undefined
   const textAndIconColor = colorText ?? fallbackText
 
   badgeStyle = StyleSheet.flatten([

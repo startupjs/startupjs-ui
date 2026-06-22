@@ -1,7 +1,7 @@
 import { Children, useState, type ReactNode } from 'react'
 import { StyleSheet, type GestureResponderEvent, type StyleProp, type TextStyle, type ViewStyle } from 'react-native'
-import { pug, observer, useIsMountedRef } from 'startupjs'
-import { colorToRGBA, themed, useThemeColor } from '@startupjs-ui/core'
+import { pug, observer, useCssVariable, useIsMountedRef } from 'startupjs'
+import { colorToRGBA, colorVariableRequest, isColorToken, themed } from '@startupjs-ui/core'
 import Div from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
 import Loader from '@startupjs-ui/loader'
@@ -80,10 +80,14 @@ function Button ({
   const isMountedRef = useIsMountedRef()
   const [asyncActive, setAsyncActive] = useState(false)
   const isFlat = variant === 'flat'
-  const _color = useThemeColor(color)
-  const _flatBgColor = useThemeColor(`bg-${color}`)
-  const _flatTextColor = useThemeColor(`text-on-${color}`)
-  const _textOnColor = useThemeColor('text-on-color')
+  const colorRequest = colorVariableRequest(color)
+  const flatBgColorRequest = colorVariableRequest(isColorToken(color) ? `bg-${color}` : undefined)
+  const flatTextColorRequest = colorVariableRequest(isColorToken(color) ? `text-on-${color}` : undefined)
+  const textOnColorRequest = colorVariableRequest('text-on-color')
+  const _color = useCssVariable(colorRequest.name, colorRequest.fallback) as string | undefined
+  const _flatBgColor = useCssVariable(flatBgColorRequest.name, flatBgColorRequest.fallback) as string | undefined
+  const _flatTextColor = useCssVariable(flatTextColorRequest.name, flatTextColorRequest.fallback) as string | undefined
+  const _textOnColor = useCssVariable(textOnColorRequest.name, textOnColorRequest.fallback) as string | undefined
   const textColor = isFlat && _flatTextColor ? `text-on-${color}` : isFlat ? 'text-on-color' : color
   const _textColor = isFlat ? (_flatTextColor ?? _textOnColor) : _color
 

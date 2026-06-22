@@ -13,7 +13,7 @@ import {
 import Portal from '@startupjs-ui/portal'
 import { ToastProvider } from '@startupjs-ui/toast'
 import DialogsProvider from '@startupjs-ui/dialogs/DialogsProvider'
-import defaultTheme from './defaultTheme.js'
+import defaultTheme from './defaultTheme.cssx.css'
 
 export const _PropsJsonSchema = {/* UiProviderProps */}
 

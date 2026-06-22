@@ -1,8 +1,8 @@
 import { useState, type ReactNode } from 'react'
 import { View, type StyleProp, type ViewStyle } from 'react-native'
 import Svg, { Circle } from 'react-native-svg'
-import { pug, observer, u } from 'startupjs'
-import { themed, useThemeColor } from '@startupjs-ui/core'
+import { pug, observer, u, useCssVariable } from 'startupjs'
+import { themed } from '@startupjs-ui/core'
 import STYLE from './index.cssx.styl'
 
 const { config: { filler: { backgroundColor, color } } } = STYLE
@@ -26,8 +26,8 @@ function CircleFiller ({
   const [layoutSize, setLayoutSize] = useState(0)
   const trackColorVar = getCssVarName(backgroundColor)
   const valueColorVar = getCssVarName(color)
-  const resolvedTrackColor = useThemeColor(trackColorVar)
-  const resolvedValueColor = useThemeColor(valueColorVar)
+  const resolvedTrackColor = useCssVariable(trackColorVar ?? '--__startupjs-ui-unused-color') as string | undefined
+  const resolvedValueColor = useCssVariable(valueColorVar ?? '--__startupjs-ui-unused-color') as string | undefined
 
   const normalizedValue = Math.max(0, Math.min(100, value))
   const diameter = layoutSize > 0 ? layoutSize : u(5)

@@ -1,8 +1,8 @@
 import { type ReactNode } from 'react'
 import { StyleSheet, Platform } from 'react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { pug, observer, u } from 'startupjs'
-import { themed, useThemeColor } from '@startupjs-ui/core'
+import { pug, observer, u, useCssVariable } from 'startupjs'
+import { colorVariableRequest, themed } from '@startupjs-ui/core'
 import { customIcons } from './globalCustomIcons'
 import STYLES from './index.cssx.styl'
 
@@ -48,7 +48,8 @@ function Icon ({
   ...props
 }: IconProps): ReactNode {
   const _size = typeof size === 'string' ? SIZES[size] : size
-  const color = useThemeColor(defaultColor) || defaultColor
+  const colorRequest = colorVariableRequest(defaultColor)
+  const color = useCssVariable(colorRequest.name, colorRequest.fallback) || defaultColor
 
   if (!icon) return null
 
