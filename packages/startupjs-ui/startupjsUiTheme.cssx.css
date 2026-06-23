@@ -519,6 +519,12 @@
   --NumberInput-button-padding-m: 2.5rem;
   --NumberInput-button-padding-s: 2rem;
 
+  --ArrayInput-actions-width: 2rem;
+  --ArrayInput-item-gap: 0.5rem;
+
+  --ObjectInput-column-gap: 1rem;
+  --ObjectInput-row-gap: 1rem;
+
   --Button-height-xs: 1rem;
   --Button-height-s: 1.5rem;
   --Button-height-m: 2rem;

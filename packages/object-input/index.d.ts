@@ -4,7 +4,6 @@
 import { type ReactNode } from 'react';
 import { type StyleProp, type ViewStyle } from 'react-native';
 import { type UIRole } from '@startupjs-ui/core';
-import './index.cssx.styl';
 type ObjectInputWrapperProps = {
     style: StyleProp<ViewStyle> | undefined;
     testID?: string;

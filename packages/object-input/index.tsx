@@ -1,10 +1,9 @@
 import { type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, themed } from 'startupjs'
+import { css, pug, observer, themed } from 'startupjs'
 import { type UIRole } from '@startupjs-ui/core'
 import Div from '@startupjs-ui/div'
 import Input from '@startupjs-ui/input'
-import './index.cssx.styl'
 
 type ObjectInputWrapperProps = {
   style: StyleProp<ViewStyle> | undefined
@@ -143,6 +142,7 @@ function ObjectInput ({
     }, children): ReactNode => {
       return pug`
         Div(
+          part='root'
           style=style
           testID=testID
           id=id
@@ -176,6 +176,7 @@ function ObjectInput ({
     'aria-readonly': ariaReadonly
   }, inputs.map(({ key, ...inputProps }, index): ReactNode => pug`
     Input.input(
+      part='input'
       key=key
       styleName={ push: index !== 0, row, column: !row }
       error=errors[key]
@@ -185,6 +186,20 @@ function ObjectInput ({
     )
   `))
 }
+
+css`
+  .input.row {
+    flex: 1;
+  }
+
+  .input.push.column {
+    margin-top: var(--ObjectInput-column-gap);
+  }
+
+  .input.push.row {
+    margin-left: var(--ObjectInput-row-gap);
+  }
+`
 
 function getOrder (order: string[] | undefined, properties: Record<string, any>): string[] {
   return order ?? Object.keys(properties)
