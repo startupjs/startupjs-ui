@@ -1,13 +1,16 @@
 import { type ReactNode } from 'react'
 import { View, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, themed } from 'startupjs'
-import { u } from '@startupjs-ui/core'
-import STYLES from './index.cssx.styl'
+import { css, pug, observer, useCssVariable, themed } from 'startupjs'
 
-const {
-  config: { heights }
-} = STYLES
-const LINE_HEIGHT = u(2)
+const HEIGHT_FALLBACKS = {
+  m: 1,
+  l: 2
+}
+
+function toNumber (value: unknown, fallback: number): number {
+  const number = Number(value)
+  return Number.isFinite(number) ? number : fallback
+}
 
 export default observer(themed('Divider', Divider))
 
@@ -33,8 +36,9 @@ function Divider ({
   variant = 'horizontal',
   testID
 }: DividerProps): ReactNode {
-  const lineWidth = heights[size]
-  const width = LINE_HEIGHT * lines
+  const lineWidth = toNumber(useCssVariable(`--Divider-height-${size}`), HEIGHT_FALLBACKS[size])
+  const lineHeight = toNumber(useCssVariable('--Divider-line-height', 16), 16)
+  const width = lineHeight * lines
   const margin = (width - lineWidth) / 2
   const marginFirstSide = Math.floor(margin)
   const marginSecondSide = Math.ceil(margin)
@@ -54,6 +58,20 @@ function Divider ({
   }
 
   return pug`
-    View.root(style=[extraStyle, style] styleName=[size, variant] testID=testID)
+    View.root(part='root' style=[extraStyle, style] styleName=[size, variant] testID=testID)
   `
 }
+
+css`
+  .root {
+    background-color: var(--Divider-bg);
+  }
+
+  .root.horizontal {
+    width: 100%;
+  }
+
+  .root.vertical {
+    height: 100%;
+  }
+`

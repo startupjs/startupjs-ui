@@ -1,10 +1,11 @@
 import { type ReactNode } from 'react'
 import { Text, type StyleProp, type TextStyle } from 'react-native'
-import { pug, observer, themed } from 'startupjs'
-import { u } from '@startupjs-ui/core'
-import './index.cssx.styl'
+import { css, pug, observer, useCssVariable, themed } from 'startupjs'
 
-const LINE_HEIGHT = u(2)
+function toNumber (value: unknown, fallback: number): number {
+  const number = Number(value)
+  return Number.isFinite(number) ? number : fallback
+}
 
 export const _PropsJsonSchema = {/* BrProps */}
 
@@ -25,10 +26,17 @@ function Br ({
   lines = 1,
   testID
 }: BrProps): ReactNode {
-  const height = half ? LINE_HEIGHT / 2 : LINE_HEIGHT * lines
+  const lineHeight = toNumber(useCssVariable('--Br-line-height', 16), 16)
+  const height = half ? lineHeight / 2 : lineHeight * lines
   return pug`
-    Text.root(style=[{ height }, style] testID=testID)
+    Text.root(part='root' style=[{ height }, style] testID=testID)
   `
 }
 
 export default observer(themed('Br', Br))
+
+css`
+  .root {
+    flex-shrink: 0;
+  }
+`

@@ -244,6 +244,13 @@
   --Div-shadow-3: var(--shadow-md);
   --Div-shadow-4: var(--shadow-lg);
 
+  --Br-line-height: 1rem;
+
+  --Divider-line-height: 1rem;
+  --Divider-height-m: 1px;
+  --Divider-height-l: 2px;
+  --Divider-bg: var(--color-border);
+
   --Button-height-xs: 1rem;
   --Button-height-s: 1.5rem;
   --Button-height-m: 2rem;

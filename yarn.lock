@@ -6277,8 +6277,6 @@ __metadata:
 "@startupjs-ui/br@npm:^0.3.0, @startupjs-ui/br@workspace:packages/br":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/br@workspace:packages/br"
-  dependencies:
-    "@startupjs-ui/core": "npm:^0.3.0"
   peerDependencies:
     react: "*"
     react-native: "*"
@@ -6481,8 +6479,6 @@ __metadata:
 "@startupjs-ui/divider@npm:^0.3.0, @startupjs-ui/divider@workspace:packages/divider":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/divider@workspace:packages/divider"
-  dependencies:
-    "@startupjs-ui/core": "npm:^0.3.0"
   peerDependencies:
     react: "*"
     react-native: "*"
