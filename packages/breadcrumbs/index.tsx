@@ -56,7 +56,7 @@ function Breadcrumbs ({
   }
   const resolvedCurrentColor = useCssVariable(
     '--Breadcrumbs-current-color',
-    'var(--color-secondary)'
+    'var(--color-foreground)'
   ) as string | undefined
   const resolvedLinkColor = useCssVariable(
     '--Breadcrumbs-link-color',

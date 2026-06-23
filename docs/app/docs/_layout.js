@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
-import { View, ScrollView, TextInput, Pressable, Dimensions, Text } from 'react-native'
+import { View, ScrollView, TextInput, Pressable, Dimensions, Text, useColorScheme } from 'react-native'
 import Animated from 'react-native-reanimated'
-import { pug, styl, observer } from 'startupjs'
+import { pug, styl, observer, useCssVariable } from 'startupjs'
 import { Slot, Link, usePathname, Stack } from 'expo-router'
 import GitHubIcon from '../../svg/github-mark.svg'
 import ProjectsSidebar from '../../components/ProjectsSidebar'
@@ -11,9 +11,8 @@ const TABLET_BREAKPOINT = 768
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 
 export default observer(({ children }) => {
-  // TODO: use dynamic color scheme when it's supported in docs (import from 'react-native')
-  // const colorScheme = useColorScheme()
-  const colorScheme = 'light'
+  const colorScheme = useColorScheme() ?? 'light'
+  const placeholderTextColor = useCssVariable('--color-muted-foreground') || '#999'
   const initialWidth = useMemo(() => Dimensions.get('window').width, [])
   const [showSidebar, setShowSidebar] = useState(initialWidth >= TABLET_BREAKPOINT)
   const toggleSidebar = useCallback(() => setShowSidebar(!showSidebar), [showSidebar])
@@ -57,7 +56,7 @@ export default observer(({ children }) => {
             GitHubLink
           TextInput.search(
             placeholder='Search...'
-            placeholderTextColor='#999'
+            placeholderTextColor=placeholderTextColor
             value=search
             onChangeText=setSearch
           )
@@ -79,9 +78,11 @@ export default observer(({ children }) => {
     .root
       flex-direction: row
       flex: 1
+      background-color: var(--color-background)
     .main
       flex: 1
       flex-direction: row
+      background-color: var(--color-background)
     .header
       padding 15px 20px 15px 45px
       flex-direction: row
@@ -89,6 +90,7 @@ export default observer(({ children }) => {
       justify-content: space-between
     .title
       font-family monospace
+      color: var(--color-foreground)
     .toggleSidebar
       $topOffset = 5px // hacky way to align with header
       $togglePadding = 10px
@@ -101,7 +103,7 @@ export default observer(({ children }) => {
       align-items: center
       justify-content: center
       border-radius: 5px
-      background-color: white
+      background-color: var(--color-card)
       box-shadow: 0 2px 4px rgba(0,0,0,0.2)
       user-select: none
       &.showSidebar
@@ -109,14 +111,14 @@ export default observer(({ children }) => {
     .line
       height: 1.5px
       width: 15px
-      background-color: #888
+      background-color: var(--color-muted-foreground)
       margin: 2px 0
     .sidebar
       $sidebarWidth = 200px
       width: $sidebarWidth
       max-width: @width
       animation: slideInLeft 0.5s ease-out
-      background-color white
+      background-color: var(--color-background)
       left 0
       top 0
       bottom 0
@@ -124,7 +126,7 @@ export default observer(({ children }) => {
       position absolute
       display: none
       border-right-width 1px
-      border-right-color #eee
+      border-right-color: var(--color-border)
       &.show
         display: flex
       // sidebar pushes content only if there is not enough space for it
@@ -135,6 +137,7 @@ export default observer(({ children }) => {
         border-right-width 0
     .contentWrapper
       flex: 1
+      background-color: var(--color-background)
       @media (max-width: 767px)
         padding-top: 20px
     .content
@@ -148,7 +151,8 @@ export default observer(({ children }) => {
     .search
       padding 10px 10px
       margin 5px 10px
-      background-color #f5f5f5
+      background-color: var(--color-muted)
+      color: var(--color-foreground)
       border-radius 999px
       outline none
     @keyframes slideInLeft
@@ -209,13 +213,13 @@ const Category = observer(({ children, name, defaultOpen = false, forceOpen = fa
       flex-direction row
       align-items center
       border-bottom-width 2px
-      border-bottom-color #eee
+      border-bottom-color: var(--color-border)
       &.isHover
-        background-color rgba(black, 0.03)
+        background-color: var(--color-accent)
     .title, .arrow
       font-size 12px
       font-weight bold
-      color #aaa
+      color: var(--color-muted-foreground)
       font-family monospace
       letter-spacing 1px
     .arrow
@@ -250,21 +254,21 @@ const Item = observer(({ children, path, setShowSidebar }) => {
     .item
       padding: 10px 20px
       border-radius: 0 999px 999px 0
-      background-color: rgba(black, 0)
+      background-color: transparent
       transition: background-color 0.2s
       &.isHover
         transition: none
-        background-color: rgba(black, 0.03)
+        background-color: var(--color-accent)
       &.isActive
         transition: background-color 0.2s
-        background-color: rgba(black, 0.05)
+        background-color: var(--color-muted)
     .text
       font-family monospace
-      color #777
+      color: var(--color-muted-foreground)
       transition: color 0.2s
       &.isActive
         font-weight bold
-        color black
+        color: var(--color-foreground)
   `
 })
 

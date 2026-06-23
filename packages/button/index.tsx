@@ -47,7 +47,7 @@ export default themed('Button', observer(Button))
 
 export const _PropsJsonSchema = {/* ButtonProps */} // used in docs generation
 export interface ButtonProps {
-  /** color name @default 'secondary' */
+  /** color name @default 'primary' */
   color?: string
   /** variant @default 'outlined' */
   variant?: 'flat' | 'outlined' | 'text'
@@ -85,7 +85,7 @@ function Button ({
   iconStyle,
   textStyle,
   children,
-  color = 'secondary',
+  color = 'primary',
   variant = 'outlined',
   size = 'm',
   shape = 'rounded',

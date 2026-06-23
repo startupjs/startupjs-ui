@@ -129,7 +129,7 @@ function TextInput ({
   const inputRef = ref ?? fallbackRef
 
   const caretColor = useCssVariable('--TextInput-caret-color', 'var(--TextInput-color)') as string
-  const resolvedIconColor = useCssVariable('--TextInput-icon-color', 'var(--color-secondary)') as string
+  const resolvedIconColor = useCssVariable('--TextInput-icon-color', 'var(--color-muted-foreground)') as string
   const placeholderTextColor = useCssVariable('--TextInput-placeholder-color', 'var(--color-muted-foreground)') as string
   const borderWidth = toNumber(useCssVariable('--TextInput-border-width', 1), 1)
   const inputHeight = toNumber(useCssVariable(`--TextInput-height-${size}`), HEIGHT_FALLBACKS[size])

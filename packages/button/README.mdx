@@ -80,13 +80,13 @@ return pug`
 
 ## Colors
 
-The default color is `secondary`. You can change it by passing any CSSX color token, such as `primary`, `success`, `warning`, or `error`, to the `color` prop. Tokens resolve through variables like `--color-primary`.
+The default color is `primary`. You can change it by passing any CSSX color token, such as `secondary`, `success`, `warning`, or `error`, to the `color` prop. Tokens resolve through variables like `--color-primary`.
 
 ```jsx example
 return (
   <Div>
     <Button onPress={() => console.log('pressed')} variant='flat'>
-      Default dark
+      Default
     </Button>
     <Br />
     <Button onPress={() => console.log('pressed')} color='primary' variant='flat'>

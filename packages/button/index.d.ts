@@ -7,7 +7,7 @@ declare const _default: import("react").ComponentType<ButtonProps>;
 export default _default;
 export declare const _PropsJsonSchema: {};
 export interface ButtonProps {
-    /** color name @default 'secondary' */
+    /** color name @default 'primary' */
     color?: string;
     /** variant @default 'outlined' */
     variant?: 'flat' | 'outlined' | 'text';
