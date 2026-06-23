@@ -3,7 +3,6 @@
 
 import { type ReactNode, type RefObject } from 'react';
 import { type StyleProp, type ViewStyle } from 'react-native';
-import './index.cssx.styl';
 declare const _default: import("react").ComponentType<MultiSelectProps>;
 export default _default;
 export declare const _PropsJsonSchema: {};
