@@ -1,6 +1,5 @@
 import React, { useState, useRef, useImperativeHandle, useEffect, type ReactNode, type RefObject } from 'react'
 import {
-  Dimensions,
   UIManager,
   StyleSheet,
   Text,
@@ -9,7 +8,7 @@ import {
   type StyleProp,
   type ViewStyle
 } from 'react-native'
-import { pug, observer, $, themed } from 'startupjs'
+import { css, pug, observer, $, themed, useDidUpdate, useMedia } from 'startupjs'
 
 import Drawer from '@startupjs-ui/drawer'
 import Popover, { type PopoverRef } from '@startupjs-ui/popover'
@@ -17,7 +16,6 @@ import ScrollView from '@startupjs-ui/scroll-view'
 import DropdownCaption from './components/Caption'
 import DropdownItem from './components/Item'
 import { useKeyboard } from './helpers'
-import STYLES from './index.cssx.styl'
 
 export const _PropsJsonSchema = {/* DropdownProps */}
 
@@ -104,12 +102,10 @@ function Dropdown ({
   const refScroll = useRef<any>(null)
   const renderContent = useRef<any[]>([])
   const closeReason = useRef<null | 'toggle' | 'select' | 'dismiss' | 'resize'>(null)
+  const media: any = useMedia()
 
   const $isShow = $(false)
   const [activeInfo, setActiveInfo] = useState<any>(null)
-  const $layoutWidth = $(
-    Math.min(Dimensions.get('window').width, Dimensions.get('screen').width)
-  )
 
   const [selectIndexValue] = useKeyboard({
     value,
@@ -122,24 +118,20 @@ function Dropdown ({
     onChangeShow: v => { handleVisibleChange(v) }
   })
 
-  const isPopover = !hasDrawer || ($layoutWidth.get() > STYLES.media.tablet)
-
-  function handleWidthChange () {
-    closeReason.current = 'resize'
-    popoverRef.current?.close?.()
-    $isShow.set(false)
-    $layoutWidth.set(Math.min(Dimensions.get('window').width, Dimensions.get('screen').width))
-  }
+  const isPopover = !hasDrawer || media.tablet
 
   useEffect(() => {
-    const listener = Dimensions.addEventListener('change', handleWidthChange)
-
     return () => {
       $isShow.del()
-      listener?.remove?.()
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useDidUpdate(() => {
+    closeReason.current = 'resize'
+    popoverRef.current?.close?.()
+    $isShow.set(false)
+  }, [isPopover])
 
   useImperativeHandle(ref, () => ({
     open: () => {
@@ -348,3 +340,52 @@ ObservedDropdown.Caption = DropdownCaption
 ObservedDropdown.Item = DropdownItem
 
 export default ObservedDropdown
+
+css`
+  .dropdown.list {
+    padding: var(--Dropdown-list-padding);
+    padding-bottom: var(--Dropdown-list-padding-bottom);
+  }
+
+  .dropdown.buttons {
+    max-height: 100%;
+  }
+
+  .case.buttons {
+    margin: var(--Dropdown-buttons-case-margin);
+    border-radius: var(--Dropdown-buttons-radius);
+    background-color: var(--Dropdown-buttons-bg);
+  }
+
+  .caption {
+    align-self: flex-start;
+  }
+
+  .captionText.list {
+    padding: var(--Dropdown-list-caption-padding);
+    font-size: var(--Dropdown-list-caption-font-size);
+    font-family: var(--Dropdown-list-caption-font-family);
+    font-weight: var(--Dropdown-list-caption-font-weight);
+  }
+
+  .button.buttons {
+    justify-content: center;
+    align-items: center;
+    margin: var(--Dropdown-buttons-cancel-margin);
+    padding: var(--Dropdown-buttons-cancel-padding);
+    border-radius: var(--Dropdown-buttons-radius);
+    background-color: var(--Dropdown-buttons-bg);
+  }
+
+  .popover {
+    border-radius: var(--Dropdown-popover-radius);
+    box-shadow: var(--Dropdown-popover-shadow);
+  }
+
+  .drawerReset {
+    background-color: transparent;
+    height: auto;
+    box-shadow: none;
+    border-radius: 0;
+  }
+`
