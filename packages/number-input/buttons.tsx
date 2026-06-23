@@ -1,13 +1,12 @@
 import { type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, themed } from 'startupjs'
+import { css, pug, observer, themed } from 'startupjs'
 
 import Button from '@startupjs-ui/button'
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons/faAngleDown'
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons/faAngleUp'
 import { faMinus } from '@fortawesome/free-solid-svg-icons/faMinus'
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus'
-import './index.cssx.styl'
 
 interface NumberInputButtonsProps {
   buttonStyle?: StyleProp<ViewStyle>
@@ -29,6 +28,7 @@ function NumberInputButtons ({
   return pug`
     if mode !== 'none'
       Button.input-button.increase(
+        part='button'
         style=buttonStyle
         styleName=buttonStyleNames
         focusable=false
@@ -39,6 +39,7 @@ function NumberInputButtons ({
         onPress=() => onIncrement?.(1)
       )
       Button.input-button.decrease(
+        part='button'
         style=buttonStyle
         styleName=buttonStyleNames
         focusable=false
@@ -52,3 +53,47 @@ function NumberInputButtons ({
 }
 
 export default observer(themed('NumberInput', NumberInputButtons))
+
+css`
+  .input-button {
+    position: absolute;
+    border-color: var(--NumberInput-button-border-color);
+  }
+
+  .input-button.vertical {
+    right: 0;
+    height: 50%;
+  }
+
+  .input-button.vertical.increase {
+    top: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .input-button.vertical.decrease {
+    bottom: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  .input-button.horizontal {
+    top: 0;
+    bottom: 0;
+    height: auto;
+  }
+
+  .input-button.horizontal.increase {
+    right: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .input-button.horizontal.decrease {
+    left: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+`

@@ -12,13 +12,12 @@ import {
   type TextStyle,
   type ViewStyle
 } from 'react-native'
-import { pug, observer, themed } from 'startupjs'
+import { css, pug, observer, themed } from 'startupjs'
 
 import Div from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
 import TextInput from '@startupjs-ui/text-input'
 import Buttons from './buttons'
-import './index.cssx.styl'
 
 const IS_IOS = Platform.OS === 'ios'
 
@@ -185,13 +184,15 @@ function NumberInput ({
     children: ReactNode
   ): ReactNode => {
     return pug`
-      Div(style=wrapperStyle)
+      Div(part='root' style=wrapperStyle)
         Div.input-wrapper(
+          part='wrapper'
           styleName=[extraStyleName, { readonly }]
           row
         )
           if units
             Span.input-units(
+              part='units'
               styleName=[size, extraStyleName, { readonly }]
             )
               = units
@@ -246,3 +247,74 @@ function NumberInput ({
 export default observer(
   themed('NumberInput', NumberInput)
 )
+
+css`
+  .input-wrapper {
+    flex-grow: 1;
+  }
+
+  .input-wrapper.right {
+    flex-direction: row-reverse;
+  }
+
+  .input-wrapper.readonly {
+    align-self: flex-start;
+  }
+
+  .input-units {
+    align-self: center;
+  }
+
+  .input-units.l {
+    font-size: var(--NumberInput-units-font-size-l);
+    line-height: var(--NumberInput-units-line-height-l);
+  }
+
+  .input-units.readonly.left {
+    margin-right: var(--NumberInput-units-readonly-gap);
+  }
+
+  .input-units.readonly.right {
+    margin-left: var(--NumberInput-units-readonly-gap);
+  }
+
+  .input-container {
+    flex-grow: 1;
+    flex-shrink: 1;
+  }
+
+  .input-container.left {
+    margin-left: var(--NumberInput-units-gap);
+  }
+
+  .input-container.right {
+    margin-right: var(--NumberInput-units-gap);
+  }
+
+  .input-input.vertical.l {
+    padding-right: var(--NumberInput-button-padding-l);
+  }
+
+  .input-input.vertical.m {
+    padding-right: var(--NumberInput-button-padding-m);
+  }
+
+  .input-input.vertical.s {
+    padding-right: var(--NumberInput-button-padding-s);
+  }
+
+  .input-input.horizontal.l {
+    padding-left: var(--NumberInput-button-padding-l);
+    padding-right: var(--NumberInput-button-padding-l);
+  }
+
+  .input-input.horizontal.m {
+    padding-left: var(--NumberInput-button-padding-m);
+    padding-right: var(--NumberInput-button-padding-m);
+  }
+
+  .input-input.horizontal.s {
+    padding-left: var(--NumberInput-button-padding-s);
+    padding-right: var(--NumberInput-button-padding-s);
+  }
+`

@@ -510,6 +510,15 @@
   --TextInput-icon-padding-l: 2.5rem;
   --TextInput-icon-offset: calc(var(--spacing) * 2);
 
+  --NumberInput-button-border-color: var(--TextInput-border-color);
+  --NumberInput-units-font-size-l: var(--text-base);
+  --NumberInput-units-line-height-l: 1.5rem;
+  --NumberInput-units-readonly-gap: 0.25rem;
+  --NumberInput-units-gap: 0.5rem;
+  --NumberInput-button-padding-l: 3rem;
+  --NumberInput-button-padding-m: 2.5rem;
+  --NumberInput-button-padding-s: 2rem;
+
   --Button-height-xs: 1rem;
   --Button-height-s: 1.5rem;
   --Button-height-m: 2rem;

@@ -3,7 +3,6 @@
 
 import { type RefObject } from 'react';
 import { type StyleProp, type TextStyle, type ViewStyle } from 'react-native';
-import './index.cssx.styl';
 export declare const _PropsJsonSchema: {};
 export interface NumberInputProps {
     /** Custom styles for the wrapper */
