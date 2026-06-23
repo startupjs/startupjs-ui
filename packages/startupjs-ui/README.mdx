@@ -11,7 +11,7 @@ import Form from 'startupjs-ui/Form'
 
 ## UiProvider
 
-UiProvider wires up CSSX theming and shared UI infrastructure (portal, toasts, dialogs). Its default theme is a CSSX CSS file with `:root` CSS variables, OKLCH palette channels, and semantic aliases. It is plugged in automatically as a plugin into `StartupjsProvider`, so the only thing you need at the root of your app is:
+UiProvider wires up CSSX theming and shared UI infrastructure (portal, toasts, dialogs). Its defaults are layered from CSSX Tailwind tokens, CSSX shadcn semantic tokens, and StartupJS UI component tokens. It is plugged in automatically as a plugin into `StartupjsProvider`, so the only thing you need at the root of your app is:
 
 ```jsx
 import { StartupjsProvider } from 'startupjs'
