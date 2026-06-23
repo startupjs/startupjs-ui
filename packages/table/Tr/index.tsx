@@ -16,6 +16,7 @@ export interface TrProps extends DivProps {
 function Tr ({ style, children, ...props }: TrProps): ReactNode {
   return pug`
     Div(
+      part='root'
       ...props
       style=style
       row

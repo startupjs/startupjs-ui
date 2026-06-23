@@ -1,8 +1,6 @@
 import { type ReactNode } from 'react'
 import { View, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, themed } from 'startupjs'
-
-import './index.cssx.styl'
+import { css, pug, observer, themed } from 'startupjs'
 
 export const _PropsJsonSchema = {/* TableProps */} // used in docs generation
 
@@ -17,8 +15,14 @@ export interface TableProps {
 
 function Table ({ style, children, testID }: TableProps): ReactNode {
   return pug`
-    View.root(style=style testID=testID)= children
+    View.root(part='root' style=style testID=testID)= children
   `
 }
 
 export default observer(themed('Table', Table))
+
+css`
+  .root {
+    width: 100%;
+  }
+`

@@ -1,9 +1,8 @@
 import { type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, themed } from 'startupjs'
+import { css, pug, observer, themed } from 'startupjs'
 
 import Div, { type DivProps } from '@startupjs-ui/div'
-import './index.cssx.styl'
 
 export const _PropsJsonSchema = {/* TheadProps */} // used in docs generation
 
@@ -24,6 +23,7 @@ function Thead ({
 }: TheadProps): ReactNode {
   return pug`
     Div(
+      part='root'
       ...props
       style=[style]
       styleName=[{ bordered }]
@@ -32,3 +32,10 @@ function Thead ({
 }
 
 export default observer(themed('Thead', Thead))
+
+css`
+  .bordered {
+    border-color: var(--Table-border-color);
+    border-bottom-width: var(--Table-border-width);
+  }
+`

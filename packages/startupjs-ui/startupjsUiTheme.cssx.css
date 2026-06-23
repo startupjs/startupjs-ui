@@ -394,6 +394,11 @@
   --Rating-star-color: var(--color-muted-foreground);
   --Rating-star-active-color: var(--color-warning);
 
+  --Table-border-color: var(--color-border);
+  --Table-border-width: 1px;
+  --Table-cell-padding-y: 0.5rem;
+  --Table-cell-padding-x: 1rem;
+
   --TextInput-color: var(--color-foreground);
   --TextInput-caret-color: var(--TextInput-color);
   --TextInput-icon-color: var(--color-secondary);

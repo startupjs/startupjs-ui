@@ -16,6 +16,7 @@ export interface TbodyProps extends DivProps {
 function Tbody ({ style, children, ...props }: TbodyProps): ReactNode {
   return pug`
     Div(
+      part='root'
       ...props
       style=style
     )= children

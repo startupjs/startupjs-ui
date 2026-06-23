@@ -1,10 +1,9 @@
 import { useEffect, type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, $, themed } from 'startupjs'
+import { css, pug, observer, $, themed } from 'startupjs'
 
 import Div, { type DivProps } from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
-import './index.cssx.styl'
 
 export const _PropsJsonSchema = {/* ThProps */} // used in docs generation
 
@@ -39,6 +38,7 @@ function Th ({
 
   return pug`
     Div.root(
+      part='root'
       ...props
       style=style
     )
@@ -54,3 +54,10 @@ function Th ({
 }
 
 export default observer(themed('Th', Th))
+
+css`
+  .root {
+    padding: var(--Table-cell-padding-y) var(--Table-cell-padding-x);
+    flex: 1;
+  }
+`
