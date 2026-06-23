@@ -390,6 +390,18 @@
   --MdxCode-line-min-height: 1.25rem;
   --MdxCode-font-family: var(--font-mono);
 
+  --Select-modal-middle-height: 3rem;
+  --Select-modal-middle-padding-right: 1rem;
+  --Select-modal-middle-bg: var(--color-muted);
+  --Select-modal-middle-border-width: 1px;
+  --Select-modal-middle-border-color: var(--color-border);
+  --Select-modal-bottom-bg: var(--color-secondary);
+  --Select-done-color: var(--color-primary);
+  --Select-done-font-family: var(--font-sans);
+  --Select-done-font-weight: var(--font-weight-semibold);
+  --Select-done-font-size: var(--text-base);
+  --Select-done-line-height: 1.5rem;
+
   --Toast-max-width: 20rem;
   --Toast-min-width: 15rem;
   --Toast-screen-padding: 1rem;

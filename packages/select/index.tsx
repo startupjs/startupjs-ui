@@ -4,14 +4,9 @@ import TextInput, { type UITextInputProps } from '@startupjs-ui/text-input'
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons/faAngleDown'
 import Wrapper from './Wrapper'
 import { getLabelFromValue, type SelectOption } from './Wrapper/helpers'
-import STYLES from './index.cssx.styl'
 
-const {
-  config: {
-    emptyValueLabel: defaultEmptyValueLabel,
-    multiline: defaultMultiline
-  }
-} = STYLES
+const defaultEmptyValueLabel = null
+const defaultMultiline = false
 
 function isConfigEnabled (value: unknown): boolean {
   return value !== false && value !== 0 && value !== '0'
