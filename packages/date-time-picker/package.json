@@ -12,7 +12,6 @@
     "@react-native-community/datetimepicker": "^8.4.4",
     "@startupjs-ui/abstract-popover": "^0.3.0",
     "@startupjs-ui/button": "^0.3.7",
-    "@startupjs-ui/core": "^0.3.0",
     "@startupjs-ui/div": "^0.3.7",
     "@startupjs-ui/divider": "^0.3.0",
     "@startupjs-ui/drawer": "^0.3.0",

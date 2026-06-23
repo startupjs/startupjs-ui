@@ -6426,7 +6426,6 @@ __metadata:
     "@react-native-community/datetimepicker": "npm:^8.4.4"
     "@startupjs-ui/abstract-popover": "npm:^0.3.0"
     "@startupjs-ui/button": "npm:^0.3.7"
-    "@startupjs-ui/core": "npm:^0.3.0"
     "@startupjs-ui/div": "npm:^0.3.7"
     "@startupjs-ui/divider": "npm:^0.3.0"
     "@startupjs-ui/drawer": "npm:^0.3.0"
