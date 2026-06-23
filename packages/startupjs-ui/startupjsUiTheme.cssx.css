@@ -373,6 +373,13 @@
   --Avatar-status-online-bg: var(--color-success);
   --Avatar-status-away-bg: var(--color-warning);
 
+  --Pagination-item-size: 2rem;
+  --Pagination-item-padding-x: 0.5rem;
+  --Pagination-page-selected-color: var(--color-primary);
+  --Pagination-status-gap: 0.5rem;
+  --Pagination-icon-color: var(--color-secondary);
+  --Pagination-icon-disabled-color: var(--color-muted-foreground);
+
   --TextInput-color: var(--color-foreground);
   --TextInput-caret-color: var(--TextInput-color);
   --TextInput-icon-color: var(--color-secondary);

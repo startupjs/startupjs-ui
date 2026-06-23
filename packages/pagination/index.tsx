@@ -1,6 +1,6 @@
 import React, { type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, themed } from 'startupjs'
+import { css, pug, observer, themed } from 'startupjs'
 
 import Div from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
@@ -10,7 +10,6 @@ import { faAngleDoubleLeft } from '@fortawesome/free-solid-svg-icons/faAngleDoub
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons/faAngleRight'
 import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons/faAngleDoubleRight'
 import usePagination from './usePagination'
-import './index.cssx.styl'
 
 const ICONS = {
   first: faAngleDoubleLeft,
@@ -26,6 +25,14 @@ export const _PropsJsonSchema = {/* PaginationProps */} // used in docs generati
 export interface PaginationProps {
   /** Custom styles applied to the root container */
   style?: StyleProp<ViewStyle>
+  /** Custom styles applied to each navigation item */
+  itemStyle?: StyleProp<ViewStyle>
+  /** Custom styles applied to page labels */
+  pageStyle?: StyleProp<any>
+  /** Custom styles applied to navigation icons */
+  iconStyle?: StyleProp<any>
+  /** Custom styles applied to the status block */
+  statusStyle?: StyleProp<ViewStyle>
   /** Display variant controlling layout @default 'full' */
   variant?: 'full' | 'compact'
   /** Zero-based page index */
@@ -110,34 +117,65 @@ function Pagination ({
   })
 
   return pug`
-    Div(row style=style testID=testID)
+    Div(row part='root' style=style testID=testID)
       each item, index in items
         React.Fragment(key=index)
           - const { type, value, selected, disabled, ...itemProps } = item
           if type === 'page'
             Div.item(
+              part='item'
               variant='highlight'
               shape='circle'
               disabled=disabled
               ...itemProps
             )
-              Span.page(styleName={ selected })= value + 1
+              Span.page(part='page' styleName={ selected })= value + 1
           else if ['first', 'last', 'previous', 'next'].includes(type)
             Div.item(
+              part='item'
               variant='highlight'
               shape='circle'
               disabled=disabled
               ...itemProps
             )
               Icon.icon(
+                part='icon'
                 styleName={ disabled }
                 icon=ICONS[type]
               )
           else if ~type.indexOf('ellipsis')
-            Div.item
-              Span ...
+            Div.item(part='item')
+              Span.page(part='page') ...
           else if type === 'status'
-            Div.status(vAlign='center' row)
+            Div.status(part='status' vAlign='center' row)
               Span= value
     `
 }
+
+css`
+  .item {
+    min-width: var(--Pagination-item-size);
+    height: var(--Pagination-item-size);
+    align-items: center;
+    justify-content: center;
+    padding-left: var(--Pagination-item-padding-x);
+    padding-right: var(--Pagination-item-padding-x);
+  }
+
+  .page.selected {
+    color: var(--Pagination-page-selected-color);
+  }
+
+  .status {
+    margin-left: var(--Pagination-status-gap);
+    margin-right: var(--Pagination-status-gap);
+  }
+
+  .icon {
+    color: var(--Pagination-icon-color);
+  }
+
+  .icon.disabled {
+    color: var(--Pagination-icon-disabled-color);
+  }
+`
