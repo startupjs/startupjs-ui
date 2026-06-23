@@ -335,6 +335,8 @@
   --Item-image-radius: 9999px;
   --Item-part-gap: 0.5rem;
 
+  --Layout-bg: var(--color-background);
+
   --TextInput-color: var(--color-foreground);
   --TextInput-caret-color: var(--TextInput-color);
   --TextInput-icon-color: var(--color-secondary);

@@ -1,10 +1,6 @@
 import { type ReactNode } from 'react'
 import { SafeAreaView, StatusBar, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, themed } from 'startupjs'
-
-import STYLES from './index.cssx.styl'
-
-const { config: { bgColor } } = STYLES
+import { css, pug, observer, useCssVariable, themed } from 'startupjs'
 
 export const _PropsJsonSchema = {/* LayoutProps */}
 
@@ -18,10 +14,12 @@ export interface LayoutProps {
 }
 
 function Layout ({ style, children, testID }: LayoutProps): ReactNode {
+  const backgroundColor = useCssVariable('--Layout-bg', 'var(--color-background)')
+
   return pug`
     SafeAreaView.root(part='root' style=style testID=testID)
       StatusBar(
-        backgroundColor=bgColor
+        backgroundColor=backgroundColor
         barStyle='dark-content'
       )
       = children
@@ -29,3 +27,11 @@ function Layout ({ style, children, testID }: LayoutProps): ReactNode {
 }
 
 export default observer(themed('Layout', Layout))
+
+css`
+  .root {
+    height: 100%;
+    background-color: var(--Layout-bg);
+    overflow: hidden;
+  }
+`
