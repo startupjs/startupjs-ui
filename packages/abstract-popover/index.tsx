@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect, useRef, useMemo, type ReactNode } fro
 import {
   Animated, Easing, Dimensions, StyleSheet, View, type LayoutChangeEvent, type StyleProp, type ViewStyle
 } from 'react-native'
-import { pug, observer, themed } from 'startupjs'
+import { css, pug, observer, themed } from 'startupjs'
 
 import Portal from '@startupjs-ui/portal'
 import getGeometry, { type PopoverGeometry } from './getGeometry'
@@ -12,7 +12,6 @@ import {
   type AbstractPopoverPlacement as Placement,
   type AbstractPopoverPosition as Position
 } from './constants'
-import './index.cssx.styl'
 
 export const _PropsJsonSchema = {/* AbstractPopoverProps */}
 
@@ -21,6 +20,8 @@ export interface AbstractPopoverProps {
   styleName?: any
   /** Custom styles for popover container */
   style?: StyleProp<ViewStyle>
+  /** Custom styles for popover arrow */
+  arrowStyle?: StyleProp<ViewStyle>
   /** Ref to the anchor element (must support `measure`) */
   anchorRef: any
   /** Show/hide popover */
@@ -99,6 +100,7 @@ function AbstractPopover ({
 const Tether = observer(function TetherComponent ({
   styleName,
   style,
+  arrowStyle,
   anchorRef,
   visible,
   position = 'bottom',
@@ -199,8 +201,17 @@ const Tether = observer(function TetherComponent ({
     rootStyle.width = geometry.width
   }
 
+  const arrowColorStyle = {
+    borderTopColor: flattenedStyle?.backgroundColor
+  }
+  const arrowGeometryStyle = geometry && {
+    left: geometry.arrowLeft,
+    top: geometry.arrowTop
+  }
+
   const popover = pug`
     Animated.View.root(
+      part='root'
       style=[flattenedStyle, rootStyle]
       styleName=styleName
       onLayout=calculateGeometry
@@ -208,11 +219,8 @@ const Tether = observer(function TetherComponent ({
     )
       if arrow && !!geometry
         View.arrow(
-          style={
-            borderTopColor: flattenedStyle?.backgroundColor,
-            left: geometry.arrowLeft,
-            top: geometry.arrowTop
-          }
+          part='arrow'
+          style=[arrowColorStyle, arrowStyle, arrowGeometryStyle]
           styleName=[geometry.position]
         )
       = children
@@ -225,3 +233,29 @@ const Tether = observer(function TetherComponent ({
 })
 
 export default observer(themed('AbstractPopover', AbstractPopover))
+
+css`
+  .root {
+    position: absolute;
+    z-index: var(--AbstractPopover-z-index);
+  }
+
+  .arrow {
+    position: absolute;
+    border-width: var(--AbstractPopover-arrow-size);
+    border-style: solid;
+    border-color: transparent;
+  }
+
+  .arrow.left {
+    transform: rotate(-90deg);
+  }
+
+  .arrow.right {
+    transform: rotate(90deg);
+  }
+
+  .arrow.bottom {
+    transform: rotate(180deg);
+  }
+`

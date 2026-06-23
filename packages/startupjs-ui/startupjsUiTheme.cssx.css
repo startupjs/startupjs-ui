@@ -257,6 +257,9 @@
   --Div-shadow-3: var(--shadow-md);
   --Div-shadow-4: var(--shadow-lg);
 
+  --AbstractPopover-z-index: 1000;
+  --AbstractPopover-arrow-size: 0.5rem;
+
   --Br-line-height: 1rem;
 
   --Divider-line-height: 1rem;
