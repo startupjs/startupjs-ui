@@ -184,7 +184,12 @@
   --color-border-attention: var(--color-attention);
   --color-border-main-subtle: var(--palette-main-3);
   --color-border-main-strong-alt: var(--palette-main-1);
-  --AutoSuggest-itemBg: color-mix(in srgb, var(--palette-main-9) 5%, transparent);
+  --AutoSuggest-loader-min-height: 4rem;
+  --AutoSuggest-content-radius: var(--radius-md);
+  --AutoSuggest-item-bg: color-mix(in srgb, var(--color-foreground) 5%, transparent);
+  --AutoSuggest-attachment-bg: var(--color-popover);
+  --AutoSuggest-attachment-radius: var(--radius-md);
+  --AutoSuggest-attachment-shadow: var(--shadow-md);
   --Carousel-arrowWrapperBg: color-mix(in srgb, var(--palette-main-9) 10%, transparent);
   --Checkbox-readonly-font-size: 1rem;
   --Checkbox-readonly-line-height: 1rem;
