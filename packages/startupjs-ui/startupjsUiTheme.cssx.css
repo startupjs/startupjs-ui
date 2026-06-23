@@ -273,6 +273,25 @@
   --Progress-label-font-size: var(--text-xs);
   --Progress-label-line-height: 1rem;
 
+  --Breadcrumbs-current-color: var(--color-secondary);
+  --Breadcrumbs-link-color: var(--color-muted-foreground);
+  --Breadcrumbs-separator-color: var(--color-muted-foreground);
+  --Breadcrumbs-icon-gap: calc(var(--spacing) * 1);
+  --Breadcrumbs-icon-gap-large: calc(var(--spacing) * 2);
+  --Breadcrumbs-separator-gap: 2px;
+  --Breadcrumbs-font-size-xs: 0.625rem;
+  --Breadcrumbs-line-height-xs: 0.875rem;
+  --Breadcrumbs-font-size-s: var(--text-xs);
+  --Breadcrumbs-line-height-s: 1rem;
+  --Breadcrumbs-font-size-m: var(--text-sm);
+  --Breadcrumbs-line-height-m: 1.25rem;
+  --Breadcrumbs-font-size-l: var(--text-base);
+  --Breadcrumbs-line-height-l: 1.5rem;
+  --Breadcrumbs-font-size-xl: var(--text-xl);
+  --Breadcrumbs-line-height-xl: 1.75rem;
+  --Breadcrumbs-font-size-xxl: var(--text-2xl);
+  --Breadcrumbs-line-height-xxl: 2rem;
+
   --TextInput-color: var(--color-foreground);
   --TextInput-caret-color: var(--TextInput-color);
   --TextInput-icon-color: var(--color-secondary);

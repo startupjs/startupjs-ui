@@ -169,7 +169,17 @@ By default, clicking a breadcrumb pushes a new entry onto the browser history st
 
 ## Custom styles
 
-Use the `style` prop to apply custom styles to the root container element.
+Use CSS variables for theme-level customization:
+
+```css
+:root {
+  --Breadcrumbs-current-color: var(--color-primary);
+  --Breadcrumbs-link-color: var(--color-muted-foreground);
+  --Breadcrumbs-separator-color: var(--color-muted-foreground);
+}
+```
+
+Use `Breadcrumbs` tag overrides and `Breadcrumbs:part(root)` for global overrides, or the `style` prop for one-off root styles.
 
 ## Sandbox
 
