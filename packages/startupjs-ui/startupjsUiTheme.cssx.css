@@ -251,6 +251,15 @@
   --Divider-height-l: 2px;
   --Divider-bg: var(--color-border);
 
+  --Progress-width: 0.25rem;
+  --Progress-duration: 300;
+  --Progress-track-bg: var(--color-muted);
+  --Progress-filler-bg: var(--color-success);
+  --Progress-circular-size: 2.5rem;
+  --Progress-label-margin-top: 2px;
+  --Progress-label-font-size: var(--text-xs);
+  --Progress-label-line-height: 1rem;
+
   --Button-height-xs: 1rem;
   --Button-height-s: 1.5rem;
   --Button-height-m: 2rem;

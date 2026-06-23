@@ -1,11 +1,7 @@
 import { useState, type ReactNode } from 'react'
 import { View, type StyleProp, type ViewStyle } from 'react-native'
 import Svg, { Circle } from 'react-native-svg'
-import { pug, observer, u, useCssVariable, themed } from 'startupjs'
-
-import STYLE from './index.cssx.styl'
-
-const { config: { filler: { backgroundColor, color } } } = STYLE
+import { pug, observer, useCssVariable, themed } from 'startupjs'
 
 interface CircleFillerProps {
   style?: StyleProp<ViewStyle>
@@ -13,31 +9,27 @@ interface CircleFillerProps {
   width?: number
 }
 
-function getCssVarName (value: string) {
-  const match = String(value || '').match(/^var\((--[^)]+)\)$/)
-  return match?.[1]
+function toNumber (value: unknown, fallback: number): number {
+  const number = Number(value)
+  return Number.isFinite(number) ? number : fallback
 }
 
 function CircleFiller ({
   style,
   value = 0,
-  width = u(0.5)
+  width = 4
 }: CircleFillerProps): ReactNode {
   const [layoutSize, setLayoutSize] = useState(0)
-  const trackColorVar = getCssVarName(backgroundColor)
-  const valueColorVar = getCssVarName(color)
-  const resolvedTrackColor = useCssVariable(trackColorVar ?? '--__startupjs-ui-unused-color') as string | undefined
-  const resolvedValueColor = useCssVariable(valueColorVar ?? '--__startupjs-ui-unused-color') as string | undefined
+  const defaultDiameter = toNumber(useCssVariable('--Progress-circular-size', 40), 40)
+  const trackColor = useCssVariable('--Progress-track-bg', 'var(--color-muted)') as string
+  const valueColor = useCssVariable('--Progress-filler-bg', 'var(--color-success)') as string
 
   const normalizedValue = Math.max(0, Math.min(100, value))
-  const diameter = layoutSize > 0 ? layoutSize : u(5)
+  const diameter = layoutSize > 0 ? layoutSize : defaultDiameter
   const strokeWidth = Math.max(2, Number(width) || 2)
   const radius = (diameter - strokeWidth) / 2
   const circumference = 2 * Math.PI * radius
   const strokeDashoffset = circumference * (1 - normalizedValue / 100)
-
-  const trackColor = resolvedTrackColor ?? backgroundColor
-  const valueColor = resolvedValueColor ?? color
 
   return pug`
     View(

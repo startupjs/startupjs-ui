@@ -1,12 +1,16 @@
 import { type ReactNode } from 'react'
 import { View, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, u, themed } from 'startupjs'
+import { css, pug, observer, useCssVariable, themed } from 'startupjs'
 
 import Div, { type DivProps } from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
 import Filler from './filler'
 import CircleFiller from './circleFiller'
-import './index.cssx.styl'
+
+function toNumber (value: unknown, fallback: number): number {
+  const number = Number(value)
+  return Number.isFinite(number) ? number : fallback
+}
 
 export default observer(themed('Progress', Progress))
 
@@ -23,7 +27,7 @@ export interface ProgressProps {
   variant?: 'linear' | 'circular'
   /** Shape of the progress track @default 'rounded' */
   shape?: DivProps['shape']
-  /** Height of the progress bar @default u(0.5) */
+  /** Height of the progress bar @default 4 */
   width?: number
   /** Style overrides for the progress track part */
   progressStyle?: DivProps['style']
@@ -39,28 +43,48 @@ function Progress ({
   children,
   variant = 'linear',
   shape = 'rounded',
-  width = u(0.5),
+  width,
+  progressStyle,
+  fillerStyle,
   testID
 }: ProgressProps): ReactNode {
+  const defaultWidth = toNumber(useCssVariable('--Progress-width', 4), 4)
+  const resolvedWidth = width ?? defaultWidth
   const isCircular = variant === 'circular'
-  const extraStyle = isCircular ? {} : { height: width }
+  const extraStyle = isCircular ? {} : { height: resolvedWidth }
 
   return pug`
-    View(style=style testID=testID)
+    View(part='root' style=style testID=testID)
       Div.progress(
         part='progress'
-        style=extraStyle
+        style=[extraStyle, progressStyle]
         styleName=[variant]
         shape=shape
       )
         //- To normalize value pass value=Math.min(value, 100)
         if isCircular
-          CircleFiller(part='filler' style=extraStyle value=value width=width)
+          CircleFiller(part='filler' style=[extraStyle, fillerStyle] value=value width=resolvedWidth)
         else
-          Filler(part='filler' style=extraStyle value=value)
+          Filler(part='filler' style=[extraStyle, fillerStyle] value=value)
       if typeof children === 'string'
         Span.label= children
       else
         = children
   `
 }
+
+css`
+  .progress {
+    overflow: hidden;
+  }
+
+  .progress.linear {
+    background-color: var(--Progress-track-bg);
+  }
+
+  .label {
+    margin-top: var(--Progress-label-margin-top);
+    font-size: var(--Progress-label-font-size);
+    line-height: var(--Progress-label-line-height);
+  }
+`
