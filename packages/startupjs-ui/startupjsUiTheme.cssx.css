@@ -390,6 +390,10 @@
   --User-description-font-size-l: var(--text-sm);
   --User-description-line-height-l: 1.25rem;
 
+  --Rating-gap: 0.5rem;
+  --Rating-star-color: var(--color-muted-foreground);
+  --Rating-star-active-color: var(--color-warning);
+
   --TextInput-color: var(--color-foreground);
   --TextInput-caret-color: var(--TextInput-color);
   --TextInput-icon-color: var(--color-secondary);
