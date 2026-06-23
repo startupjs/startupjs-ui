@@ -3,7 +3,6 @@
 
 import { type ReactNode, type RefObject } from 'react';
 import { type TextStyle, type StyleProp, type TextProps } from 'react-native';
-import './index.cssx.styl';
 declare const _default: import("react").ComponentType<SpanProps>;
 export default _default;
 export declare const _PropsJsonSchema: {};

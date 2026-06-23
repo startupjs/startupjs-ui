@@ -3,8 +3,8 @@ import {
   View, Pressable, Platform, StyleSheet, type StyleProp, type ViewStyle, type ViewProps
 } from 'react-native'
 import Animated from 'react-native-reanimated'
-import { pug, observer, u, useCssVariable, useDidUpdate, themed } from 'startupjs'
-import { colorToRGBA, type UIRole } from '@startupjs-ui/core'
+import { css, pug, observer, getCssColor, useCssVariable, useDidUpdate, themed } from 'startupjs'
+import { type UIRole } from '@startupjs-ui/core'
 import {
   TextStyleContext,
   getInheritedTextStyle,
@@ -13,7 +13,6 @@ import {
 } from '@startupjs-ui/span/textStyleContext'
 import Span from '@startupjs-ui/span'
 import { useDecorateTooltipProps } from './useTooltip'
-import STYLES from './index.cssx.styl'
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 
@@ -23,13 +22,6 @@ const DEPRECATED_PUSHED_VALUES = ['xs', 'xl', 'xxl']
 const PRESSABLE_PROPS = ['onPress', 'onLongPress', 'onPressIn', 'onPressOut']
 const isWeb = Platform.OS === 'web'
 const isNative = Platform.OS !== 'web'
-
-const {
-  config: {
-    defaultHoverOpacity,
-    defaultActiveOpacity
-  }
-} = STYLES
 
 export default observer(themed('Div', Div))
 
@@ -153,8 +145,11 @@ function Div ({
   const isPressable = hasPressHandler(props)
   const fallbackRef = useRef<any>(null)
   const rootRef = ref ?? fallbackRef
-  const defaultHoverBg = useCssVariable('--Div-hoverBg') as string | undefined
-  const defaultActiveBg = useCssVariable('--Div-activeBg') as string | undefined
+  const spacing = toNumber(useCssVariable('--spacing', 4), 4)
+  const defaultHoverOpacity = toNumber(useCssVariable('--Div-hover-opacity', 0.8), 0.8)
+  const defaultActiveOpacity = toNumber(useCssVariable('--Div-active-opacity', 0.5), 0.5)
+  const defaultHoverBg = useCssVariable('--Div-hover-bg') as string | undefined
+  const defaultActiveBg = useCssVariable('--Div-active-bg') as string | undefined
 
   let pressableStyle: StyleProp<ViewStyle> = {}
   let deferredRole: string | undefined
@@ -173,7 +168,9 @@ function Div ({
     feedback,
     webNativeButton: _webNativeButton,
     defaultHoverBg,
-    defaultActiveBg
+    defaultActiveBg,
+    defaultHoverOpacity,
+    defaultActiveOpacity
   }))
 
   ;({
@@ -218,7 +215,7 @@ function Div ({
     Component.root(
       ref=rootRef
       style=[
-        gap ? { gap: u(gap) } : undefined,
+        gap ? { gap: gap * 2 * spacing } : undefined,
         style,
         pressableStyle
       ]
@@ -370,7 +367,9 @@ function useDecoratePressableProps ({
   feedback,
   webNativeButton,
   defaultHoverBg,
-  defaultActiveBg
+  defaultActiveBg,
+  defaultHoverOpacity,
+  defaultActiveOpacity
 }: {
   props: Record<string, any>
   style: StyleProp<ViewStyle>
@@ -383,6 +382,8 @@ function useDecoratePressableProps ({
   webNativeButton?: boolean
   defaultHoverBg?: string
   defaultActiveBg?: string
+  defaultHoverOpacity: number
+  defaultActiveOpacity: number
 }): {
     props: Record<string, any>
     pressableStyle?: StyleProp<ViewStyle>
@@ -444,9 +445,9 @@ function useDecoratePressableProps ({
     // hover or active state styles
     // active state takes precedence over hover state
     if (active) {
-      pressableStyle = activeStyle ?? getDefaultStyle(style, 'active', variant, defaultActiveBg)
+      pressableStyle = activeStyle ?? getDefaultStyle(style, 'active', variant, defaultActiveBg, defaultActiveOpacity)
     } else if (hover) {
-      pressableStyle = hoverStyle ?? getDefaultStyle(style, 'hover', variant, defaultHoverBg)
+      pressableStyle = hoverStyle ?? getDefaultStyle(style, 'hover', variant, defaultHoverBg, defaultHoverOpacity)
     }
   }
 
@@ -467,11 +468,11 @@ function getDefaultStyle (
   style: StyleProp<ViewStyle>,
   type: 'hover' | 'active',
   variant?: 'opacity' | 'highlight',
-  fallbackBackgroundColor?: string
+  fallbackBackgroundColor?: string,
+  opacity = 1
 ): StyleProp<ViewStyle> | undefined {
   if (variant === 'opacity') {
-    if (type === 'hover') return { opacity: defaultHoverOpacity }
-    if (type === 'active') return { opacity: defaultActiveOpacity }
+    if (type === 'hover' || type === 'active') return { opacity }
   } else {
     style = StyleSheet.flatten(style)
     let backgroundColor = style.backgroundColor
@@ -479,7 +480,7 @@ function getDefaultStyle (
 
     if (type === 'hover') {
       if (backgroundColor) {
-        return { backgroundColor: colorToRGBA(backgroundColor as string, defaultHoverOpacity) }
+        return { backgroundColor: getMixedColor(backgroundColor as string, opacity) ?? fallbackBackgroundColor }
       } else {
         // If no color exists, we treat it as a light background and just dim it a bit
         return { backgroundColor: fallbackBackgroundColor }
@@ -488,7 +489,7 @@ function getDefaultStyle (
 
     if (type === 'active') {
       if (backgroundColor) {
-        return { backgroundColor: colorToRGBA(backgroundColor as string, defaultActiveOpacity) }
+        return { backgroundColor: getMixedColor(backgroundColor as string, opacity) ?? fallbackBackgroundColor }
       } else {
         // If no color exists, we treat it as a light background and just dim it a bit
         return { backgroundColor: fallbackBackgroundColor }
@@ -499,6 +500,23 @@ function getDefaultStyle (
 
 function hasPressHandler (props: Record<string, any>): boolean {
   return PRESSABLE_PROPS.some(prop => props[prop])
+}
+
+function getMixedColor (backgroundColor: string, opacity: number): string | undefined {
+  try {
+    return getCssColor(backgroundColor, opacity)
+  } catch {
+    return undefined
+  }
+}
+
+function toNumber (value: unknown, fallback: number): number {
+  if (typeof value === 'number' && Number.isFinite(value)) return value
+  if (typeof value === 'string') {
+    const number = Number(value)
+    if (Number.isFinite(number)) return number
+  }
+  return fallback
 }
 
 function reverseMarginPaddingSides (style: ViewStyle | undefined): ViewStyle | undefined {
@@ -530,3 +548,145 @@ const ERRORS = {
     [@startupjs/ui] Div: renderTooltip is DEPRECATED, use 'tooltip' property instead.
   `
 }
+
+css`
+  .root {
+    outline-color: var(--color-ring);
+  }
+
+  .root.column.left {
+    align-items: stretch;
+  }
+
+  .root.column.center {
+    align-items: center;
+  }
+
+  .root.column.right {
+    align-items: flex-end;
+  }
+
+  .root.column.v_top {
+    justify-content: flex-start;
+  }
+
+  .root.column.v_center {
+    justify-content: center;
+  }
+
+  .root.column.v_bottom {
+    justify-content: flex-end;
+  }
+
+  .root.row {
+    flex-direction: row;
+  }
+
+  .root.row.left {
+    justify-content: flex-start;
+  }
+
+  .root.row.center {
+    justify-content: center;
+  }
+
+  .root.row.right {
+    justify-content: flex-end;
+  }
+
+  .root.row.between {
+    justify-content: space-between;
+  }
+
+  .root.row.around {
+    justify-content: space-around;
+  }
+
+  .root.row.v_start,
+  .root.row.v_top {
+    align-items: flex-start;
+  }
+
+  .root.row.v_center {
+    align-items: center;
+  }
+
+  .root.row.v_end,
+  .root.row.v_bottom {
+    align-items: flex-end;
+  }
+
+  .root.row.v_stretch {
+    align-items: stretch;
+  }
+
+  .root.wrap {
+    flex-wrap: wrap;
+  }
+
+  .root.reverse.column {
+    flex-direction: column-reverse;
+  }
+
+  .root.reverse.row {
+    flex-direction: row-reverse;
+  }
+
+  .root.rounded {
+    border-radius: var(--Div-radius);
+  }
+
+  .root.circle {
+    border-radius: 9999px;
+  }
+
+  .root.pushed-s {
+    margin-left: var(--Div-pushed-s);
+  }
+
+  .root.pushed-m {
+    margin-left: var(--Div-pushed-m);
+  }
+
+  .root.pushed-l {
+    margin-left: var(--Div-pushed-l);
+  }
+
+  .root.shadow-1 {
+    box-shadow: var(--Div-shadow-1);
+  }
+
+  .root.shadow-2 {
+    box-shadow: var(--Div-shadow-2);
+  }
+
+  .root.shadow-3 {
+    box-shadow: var(--Div-shadow-3);
+  }
+
+  .root.shadow-4 {
+    box-shadow: var(--Div-shadow-4);
+  }
+
+  .root.bleed {
+    padding-left: var(--Div-bleed-x);
+    padding-right: var(--Div-bleed-x);
+    margin-left: calc(var(--Div-bleed-x) * -1);
+    margin-right: calc(var(--Div-bleed-x) * -1);
+  }
+
+  .root.full {
+    flex-grow: 1;
+    flex-shrink: 1;
+  }
+
+  .root.clickable {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .root.disabled {
+    opacity: var(--Div-disabled-opacity);
+    cursor: default;
+  }
+`

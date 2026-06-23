@@ -1,13 +1,12 @@
 import { type ReactNode, type RefObject, useContext } from 'react'
 import { StyleSheet, Text, type TextStyle, type StyleProp, type TextProps } from 'react-native'
 import Animated from 'react-native-reanimated'
-import { pug, observer, themed } from 'startupjs'
+import { css, pug, observer, themed } from 'startupjs'
 
 import {
   TextStyleContext,
   resolveSpanLineHeight
 } from './textStyleContext'
-import './index.cssx.styl'
 
 export default observer(themed('Span', Span))
 
@@ -73,7 +72,7 @@ function Span ({
     if (variant === 'description') {
       console.warn("[@startupjs/ui] Span: variant='description' is DEPRECATED, use prop description instead.")
     } else {
-      console.warn(`[@startupjs/ui] Span: variant='${variant}' is DEPRECATED, use font(${variant}) mixin instead or h1-h6 props.`)
+      console.warn(`[@startupjs/ui] Span: variant='${variant}' is DEPRECATED, use h1-h6 props or CSS variables instead.`)
     }
   }
 
@@ -125,3 +124,78 @@ function hasAnimatedProperty (style: any): boolean {
   if (!style) return false
   return Object.keys(style).some(key => key.startsWith('animation') || key.startsWith('transition'))
 }
+
+css`
+  .root {
+    color: var(--Span-color);
+    font-family: var(--Span-font-family);
+    font-size: var(--Span-font-size);
+    font-weight: var(--Span-font-weight);
+    line-height: var(--Span-line-height);
+  }
+
+  .root.h1,
+  .root.h2,
+  .root.h3,
+  .root.h4,
+  .root.h5,
+  .root.h6 {
+    font-family: var(--Span-heading-font-family);
+    font-weight: var(--Span-heading-font-weight);
+  }
+
+  .root.h1 {
+    font-size: var(--Span-h1-font-size);
+    line-height: var(--Span-h1-line-height);
+  }
+
+  .root.h2 {
+    font-size: var(--Span-h2-font-size);
+    line-height: var(--Span-h2-line-height);
+  }
+
+  .root.h3 {
+    font-size: var(--Span-h3-font-size);
+    line-height: var(--Span-h3-line-height);
+  }
+
+  .root.h4 {
+    font-size: var(--Span-h4-font-size);
+    line-height: var(--Span-h4-line-height);
+  }
+
+  .root.h5 {
+    font-size: var(--Span-h5-font-size);
+    line-height: var(--Span-h5-line-height);
+  }
+
+  .root.h6 {
+    font-size: var(--Span-h6-font-size);
+    line-height: var(--Span-h6-line-height);
+  }
+
+  .root.bold {
+    font-weight: var(--Span-font-weight-bold);
+  }
+
+  .root.italic {
+    font-style: italic;
+  }
+
+  .root.h1.bold,
+  .root.h2.bold,
+  .root.h3.bold,
+  .root.h4.bold,
+  .root.h5.bold,
+  .root.h6.bold {
+    font-weight: var(--Span-heading-font-weight-bold);
+  }
+
+  .root.description {
+    color: var(--Span-description-color);
+  }
+
+  .root.full {
+    flex: 1;
+  }
+`

@@ -14,8 +14,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.26",
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
-    "@fortawesome/react-native-fontawesome": "^0.3.0",
-    "@startupjs-ui/core": "^0.3.0"
+    "@fortawesome/react-native-fontawesome": "^0.3.0"
   },
   "peerDependencies": {
     "react": "*",

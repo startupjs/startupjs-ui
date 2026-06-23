@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { pug, u, styl } from 'startupjs'
+import { css, pug } from 'startupjs'
 import { Sandbox } from '@startupjs-ui/docs'
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
 import Div, { _PropsJsonSchema as DivPropsJsonSchema } from './index.tsx'
@@ -56,18 +56,18 @@ You can use the following props to manage layout:
 - `wrap` -- controls wrapping of children into multiple rows (default: `false`)
 - `align` -- controls horizontal alignment (values: `'left'`, `'center'`, `'right'`; row layouts also support `'around'` and `'between'`)
 - `vAlign` -- controls vertical alignment (values: `'top'`, `'center'`, `'bottom'`; row layouts also support `'stretch'`, `'start'`, and `'end'`)
-- `gap` -- defines the spacing between items in [units](/docs/tutorial/TricksWithStyles#units); passing `true` is equivalent to `2`
+- `gap` -- defines the spacing between items on the CSSX spacing scale; passing `true` is equivalent to `2`
 
 ```jsx example
 return (
   <Div
-    style={{ height: u(10), backgroundColor: 'yellow' }}
+    style={{ height: 80, backgroundColor: 'yellow' }}
     row
     align='center'
     vAlign='center'
   >
-    <Div style={{ width: u(5), height: u(5), backgroundColor: 'red' }} />
-    <Div style={{ width: u(5), height: u(5), backgroundColor: 'blue' }} pushed />
+    <Div style={{ width: 40, height: 40, backgroundColor: 'red' }} />
+    <Div style={{ width: 40, height: 40, backgroundColor: 'blue' }} pushed />
   </Div>
 )
 ```
@@ -182,9 +182,10 @@ return pug`
     Icon(icon=faInfoCircle size='xl')
 `
 
-styl`
-  .root
-    align-self flex-start
+css`
+  .root {
+    align-self: flex-start;
+  }
 `
 ```
 
@@ -204,42 +205,63 @@ return (
     </Div>
   </Div>
 )
-styl`
-  .box
-    width 50px
-    height 50px
-    background-color red
-    border-color red
-    transition background-color 1s, border-width 1s, border-color 1s
-    animation none
-    &.isActive
-      border-width 10px
-      border-color lime
-      background-color green
-      animation shake 0.5s infinite, pulse 1s infinite, radius 1s forwards, shadow 1s infinite
-  .root
-    height 60px
-  .button
-    padding 8px 16px
-    background-color #2962FF
-    border-radius 4px
-  @keyframes shake
-    0%, 100%
-      transform translateX(0) translateY(0)
-    25%
-      transform translateX(-10px) translateY(-10px)
-    75%
-      transform translateX(10px) translateY(10px)
-  @keyframes pulse
-    50%
-      width 60px
-      height 60px
-  @keyframes radius
-    100%
-      border-radius 30px
-  @keyframes shadow
-    50%
-      box-shadow 0px 0px 10px rgba(green, 1)
+css`
+  .box {
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    border-color: red;
+    transition: background-color 1s, border-width 1s, border-color 1s;
+    animation: none;
+  }
+
+  .box.isActive {
+    border-width: 10px;
+    border-color: lime;
+    background-color: green;
+    animation: shake 0.5s infinite, pulse 1s infinite, radius 1s forwards, shadow 1s infinite;
+  }
+
+  .root {
+    height: 60px;
+  }
+
+  .button {
+    padding: 8px 16px;
+    background-color: #2962FF;
+    border-radius: 4px;
+  }
+
+  @keyframes shake {
+    0%, 100% {
+      transform: translateX(0) translateY(0);
+    }
+    25% {
+      transform: translateX(-10px) translateY(-10px);
+    }
+    75% {
+      transform: translateX(10px) translateY(10px);
+    }
+  }
+
+  @keyframes pulse {
+    50% {
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  @keyframes radius {
+    100% {
+      border-radius: 30px;
+    }
+  }
+
+  @keyframes shadow {
+    50% {
+      box-shadow: 0px 0px 10px green;
+    }
+  }
 `
 ```
 

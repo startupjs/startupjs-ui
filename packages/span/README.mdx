@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { pug, styl } from 'startupjs'
+import { css } from 'startupjs'
 import Span, { _PropsJsonSchema as SpanPropsJsonSchema } from './index'
 import { View, Pressable } from 'react-native'
 import { Sandbox } from '@startupjs-ui/docs'
@@ -63,37 +63,55 @@ return (
     </Pressable>
   </View>
 )
-styl`
-  .text
-    color red
-    transition color 1s
-    animation none
-    &.isActive
-      color green
-      animation shake 0.5s infinite, pulse 1s infinite, highlight 1s infinite
-  .root
-    height 60px
-    flex-direction row
-    align-items center
-    gap 16px
-  .button
-    padding 8px 16px
-    background-color #2962FF
-    border-radius 4px
-  @keyframes shake
-    0%, 100%
-      transform translateX(0) translateY(0)
-    25%
-      transform translateX(-10px) translateY(-10px)
-    75%
-      transform translateX(10px) translateY(10px)
-  @keyframes pulse
-    50%
-      font-size 24px
-  @keyframes highlight
-    50%
-      background-color rgba(green, 0.2)
-      box-shadow 0px 0px 10px rgba(green, 1)
+css`
+  .text {
+    color: red;
+    transition: color 1s;
+    animation: none;
+  }
+
+  .text.isActive {
+    color: green;
+    animation: shake 0.5s infinite, pulse 1s infinite, highlight 1s infinite;
+  }
+
+  .root {
+    height: 60px;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .button {
+    padding: 8px 16px;
+    background-color: #2962FF;
+    border-radius: 4px;
+  }
+
+  @keyframes shake {
+    0%, 100% {
+      transform: translateX(0) translateY(0);
+    }
+    25% {
+      transform: translateX(-10px) translateY(-10px);
+    }
+    75% {
+      transform: translateX(10px) translateY(10px);
+    }
+  }
+
+  @keyframes pulse {
+    50% {
+      font-size: 24px;
+    }
+  }
+
+  @keyframes highlight {
+    50% {
+      background-color: rgba(0, 128, 0, 0.2);
+      box-shadow: 0px 0px 10px green;
+    }
+  }
 `
 ```
 

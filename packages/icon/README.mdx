@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { css } from 'startupjs'
 import Icon, { _PropsJsonSchema as IconPropsJsonSchema } from './index'
 import Div from '@startupjs-ui/div'
 import Br from '@startupjs-ui/br'
@@ -8,7 +9,6 @@ import { faTable } from '@fortawesome/free-solid-svg-icons/faTable'
 import { faShareAlt } from '@fortawesome/free-solid-svg-icons/faShareAlt'
 import CustomIconExample from './CustomIconExample.svg'
 import { Sandbox } from '@startupjs-ui/docs'
-import './index.mdx.cssx.styl'
 
 # Icon
 
@@ -92,43 +92,38 @@ return (
 
 ## Colors
 
-Set the icon color by specifying `color` in the stylesheet.
-
-In `.styl` file
-```stylus
-.icon
-  &.primary
-    color var(--color-text-primary)
-
-  &.success
-    color var(--color-text-success)
-
-  &.orange
-    color var(--color-text-attention)
-```
-
-```jsx
-import { faHouseUser } from '@fortawesome/free-solid-svg-icons/faHouseUser'
-import { faTable } from '@fortawesome/free-solid-svg-icons/faTable'
-import { faShareAlt } from '@fortawesome/free-solid-svg-icons/faShareAlt'
-```
+Set the icon color by specifying `color` in CSS.
 
 ```jsx example
 return (
   <Div row align='around'>
-    <Icon icon={faShareAlt} styleName='icon orange'/>
+    <Icon icon={faShareAlt} styleName='icon warning'/>
     <Icon icon={faHouseUser} styleName='icon primary'/>
     <Icon icon={faTable} styleName='icon success'/>
   </Div>
 )
+
+css`
+  .icon.primary {
+    color: var(--color-primary);
+  }
+
+  .icon.success {
+    color: var(--color-success);
+  }
+
+  .icon.warning {
+    color: var(--color-warning);
+  }
+`
 ```
 
-## Theme configuration
+## Theme Variables
 
-Icon also exposes CSSX theme configuration for app-wide visual tuning:
+Icon exposes CSSX variables for app-wide visual tuning:
 
-- **$UI.Icon.color** -- default icon color. It uses `var(--color-text-secondary)` by default.
-- **$UI.Icon.forceWebSize** -- when enabled, web FontAwesome icons always use the `size` prop for width and height. By default, explicit `style.width` and `style.height` can still override the size.
+- `--Icon-color` -- default icon color. It uses `var(--color-muted-foreground)` by default.
+- `--Icon-force-web-size` -- when set to `1`, web FontAwesome icons always use the `size` prop for width and height. By default, explicit `style.width` and `style.height` can still override the size.
 
 ## Sandbox
 

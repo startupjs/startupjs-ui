@@ -191,4 +191,49 @@
   --Range-labelBg: var(--palette-main-7);
   --Range-labelText: var(--palette-main-0);
   --TextInput-text-color: var(--palette-main-7);
+
+  --Span-color: var(--color-foreground);
+  --Span-description-color: var(--color-muted-foreground);
+  --Span-font-family: var(--font-sans);
+  --Span-heading-font-family: var(--font-sans);
+  --Span-font-size: var(--text-sm);
+  --Span-line-height: 1.25rem;
+  --Span-font-weight: var(--font-weight-normal);
+  --Span-font-weight-bold: var(--font-weight-semibold);
+  --Span-heading-font-weight: var(--font-weight-normal);
+  --Span-heading-font-weight-bold: var(--font-weight-semibold);
+  --Span-h1-font-size: var(--text-7xl);
+  --Span-h1-line-height: 6rem;
+  --Span-h2-font-size: var(--text-5xl);
+  --Span-h2-line-height: 4rem;
+  --Span-h3-font-size: var(--text-4xl);
+  --Span-h3-line-height: 3rem;
+  --Span-h4-font-size: var(--text-2xl);
+  --Span-h4-line-height: 2rem;
+  --Span-h5-font-size: var(--text-xl);
+  --Span-h5-line-height: 1.75rem;
+  --Span-h6-font-size: var(--text-base);
+  --Span-h6-line-height: 1.5rem;
+
+  --Icon-color: var(--color-muted-foreground);
+  --Icon-force-web-size: 0;
+
+  --Div-radius: var(--radius-md);
+  --Div-disabled-opacity: 0.5;
+  --Div-hover-opacity: 0.8;
+  --Div-active-opacity: 0.5;
+  --Div-hover-bg: color-mix(in srgb, var(--color-foreground) 5%, transparent);
+  --Div-active-bg: color-mix(in srgb, var(--color-foreground) 20%, transparent);
+  --Div-pushed-s: calc(var(--spacing) * 2);
+  --Div-pushed-m: calc(var(--spacing) * 4);
+  --Div-pushed-l: calc(var(--spacing) * 6);
+  --Div-bleed-x: calc(var(--spacing) * 4);
+  --Div-tooltip-bg: var(--color-popover-foreground);
+  --Div-tooltip-foreground: var(--color-popover);
+  --Div-tooltip-radius: var(--radius-md);
+  --Div-tooltip-shadow: var(--shadow-lg);
+  --Div-shadow-1: var(--shadow-xs);
+  --Div-shadow-2: var(--shadow-sm);
+  --Div-shadow-3: var(--shadow-md);
+  --Div-shadow-4: var(--shadow-lg);
 }

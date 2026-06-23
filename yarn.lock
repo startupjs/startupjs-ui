@@ -6639,7 +6639,6 @@ __metadata:
     "@fortawesome/fontawesome-svg-core": "npm:^1.2.26"
     "@fortawesome/free-solid-svg-icons": "npm:^7.1.0"
     "@fortawesome/react-native-fontawesome": "npm:^0.3.0"
-    "@startupjs-ui/core": "npm:^0.3.0"
   peerDependencies:
     react: "*"
     react-native: "*"
@@ -7039,8 +7038,6 @@ __metadata:
 "@startupjs-ui/span@npm:^0.3.4, @startupjs-ui/span@workspace:packages/span":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/span@workspace:packages/span"
-  dependencies:
-    "@startupjs-ui/core": "npm:^0.3.0"
   peerDependencies:
     react: "*"
     react-native: "*"

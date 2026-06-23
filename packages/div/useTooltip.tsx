@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback, type ReactNode, type RefObject } from 'react'
 import { Platform, View } from 'react-native'
-import { pug, styl } from 'startupjs'
+import { css, pug } from 'startupjs'
 import Span from '@startupjs-ui/span'
 import AbstractPopover from '@startupjs-ui/abstract-popover'
 
@@ -88,19 +88,24 @@ export default function useTooltip ({ style, anchorRef, tooltip }: UseTooltipPro
 
   return result
 
-  styl`
-    .tooltip
-      background-color var(--Div-tooltipBg)
-      max-width 260px
-      radius()
-      shadow(3)
-      padding 1u 2u
+  css`
+    .tooltip {
+      background-color: var(--Div-tooltip-bg);
+      max-width: 260px;
+      border-radius: var(--Div-tooltip-radius);
+      box-shadow: var(--Div-tooltip-shadow);
+      padding: calc(var(--spacing) * 2) calc(var(--spacing) * 4);
+    }
 
-      +tablet()
-        max-width 320px
+    @media (--breakpoint-tablet) {
+      .tooltip {
+        max-width: 320px;
+      }
+    }
 
-      &-text
-        color var(--Div-tooltipText)
+    .tooltip-text {
+      color: var(--Div-tooltip-foreground);
+    }
   `
 }
 
