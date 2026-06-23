@@ -5,7 +5,6 @@ import Br from '@startupjs-ui/br'
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { Sandbox } from '@startupjs-ui/docs'
-import './index.mdx.cssx.styl'
 
 # TextInput
 
@@ -91,12 +90,6 @@ return (
 
 An icon can be added using the `icon` prop, and a secondary icon using `secondaryIcon`. The primary icon's position is controlled by `iconPosition` (`'left'` by default), and the secondary icon is placed on the opposite side. Use `onIconPress` and `onSecondaryIconPress` to handle clicks on the icons. To customize icon styles, use the `iconStyle` and `secondaryIconStyle` props.
 
-In `.styl` file
-```stylus
-.icon
-  color var(--color-text-primary)
-```
-
 ```jsx example
 const [valueLeft, setLeftValue] = useState()
 const [valueRight, setRightValue] = useState()
@@ -105,7 +98,7 @@ return (
     <TextInput
       icon={faSearch}
       secondaryIcon={faTimesCircle}
-      secondaryIconStyleName='icon'
+      secondaryIconStyle={{ color: '#2563eb' }}
       value={valueLeft}
       onChangeText={setLeftValue}
       onSecondaryIconPress={() => setLeftValue()}
@@ -122,14 +115,16 @@ return (
 )
 ```
 
-## Custom styles and theme configuration
+## Custom styles and theme variables
 
 Use `style` for the wrapper, `inputStyle` for the underlying input element, `iconStyle` for the primary icon, and `secondaryIconStyle` for the secondary icon.
 
-TextInput also exposes CSSX theme configuration for app-wide visual tuning:
+TextInput reads app-wide defaults from CSSX variables:
 
-- **$UI.TextInput.iconColor** -- default icon color. It uses `var(--color-text-secondary)` by default.
-- **$UI.TextInput.lineHeights** -- optional per-size line heights. When both `heights[size]` and `lineHeights[size]` are numeric, TextInput uses them to calculate vertical padding and multiline height.
+- **--TextInput-color**, **--TextInput-placeholder-color**, and **--TextInput-icon-color** -- text, placeholder, and icon colors.
+- **--TextInput-height-{size}**, **--TextInput-font-size-{size}**, and **--TextInput-padding-y-{size}** -- per-size spacing and typography.
+- **--TextInput-line-height-{size}** -- optional per-size line height for custom multiline sizing.
+- **--TextInput-border-color**, **--TextInput-border-color-focused**, and **--TextInput-border-color-error** -- border states.
 
 ## Number of lines
 

@@ -260,6 +260,35 @@
   --Progress-label-font-size: var(--text-xs);
   --Progress-label-line-height: 1rem;
 
+  --TextInput-color: var(--color-foreground);
+  --TextInput-caret-color: var(--TextInput-color);
+  --TextInput-icon-color: var(--color-secondary);
+  --TextInput-placeholder-color: var(--color-muted-foreground);
+  --TextInput-bg: var(--color-background);
+  --TextInput-bg-disabled: var(--color-muted);
+  --TextInput-border-color: var(--color-border);
+  --TextInput-border-color-focused: var(--color-primary);
+  --TextInput-border-color-error: var(--color-error);
+  --TextInput-border-width: 1px;
+  --TextInput-radius: var(--radius-md);
+  --TextInput-min-width: 4rem;
+  --TextInput-padding-x: calc(var(--spacing) * 2);
+  --TextInput-padding-y-s: calc(var(--spacing) * 1);
+  --TextInput-padding-y-m: calc(var(--spacing) * 1.5);
+  --TextInput-padding-y-l: calc(var(--spacing) * 2);
+  --TextInput-height-s: 1rem;
+  --TextInput-height-m: 1.25rem;
+  --TextInput-height-l: 1.5rem;
+  --TextInput-font-size-s: var(--text-sm);
+  --TextInput-font-size-m: var(--text-sm);
+  --TextInput-font-size-l: var(--text-base);
+  --TextInput-line-height-s: initial;
+  --TextInput-line-height-m: initial;
+  --TextInput-line-height-l: initial;
+  --TextInput-icon-padding-m: 2rem;
+  --TextInput-icon-padding-l: 2.5rem;
+  --TextInput-icon-offset: calc(var(--spacing) * 2);
+
   --Button-height-xs: 1rem;
   --Button-height-s: 1.5rem;
   --Button-height-m: 2rem;
