@@ -337,6 +337,25 @@
 
   --Layout-bg: var(--color-background);
 
+  --Alert-padding-y: 0.5rem;
+  --Alert-padding-x: 1rem;
+  --Alert-border-width: 1px;
+  --Alert-radius: var(--radius-md);
+  --Alert-info-border-color: var(--color-border-primary);
+  --Alert-info-bg: var(--color-bg-primary-transparent);
+  --Alert-info-icon-color: var(--color-text-primary);
+  --Alert-error-border-color: var(--color-border-error);
+  --Alert-error-bg: var(--color-bg-error-transparent);
+  --Alert-error-icon-color: var(--color-text-error);
+  --Alert-warning-border-color: var(--color-border-warning);
+  --Alert-warning-bg: var(--color-bg-warning-transparent);
+  --Alert-warning-icon-color: var(--color-text-warning);
+  --Alert-success-border-color: var(--color-border-success);
+  --Alert-success-bg: var(--color-bg-success-transparent);
+  --Alert-success-icon-color: var(--color-text-success);
+  --Alert-content-indent: 0.75rem;
+  --Alert-actions-gap: 1rem;
+
   --TextInput-color: var(--color-foreground);
   --TextInput-caret-color: var(--TextInput-color);
   --TextInput-icon-color: var(--color-secondary);

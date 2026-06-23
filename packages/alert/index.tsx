@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react'
-import { pug, observer, themed } from 'startupjs'
+import { css, pug, observer, themed } from 'startupjs'
 
 import Div, { type DivProps } from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
@@ -9,7 +9,6 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle'
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle'
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
-import './index.cssx.styl'
 
 const ICONS = {
   info: faInfoCircle,
@@ -25,6 +24,14 @@ export const _PropsJsonSchema = {/* AlertProps */}
 export interface AlertProps extends Omit<DivProps, 'variant' | 'style'> {
   /** Custom styles applied to the root view */
   style?: DivProps['style']
+  /** Custom styles applied to the information block */
+  informationStyle?: DivProps['style']
+  /** Custom styles applied to the icon */
+  iconStyle?: IconProps['style']
+  /** Custom styles applied to the content block */
+  contentStyle?: DivProps['style']
+  /** Custom styles applied to the actions block */
+  actionsStyle?: DivProps['style']
   /** Alert visual style variant @default 'info' */
   variant?: 'info' | 'error' | 'warning' | 'success'
   /** Icon definition or toggle. Pass false to hide icon @default true */
@@ -59,20 +66,22 @@ function Alert ({
 
   return pug`
     Div.root(
+      part='root'
       style=style
       vAlign='center'
       styleName=[variant]
       row
       ...props
     )
-      Div.information(row vAlign='center')
+      Div.information(part='information' row vAlign='center')
         if icon
           Icon.icon(
+            part='icon'
             icon=icon === true ? ICONS[variant] : icon
             size='l'
             styleName=[variant]
           )
-        Div.content(styleName={ indent: icon !== false })
+        Div.content(part='content' styleName={ indent: icon !== false })
           if title
             Span(bold)= title
           if typeof children === 'string'
@@ -82,14 +91,83 @@ function Alert ({
           else
             = children
       if renderActions
-        Div.actions
+        Div.actions(part='actions')
           = renderActions()
       else if onClose
-        Div.actions(onPress=onClose)
+        Div.actions(part='actions' onPress=onClose)
           Icon.icon(
+            part='icon'
             icon=faTimes
             size='l'
             styleName=[variant]
-          )
+      )
   `
 }
+
+css`
+  .root {
+    padding: var(--Alert-padding-y) var(--Alert-padding-x);
+    border-width: var(--Alert-border-width);
+    justify-content: space-between;
+    border-radius: var(--Alert-radius);
+  }
+
+  .root.info {
+    border-color: var(--Alert-info-border-color);
+    background-color: var(--Alert-info-bg);
+  }
+
+  .root.error {
+    border-color: var(--Alert-error-border-color);
+    background-color: var(--Alert-error-bg);
+  }
+
+  .root.warning {
+    border-color: var(--Alert-warning-border-color);
+    background-color: var(--Alert-warning-bg);
+  }
+
+  .root.success {
+    border-color: var(--Alert-success-border-color);
+    background-color: var(--Alert-success-bg);
+  }
+
+  .information {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    flex-shrink: 1;
+  }
+
+  .icon {
+    flex-shrink: 0;
+  }
+
+  .icon.info {
+    color: var(--Alert-info-icon-color);
+  }
+
+  .icon.error {
+    color: var(--Alert-error-icon-color);
+  }
+
+  .icon.warning {
+    color: var(--Alert-warning-icon-color);
+  }
+
+  .icon.success {
+    color: var(--Alert-success-icon-color);
+  }
+
+  .content {
+    flex-shrink: 1;
+  }
+
+  .content.indent {
+    margin-left: var(--Alert-content-indent);
+  }
+
+  .actions {
+    flex-shrink: 0;
+    margin-left: var(--Alert-actions-gap);
+  }
+`
