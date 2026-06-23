@@ -1,8 +1,7 @@
 import { type ReactNode, type Ref } from 'react'
 import { Platform, ScrollView as RNScrollView, type StyleProp, type ViewProps } from 'react-native'
-import { pug, observer, themed } from 'startupjs'
+import { css, pug, observer, themed } from 'startupjs'
 import { type UIRole } from '@startupjs-ui/core'
-import './index.cssx.styl'
 
 const IS_NATIVE = Platform.OS !== 'web'
 
@@ -42,3 +41,9 @@ function ScrollView ({
 function isWebOnlyRole (role: unknown): role is Exclude<UIRole, ViewProps['role']> {
   return role === 'listbox' || role === 'gridcell'
 }
+
+css`
+  .root.full:part(contentContainer) {
+    min-height: 100%;
+  }
+`

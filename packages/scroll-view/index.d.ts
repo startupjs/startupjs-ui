@@ -4,7 +4,6 @@
 import { type ReactNode, type Ref } from 'react';
 import { type StyleProp } from 'react-native';
 import { type UIRole } from '@startupjs-ui/core';
-import './index.cssx.styl';
 declare const _default: import("react").ComponentType<ScrollViewProps>;
 export default _default;
 export declare const _PropsJsonSchema: {};
