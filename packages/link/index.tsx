@@ -1,20 +1,15 @@
 import { Children, cloneElement, type ReactNode } from 'react'
 import { Linking, Platform, type StyleProp, type TextStyle, type ViewStyle } from 'react-native'
-import { pug, observer, themed } from 'startupjs'
+import { css, pug, observer, themed } from 'startupjs'
 import useRouter from 'startupjs/useRouter'
 
 import Button from '@startupjs-ui/button'
 import Div, { type DivProps } from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
-import STYLES from './index.cssx.styl'
 
 const isWeb = Platform.OS === 'web'
 const EXTERNAL_LINK_REGEXP = /^(https?:\/\/|\/\/|mailto:)/i
-const {
-  config: {
-    color: defaultColor
-  }
-} = STYLES
+const DEFAULT_COLOR = 'default'
 
 export default observer(themed('Link', Link))
 
@@ -50,7 +45,7 @@ function Link ({
   style,
   to,
   href,
-  color = defaultColor,
+  color = DEFAULT_COLOR,
   theme,
   display,
   push,
@@ -149,6 +144,7 @@ function Link ({
 
   return pug`
     Component.root(
+      part='root'
       style=style
       styleName=[theme, color, resolvedDisplay]
       ...restProps
@@ -160,3 +156,21 @@ function Link ({
 function isModifiedEvent (event: any) {
   return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey)
 }
+
+css`
+  .root {
+    color: var(--Link-color);
+    text-decoration-line: underline;
+    text-decoration-color: var(--Link-decoration-color);
+  }
+
+  .root.primary {
+    color: var(--Link-primary-color);
+    text-decoration-color: var(--Link-primary-decoration-color);
+  }
+
+  .root.block {
+    display: flex;
+    text-decoration-line: none;
+  }
+`

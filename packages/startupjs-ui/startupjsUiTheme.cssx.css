@@ -324,6 +324,11 @@
   --Card-border-width: 1px;
   --Card-border-color: var(--color-border);
 
+  --Link-color: var(--color-secondary);
+  --Link-primary-color: var(--color-primary);
+  --Link-decoration-color: var(--Link-color);
+  --Link-primary-decoration-color: var(--Link-primary-color);
+
   --TextInput-color: var(--color-foreground);
   --TextInput-caret-color: var(--TextInput-color);
   --TextInput-icon-color: var(--color-secondary);
