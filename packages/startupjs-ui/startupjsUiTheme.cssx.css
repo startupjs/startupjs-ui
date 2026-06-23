@@ -264,6 +264,9 @@
   --Divider-height-l: 2px;
   --Divider-bg: var(--color-border);
 
+  --Sidebar-bg: var(--color-background);
+  --DrawerSidebar-bg: var(--color-background);
+
   --Progress-width: 0.25rem;
   --Progress-duration: 300;
   --Progress-track-bg: var(--color-muted);

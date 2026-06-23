@@ -5,10 +5,8 @@ import Button from '@startupjs-ui/button'
 import Br from '@startupjs-ui/br'
 import Content from '@startupjs-ui/content'
 import Span from '@startupjs-ui/span'
-import { $, pug } from 'startupjs'
-import { useMedia } from '@startupjs-ui/core'
+import { $, css, pug, useMedia } from 'startupjs'
 import { Sandbox } from '@startupjs-ui/docs'
-import './index.mdx.cssx.styl'
 
 # Sidebar
 
@@ -199,3 +197,20 @@ return (
   propsJsonSchema={SidebarPropsJsonSchema}
   block
 />
+
+css`
+  .sidebar {
+    padding: 1rem;
+    height: 10rem;
+  }
+
+  .content {
+    padding: 1rem;
+    height: 10rem;
+    background-color: var(--color-background);
+  }
+
+  .button {
+    width: 5rem;
+  }
+`

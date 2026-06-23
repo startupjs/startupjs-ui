@@ -5,9 +5,8 @@ import Content from '@startupjs-ui/content'
 import Div from '@startupjs-ui/div'
 import Menu from '@startupjs-ui/menu'
 import Span from '@startupjs-ui/span'
-import { $ } from 'startupjs'
+import { $, css } from 'startupjs'
 import { Sandbox } from '@startupjs-ui/docs'
-import './index.mdx.cssx.styl'
 
 # DrawerSidebar
 
@@ -175,3 +174,18 @@ return (
   block
   propsJsonSchema={DrawerSidebarPropsJsonSchema}
 />
+
+css`
+  .sidebar {
+    padding: 1rem;
+  }
+
+  .content {
+    padding: 1rem;
+    height: 10rem;
+  }
+
+  .renderer {
+    overflow: hidden;
+  }
+`

@@ -6525,7 +6525,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/drawer-sidebar@workspace:packages/drawer-sidebar"
   dependencies:
-    "@startupjs-ui/core": "npm:^0.3.0"
     react-native-drawer-layout-polyfill: "npm:^2.0.0"
   peerDependencies:
     react: "*"
@@ -7002,7 +7001,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/sidebar@workspace:packages/sidebar"
   dependencies:
-    "@startupjs-ui/core": "npm:^0.3.0"
     "@startupjs-ui/div": "npm:^0.3.7"
   peerDependencies:
     react: "*"
