@@ -1,10 +1,9 @@
 import { Children, isValidElement, useMemo, useRef, useCallback, useImperativeHandle, type ReactNode, type RefObject } from 'react'
 import { View, TouchableWithoutFeedback, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, useBind, $, themed } from 'startupjs'
+import { css, pug, observer, useBind, $, themed } from 'startupjs'
 
 import AbstractPopover, { type AbstractPopoverProps } from '@startupjs-ui/abstract-popover'
 import Div from '@startupjs-ui/div'
-import './index.cssx.styl'
 
 export const _PropsJsonSchema = {/* PopoverProps */}
 
@@ -111,18 +110,20 @@ function Popover ({
     return pug`
       View.root
         TouchableWithoutFeedback(onPress=setVisibleFalse)
-          View.overlay(style=overlayStyle)
+          View.overlay(part='overlay' style=overlayStyle)
         = wrappedNode
     `
   }
 
   return pug`
     Div(
+      part='root'
       style=style
       ref=anchorRef
       onPress=shouldOpenOnAnchorPress ? setVisibleTrue : null
     )= children
     AbstractPopover.attachment(
+      part='attachment'
       ...props
       visible=visible
       style=[attachmentStyle]
@@ -134,3 +135,20 @@ function Popover ({
 }
 
 export default observer(themed('Popover', Popover))
+
+css`
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .attachment {
+    background-color: var(--Popover-bg);
+    border-radius: var(--Popover-radius);
+    box-shadow: var(--Popover-shadow);
+    overflow: hidden;
+  }
+`

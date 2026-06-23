@@ -260,6 +260,10 @@
   --AbstractPopover-z-index: 1000;
   --AbstractPopover-arrow-size: 0.5rem;
 
+  --Popover-bg: var(--color-popover);
+  --Popover-radius: var(--radius-md);
+  --Popover-shadow: var(--shadow-md);
+
   --Br-line-height: 1rem;
 
   --Divider-line-height: 1rem;
