@@ -1,9 +1,18 @@
 import Div from '@startupjs-ui/div'
 import Layout, { _PropsJsonSchema as LayoutPropsJsonSchema } from './index'
 import Span from '@startupjs-ui/span'
-import { u } from 'startupjs'
+import { css } from 'startupjs'
 import { Sandbox } from '@startupjs-ui/docs'
-import './index.mdx.cssx.styl'
+
+css`
+  .child {
+    height: 7.5rem;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background-color: #00AED6;
+  }
+`
 
 # Layout
 
@@ -19,7 +28,7 @@ import { Layout } from 'startupjs-ui'
 return (
   <Layout style={{
     backgroundColor: '#fff',
-    height: u(25),
+    height: 200,
     alignItems: 'center',
     justifyContent: 'center'
   }}>
@@ -41,7 +50,7 @@ return (
   props={{
     style: {
       backgroundColor: '#f1f1f1',
-      height: u(25),
+      height: 200,
       alignItems: 'center',
       justifyContent: 'center'
     },

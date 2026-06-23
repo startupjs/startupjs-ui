@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Image } from 'react-native'
-import { u } from 'startupjs'
 import { Sandbox } from '@startupjs-ui/docs'
 import Span from '@startupjs-ui/span'
 import Collapse from '@startupjs-ui/collapse'
@@ -90,8 +89,8 @@ return (
 ## Complex interaction (integration with other components)
 
 ```jsx example
-const style = { maxWidth: u(50) }
-const imageStyle = { height: u(40), resizeMode: 'cover' }
+const style = { maxWidth: 400 }
+const imageStyle = { height: 320, resizeMode: 'cover' }
 const [collapsed, setCollapsed] = useState(false)
 return (
   <Card

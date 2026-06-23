@@ -3,7 +3,6 @@ import Button from '@startupjs-ui/button'
 import Span from '@startupjs-ui/span'
 import Div from '@startupjs-ui/div'
 import Portal, { _PropsJsonSchema as PortalPropsJsonSchema } from './index'
-import { u } from 'startupjs'
 import { Sandbox } from '@startupjs-ui/docs'
 
 # Portal
@@ -37,8 +36,8 @@ const contentStyle = {
   position: 'absolute',
   top: 0,
   left: 0,
-  width: u(25),
-  height: u(20),
+  width: 200,
+  height: 160,
   backgroundColor: '#444',
   justifyContent: 'center',
   alignItems: 'center'
@@ -46,8 +45,8 @@ const contentStyle = {
 
 const textStyle = {
   color: '#fff',
-  marginBottom: u(2),
-  fontSize: u(3)
+  marginBottom: 16,
+  fontSize: 24
 }
 
 return (
