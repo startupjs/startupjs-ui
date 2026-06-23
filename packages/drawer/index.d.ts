@@ -3,7 +3,6 @@
 
 import { type ComponentType, type ReactNode } from 'react';
 import { type StyleProp, type ViewStyle } from 'react-native';
-import './index.cssx.styl';
 export { default as useDrawerDismiss } from './useDrawerDismiss';
 export declare const _PropsJsonSchema: {};
 export interface DrawerProps {
@@ -15,6 +14,8 @@ export interface DrawerProps {
     ContentComponent?: ComponentType<any>;
     /** Custom styles applied to the swipe responder zone */
     swipeStyle?: StyleProp<ViewStyle>;
+    /** Custom styles applied to the dimming overlay */
+    overlayStyle?: StyleProp<ViewStyle>;
     /** Content rendered inside the drawer */
     children?: ReactNode;
     /** Controlled visibility flag @default false */

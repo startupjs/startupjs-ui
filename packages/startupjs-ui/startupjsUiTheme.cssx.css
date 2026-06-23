@@ -331,6 +331,13 @@
 
   --Sidebar-bg: var(--color-background);
   --DrawerSidebar-bg: var(--color-background);
+  --Drawer-bg: var(--color-background);
+  --Drawer-overlay-bg: color-mix(in srgb, var(--color-foreground) 50%, transparent);
+  --Drawer-shadow: var(--shadow-sm);
+  --Drawer-vertical-size: 80%;
+  --Drawer-horizontal-size: 80%;
+  --Drawer-bottom-height: 60%;
+  --Drawer-bottom-radius: 1rem;
 
   --MenuItem-active-border-size: 2px;
 
