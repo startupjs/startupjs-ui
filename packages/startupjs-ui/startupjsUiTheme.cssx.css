@@ -356,6 +356,23 @@
   --Alert-content-indent: 0.75rem;
   --Alert-actions-gap: 1rem;
 
+  --Avatar-size-s: 2rem;
+  --Avatar-size-m: 2.5rem;
+  --Avatar-size-l: 3rem;
+  --Avatar-status-size-s: 0.625rem;
+  --Avatar-status-size-m: 0.75rem;
+  --Avatar-status-size-l: 0.875rem;
+  --Avatar-fallback-size-s: 0.75rem;
+  --Avatar-fallback-size-m: 0.875rem;
+  --Avatar-fallback-size-l: 1rem;
+  --Avatar-fallback-color: var(--color-primary-foreground);
+  --Avatar-status-border-width: 2px;
+  --Avatar-status-border-color: var(--color-background);
+  --Avatar-status-radius: 9999px;
+  --Avatar-status-offset: -0.125rem;
+  --Avatar-status-online-bg: var(--color-success);
+  --Avatar-status-away-bg: var(--color-warning);
+
   --TextInput-color: var(--color-foreground);
   --TextInput-caret-color: var(--TextInput-color);
   --TextInput-icon-color: var(--color-secondary);

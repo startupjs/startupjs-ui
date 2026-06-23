@@ -10,6 +10,14 @@ export declare const _PropsJsonSchema: {};
 export interface AvatarProps extends DivProps {
     /** Custom styles applied to the root view */
     style?: StyleProp<ViewStyle>;
+    /** Custom styles applied to the avatar wrapper */
+    wrapperStyle?: StyleProp<ViewStyle>;
+    /** Custom styles applied to the image or fallback background */
+    imageStyle?: StyleProp<any>;
+    /** Custom styles applied to the fallback text */
+    fallbackStyle?: StyleProp<any>;
+    /** Custom styles applied to the status indicator */
+    statusStyle?: StyleProp<ViewStyle>;
     /** Avatar image source URL */
     src?: string;
     /** Size preset or explicit pixel value @default 'm' */
