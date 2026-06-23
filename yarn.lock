@@ -6722,8 +6722,6 @@ __metadata:
 "@startupjs-ui/loader@npm:^0.3.0, @startupjs-ui/loader@workspace:packages/loader":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/loader@workspace:packages/loader"
-  dependencies:
-    "@startupjs-ui/core": "npm:^0.3.0"
   peerDependencies:
     react: "*"
     react-native: "*"
