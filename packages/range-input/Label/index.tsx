@@ -1,11 +1,8 @@
 import { type ReactNode } from 'react'
 import { type LabelProps as MultiSliderLabelProps } from '@startupjs-ui/react-native-multi-slider'
-import { pug, cssx } from 'startupjs'
+import { css, pug, useCssVariable } from 'startupjs'
 import Div from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
-import STYLES from './index.cssx.styl'
-
-const LABEL_STYLE: any = cssx('label', STYLES).style
 
 function Label ({
   oneMarkerValue,
@@ -21,23 +18,64 @@ function Label ({
     Number.isFinite(oneMarkerValue)
   const showTwo = twoMarkerPressed && Number.isFinite(twoMarkerLeftPosition) &&
     Number.isFinite(twoMarkerValue)
+  const labelWidth = Number(useCssVariable('--Range-label-width', 96)) || 96
 
   return pug`
-    Div.root
+    Div.root(part='root')
       if showOne
-        = renderLabel(oneMarkerLeftPosition, oneMarkerValue)
+        = renderLabel(oneMarkerLeftPosition, oneMarkerValue, labelWidth)
       if showTwo
-        = renderLabel(twoMarkerLeftPosition, twoMarkerValue)
+        = renderLabel(twoMarkerLeftPosition, twoMarkerValue, labelWidth)
   `
 }
 
-function renderLabel (position: number, value: string | number): ReactNode {
+function renderLabel (position: number, value: string | number, labelWidth: number): ReactNode {
   return pug`
-    Div.label(style={ left: position - LABEL_STYLE.width / 2 })
-      // todo: implement common tooltip style
-      Span.text= value
-      Span.arrow
+    Div.label(part='label' style={ left: position - labelWidth / 2 })
+      Span.text(part='text')= value
+      Span.arrow(part='arrow')
   `
 }
 
 export default Label
+
+css`
+  .root {
+    position: relative;
+  }
+
+  .label {
+    position: absolute;
+    top: var(--Range-label-top);
+    width: var(--Range-label-width);
+    align-items: center;
+  }
+
+  .text {
+    background-color: var(--Range-label-bg);
+    padding-top: var(--Range-label-padding-y);
+    padding-bottom: var(--Range-label-padding-y);
+    padding-left: var(--Range-label-padding-x);
+    padding-right: var(--Range-label-padding-x);
+    font-style: normal;
+    font-size: var(--Range-label-font-size);
+    line-height: var(--Range-label-line-height);
+    color: var(--Range-label-color);
+    box-shadow: var(--Range-label-shadow);
+    border-radius: var(--Range-label-radius);
+  }
+
+  .arrow {
+    width: 0;
+    height: 0;
+    background-color: transparent;
+    border-style: solid;
+    border-left-width: var(--Range-label-arrow-size);
+    border-right-width: var(--Range-label-arrow-size);
+    border-bottom-width: var(--Range-label-arrow-size);
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: var(--Range-label-bg);
+    transform: rotate(180deg);
+  }
+`
