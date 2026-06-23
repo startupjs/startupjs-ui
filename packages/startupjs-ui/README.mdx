@@ -29,31 +29,29 @@ export default function RootLayout () {
 You can pass CSSX theme overrides through `StartupjsProvider style`:
 
 ```jsx
-import styleOverrides from './style.cssx.css'
+import { css } from 'startupjs'
+
+const style = css`
+  :root {
+    --color-primary: #0000ff;
+    --color-error: #ff0000;
+  }
+
+  Button {
+    border-radius: 12px;
+  }
+
+  Button:part(hover) {
+    background-color: #0000cc;
+  }
+`
 
 <StartupjsProvider
-  style={styleOverrides}
+  style={style}
   routerPortal
 >
   <Stack />
 </StartupjsProvider>
-```
-
-```css
-/* style.cssx.css */
-
-:root {
-  --color-primary: #0000ff;
-  --color-error: #ff0000;
-}
-
-Button {
-  border-radius: 12px;
-}
-
-Button:part(hover) {
-  background-color: #0000cc;
-}
 ```
 
 ### Options
