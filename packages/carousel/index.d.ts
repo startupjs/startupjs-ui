@@ -3,7 +3,6 @@
 
 import React, { type Ref } from 'react';
 import { type StyleProp, type ViewStyle } from 'react-native';
-import './index.cssx.styl';
 export declare const _PropsJsonSchema: {};
 export interface CarouselProps {
     /** Custom styles applied to the outer wrapper */

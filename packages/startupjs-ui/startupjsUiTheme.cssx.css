@@ -190,7 +190,16 @@
   --AutoSuggest-attachment-bg: var(--color-popover);
   --AutoSuggest-attachment-radius: var(--radius-md);
   --AutoSuggest-attachment-shadow: var(--shadow-md);
-  --Carousel-arrowWrapperBg: color-mix(in srgb, var(--palette-main-9) 10%, transparent);
+  --Carousel-arrow-bg: color-mix(in srgb, var(--color-foreground) 10%, transparent);
+  --Carousel-arrow-radius: var(--radius-md);
+  --Carousel-arrow-padding: 0.25rem;
+  --Carousel-arrow-offset: 1.5rem;
+  --Carousel-dots-margin-y: 1rem;
+  --Carousel-dot-size: 0.5rem;
+  --Carousel-dot-gap: 0.2rem;
+  --Carousel-dot-radius: 9999px;
+  --Carousel-dot-bg: var(--color-muted);
+  --Carousel-dot-active-bg: var(--color-primary);
   --Checkbox-readonly-font-size: 1rem;
   --Checkbox-readonly-line-height: 1rem;
   --Checkbox-readonly-font-weight: var(--font-weight-black);

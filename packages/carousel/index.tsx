@@ -15,7 +15,7 @@ import {
   type StyleProp,
   type ViewStyle
 } from 'react-native'
-import { pug, observer, themed } from 'startupjs'
+import { css, pug, observer, themed } from 'startupjs'
 
 import Div from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
@@ -23,7 +23,6 @@ import { faAngleLeft } from '@fortawesome/free-solid-svg-icons/faAngleLeft'
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons/faAngleRight'
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons/faAngleUp'
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons/faAngleDown'
-import './index.cssx.styl'
 
 /* eslint-disable react-hooks/exhaustive-deps */
 export const _PropsJsonSchema = {/* CarouselProps */}
@@ -621,3 +620,91 @@ function getValidChildren ({ children, isEndless, isResponsive, childrenRefs }: 
 }
 
 export default observer(themed('Carousel', Carousel))
+
+css`
+  .wrapper {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-direction: column;
+  }
+
+  .carousel {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-direction: row;
+  }
+
+  .carousel.vertical {
+    flex-direction: column;
+  }
+
+  .arrow {
+    background-color: var(--Carousel-arrow-bg);
+    align-self: center;
+    cursor: pointer;
+    position: absolute;
+    user-select: none;
+    z-index: 999;
+    border-radius: var(--Carousel-arrow-radius);
+    padding: var(--Carousel-arrow-padding);
+  }
+
+  .arrow.vertical {
+    position: relative;
+  }
+
+  .arrowNext {
+    right: var(--Carousel-arrow-offset);
+  }
+
+  .arrowNext.vertical {
+    right: 0;
+  }
+
+  .arrowBack {
+    left: var(--Carousel-arrow-offset);
+  }
+
+  .arrowBack.vertical {
+    left: 0;
+  }
+
+  .root {
+    overflow: hidden;
+    flex-direction: row;
+    flex-grow: 1;
+    flex-shrink: 1;
+  }
+
+  .root.vertical {
+    flex-direction: column;
+  }
+
+  .case {
+    flex-direction: row;
+  }
+
+  .case.vertical {
+    flex-direction: column;
+  }
+
+  .dots {
+    align-self: center;
+    margin-top: var(--Carousel-dots-margin-y);
+    margin-bottom: var(--Carousel-dots-margin-y);
+  }
+
+  .dot {
+    height: var(--Carousel-dot-size);
+    width: var(--Carousel-dot-size);
+    background-color: var(--Carousel-dot-bg);
+    border-radius: var(--Carousel-dot-radius);
+    margin-left: var(--Carousel-dot-gap);
+    margin-right: var(--Carousel-dot-gap);
+    cursor: pointer;
+  }
+
+  .dotActive {
+    background-color: var(--Carousel-dot-active-bg);
+  }
+`
