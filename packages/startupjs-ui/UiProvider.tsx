@@ -1,6 +1,7 @@
 import {
   useEffect,
   useLayoutEffect,
+  useMemo,
   type ReactNode
 } from 'react'
 import {
@@ -37,8 +38,13 @@ function UiProvider ({
   style,
   theme
 }: UiProviderProps): ReactNode {
+  const providerStyle = useMemo(
+    () => [tailwindTheme, shadcnTheme, startupjsUiTheme, style],
+    [style]
+  )
+
   return pug`
-    CssxProvider(style=[tailwindTheme, shadcnTheme, startupjsUiTheme, style] theme=theme)
+    CssxProvider(style=providerStyle theme=theme)
       ColorSchemeSync
       Portal.Provider
         ToastProvider

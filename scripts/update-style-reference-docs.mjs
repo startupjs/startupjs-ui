@@ -178,12 +178,27 @@ function getPackageParts (packageName) {
     for (const match of source.matchAll(/\bpart\s*=\s*\[\s*['"]([^'"]+)['"]/g)) {
       parts.add(match[1])
     }
+    for (const match of source.matchAll(/\bpart\s*=\s*\[([\s\S]*?)\]/g)) {
+      addPartsFromArraySource(parts, match[1])
+    }
+    for (const match of source.matchAll(/\bpart\s*=\s*\{\s*\[([\s\S]*?)\]\s*\}/g)) {
+      addPartsFromArraySource(parts, match[1])
+    }
   }
   return [...parts].sort((a, b) => {
     if (a === 'root') return -1
     if (b === 'root') return 1
     return a.localeCompare(b)
   })
+}
+
+function addPartsFromArraySource (parts, source) {
+  for (const match of source.matchAll(/['"]([^'"]+)['"]/g)) {
+    parts.add(match[1])
+  }
+  for (const match of source.matchAll(/\b([A-Za-z][A-Za-z0-9_]*)\s*:/g)) {
+    parts.add(match[1])
+  }
 }
 
 function listSourceFiles (dir) {
