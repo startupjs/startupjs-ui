@@ -402,6 +402,12 @@
 
   --Layout-bg: var(--color-background);
 
+  --Collapse-radius: var(--radius-md);
+  --Collapse-header-padding: 1rem;
+  --Collapse-header-icon-gap: 0.5rem;
+  --Collapse-content-padding-x: 1rem;
+  --Collapse-content-padding-bottom: 1rem;
+
   --Alert-padding-y: 0.5rem;
   --Alert-padding-x: 1rem;
   --Alert-border-width: 1px;

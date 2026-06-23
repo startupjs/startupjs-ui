@@ -1,11 +1,10 @@
 import React, { type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, useBind, themed } from 'startupjs'
+import { css, pug, observer, useBind, themed } from 'startupjs'
 
 import Div, { type DivProps } from '@startupjs-ui/div'
 import CollapseHeader, { type CollapseHeaderProps } from './CollapseHeader'
 import CollapseContent from './CollapseContent'
-import './index.cssx.styl'
 
 export const _PropsJsonSchema = {/* CollapseProps */}
 
@@ -117,7 +116,7 @@ function Collapse ({
   }
 
   return pug`
-    Div.root(style=style ...props)
+    Div.root(part='root' style=style styleName=[variant] ...props)
       = header
       = content
   `
@@ -128,3 +127,9 @@ ObservedCollapse.Header = CollapseHeader
 ObservedCollapse.Content = CollapseContent
 
 export default ObservedCollapse
+
+css`
+  .root.full {
+    border-radius: var(--Collapse-radius);
+  }
+`

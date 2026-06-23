@@ -1,9 +1,8 @@
 import React, { type ReactNode } from 'react'
 import Collapsible from 'react-native-collapsible'
-import { pug, observer, themed } from 'startupjs'
+import { css, pug, observer, themed } from 'startupjs'
 
 import Span from '@startupjs-ui/span'
-import './index.cssx.styl'
 
 export const _PropsJsonSchema = {/* CollapseContentProps */}
 
@@ -49,9 +48,18 @@ function CollapseContent ({
   })
 
   return pug`
-    Collapsible.root(style=style styleName=[variant] collapsed=!open ...props)
+    Collapsible.root(part='root' style=style styleName=[variant] collapsed=!open ...props)
       = content
   `
 }
 
 export default observer(themed('CollapseContent', CollapseContent))
+
+css`
+  .root.full {
+    padding-top: 0;
+    padding-right: var(--Collapse-content-padding-x);
+    padding-bottom: var(--Collapse-content-padding-bottom);
+    padding-left: var(--Collapse-content-padding-x);
+  }
+`
