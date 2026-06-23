@@ -8,6 +8,8 @@ export declare const _PropsJsonSchema: {};
 export interface ModalProps {
     /** Custom styles applied to the root view */
     style?: StyleProp<ViewStyle>;
+    /** Custom styles applied to the modal backdrop */
+    overlayStyle?: StyleProp<ViewStyle>;
     /** Custom styles applied to the modal content container */
     modalStyle?: StyleProp<ViewStyle>;
     /** Content rendered inside the modal */

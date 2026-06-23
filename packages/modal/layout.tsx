@@ -1,11 +1,10 @@
 import React, { useId, type ReactNode, type ComponentType } from 'react'
 import { View, TouchableOpacity, type StyleProp, type ViewStyle, type ViewProps } from 'react-native'
-import { pug, observer, themed } from 'startupjs'
+import { css, pug, observer, themed } from 'startupjs'
 
 import ModalHeader from './ModalHeader'
 import ModalContent from './ModalContent'
 import ModalActions, { DEFAULT_CANCEL_LABEL, DEFAULT_CONFIRM_LABEL } from './ModalActions'
-import './index.cssx.styl'
 
 function getTextFromChildren (children: ReactNode): string | undefined {
   if (children == null || typeof children === 'boolean') return undefined
@@ -28,6 +27,8 @@ function getTextFromChildren (children: ReactNode): string | undefined {
 export interface ModalLayoutProps {
   /** Custom styles applied to the root view */
   style?: StyleProp<ViewStyle>
+  /** Custom styles applied to the modal backdrop */
+  overlayStyle?: StyleProp<ViewStyle>
   /** Custom styles applied to the modal surface */
   modalStyle?: StyleProp<ViewStyle>
   /** Children rendered inside modal sections */
@@ -66,6 +67,7 @@ export interface ModalLayoutProps {
 
 function Modal ({
   style,
+  overlayStyle,
   modalStyle,
   children,
   variant,
@@ -222,15 +224,19 @@ function Modal ({
 
   return pug`
     View.root(
+      part='root'
       style=style
       styleName=[variant]
     )
       if isWindowLayout
         TouchableOpacity.overlay(
+          part='overlay'
           activeOpacity=1
+          style=overlayStyle
           onPress=enableBackdropPress ? _onBackdropPress : undefined
         )
       ModalElement.modal(
+        part='modal'
         style=modalStyle
         styleName=[variant]
         role=role ?? 'dialog'
@@ -246,3 +252,42 @@ function Modal ({
 }
 
 export default observer(themed('Modal', Modal))
+
+css`
+  .root {
+    height: 100%;
+  }
+
+  .root.window {
+    padding-left: var(--Modal-window-gutter);
+    padding-right: var(--Modal-window-gutter);
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: var(--Modal-overlay-bg);
+    cursor: pointer;
+  }
+
+  .modal {
+    flex-shrink: 1;
+    background-color: var(--Modal-bg);
+  }
+
+  .modal.window {
+    margin: auto;
+    max-height: var(--Modal-window-max-height);
+    max-width: var(--Modal-window-max-width);
+    min-width: var(--Modal-window-min-width);
+    border-radius: var(--Modal-radius);
+    box-shadow: var(--Modal-shadow);
+  }
+
+  .modal.fullscreen {
+    height: 100%;
+  }
+`

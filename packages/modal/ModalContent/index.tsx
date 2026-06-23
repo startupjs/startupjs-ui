@@ -1,10 +1,9 @@
 import React, { type ReactNode, type ComponentType } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, themed } from 'startupjs'
+import { css, pug, observer, themed } from 'startupjs'
 
 import Span from '@startupjs-ui/span'
 import ScrollView from '@startupjs-ui/scroll-view'
-import './index.cssx.styl'
 
 export const _PropsJsonSchema = {/* ModalContentProps */}
 
@@ -36,6 +35,7 @@ function ModalContent ({
 
   return pug`
     ContentComponent.root(
+      part='root'
       style=style
       ...props
     )= content
@@ -43,3 +43,9 @@ function ModalContent ({
 }
 
 export default observer(themed('ModalContent', ModalContent))
+
+css`
+  .root {
+    padding: var(--Modal-section-padding);
+  }
+`

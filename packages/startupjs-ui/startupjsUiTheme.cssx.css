@@ -399,6 +399,23 @@
   --Table-cell-padding-y: 0.5rem;
   --Table-cell-padding-x: 1rem;
 
+  --Modal-bg: var(--color-background);
+  --Modal-overlay-bg: color-mix(in srgb, var(--color-foreground) 25%, transparent);
+  --Modal-window-gutter: 1rem;
+  --Modal-window-max-height: 90%;
+  --Modal-window-max-width: 776px;
+  --Modal-window-min-width: 280px;
+  --Modal-radius: var(--radius-md);
+  --Modal-shadow: var(--shadow-lg);
+  --Modal-section-padding: 1rem;
+  --Modal-action-gap: 0.5rem;
+  --Modal-title-font-size: var(--text-xl);
+  --Modal-title-line-height: 1.75rem;
+  --Modal-title-font-weight: var(--font-weight-semibold);
+  --Modal-title-font-family: var(--font-sans);
+  --Modal-close-gap: 1rem;
+  --Modal-icon-color: var(--color-muted-foreground);
+
   --TextInput-color: var(--color-foreground);
   --TextInput-caret-color: var(--TextInput-color);
   --TextInput-icon-color: var(--color-secondary);
