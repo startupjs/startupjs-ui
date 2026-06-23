@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
+import { css, pug, observer } from 'startupjs'
 import Div from '@startupjs-ui/div'
 import Input from './input'
 import {
@@ -10,7 +10,6 @@ import {
   getOptionDescription,
   stringifyValue
 } from './helpers'
-import './index.cssx.styl'
 
 export default observer(Radio)
 
@@ -53,6 +52,7 @@ function Radio ({
 }: RadioProps): ReactNode {
   return pug`
     Div.root(
+      part='root'
       ...props
       style=style
       styleName={ row }
@@ -65,6 +65,7 @@ function Radio ({
         - const error = _hasError && (value ? checked : true)
 
         Input.input(
+          part='input'
           key=optionValue
           style=inputStyle
           styleName={ row, first: !index }
@@ -78,3 +79,17 @@ function Radio ({
         )= getOptionLabel(option)
   `
 }
+
+css`
+  .root.row {
+    flex-direction: row;
+  }
+
+  .input.row {
+    margin-left: var(--Radio-option-row-gap);
+  }
+
+  .input.first {
+    margin-left: 0;
+  }
+`
