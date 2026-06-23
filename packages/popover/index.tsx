@@ -1,6 +1,6 @@
-import { Children, isValidElement, useMemo, useRef, useCallback, useImperativeHandle, type ReactNode, type RefObject } from 'react'
+import { Children, isValidElement, useMemo, useRef, useCallback, useImperativeHandle, useState, type ReactNode, type RefObject } from 'react'
 import { View, TouchableWithoutFeedback, type StyleProp, type ViewStyle } from 'react-native'
-import { css, pug, observer, useBind, $, themed } from 'startupjs'
+import { css, pug, observer, themed } from 'startupjs'
 
 import AbstractPopover, { type AbstractPopoverProps } from '@startupjs-ui/abstract-popover'
 import Div from '@startupjs-ui/div'
@@ -42,7 +42,7 @@ export interface PopoverRef {
 function Popover ({
   style,
   attachmentStyle,
-  visible,
+  visible: visibleProp,
   $visible,
   children,
   renderContent,
@@ -56,31 +56,18 @@ function Popover ({
   ...props
 }: PopoverProps): ReactNode {
   const anchorRef = useRef<any>(null)
-
-  const isUncontrolled = useMemo(() => {
-    const isUsedViaTwoWayDataBinding = typeof $visible !== 'undefined'
-    const isUsedViaState = typeof onChange === 'function'
-    return !(isUsedViaTwoWayDataBinding || isUsedViaState)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const $internalVisible = $(false)
-  const $effectiveVisible = isUncontrolled ? $internalVisible : $visible
-
-  ;({ visible, onChange } = useBind({ visible, $visible: $effectiveVisible, onChange }) as any)
+  const [internalVisible, setInternalVisible] = useState(false)
+  const isVisibleBound = typeof $visible !== 'undefined'
+  const isVisibleControlled = typeof visibleProp === 'boolean' || isVisibleBound
+  const visible = isVisibleBound
+    ? $visible.get()
+    : (typeof visibleProp === 'boolean' ? visibleProp : internalVisible)
 
   const handleChange = useCallback((nextVisible: boolean) => {
-    if (typeof onChange === 'function') {
-      onChange(nextVisible)
-      return
-    }
-    if ($effectiveVisible) {
-      $effectiveVisible.set(nextVisible)
-      return
-    }
-    $internalVisible.set(nextVisible)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    if (isVisibleBound) $visible.set(nextVisible)
+    onChange?.(nextVisible)
+    if (!isVisibleControlled) setInternalVisible(nextVisible)
+  }, [$visible, isVisibleBound, isVisibleControlled, onChange])
 
   useImperativeHandle(ref, () => ({
     open: () => { handleChange(true) },
@@ -134,7 +121,7 @@ function Popover ({
   `
 }
 
-export default observer(themed('Popover', Popover))
+export default themed('Popover', observer(Popover))
 
 css`
   .overlay {

@@ -31,7 +31,7 @@ function Thead ({
   `
 }
 
-export default observer(themed('Thead', Thead))
+export default themed('Thead', observer(Thead))
 
 css`
   .bordered {

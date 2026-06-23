@@ -86,7 +86,7 @@ function CheckboxInput ({
   `
 }
 
-export default observer(themed('Checkbox', CheckboxInput))
+export default themed('Checkbox', observer(CheckboxInput))
 
 css`
   .checkbox {

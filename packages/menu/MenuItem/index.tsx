@@ -91,7 +91,7 @@ function MenuItem ({
   `
 }
 
-export default observer(themed('MenuItem', MenuItem))
+export default themed('MenuItem', observer(MenuItem))
 
 css`
   .border {

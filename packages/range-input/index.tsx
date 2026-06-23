@@ -4,7 +4,7 @@ import { css, pug, observer, themed } from 'startupjs'
 
 import Label from './Label'
 
-export default observer(themed('RangeInput', RangeInput))
+export default themed('RangeInput', observer(RangeInput))
 
 export const _PropsJsonSchema = {/* RangeInputProps */}
 

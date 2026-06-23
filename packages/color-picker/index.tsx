@@ -14,7 +14,7 @@ import Button from '@startupjs-ui/button'
 import Picker from './picker'
 import { getLabelColor } from './helpers'
 
-export default observer(themed('ColorPicker', ColorPicker))
+export default themed('ColorPicker', observer(ColorPicker))
 
 export const _PropsJsonSchema = {/* ColorPickerProps */}
 

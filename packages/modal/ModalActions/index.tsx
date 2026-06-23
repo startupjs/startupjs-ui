@@ -64,7 +64,7 @@ function ModalActions ({
   `
 }
 
-export default observer(themed('ModalActions', ModalActions))
+export default themed('ModalActions', observer(ModalActions))
 
 css`
   .root {

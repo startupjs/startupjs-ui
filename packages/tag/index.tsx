@@ -16,7 +16,7 @@ function isSemanticColorToken (value: string): boolean {
   return COLOR_TOKEN_RE.test(value.trim())
 }
 
-export default observer(themed('Tag', Tag))
+export default themed('Tag', observer(Tag))
 
 export const _PropsJsonSchema = {/* TagProps */}
 

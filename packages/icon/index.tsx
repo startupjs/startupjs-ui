@@ -13,7 +13,7 @@ const SIZES = {
   xxl: 28
 }
 
-export default observer(themed('Icon', Icon))
+export default themed('Icon', observer(Icon))
 
 export const _PropsJsonSchema = {/* IconProps */}
 

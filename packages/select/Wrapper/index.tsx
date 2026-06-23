@@ -217,7 +217,7 @@ function SelectWrapperIOS ({
   `
 }
 
-export default observer(themed('Select', SelectWrapper))
+export default themed('Select', observer(SelectWrapper))
 
 css`
   .root {

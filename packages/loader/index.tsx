@@ -9,7 +9,7 @@ function isSemanticColorToken (value: string): boolean {
   return COLOR_TOKEN_RE.test(value.trim())
 }
 
-export default observer(themed('Loader', Loader))
+export default themed('Loader', observer(Loader))
 
 export const _PropsJsonSchema = {/* LoaderProps */}
 

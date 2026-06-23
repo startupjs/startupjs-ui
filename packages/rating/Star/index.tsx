@@ -4,7 +4,7 @@ import { css, pug, observer, themed } from 'startupjs'
 import Icon, { type IconProps } from '@startupjs-ui/icon'
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'
 
-export default observer(themed('Rating', Star))
+export default themed('Rating', observer(Star))
 
 export interface StarProps {
   /** Custom styles applied to the star icon */

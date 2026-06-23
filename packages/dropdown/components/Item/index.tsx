@@ -121,7 +121,7 @@ function DropdownItem ({
   `
 }
 
-export default observer(themed('DropdownItem', DropdownItem))
+export default themed('DropdownItem', observer(DropdownItem))
 
 css`
   .item.list {

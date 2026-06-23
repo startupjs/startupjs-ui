@@ -23,4 +23,4 @@ function Tbody ({ style, children, ...props }: TbodyProps): ReactNode {
   `
 }
 
-export default observer(themed('Tbody', Tbody))
+export default themed('Tbody', observer(Tbody))

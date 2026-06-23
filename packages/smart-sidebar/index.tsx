@@ -120,7 +120,7 @@ function SmartSidebar ({
   `
 }
 
-export default observer(themed('SmartSidebar', SmartSidebar))
+export default themed('SmartSidebar', observer(SmartSidebar))
 
 function isFixedLayout (fixedLayoutBreakpoint: number) {
   const dim = Dimensions.get('window')

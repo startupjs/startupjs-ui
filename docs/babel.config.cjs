@@ -5,8 +5,8 @@ module.exports = function (api) {
       'babel-preset-expo',
       ['startupjs/babel', {
         docgen: true,
-        // compileCssImports: true,
-        // cssFileExtensions: ['cssx.styl', 'cssx.css']
+        compileCssImports: true,
+        cssFileExtensions: ['cssx.styl', 'cssx.css']
       }]
     ]
   }

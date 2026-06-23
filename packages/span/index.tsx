@@ -8,7 +8,7 @@ import {
   resolveSpanLineHeight
 } from './textStyleContext'
 
-export default observer(themed('Span', Span))
+export default themed('Span', observer(Span))
 
 export const _PropsJsonSchema = {/* SpanProps */}
 

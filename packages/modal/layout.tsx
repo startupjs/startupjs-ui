@@ -251,7 +251,7 @@ function Modal ({
   `
 }
 
-export default observer(themed('Modal', Modal))
+export default themed('Modal', observer(Modal))
 
 css`
   .root {

@@ -5,7 +5,7 @@ import { type UIRole } from '@startupjs-ui/core'
 
 const IS_NATIVE = Platform.OS !== 'web'
 
-export default observer(themed('ScrollView', ScrollView))
+export default themed('ScrollView', observer(ScrollView))
 
 export const _PropsJsonSchema = {/* ScrollViewProps */}
 

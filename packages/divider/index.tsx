@@ -12,7 +12,7 @@ function toNumber (value: unknown, fallback: number): number {
   return Number.isFinite(number) ? number : fallback
 }
 
-export default observer(themed('Divider', Divider))
+export default themed('Divider', observer(Divider))
 
 export const _PropsJsonSchema = {/* DividerProps */}
 

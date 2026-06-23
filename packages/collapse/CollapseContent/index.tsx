@@ -53,7 +53,7 @@ function CollapseContent ({
   `
 }
 
-export default observer(themed('CollapseContent', CollapseContent))
+export default themed('CollapseContent', observer(CollapseContent))
 
 css`
   .root.full {

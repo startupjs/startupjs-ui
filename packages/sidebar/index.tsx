@@ -3,7 +3,7 @@ import { ScrollView, View, StyleSheet, type StyleProp, type ViewStyle } from 're
 import { css, pug, observer, useCssVariable, themed } from 'startupjs'
 import Div from '@startupjs-ui/div'
 
-export default observer(themed('Sidebar', Sidebar))
+export default themed('Sidebar', observer(Sidebar))
 
 export const _PropsJsonSchema = {/* SidebarProps */}
 
@@ -33,7 +33,7 @@ export interface SidebarProps {
 }
 
 function Sidebar ({
-  style = [],
+  style,
   sidebarStyle,
   contentStyle,
   children,

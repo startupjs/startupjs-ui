@@ -46,7 +46,7 @@ function toOptionalNumber (value: unknown): number | undefined {
   return Number.isFinite(number) ? number : undefined
 }
 
-export default observer(themed('TextInput', TextInput))
+export default themed('TextInput', observer(TextInput))
 
 export const _PropsJsonSchema = {/* TextInputProps */}
 

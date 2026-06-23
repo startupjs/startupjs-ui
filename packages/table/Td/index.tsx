@@ -52,7 +52,7 @@ function Td ({
   `
 }
 
-export default observer(themed('Td', Td))
+export default themed('Td', observer(Td))
 
 css`
   .root {

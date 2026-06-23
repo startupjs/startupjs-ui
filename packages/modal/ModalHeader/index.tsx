@@ -53,7 +53,7 @@ function ModalHeader ({
   `
 }
 
-export default observer(themed('ModalHeader', ModalHeader))
+export default themed('ModalHeader', observer(ModalHeader))
 
 css`
   .root {

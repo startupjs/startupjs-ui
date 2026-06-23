@@ -106,7 +106,7 @@ function Swipe ({
   `
 }
 
-export default observer(themed('Drawer', Swipe))
+export default themed('Drawer', observer(Swipe))
 
 css`
   .responder {

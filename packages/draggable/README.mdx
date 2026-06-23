@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { css, pug } from 'startupjs'
+import { pug } from 'startupjs'
 import { Sandbox } from '@startupjs-ui/docs'
 import {
   Draggable,
@@ -17,26 +17,6 @@ import {
   DroppableSandbox,
   DraggableSandbox
 } from './README.helpers'
-
-css`
-  .droppable {
-    margin-right: 1rem;
-    background-color: var(--color-muted);
-    padding: 0.5rem;
-  }
-
-  .draggable {
-    width: 200px;
-    background-color: var(--color-background);
-    margin-top: 0.25rem;
-    margin-bottom: 0.25rem;
-    padding: 0.5rem 1rem;
-    border-width: 1px;
-    border-style: solid;
-    border-color: var(--color-border);
-    border-radius: var(--radius-md);
-  }
-`
 
 # Draggable
 
@@ -201,10 +181,11 @@ return pug`
                 Span= drag.text
 `
 ```
-<!-- CSSX_STYLE_REFERENCE_START -->
+
 ## Styling reference
 
 Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
 
 ### Parts
 
@@ -217,7 +198,6 @@ This component does not expose named parts.
 | `--Draggable-placeholder-bg` | `var(--color-muted)` | Controls the placeholder background. |
 | `--Draggable-placeholder-radius` | `var(--radius-sm)` | Controls the placeholder radius. |
 | `--Draggable-placeholder-min-height` | `2rem` | Controls the placeholder min height. |
-<!-- CSSX_STYLE_REFERENCE_END -->
 
 ## Sandbox
 

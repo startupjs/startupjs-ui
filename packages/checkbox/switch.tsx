@@ -74,7 +74,7 @@ function SwitchInput ({
       )
   `
 }
-export default observer(themed('Checkbox', SwitchInput))
+export default themed('Checkbox', observer(SwitchInput))
 
 css`
   .switch {

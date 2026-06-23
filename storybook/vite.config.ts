@@ -1,10 +1,51 @@
 import path from 'node:path'
+import fs from 'node:fs/promises'
+import { Buffer } from 'node:buffer'
 import { fileURLToPath } from 'node:url'
 import { transformAsync } from '@babel/core'
+import { compileCss } from '@cssxjs/css-to-rn'
 import { defineConfig } from 'vite'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
+const rootDir = path.resolve(dirname, '..')
 const reanimatedFilePattern = /node_modules\/react-native-(?:reanimated|worklets)\/.*\.[cm]?[jt]sx?(?:\?.*)?$/
+const cssxCssFilePattern = /\.cssx\.css(?:\?.*)?$/
+const cssxCssVirtualPrefix = '\0startupjs-ui-storybook-cssx-css:'
+
+function cssxCssPlugin () {
+  return {
+    name: 'startupjs-ui-storybook-cssx-css',
+    enforce: 'pre' as const,
+    async resolveId (source: string, importer: string | undefined) {
+      if (!cssxCssFilePattern.test(source)) return null
+
+      const resolved = await this.resolve(source, importer, { skipSelf: true })
+      if (resolved == null) return null
+
+      return cssxCssVirtualPrefix + Buffer.from(resolved.id).toString('base64url')
+    },
+    async load (id: string) {
+      if (!id.startsWith(cssxCssVirtualPrefix)) return null
+
+      const filename = Buffer
+        .from(id.slice(cssxCssVirtualPrefix.length), 'base64url')
+        .toString('utf8')
+        .split('?')[0]
+
+      const source = await fs.readFile(filename, 'utf8')
+      const sheet = compileCss(source, {
+        mode: 'build',
+        sourceId: path.relative(rootDir, filename),
+        target: 'web'
+      })
+
+      return {
+        code: `export default ${JSON.stringify(sheet)};`,
+        map: null
+      }
+    }
+  }
+}
 
 function reanimatedWorkletsBabelPlugin () {
   return {
@@ -45,8 +86,9 @@ export default defineConfig({
       ]
     }
   },
-  plugins: [reanimatedWorkletsBabelPlugin()],
+  plugins: [cssxCssPlugin(), reanimatedWorkletsBabelPlugin()],
   resolve: {
+    conditions: ['cssx-ts'],
     alias: {
       // Storybook web runs through Vite ESM, but Reanimated currently imports this
       // internal validator as a default export from a CommonJS file. Alias just this
@@ -63,8 +105,18 @@ export default defineConfig({
   },
   optimizeDeps: {
     exclude: [
+      '@cssxjs/css-to-rn',
+      '@cssxjs/css-to-rn/react',
+      '@cssxjs/css-to-rn/web',
+      '@startupjs/utils',
+      '@startupjs/utils/RouterContext',
+      '@startupjs/utils/useRouter',
+      'cssxjs',
+      'cssxjs/runtime',
+      'cssxjs/runtime/teamplay',
       'react-native-reanimated',
-      'react-native-worklets'
+      'react-native-worklets',
+      'startupjs'
     ],
     include: [
       '@babel/runtime/helpers/asyncToGenerator',
@@ -90,11 +142,8 @@ export default defineConfig({
       '@fortawesome/free-solid-svg-icons/faPlus',
       '@fortawesome/free-solid-svg-icons/faStar',
       '@fortawesome/react-native-fontawesome',
-      '@startupjs-ui/react-native-multi-slider',
       '@react-native-picker/picker',
-      '@startupjs/utils/RouterContext',
-      'cssxjs/runtime',
-      'cssxjs/runtime/teamplay',
+      '@startupjs-ui/react-native-multi-slider',
       'randomcolor',
       'react-native-collapsible',
       'react-native-svg',

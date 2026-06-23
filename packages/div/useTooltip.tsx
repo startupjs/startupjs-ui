@@ -66,6 +66,26 @@ export default function useTooltip ({ style, anchorRef, tooltip }: UseTooltipPro
 
   result.tooltipEventHandlers = tooltipEventHandlers
 
+  css`
+    .tooltip {
+      background-color: var(--Div-tooltip-bg);
+      max-width: 260px;
+      border-radius: var(--Div-tooltip-radius);
+      box-shadow: var(--Div-tooltip-shadow);
+      padding: calc(var(--spacing) * 2) calc(var(--spacing) * 4);
+    }
+
+    @media (--breakpoint-tablet) {
+      .tooltip {
+        max-width: 320px;
+      }
+    }
+
+    .tooltip-text {
+      color: var(--Div-tooltip-foreground);
+    }
+  `
+
   if (tooltip) {
     result.tooltipElement = pug`
       AbstractPopover.tooltip(
@@ -87,26 +107,6 @@ export default function useTooltip ({ style, anchorRef, tooltip }: UseTooltipPro
   }
 
   return result
-
-  css`
-    .tooltip {
-      background-color: var(--Div-tooltip-bg);
-      max-width: 260px;
-      border-radius: var(--Div-tooltip-radius);
-      box-shadow: var(--Div-tooltip-shadow);
-      padding: calc(var(--spacing) * 2) calc(var(--spacing) * 4);
-    }
-
-    @media (--breakpoint-tablet) {
-      .tooltip {
-        max-width: 320px;
-      }
-    }
-
-    .tooltip-text {
-      color: var(--Div-tooltip-foreground);
-    }
-  `
 }
 
 export interface UseDecorateTooltipProps {

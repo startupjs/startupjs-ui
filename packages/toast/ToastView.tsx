@@ -141,7 +141,7 @@ function Toast ({
   `
 }
 
-export default observer(themed('Toast', Toast))
+export default themed('Toast', observer(Toast))
 
 css`
   .root {

@@ -9,7 +9,7 @@ import Star from './Star'
 const AMOUNT = 5
 const ITEMS = Array(AMOUNT).fill(null)
 
-export default observer(themed('Rating', Rating))
+export default themed('Rating', observer(Rating))
 
 export const _PropsJsonSchema = {/* RatingProps */}
 

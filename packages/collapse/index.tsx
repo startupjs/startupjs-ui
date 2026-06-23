@@ -122,7 +122,7 @@ function Collapse ({
   `
 }
 
-const ObservedCollapse: any = observer(themed('Collapse', Collapse))
+const ObservedCollapse: any = themed('Collapse', observer(Collapse))
 ObservedCollapse.Header = CollapseHeader
 ObservedCollapse.Content = CollapseContent
 

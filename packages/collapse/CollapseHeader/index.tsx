@@ -87,7 +87,7 @@ function CollapseHeader ({
   `
 }
 
-export default observer(themed('CollapseHeader', CollapseHeader))
+export default themed('CollapseHeader', observer(CollapseHeader))
 
 css`
   .root {

@@ -11,7 +11,7 @@ const isWeb = Platform.OS === 'web'
 const EXTERNAL_LINK_REGEXP = /^(https?:\/\/|\/\/|mailto:)/i
 const DEFAULT_COLOR = 'default'
 
-export default observer(themed('Link', Link))
+export default themed('Link', observer(Link))
 
 export const _PropsJsonSchema = {/* LinkProps */} // used in docs generation
 export interface LinkProps extends Omit<DivProps, 'style'> {

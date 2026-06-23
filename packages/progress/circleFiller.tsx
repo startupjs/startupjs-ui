@@ -65,4 +65,4 @@ function CircleFiller ({
   `
 }
 
-export default observer(themed('Progress', CircleFiller))
+export default themed('Progress', observer(CircleFiller))

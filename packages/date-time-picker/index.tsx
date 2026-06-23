@@ -21,7 +21,7 @@ import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { getLocale, useMoment } from './helpers'
 import { Calendar, TimeSelect } from './components'
 
-export default observer(themed('DateTimePicker', DateTimePicker))
+export default themed('DateTimePicker', observer(DateTimePicker))
 
 export const _PropsJsonSchema = {/* DateTimePickerProps */}
 

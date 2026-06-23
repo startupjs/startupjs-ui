@@ -163,7 +163,7 @@ function ItemRight ({ style, children }: ItemRightProps): ReactNode {
   `
 }
 
-const ObservedItem: any = observer(themed('Item', Item))
+const ObservedItem: any = themed('Item', observer(Item))
 
 ObservedItem.Left = ItemLeft
 ObservedItem.Content = ItemContent

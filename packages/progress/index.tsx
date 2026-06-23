@@ -12,7 +12,7 @@ function toNumber (value: unknown, fallback: number): number {
   return Number.isFinite(number) ? number : fallback
 }
 
-export default observer(themed('Progress', Progress))
+export default themed('Progress', observer(Progress))
 
 export const _PropsJsonSchema = {/* ProgressProps */}
 

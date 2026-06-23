@@ -10,7 +10,7 @@ type BreadcrumbsSize = 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl'
 
 const DEPRECATED_SIZE_VALUES: BreadcrumbsSize[] = ['xs', 'xl', 'xxl']
 
-export default observer(themed('Breadcrumbs', Breadcrumbs))
+export default themed('Breadcrumbs', observer(Breadcrumbs))
 
 export const _PropsJsonSchema = {/* BreadcrumbsProps */}
 

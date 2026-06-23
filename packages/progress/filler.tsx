@@ -51,7 +51,7 @@ function ProgressFiller ({ style, value }: ProgressFillerProps): ReactNode {
   `
 }
 
-export default observer(themed('Progress', ProgressFiller))
+export default themed('Progress', observer(ProgressFiller))
 
 css`
   .filler {

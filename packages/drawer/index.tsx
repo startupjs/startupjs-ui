@@ -204,7 +204,7 @@ function getValidNode (current: any) {
     : current?.getNode?.()
 }
 
-export default observer(themed('Drawer', Drawer))
+export default themed('Drawer', observer(Drawer))
 
 css`
   .overlayCase {

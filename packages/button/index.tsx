@@ -43,7 +43,7 @@ function isCustomBorderColor (value: unknown): value is string {
   return typeof value === 'string' && value !== '' && value !== 'transparent'
 }
 
-export default observer(themed('Button', Button))
+export default themed('Button', observer(Button))
 
 export const _PropsJsonSchema = {/* ButtonProps */} // used in docs generation
 export interface ButtonProps {

@@ -102,7 +102,7 @@ const RadioInput = function ({
   `
 }
 
-export default observer(themed('Radio', RadioInput))
+export default themed('Radio', observer(RadioInput))
 
 css`
   .input-input {

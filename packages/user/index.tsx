@@ -6,7 +6,7 @@ import Avatar, { type AvatarProps } from '@startupjs-ui/avatar'
 import Div, { type DivProps } from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
 
-export default observer(themed('User', User))
+export default themed('User', observer(User))
 
 export const _PropsJsonSchema = {/* UserProps */} // used in docs generation
 

@@ -1,20 +1,8 @@
-import { css } from 'startupjs'
 import { Sandbox } from '@startupjs-ui/docs'
 import Content, { _PropsJsonSchema as ContentPropsJsonSchema } from './index'
 import Br from '@startupjs-ui/br'
 import Div from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
-
-css`
-  .child {
-    height: 7.5rem;
-    background-color: #00AED6;
-  }
-
-  .renderer {
-    height: 12.5rem;
-  }
-`
 
 # Content
 
@@ -187,10 +175,11 @@ return (
   </Div>
 )
 ```
-<!-- CSSX_STYLE_REFERENCE_START -->
+
 ## Styling reference
 
 Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
 
 ### Parts
 
@@ -207,7 +196,6 @@ Use these names from `StartupjsProvider style` or another CSSX provider style la
 | `--Content-width-tablet` | `var(--breakpoint-md)` | Controls the width tablet. |
 | `--Content-width-desktop` | `var(--breakpoint-lg)` | Controls the width desktop. |
 | `--Content-width-wide` | `var(--breakpoint-xl)` | Controls the width wide. |
-<!-- CSSX_STYLE_REFERENCE_END -->
 
 ## Sandbox
 
@@ -215,9 +203,9 @@ Use these names from `StartupjsProvider style` or another CSSX provider style la
   Component={Content}
   props={{
     style: { backgroundColor: '#2962FF' },
-    children: <Div styleName='child' />,
+    children: <Div style={{ height: 120, backgroundColor: '#00AED6' }} />,
   }}
   propsJsonSchema={ContentPropsJsonSchema}
-  rendererStyleName='renderer'
+  rendererStyle={{ height: 200 }}
   block
 />

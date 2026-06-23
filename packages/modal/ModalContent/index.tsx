@@ -42,7 +42,7 @@ function ModalContent ({
   `
 }
 
-export default observer(themed('ModalContent', ModalContent))
+export default themed('ModalContent', observer(ModalContent))
 
 css`
   .root {

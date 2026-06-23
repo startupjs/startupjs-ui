@@ -53,7 +53,7 @@ function Th ({
   `
 }
 
-export default observer(themed('Th', Th))
+export default themed('Th', observer(Th))
 
 css`
   .root {

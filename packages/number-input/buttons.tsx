@@ -52,7 +52,7 @@ function NumberInputButtons ({
   `
 }
 
-export default observer(themed('NumberInput', NumberInputButtons))
+export default themed('NumberInput', observer(NumberInputButtons))
 
 css`
   .input-button {

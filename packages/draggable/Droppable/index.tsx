@@ -75,4 +75,4 @@ function Droppable ({
   `
 }
 
-export default observer(themed('Droppable', Droppable))
+export default themed('Droppable', observer(Droppable))

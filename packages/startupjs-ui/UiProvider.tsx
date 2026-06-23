@@ -8,7 +8,6 @@ import {
   pug,
   observer,
   useCssVariable,
-  type CssxProviderProps,
   type CssxProviderStyleInput
 } from 'startupjs'
 import Portal from '@startupjs-ui/portal'
@@ -16,7 +15,7 @@ import { ToastProvider } from '@startupjs-ui/toast'
 import DialogsProvider from '@startupjs-ui/dialogs/DialogsProvider'
 import tailwindTheme from 'startupjs/themes/tailwind'
 import shadcnTheme from 'startupjs/themes/shadcn'
-import startupjsUiTheme from './startupjsUiTheme.cssx.css'
+import startupjsUiTheme from './startupjsUiTheme'
 
 export const _PropsJsonSchema = {/* UiProviderProps */}
 
@@ -30,7 +29,7 @@ export interface UiProviderProps {
   /** CSSX style overrides. Use :root for theme variables and tag selectors for component defaults. */
   style?: CssxProviderStyleInput
   /** CSSX theme selection. Inherits from StartupjsProvider when mounted by the plugin. */
-  theme?: CssxProviderProps['theme']
+  theme?: string
 }
 
 function UiProvider ({

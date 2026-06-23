@@ -53,7 +53,7 @@ css`
   }
 `
 
-const ObservedMenu: any = observer(themed('Menu', Menu))
+const ObservedMenu: any = themed('Menu', observer(Menu))
 
 ObservedMenu.Item = MenuItem
 

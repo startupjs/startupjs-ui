@@ -344,4 +344,4 @@ function Draggable ({
   `
 }
 
-export default observer(themed('Draggable', Draggable), { cache: false })
+export default themed('Draggable', observer(Draggable, { cache: false }))

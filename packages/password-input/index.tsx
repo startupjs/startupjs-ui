@@ -64,4 +64,4 @@ function PasswordInput ({
   `
 }
 
-export default observer(themed('PasswordInput', PasswordInput))
+export default themed('PasswordInput', observer(PasswordInput))

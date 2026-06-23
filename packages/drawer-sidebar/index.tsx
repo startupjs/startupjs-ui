@@ -32,7 +32,7 @@ export interface DrawerSidebarProps {
 }
 
 function DrawerSidebar ({
-  style = [],
+  style,
   children,
   $open,
   position = 'left',
@@ -102,4 +102,4 @@ function DrawerSidebar ({
   `
 }
 
-export default observer(themed('DrawerSidebar', DrawerSidebar))
+export default themed('DrawerSidebar', observer(DrawerSidebar))

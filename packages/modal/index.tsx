@@ -201,7 +201,7 @@ function ModalRoot ({
   `
 }
 
-const ObservedModal = observer(themed('Modal', ModalRoot)) as any
+const ObservedModal = themed('Modal', observer(ModalRoot)) as any
 
 ObservedModal.Header = ModalHeader
 ObservedModal.Content = ModalContent

@@ -3,7 +3,7 @@ import { css, pug, observer, themed } from 'startupjs'
 
 import Div, { type DivProps } from '@startupjs-ui/div'
 
-export default observer(themed('Card', Card))
+export default themed('Card', observer(Card))
 
 export const _PropsJsonSchema = {/* CardProps */}
 

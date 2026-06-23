@@ -26,7 +26,7 @@ function Layout ({ style, children, testID }: LayoutProps): ReactNode {
   `
 }
 
-export default observer(themed('Layout', Layout))
+export default themed('Layout', observer(Layout))
 
 css`
   .root {

@@ -129,13 +129,13 @@ export default observer(({ children }) => {
         display: flex
       // sidebar pushes content only if there is not enough space for it
       // to show in the left padding of content
-      +between($UI.media.tablet, $UI.media.tablet + $sidebarWidth * 2 + 10px * 2)
+      @media (min-width: 768px) and (max-width: 1188px)
         position relative
-      +tablet()
+      @media (min-width: 768px)
         border-right-width 0
     .contentWrapper
       flex: 1
-      +to($UI.media.tablet)
+      @media (max-width: 767px)
         padding-top: 20px
     .content
       flex: 1

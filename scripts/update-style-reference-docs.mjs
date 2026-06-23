@@ -7,8 +7,11 @@ const root = path.resolve(__dirname, '..')
 const packagesDir = path.join(root, 'packages')
 const themePath = path.join(packagesDir, 'startupjs-ui', 'startupjsUiTheme.cssx.css')
 
-const START = '<!-- CSSX_STYLE_REFERENCE_START -->'
-const END = '<!-- CSSX_STYLE_REFERENCE_END -->'
+const STYLE_REFERENCE_HEADING = 'Styling reference'
+const START = '{/* CSSX_STYLE_REFERENCE_START */}'
+const END = '{/* CSSX_STYLE_REFERENCE_END */}'
+const LEGACY_START = '<!-- CSSX_STYLE_REFERENCE_START -->'
+const LEGACY_END = '<!-- CSSX_STYLE_REFERENCE_END -->'
 
 const PACKAGE_PREFIXES = {
   'range-input': ['Range']
@@ -213,23 +216,45 @@ function removeLegacySections (source) {
 }
 
 function insertSection (source, section) {
-  const generated = `\n${START}\n${section}\n${END}\n`
-  const existingRe = new RegExp(`\\n?${escapeRegExp(START)}[\\s\\S]*?${escapeRegExp(END)}\\n?`, 'm')
-  if (existingRe.test(source)) return source.replace(existingRe, generated)
+  const generated = `${section}\n`
+  const startRe = `(?:${escapeRegExp(START)}|${escapeRegExp(LEGACY_START)})`
+  const endRe = `(?:${escapeRegExp(END)}|${escapeRegExp(LEGACY_END)})`
+  const existingRe = new RegExp(`\\n?${startRe}[\\s\\S]*?${endRe}\\n?`, 'm')
+  if (existingRe.test(source)) return source.replace(existingRe, `\n${generated}`)
+
+  const headingMatch = source.match(new RegExp(`(^|\\n)## ${escapeRegExp(STYLE_REFERENCE_HEADING)}\\n`))
+  if (headingMatch) {
+    const replaceStart = headingMatch.index ?? 0
+    const headingStart = replaceStart + headingMatch[1].length
+    const nextHeadingIndex = source.indexOf('\n## ', headingStart + headingMatch[0].length)
+    const before = source.slice(0, replaceStart)
+
+    if (nextHeadingIndex === -1) {
+      return joinGeneratedSection(before, generated)
+    }
+
+    return `${joinGeneratedSection(before, generated)}${source.slice(nextHeadingIndex)}`
+  }
 
   const sandboxIndex = source.search(/\n## Sandbox\b/)
   if (sandboxIndex !== -1) {
-    return `${source.slice(0, sandboxIndex).replace(/\s*$/, '')}${generated}${source.slice(sandboxIndex)}`
+    return `${joinGeneratedSection(source.slice(0, sandboxIndex), generated)}${source.slice(sandboxIndex)}`
   }
 
-  return `${source.replace(/\s*$/, '')}${generated}`
+  return joinGeneratedSection(source, generated)
+}
+
+function joinGeneratedSection (before, generated) {
+  const trimmed = before.replace(/\s*$/, '')
+  return `${trimmed}${trimmed ? '\n\n' : ''}${generated}`
 }
 
 function buildSection ({ parts, variables }) {
   const lines = [
-    '## Styling reference',
+    `## ${STYLE_REFERENCE_HEADING}`,
     '',
     'Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.',
+    'For the full theming model, see the [Styling and theming](/docs/Styling) guide.',
     '',
     '### Parts',
     ''

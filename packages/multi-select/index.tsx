@@ -21,7 +21,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
 
 const IS_WEB = Platform.OS === 'web'
 
-export default observer(themed('MultiSelect', MultiSelect))
+export default themed('MultiSelect', observer(MultiSelect))
 
 export const _PropsJsonSchema = {/* MultiSelectProps */} // used in docs generation
 

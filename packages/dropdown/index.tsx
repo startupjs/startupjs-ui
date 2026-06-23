@@ -334,7 +334,7 @@ function Dropdown ({
   `
 }
 
-const ObservedDropdown: any = observer(themed('Dropdown', Dropdown))
+const ObservedDropdown: any = themed('Dropdown', observer(Dropdown))
 
 ObservedDropdown.Caption = DropdownCaption
 ObservedDropdown.Item = DropdownItem

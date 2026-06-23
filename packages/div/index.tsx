@@ -23,7 +23,7 @@ const PRESSABLE_PROPS = ['onPress', 'onLongPress', 'onPressIn', 'onPressOut']
 const isWeb = Platform.OS === 'web'
 const isNative = Platform.OS !== 'web'
 
-export default observer(themed('Div', Div))
+export default themed('Div', observer(Div))
 
 export const _PropsJsonSchema = {/* DivProps */}
 

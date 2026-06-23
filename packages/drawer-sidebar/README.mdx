@@ -5,7 +5,7 @@ import Content from '@startupjs-ui/content'
 import Div from '@startupjs-ui/div'
 import Menu from '@startupjs-ui/menu'
 import Span from '@startupjs-ui/span'
-import { $, css } from 'startupjs'
+import { $ } from 'startupjs'
 import { Sandbox } from '@startupjs-ui/docs'
 
 # DrawerSidebar
@@ -145,10 +145,11 @@ return (
   </Div>
 )
 ```
-<!-- CSSX_STYLE_REFERENCE_START -->
+
 ## Styling reference
 
 Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
 
 ### Parts
 
@@ -161,7 +162,6 @@ Use these names from `StartupjsProvider style` or another CSSX provider style la
 | Variable | Default | Description |
 | --- | --- | --- |
 | `--DrawerSidebar-bg` | `var(--color-background)` | Controls the background. |
-<!-- CSSX_STYLE_REFERENCE_END -->
 
 ## Sandbox
 
@@ -170,12 +170,12 @@ Use these names from `StartupjsProvider style` or another CSSX provider style la
   props={{
     $open: $.session.Sandbox.DrawerSidebar,
     renderContent: () => (
-      <Div styleName='sidebar'>
+      <Div style={{ padding: 16 }}>
         <Span>Sidebar content</Span>
       </Div>
     ),
     children: (
-      <Div styleName='content'>
+      <Div style={{ padding: 16, height: 160 }}>
         <Button
           onPress={()=> {
             const value = $.session.Sandbox.DrawerSidebar.get()
@@ -187,22 +187,7 @@ Use these names from `StartupjsProvider style` or another CSSX provider style la
       </Div>
     )
   }}
-  rendererStyleName='renderer'
+  rendererStyle={{ overflow: 'hidden' }}
   block
   propsJsonSchema={DrawerSidebarPropsJsonSchema}
 />
-
-css`
-  .sidebar {
-    padding: 1rem;
-  }
-
-  .content {
-    padding: 1rem;
-    height: 10rem;
-  }
-
-  .renderer {
-    overflow: hidden;
-  }
-`

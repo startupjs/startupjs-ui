@@ -284,7 +284,7 @@ function AutoSuggest ({
   `
 }
 
-export default observer(themed('AutoSuggest', AutoSuggest))
+export default themed('AutoSuggest', observer(AutoSuggest))
 
 css`
   .root,

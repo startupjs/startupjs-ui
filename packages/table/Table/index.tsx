@@ -19,7 +19,7 @@ function Table ({ style, children, testID }: TableProps): ReactNode {
   `
 }
 
-export default observer(themed('Table', Table))
+export default themed('Table', observer(Table))
 
 css`
   .root {

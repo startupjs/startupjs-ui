@@ -191,7 +191,7 @@ const RankReadonly = observer(function RankReadonly ({
   `
 })
 
-export default observer(themed('Rank', Rank))
+export default themed('Rank', observer(Rank))
 
 css`
   .droppable {

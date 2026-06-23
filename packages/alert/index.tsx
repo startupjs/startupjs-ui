@@ -17,7 +17,7 @@ const ICONS = {
   success: faCheckCircle
 }
 
-export default observer(themed('Alert', Alert))
+export default themed('Alert', observer(Alert))
 
 export const _PropsJsonSchema = {/* AlertProps */}
 

@@ -11,7 +11,7 @@ import deleteFileApi from './deleteFile'
 import uploadFileApi from './uploadFile'
 import type { FileInputProps, FileInputRef } from './index'
 
-export default observer(themed('FileInput', FileInput))
+export default themed('FileInput', observer(FileInput))
 
 function FileInput ({
   value: initialFileId,

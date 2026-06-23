@@ -619,7 +619,7 @@ function getValidChildren ({ children, isEndless, isResponsive, childrenRefs }: 
   return childrenWithRefs
 }
 
-export default observer(themed('Carousel', Carousel))
+export default themed('Carousel', observer(Carousel))
 
 css`
   .wrapper {

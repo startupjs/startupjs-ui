@@ -18,7 +18,7 @@ const ICONS = {
   next: faAngleRight
 }
 
-export default observer(themed('Pagination', Pagination))
+export default themed('Pagination', observer(Pagination))
 
 export const _PropsJsonSchema = {/* PaginationProps */} // used in docs generation
 

@@ -24,4 +24,4 @@ function Tr ({ style, children, ...props }: TrProps): ReactNode {
   `
 }
 
-export default observer(themed('Tr', Tr))
+export default themed('Tr', observer(Tr))

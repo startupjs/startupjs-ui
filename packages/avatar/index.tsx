@@ -13,7 +13,7 @@ function toNumber (value: unknown, fallback: number): number {
   return Number.isFinite(number) ? number : fallback
 }
 
-export default observer(themed('Avatar', Avatar))
+export default themed('Avatar', observer(Avatar))
 
 export const _PropsJsonSchema = {/* AvatarProps */}
 

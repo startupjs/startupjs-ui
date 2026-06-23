@@ -17,7 +17,7 @@ function isSemanticColorToken (value: string): boolean {
   return COLOR_TOKEN_RE.test(value.trim())
 }
 
-export default observer(themed('Badge', Badge))
+export default themed('Badge', observer(Badge))
 
 export const _PropsJsonSchema = {/* BadgeProps */}
 

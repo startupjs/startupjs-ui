@@ -23,17 +23,13 @@ function Label ({
   return pug`
     Div.root(part='root')
       if showOne
-        = renderLabel(oneMarkerLeftPosition, oneMarkerValue, labelWidth)
+        Div.label(part='label' style={ left: oneMarkerLeftPosition - labelWidth / 2 })
+          Span.text(part='text')= oneMarkerValue
+          Span.arrow(part='arrow')
       if showTwo
-        = renderLabel(twoMarkerLeftPosition, twoMarkerValue, labelWidth)
-  `
-}
-
-function renderLabel (position: number, value: string | number, labelWidth: number): ReactNode {
-  return pug`
-    Div.label(part='label' style={ left: position - labelWidth / 2 })
-      Span.text(part='text')= value
-      Span.arrow(part='arrow')
+        Div.label(part='label' style={ left: twoMarkerLeftPosition - labelWidth / 2 })
+          Span.text(part='text')= twoMarkerValue
+          Span.arrow(part='arrow')
   `
 }
 

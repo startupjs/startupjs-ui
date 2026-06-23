@@ -1,5 +1,5 @@
 import { useMemo, useCallback, type ReactNode } from 'react'
-import { css, pug, observer } from 'startupjs'
+import { css, observer } from 'startupjs'
 import Span from '@startupjs-ui/span'
 import Div from '@startupjs-ui/div'
 import { useMoment } from '../../../helpers'
@@ -100,40 +100,49 @@ function Days ({
       : moment.tz(value, timezone).isSame(date, 'd')
   }
 
-  return pug`
-    Div.row(key='week-header' row role='row')
-      for shortDayName in weekdaysShort
-        Div.cell(key=shortDayName role='columnheader')
-          Span.shortName(key='shortName-' + shortDayName bold)= shortDayName
-
-    for week, weekIndex in matrixMonthDays
-      // noop to prevent eslint error about missing 'week'. TODO: implement eslint disable comments support in pug
-      - (week => {})(week)
-      Div.row(key='week-' + weekIndex row role='row')
-        for day, dayIndex in matrixMonthDays[weekIndex]
-          Div.cell(
-            key=weekIndex + '-' + dayIndex
-            role='gridcell'
-            aria-label=day.ariaLabel
-            styleName={
-              isActive: !range && moment.tz(day.value, timezone).isSame(date, 'd'),
-              isActiveRangeStart: range && moment.tz(day.value, timezone).isSame(range[0], 'd'),
-              isActiveRange: range && moment.tz(day.value, timezone).isBetween(range[0], range[1], 'd'),
-              isActiveRangeEnd: range && moment.tz(day.value, timezone).isSame(range[1], 'd')
-            }
-            disabled=isDisableDay(day.value)
-            testID=day.testID
-            onPress=() => _onChangeDay(day)
-          )
-            Span.label(
-              key='day-label-' + weekIndex + '-' + dayIndex
-              bold=getLabelActive(day.value)
-              styleName={
-                isMute: !moment.tz(day.value, timezone).isSame(uiDate, 'M'),
-                isActive: getLabelActive(day.value)
-              }
-            )= day.label
-  `
+  return (
+    <>
+      <Div {...css('row')} row role='row'>
+        {weekdaysShort.map((shortDayName: string) => (
+          <Div key={shortDayName} {...css('cell')} role='columnheader'>
+            <Span {...css('shortName')} bold>{shortDayName}</Span>
+          </Div>
+        ))}
+      </Div>
+      {matrixMonthDays.map((week, weekIndex) => (
+        <Div key={`week-${weekIndex}`} {...css('row')} row role='row'>
+          {week.map(day => (
+            <Div
+              key={day.testID}
+              {...css({
+                cell: true,
+                isActive: !range && moment.tz(day.value, timezone).isSame(date, 'd'),
+                isActiveRangeStart: range && moment.tz(day.value, timezone).isSame(range[0], 'd'),
+                isActiveRange: range && moment.tz(day.value, timezone).isBetween(range[0], range[1], 'd'),
+                isActiveRangeEnd: range && moment.tz(day.value, timezone).isSame(range[1], 'd')
+              })}
+              role='gridcell'
+              aria-label={day.ariaLabel}
+              disabled={isDisableDay(day.value)}
+              testID={day.testID}
+              onPress={() => { _onChangeDay(day) }}
+            >
+              <Span
+                {...css({
+                  label: true,
+                  isMute: !moment.tz(day.value, timezone).isSame(uiDate, 'M'),
+                  isActive: getLabelActive(day.value)
+                })}
+                bold={getLabelActive(day.value)}
+              >
+                {day.label}
+              </Span>
+            </Div>
+          ))}
+        </Div>
+      ))}
+    </>
+  )
 }
 
 export default observer(Days)

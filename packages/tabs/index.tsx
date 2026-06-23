@@ -210,7 +210,7 @@ function Tabs ({
   `
 }
 
-const ObservedTabs: any = observer(themed('Tabs', Tabs))
+const ObservedTabs: any = themed('Tabs', observer(Tabs))
 
 ObservedTabs.Bar = Bar
 

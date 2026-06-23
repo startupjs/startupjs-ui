@@ -6,7 +6,7 @@ import Div, { type DivProps } from '@startupjs-ui/div'
 const DEFAULT_WIDTH = 'tablet'
 const LEGACY_UNIT = 8
 
-export default observer(themed('Content', Content))
+export default themed('Content', observer(Content))
 
 export const _PropsJsonSchema = {/* ContentProps */}
 

@@ -44,7 +44,7 @@ function DropdownCaption ({
   `
 }
 
-export default observer(themed('DropdownCaption', DropdownCaption))
+export default themed('DropdownCaption', observer(DropdownCaption))
 
 css`
   .select {

@@ -69,12 +69,16 @@ function AbstractPopover ({
   ...props
 }: AbstractPopoverProps): ReactNode {
   const [visible, setVisible] = useState(false)
+  const visiblePropRef = useRef(visibleProp)
 
   useEffect(() => {
+    visiblePropRef.current = visibleProp
     if (visibleProp) setVisible(true)
   }, [visibleProp])
 
   const handleCloseComplete = useCallback((finished?: boolean) => {
+    if (visiblePropRef.current) return
+
     setVisible(false)
     onCloseComplete?.(finished)
   }, [onCloseComplete])
@@ -232,7 +236,7 @@ const Tether = observer(function TetherComponent ({
   `
 })
 
-export default observer(themed('AbstractPopover', AbstractPopover))
+export default themed('AbstractPopover', observer(AbstractPopover))
 
 css`
   .root {

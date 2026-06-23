@@ -33,7 +33,7 @@ function Br ({
   `
 }
 
-export default observer(themed('Br', Br))
+export default themed('Br', observer(Br))
 
 css`
   .root {

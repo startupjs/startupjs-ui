@@ -5,7 +5,7 @@ import Button from '@startupjs-ui/button'
 import Br from '@startupjs-ui/br'
 import Content from '@startupjs-ui/content'
 import Span from '@startupjs-ui/span'
-import { $, css, pug, useMedia } from 'startupjs'
+import { $, pug, useMedia } from 'startupjs'
 import { Sandbox } from '@startupjs-ui/docs'
 
 # Sidebar
@@ -166,10 +166,11 @@ return (
 - `contentStyle` -- custom styles applied to the main content area
 - `width` -- sidebar width in density-independent pixels (default `264`)
 - `disabled` -- when `true`, forces the sidebar to stay closed regardless of the `$open` value (default `false`)
-<!-- CSSX_STYLE_REFERENCE_START -->
+
 ## Styling reference
 
 Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
 
 ### Parts
 
@@ -183,7 +184,6 @@ Use these names from `StartupjsProvider style` or another CSSX provider style la
 | Variable | Default | Description |
 | --- | --- | --- |
 | `--Sidebar-bg` | `var(--color-background)` | Controls the background. |
-<!-- CSSX_STYLE_REFERENCE_END -->
 
 ## Sandbox
 
@@ -192,15 +192,12 @@ Use these names from `StartupjsProvider style` or another CSSX provider style la
     // TODO: $open is not working here probably because Sandbox doesn't accept model props correctly
     $open: $.session.Sandbox.Sidebar,
     renderContent: () => {
-      return pug`
-        Div.sidebar
-          Span Sidebar content
-      `
+      return <Div style={{ padding: 16, height: 160 }}><Span>Sidebar content</Span></Div>
     },
     children: (
-      <Div styleName='content'>
+      <Div style={{ padding: 16, height: 160, backgroundColor: 'var(--color-background)' }}>
         <Button
-          styleName='button'
+          style={{ width: 80 }}
           onPress={() => {
             console.log('Toggle sidebar')
             const value = $.session.Sandbox.Sidebar.get()
@@ -215,20 +212,3 @@ Use these names from `StartupjsProvider style` or another CSSX provider style la
   propsJsonSchema={SidebarPropsJsonSchema}
   block
 />
-
-css`
-  .sidebar {
-    padding: 1rem;
-    height: 10rem;
-  }
-
-  .content {
-    padding: 1rem;
-    height: 10rem;
-    background-color: var(--color-background);
-  }
-
-  .button {
-    width: 5rem;
-  }
-`
