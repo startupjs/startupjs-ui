@@ -271,7 +271,7 @@ const Item = observer(({ children, path, setShowSidebar }) => {
 const DOC_COMPONENT_CATEGORIES = [
   {
     name: 'Guides',
-    items: ['Accessibility', { name: 'E2E Testing', path: 'E2ETesting' }]
+    items: ['Styling', 'Accessibility', { name: 'E2E Testing', path: 'E2ETesting' }]
   },
   {
     name: 'Layout & Structure',
