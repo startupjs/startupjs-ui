@@ -339,6 +339,22 @@
   --Drawer-bottom-height: 60%;
   --Drawer-bottom-radius: 1rem;
 
+  --Toast-max-width: 20rem;
+  --Toast-min-width: 15rem;
+  --Toast-screen-padding: 1rem;
+  --Toast-padding: 1rem;
+  --Toast-radius: var(--radius-sm);
+  --Toast-bg: var(--color-background);
+  --Toast-border-width: 4px;
+  --Toast-shadow: var(--shadow-sm);
+  --Toast-info-color: var(--color-primary);
+  --Toast-error-color: var(--color-destructive);
+  --Toast-warning-color: var(--color-warning);
+  --Toast-success-color: var(--color-success);
+  --Toast-text-gap: 0.5rem;
+  --Toast-title-gap: 0.5rem;
+  --Toast-actions-gap: 0.5rem;
+
   --MenuItem-active-border-size: 2px;
 
   --Rank-item-padding: 0.5rem;
