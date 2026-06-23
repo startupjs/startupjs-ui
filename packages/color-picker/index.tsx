@@ -7,13 +7,12 @@ import {
   type RefObject
 } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, themed } from 'startupjs'
+import { css, pug, observer, themed } from 'startupjs'
 
 import Div from '@startupjs-ui/div'
 import Button from '@startupjs-ui/button'
 import Picker from './picker'
 import { getLabelColor } from './helpers'
-import './index.cssx.styl'
 
 export default observer(themed('ColorPicker', ColorPicker))
 
@@ -80,3 +79,10 @@ function ColorPicker ({
       )= value.toUpperCase()
   `
 }
+
+css`
+  .button {
+    border-color: var(--ColorPicker-button-border-color);
+    border-width: var(--ColorPicker-button-border-width);
+  }
+`

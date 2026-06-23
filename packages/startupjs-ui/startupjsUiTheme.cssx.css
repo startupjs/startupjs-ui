@@ -200,6 +200,9 @@
   --Carousel-dot-radius: 9999px;
   --Carousel-dot-bg: var(--color-muted);
   --Carousel-dot-active-bg: var(--color-primary);
+  --ColorPicker-button-border-color: var(--color-border);
+  --ColorPicker-button-border-width: 1px;
+  --ColorPicker-picker-height: 25rem;
   --Checkbox-readonly-font-size: 1rem;
   --Checkbox-readonly-line-height: 1rem;
   --Checkbox-readonly-font-weight: var(--font-weight-black);

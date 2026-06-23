@@ -1,6 +1,5 @@
 import { useRef, useEffect, useImperativeHandle, type ReactNode, type RefObject } from 'react'
 import { pug, observer } from 'startupjs'
-import './index.cssx.styl'
 
 interface PickerProps {
   onChangeColor?: (color: string) => void
