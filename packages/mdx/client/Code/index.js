@@ -1,5 +1,5 @@
 import React, { useMemo, memo } from 'react'
-import { pug } from 'startupjs'
+import { css, pug } from 'startupjs'
 import Div from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
 import ScrollView from '@startupjs-ui/scroll-view'
@@ -14,7 +14,6 @@ import languagePug from 'refractor/lang/pug.js'
 import languageMarkdown from 'refractor/lang/markdown.js'
 import languageJson from 'refractor/lang/json.js'
 import languageBash from 'refractor/lang/bash.js'
-import './index.cssx.styl'
 
 const SUB_LANGUAGE_REGEX = /(^|\W)(pug|styl|css)(`\s*\n)([^`]*\s*\n)(`)/
 const TEMPLATE_LANGUAGE_ROOTS = new Set(['js', 'javascript', 'jsx', 'ts', 'typescript', 'tsx'])
@@ -150,3 +149,92 @@ function renderer (tree, style) {
     }
   })
 }
+
+css`
+  .root {
+    padding: var(--MdxCode-padding);
+    background-color: var(--MdxCode-bg);
+    border-radius: var(--MdxCode-radius);
+  }
+
+  .line {
+    min-height: var(--MdxCode-line-min-height);
+    font-family: var(--MdxCode-font-family);
+    white-space: pre;
+  }
+
+  .token {
+    font-family: var(--MdxCode-font-family);
+  }
+
+  .token.comment,
+  .token.prolog,
+  .token.doctype,
+  .token.cdata {
+    color: slategray;
+  }
+
+  .token.punctuation {
+    color: #999;
+  }
+
+  .token.namespace {
+    opacity: 0.7;
+  }
+
+  .token.property,
+  .token.tag,
+  .token.boolean,
+  .token.number,
+  .token.constant,
+  .token.symbol,
+  .token.deleted {
+    color: #905;
+  }
+
+  .token.selector,
+  .token.attr-name,
+  .token.string,
+  .token.char,
+  .token.builtin,
+  .token.inserted {
+    color: #690;
+  }
+
+  .token.operator,
+  .token.entity,
+  .token.url {
+    color: #9a6e3a;
+    background-color: hsla(0, 0%, 100%, 0.5);
+  }
+
+  .token.atrule,
+  .token.attr-value,
+  .token.keyword {
+    color: #07a;
+  }
+
+  .token.function,
+  .token.class-name {
+    color: #DD4A68;
+  }
+
+  .token.regex,
+  .token.important,
+  .token.variable {
+    color: #e90;
+  }
+
+  .token.important,
+  .token.bold {
+    font-weight: bold;
+  }
+
+  .token.italic {
+    font-style: italic;
+  }
+
+  .token.entity {
+    cursor: help;
+  }
+`

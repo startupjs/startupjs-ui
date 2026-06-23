@@ -360,6 +360,36 @@
   --Draggable-placeholder-radius: var(--radius-sm);
   --Draggable-placeholder-min-height: 2rem;
 
+  --Mdx-font-family: var(--font-sans);
+  --Mdx-font-size: var(--text-base);
+  --Mdx-line-height: 1.5rem;
+  --Mdx-heading-font-family: var(--font-sans);
+  --Mdx-heading-font-weight: var(--font-weight-semibold);
+  --Mdx-block-margin-top: 1rem;
+  --Mdx-h2-margin-top: 4rem;
+  --Mdx-h3-margin-top: 3rem;
+  --Mdx-anchor-link-margin-left: 0.5rem;
+  --Mdx-divider-height: 0.25rem;
+  --Mdx-divider-bg: var(--color-secondary);
+  --Mdx-divider-margin-bottom: 0.75rem;
+  --Mdx-list-index-width: 1.5rem;
+  --Mdx-code-bg: var(--color-muted);
+  --Mdx-code-border-width: 1px;
+  --Mdx-code-border-color: var(--color-border);
+  --Mdx-code-radius: var(--radius-md);
+  --Mdx-example-bg: var(--color-muted);
+  --Mdx-example-radius: 0.5rem;
+  --Mdx-example-padding: 1rem;
+  --Mdx-code-collapse-header-padding-top: 0.5rem;
+  --Mdx-code-collapse-header-padding-bottom: 1rem;
+  --Mdx-code-action-margin-left: 1rem;
+  --Mdx-action-color: var(--color-muted-foreground);
+  --MdxCode-padding: 1rem;
+  --MdxCode-bg: var(--color-muted);
+  --MdxCode-radius: var(--radius-lg);
+  --MdxCode-line-min-height: 1.25rem;
+  --MdxCode-font-family: var(--font-mono);
+
   --Toast-max-width: 20rem;
   --Toast-min-width: 15rem;
   --Toast-screen-padding: 1rem;
