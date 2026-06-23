@@ -1,18 +1,23 @@
-import { Children, type ReactNode } from 'react'
+import { Children, cloneElement, type ReactNode } from 'react'
 import { Image, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, themed } from 'startupjs'
+import { css, pug, observer, themed } from 'startupjs'
 
 import Div, { type DivProps } from '@startupjs-ui/div'
 import Icon, { type IconProps } from '@startupjs-ui/icon'
 import Link from '@startupjs-ui/link'
 import Span from '@startupjs-ui/span'
-import './index.cssx.styl'
 
 export const _PropsJsonSchema = {/* ItemProps */} // used in docs generation
 
 export interface ItemProps extends Omit<DivProps, 'style' | 'onPress'> {
   /** Custom styles applied to the root view */
   style?: StyleProp<ViewStyle>
+  /** Custom styles applied to the left part */
+  leftStyle?: StyleProp<ViewStyle>
+  /** Custom styles applied to the content part */
+  contentStyle?: StyleProp<ViewStyle>
+  /** Custom styles applied to the right part */
+  rightStyle?: StyleProp<ViewStyle>
   /** Content rendered inside Item */
   children?: ReactNode
   /** Navigation target passed to Link wrapper */
@@ -27,6 +32,9 @@ export interface ItemProps extends Omit<DivProps, 'style' | 'onPress'> {
 
 function Item ({
   style,
+  leftStyle,
+  contentStyle,
+  rightStyle,
   children,
   to,
   url,
@@ -57,17 +65,17 @@ function Item ({
     }
 
     if (ItemLeft === child.type) {
-      left = child
+      left = mergePartStyle(child, leftStyle)
       return
     }
 
     if (ItemRight === child.type) {
-      right = child
+      right = mergePartStyle(child, rightStyle)
       return
     }
 
     if (ItemContent === child.type) {
-      content = child
+      content = mergePartStyle(child, contentStyle)
       return
     }
 
@@ -77,12 +85,12 @@ function Item ({
   if (!left) {
     if (icon) {
       left = pug`
-        ItemLeft
+        ItemLeft(style=leftStyle)
           Icon(icon=icon)
       `
     } else if (url) {
       left = pug`
-        ItemLeft
+        ItemLeft(style=leftStyle)
           Image.image(source={ uri: url })
       `
     }
@@ -91,15 +99,16 @@ function Item ({
   content = content ??
     (contentChildren.length === 1
       ? pug`
-        ItemContent= contentChildren[0]
+        ItemContent(style=contentStyle)= contentChildren[0]
       `
       : pug`
-        ItemContent= contentChildren
+        ItemContent(style=contentStyle)= contentChildren
       `
     )
 
   return pug`
     Wrapper.root(
+      part='root'
       style=style
       variant="highlight"
       onPress=onPress
@@ -161,3 +170,36 @@ ObservedItem.Content = ItemContent
 ObservedItem.Right = ItemRight
 
 export default ObservedItem
+
+function mergePartStyle (child: any, style: StyleProp<ViewStyle>): ReactNode {
+  if (!style) return child
+  return cloneElement(child, {
+    style: [style, child.props?.style]
+  })
+}
+
+css`
+  .root {
+    padding: var(--Item-padding-y) var(--Item-padding-x);
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .image {
+    width: var(--Item-image-size);
+    height: var(--Item-image-size);
+    border-radius: var(--Item-image-radius);
+  }
+
+  .content {
+    flex-grow: 1;
+  }
+
+  .left {
+    margin-right: var(--Item-part-gap);
+  }
+
+  .right {
+    margin-left: var(--Item-part-gap);
+  }
+`

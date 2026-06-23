@@ -329,6 +329,12 @@
   --Link-decoration-color: var(--Link-color);
   --Link-primary-decoration-color: var(--Link-primary-color);
 
+  --Item-padding-y: 0.5rem;
+  --Item-padding-x: 1rem;
+  --Item-image-size: 2rem;
+  --Item-image-radius: 9999px;
+  --Item-part-gap: 0.5rem;
+
   --TextInput-color: var(--color-foreground);
   --TextInput-caret-color: var(--TextInput-color);
   --TextInput-icon-color: var(--color-secondary);

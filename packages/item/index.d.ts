@@ -5,11 +5,16 @@ import { type ReactNode } from 'react';
 import { type StyleProp, type ViewStyle } from 'react-native';
 import { type DivProps } from '@startupjs-ui/div';
 import { type IconProps } from '@startupjs-ui/icon';
-import './index.cssx.styl';
 export declare const _PropsJsonSchema: {};
 export interface ItemProps extends Omit<DivProps, 'style' | 'onPress'> {
     /** Custom styles applied to the root view */
     style?: StyleProp<ViewStyle>;
+    /** Custom styles applied to the left part */
+    leftStyle?: StyleProp<ViewStyle>;
+    /** Custom styles applied to the content part */
+    contentStyle?: StyleProp<ViewStyle>;
+    /** Custom styles applied to the right part */
+    rightStyle?: StyleProp<ViewStyle>;
     /** Content rendered inside Item */
     children?: ReactNode;
     /** Navigation target passed to Link wrapper */
