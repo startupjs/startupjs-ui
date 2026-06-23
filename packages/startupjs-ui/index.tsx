@@ -93,14 +93,10 @@ export { default as H6 } from './exports/_DEPRECATED_H6'
 
 export { default as User } from '@startupjs-ui/user'
 
-// core helpers
-export {
-  colorToRGBA,
-  u
-} from '@startupjs-ui/core'
+// shared types
+export type { UIRole } from '@startupjs-ui/core'
 
 // hooks
-export { useMedia } from '@startupjs-ui/core'
 export { useFormFields, useFormFields$, useValidate } from '@startupjs-ui/form'
 
 // UiProvider

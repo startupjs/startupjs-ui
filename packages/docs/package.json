@@ -12,7 +12,6 @@
     "@startupjs-ui/alert": "^0.3.7",
     "@startupjs-ui/br": "^0.3.0",
     "@startupjs-ui/button": "^0.3.7",
-    "@startupjs-ui/core": "^0.3.0",
     "@startupjs-ui/div": "^0.3.7",
     "@startupjs-ui/input": "^0.3.8",
     "@startupjs-ui/scroll-view": "^0.3.0",

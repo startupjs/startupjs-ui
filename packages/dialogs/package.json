@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "@startupjs-ui/br": "^0.3.0",
-    "@startupjs-ui/core": "^0.3.0",
     "@startupjs-ui/modal": "^0.3.7",
     "@startupjs-ui/span": "^0.3.4",
     "@startupjs-ui/text-input": "^0.3.7"

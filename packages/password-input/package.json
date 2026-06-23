@@ -8,7 +8,6 @@
   "types": "index.d.ts",
   "type": "module",
   "dependencies": {
-    "@startupjs-ui/core": "^0.3.0",
     "@startupjs-ui/text-input": "^0.3.7"
   },
   "peerDependencies": {
