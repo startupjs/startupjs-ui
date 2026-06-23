@@ -166,17 +166,6 @@ You can fine-tune the button's appearance using style props:
 - **hoverStyle** -- custom styles applied on hover
 - **activeStyle** -- custom styles applied when pressed
 
-## Theme variables
-
-Button reads its defaults from CSSX variables, so apps can tune it through `StartupjsProvider style` or another `CssxProvider` layer:
-
-- **--Button-height-{size}** -- button height for `xs`, `s`, `m`, `l`, `xl`, and `xxl`.
-- **--Button-font-size-{size}** and **--Button-line-height-{size}** -- label typography.
-- **--Button-outlined-border-width** and **--Button-outlined-border-color** -- outlined variant border.
-- **--Button-disabled-opacity** -- disabled state opacity.
-- **--Button-web-native-button** -- controls whether the web root renders with native button semantics.
-
-Use `Button`, `Button:part(text)`, `Button:part(icon)`, and `Button:part(loader)` selectors for app-wide structural overrides.
 
 ## Call to Action
 
@@ -208,6 +197,54 @@ It is a much better UX practice to use regular buttons by default and decide whi
   </Button>
 </Div>
 ```
+<!-- CSSX_STYLE_REFERENCE_START -->
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+
+### Parts
+
+| Part | Description |
+| --- | --- |
+| `root` | Root element. |
+| `icon` | Primary icon. |
+| `loader` | Loading indicator. |
+| `text` | Main text label. |
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--Button-height-xs` | `1rem` | Controls the xs height. |
+| `--Button-height-s` | `1.5rem` | Controls the small height. |
+| `--Button-height-m` | `2rem` | Controls the medium height. |
+| `--Button-height-l` | `2.5rem` | Controls the large height. |
+| `--Button-height-xl` | `3rem` | Controls the xl height. |
+| `--Button-height-xxl` | `3.5rem` | Controls the xxl height. |
+| `--Button-font-size-xs` | `var(--text-xs)` | Controls the xs font size. |
+| `--Button-font-size-s` | `var(--text-xs)` | Controls the small font size. |
+| `--Button-font-size-m` | `var(--text-sm)` | Controls the medium font size. |
+| `--Button-font-size-l` | `var(--text-base)` | Controls the large font size. |
+| `--Button-font-size-xl` | `var(--text-xl)` | Controls the xl font size. |
+| `--Button-font-size-xxl` | `var(--text-2xl)` | Controls the xxl font size. |
+| `--Button-line-height-xs` | `0.875rem` | Controls the xs line height. |
+| `--Button-line-height-s` | `1rem` | Controls the small line height. |
+| `--Button-line-height-m` | `1.25rem` | Controls the medium line height. |
+| `--Button-line-height-l` | `1.5rem` | Controls the large line height. |
+| `--Button-line-height-xl` | `1.75rem` | Controls the xl line height. |
+| `--Button-line-height-xxl` | `2rem` | Controls the xxl line height. |
+| `--Button-font-weight` | `var(--font-weight-medium)` | Controls the font weight. |
+| `--Button-outlined-border-width` | `1px` | Controls the outlined border width. |
+| `--Button-outlined-border-color` | `transparent` | Controls the outlined border color. |
+| `--Button-web-native-button` | `1` | Controls the web native button. |
+| `--Button-disabled-opacity` | `0.25` | Controls the disabled opacity. |
+| `--Button-icon-margin-xs` | `calc(var(--spacing) * 1)` | Controls the xs icon margin. |
+| `--Button-icon-margin-s` | `calc(var(--spacing) * 1)` | Controls the small icon margin. |
+| `--Button-icon-margin-m` | `calc(var(--spacing) * 2)` | Controls the medium icon margin. |
+| `--Button-icon-margin-l` | `calc(var(--spacing) * 2)` | Controls the large icon margin. |
+| `--Button-icon-margin-xl` | `calc(var(--spacing) * 3)` | Controls the xl icon margin. |
+| `--Button-icon-margin-xxl` | `calc(var(--spacing) * 3)` | Controls the xxl icon margin. |
+<!-- CSSX_STYLE_REFERENCE_END -->
 
 ## Sandbox
 

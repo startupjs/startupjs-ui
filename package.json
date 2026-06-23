@@ -26,6 +26,7 @@
     "storybook:native:web": "yarn workspace startupjs-ui-storybook web",
     "storybook:native:build": "yarn workspace startupjs-ui-storybook build",
     "test": "sh -c 'set -e; for dir in packages/*/; do echo \"Testing $dir\"; (cd \"$dir\" && yarn test) || { echo \"\\033[31mERROR: Tests failed for $dir\\033[0m\"; exit 1; }; done'",
+    "docs:style-reference": "node scripts/update-style-reference-docs.mjs",
     "generate-package-dts": "node scripts/generate-package-dts.mjs",
     "publish-patch": "dotenv -- npx lerna publish patch --conventional-commits --create-release=github",
     "publish-patch-force": "dotenv -- npx lerna publish patch --force-publish --conventional-commits --create-release=github",

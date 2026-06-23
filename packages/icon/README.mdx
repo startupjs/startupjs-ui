@@ -117,13 +117,22 @@ css`
   }
 `
 ```
+<!-- CSSX_STYLE_REFERENCE_START -->
+## Styling reference
 
-## Theme Variables
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
 
-Icon exposes CSSX variables for app-wide visual tuning:
+### Parts
 
-- `--Icon-color` -- default icon color. It uses `var(--color-muted-foreground)` by default.
-- `--Icon-force-web-size` -- when set to `1`, web FontAwesome icons always use the `size` prop for width and height. By default, explicit `style.width` and `style.height` can still override the size.
+This component does not expose named parts.
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--Icon-color` | `var(--color-muted-foreground)` | Controls the color. |
+| `--Icon-force-web-size` | `0` | Controls the force web size. |
+<!-- CSSX_STYLE_REFERENCE_END -->
 
 ## Sandbox
 

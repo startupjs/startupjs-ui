@@ -164,6 +164,32 @@ return (
 - `style` -- custom styles applied to the root container
 - `disabled` -- when `true`, disables all navigation buttons (default `false`)
 - `onChangeLimit` -- called when the page size changes
+<!-- CSSX_STYLE_REFERENCE_START -->
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+
+### Parts
+
+| Part | Description |
+| --- | --- |
+| `root` | Root element. |
+| `icon` | Primary icon. |
+| `item` | List item. |
+| `page` | Page label. |
+| `status` | Status indicator. |
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--Pagination-item-size` | `2rem` | Controls the item size. |
+| `--Pagination-item-padding-x` | `0.5rem` | Controls the horizontal item padding. |
+| `--Pagination-page-selected-color` | `var(--color-primary)` | Controls the page selected color. |
+| `--Pagination-status-gap` | `0.5rem` | Controls the status gap. |
+| `--Pagination-icon-color` | `var(--color-secondary)` | Controls the icon color. |
+| `--Pagination-icon-disabled-color` | `var(--color-muted-foreground)` | Controls the icon disabled color. |
+<!-- CSSX_STYLE_REFERENCE_END -->
 
 ## Sandbox
 

@@ -78,6 +78,47 @@ Pass `onAction` to display an action button on the toast. The button label defau
 | `actionLabel` | `string` | `'View'` | Label for the action button |
 | `onAction` | `() => void` | | Handler called when the action button is pressed |
 | `onClose` | `() => void` | | Called after the toast is closed and removed from the stack |
+<!-- CSSX_STYLE_REFERENCE_START -->
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+
+### Parts
+
+| Part | Description |
+| --- | --- |
+| `root` | Root element. |
+| `action` | Action button. |
+| `actions` | Actions container. |
+| `close` | Close button. |
+| `closeIcon` | Close icon. |
+| `header` | Header area. |
+| `icon` | Primary icon. |
+| `text` | Main text label. |
+| `title` | Title text. |
+| `titleWrapper` | Title wrapper. |
+| `toast` | Toast surface. |
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--Toast-max-width` | `20rem` | Controls the max width. |
+| `--Toast-min-width` | `15rem` | Controls the min width. |
+| `--Toast-screen-padding` | `1rem` | Controls the screen padding. |
+| `--Toast-padding` | `1rem` | Controls the padding. |
+| `--Toast-radius` | `var(--radius-sm)` | Controls the radius. |
+| `--Toast-bg` | `var(--color-background)` | Controls the background. |
+| `--Toast-border-width` | `4px` | Controls the border width. |
+| `--Toast-shadow` | `var(--shadow-sm)` | Controls the shadow. |
+| `--Toast-info-color` | `var(--color-primary)` | Controls the info color. |
+| `--Toast-error-color` | `var(--color-destructive)` | Controls the error color. |
+| `--Toast-warning-color` | `var(--color-warning)` | Controls the warning color. |
+| `--Toast-success-color` | `var(--color-success)` | Controls the success color. |
+| `--Toast-text-gap` | `0.5rem` | Controls the text gap. |
+| `--Toast-title-gap` | `0.5rem` | Controls the title gap. |
+| `--Toast-actions-gap` | `0.5rem` | Controls the actions gap. |
+<!-- CSSX_STYLE_REFERENCE_END -->
 
 ## Sandbox
 

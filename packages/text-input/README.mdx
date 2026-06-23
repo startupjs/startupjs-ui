@@ -115,16 +115,6 @@ return (
 )
 ```
 
-## Custom styles and theme variables
-
-Use `style` for the wrapper, `inputStyle` for the underlying input element, `iconStyle` for the primary icon, and `secondaryIconStyle` for the secondary icon.
-
-TextInput reads app-wide defaults from CSSX variables:
-
-- **--TextInput-color**, **--TextInput-placeholder-color**, and **--TextInput-icon-color** -- text, placeholder, and icon colors.
-- **--TextInput-height-{size}**, **--TextInput-font-size-{size}**, and **--TextInput-padding-y-{size}** -- per-size spacing and typography.
-- **--TextInput-line-height-{size}** -- optional per-size line height for custom multiline sizing.
-- **--TextInput-border-color**, **--TextInput-border-color-focused**, and **--TextInput-border-color-error** -- border states.
 
 ## Number of lines
 
@@ -159,6 +149,53 @@ return (
   />
 )
 ```
+<!-- CSSX_STYLE_REFERENCE_START -->
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+
+### Parts
+
+| Part | Description |
+| --- | --- |
+| `icon` | Primary icon. |
+| `input` | Input control. |
+| `secondaryIcon` | Secondary icon. |
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--TextInput-text-color` | `var(--palette-main-7)` | Controls the text color. |
+| `--TextInput-color` | `var(--color-foreground)` | Controls the color. |
+| `--TextInput-caret-color` | `var(--TextInput-color)` | Controls the caret color. |
+| `--TextInput-icon-color` | `var(--color-secondary)` | Controls the icon color. |
+| `--TextInput-placeholder-color` | `var(--color-muted-foreground)` | Controls the placeholder color. |
+| `--TextInput-bg` | `var(--color-background)` | Controls the background. |
+| `--TextInput-bg-disabled` | `var(--color-muted)` | Controls the background disabled. |
+| `--TextInput-border-color` | `var(--color-border)` | Controls the border color. |
+| `--TextInput-border-color-focused` | `var(--color-primary)` | Controls the border color focused. |
+| `--TextInput-border-color-error` | `var(--color-error)` | Controls the border color error. |
+| `--TextInput-border-width` | `1px` | Controls the border width. |
+| `--TextInput-radius` | `var(--radius-md)` | Controls the radius. |
+| `--TextInput-min-width` | `4rem` | Controls the min width. |
+| `--TextInput-padding-x` | `calc(var(--spacing) * 2)` | Controls the horizontal padding. |
+| `--TextInput-padding-y-s` | `calc(var(--spacing) * 1)` | Controls the small padding vertical. |
+| `--TextInput-padding-y-m` | `calc(var(--spacing) * 1.5)` | Controls the medium padding vertical. |
+| `--TextInput-padding-y-l` | `calc(var(--spacing) * 2)` | Controls the large padding vertical. |
+| `--TextInput-height-s` | `1rem` | Controls the small height. |
+| `--TextInput-height-m` | `1.25rem` | Controls the medium height. |
+| `--TextInput-height-l` | `1.5rem` | Controls the large height. |
+| `--TextInput-font-size-s` | `var(--text-sm)` | Controls the small font size. |
+| `--TextInput-font-size-m` | `var(--text-sm)` | Controls the medium font size. |
+| `--TextInput-font-size-l` | `var(--text-base)` | Controls the large font size. |
+| `--TextInput-line-height-s` | `initial` | Controls the small line height. |
+| `--TextInput-line-height-m` | `initial` | Controls the medium line height. |
+| `--TextInput-line-height-l` | `initial` | Controls the large line height. |
+| `--TextInput-icon-padding-m` | `2rem` | Controls the medium icon padding. |
+| `--TextInput-icon-padding-l` | `2.5rem` | Controls the large icon padding. |
+| `--TextInput-icon-offset` | `calc(var(--spacing) * 2)` | Controls the icon offset. |
+<!-- CSSX_STYLE_REFERENCE_END -->
 
 ## Sandbox
 
