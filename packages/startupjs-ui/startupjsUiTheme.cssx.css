@@ -269,6 +269,20 @@
 
   --MenuItem-active-border-size: 2px;
 
+  --Rank-item-padding: 0.5rem;
+  --Rank-item-gap: 0.5rem;
+  --Rank-item-radius: var(--radius-md);
+  --Rank-item-border-width: 1px;
+  --Rank-item-bg: var(--color-background);
+  --Rank-item-bg-disabled: var(--color-muted);
+  --Rank-item-border-color: var(--color-border);
+  --Rank-icon-disabled-color: var(--color-muted-foreground);
+  --Rank-span-offset: 1.25rem;
+  --Rank-right-offset: 2rem;
+  --Rank-readonly-index-width: 1.25rem;
+  --Rank-hint-font-size: var(--text-xs);
+  --Rank-hint-line-height: 1rem;
+
   --Progress-width: 0.25rem;
   --Progress-duration: 300;
   --Progress-track-bg: var(--color-muted);

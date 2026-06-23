@@ -1,7 +1,6 @@
 import { useMemo, type ReactNode } from 'react'
-import { StyleSheet, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, $, cssx, useCssVariable, themed } from 'startupjs'
-import { colorVariableRequest } from '@startupjs-ui/core'
+import { Platform, StyleSheet, type StyleProp, type ViewStyle } from 'react-native'
+import { css, pug, observer, $, useCssVariable, themed } from 'startupjs'
 import { DragDropProvider, Draggable, Droppable } from '@startupjs-ui/draggable'
 import Div from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
@@ -9,10 +8,11 @@ import Select from '@startupjs-ui/select'
 import Span from '@startupjs-ui/span'
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons/faGripVertical'
 import { getOptionLabel, getOptionValue, stringifyValue, move } from './helpers'
-import STYLES from './index.cssx.styl'
 
-const DRAGGABLE_STYLE: any = cssx('draggable', STYLES).style
-const CURSOR_STYLE: any = cssx('cursor', STYLES).style
+function toNumber (value: unknown, fallback: number): number {
+  const number = Number(value)
+  return Number.isFinite(number) ? number : fallback
+}
 
 export const _PropsJsonSchema = {/* RankProps */} // used in docs generation
 
@@ -75,12 +75,13 @@ const RankInput = observer(function RankInput ({
   const $width: any = $()
   const dropId = useMemo(() => $.id(), [])
 
-  const bgMainSubtleRequest = colorVariableRequest('bg-main-subtle')
-  const bgMainStrongRequest = colorVariableRequest('bg-main-strong')
-  const borderMainRequest = colorVariableRequest('border-main')
-  const bgMainSubtle = useCssVariable(bgMainSubtleRequest.name, bgMainSubtleRequest.fallback)
-  const bgMainStrong = useCssVariable(bgMainStrongRequest.name, bgMainStrongRequest.fallback)
-  const borderMain = useCssVariable(borderMainRequest.name, borderMainRequest.fallback)
+  const itemPadding = toNumber(useCssVariable('--Rank-item-padding', 8), 8)
+  const itemGap = toNumber(useCssVariable('--Rank-item-gap', 8), 8)
+  const itemRadius = toNumber(useCssVariable('--Rank-item-radius', 6), 6)
+  const itemBorderWidth = toNumber(useCssVariable('--Rank-item-border-width', 1), 1)
+  const itemBg = useCssVariable('--Rank-item-bg', 'var(--color-background)')
+  const disabledItemBg = useCssVariable('--Rank-item-bg-disabled', 'var(--color-muted)')
+  const itemBorderColor = useCssVariable('--Rank-item-border-color', 'var(--color-border)')
 
   const selectOptions = useMemo(() => {
     return value.map((_o, i) => ({ label: i + 1, value: i }))
@@ -110,9 +111,20 @@ const RankInput = observer(function RankInput ({
 
     // HACK: Draggable component has some visual bugs if styles are not passed
     // through style object
-    const extraStyle: any = disabled ? { backgroundColor: bgMainSubtle } : CURSOR_STYLE
+    const extraStyle: any = disabled
+      ? { backgroundColor: disabledItemBg }
+      : Platform.OS === 'web'
+        ? { cursor: 'pointer' }
+        : undefined
     const itemStyle: any = [
-      { ...DRAGGABLE_STYLE, backgroundColor: bgMainStrong, borderColor: borderMain },
+      {
+        padding: itemPadding,
+        borderWidth: itemBorderWidth,
+        borderRadius: itemRadius,
+        marginTop: itemGap,
+        backgroundColor: itemBg,
+        borderColor: itemBorderColor
+      },
       { width: $width.get() },
       extraStyle
     ]
@@ -180,3 +192,41 @@ const RankReadonly = observer(function RankReadonly ({
 })
 
 export default observer(themed('Rank', Rank))
+
+css`
+  .droppable {
+    margin-top: var(--Rank-item-gap);
+  }
+
+  .span {
+    flex-shrink: 1;
+    flex-grow: 1;
+    margin-left: var(--Rank-span-offset);
+    justify-content: center;
+  }
+
+  .readonly-index {
+    min-width: var(--Rank-readonly-index-width);
+  }
+
+  .readonly-text {
+    flex-shrink: 1;
+    flex-grow: 1;
+  }
+
+  .right {
+    flex-shrink: 0;
+    justify-content: center;
+    margin-left: var(--Rank-right-offset);
+  }
+
+  .icon.disabled {
+    color: var(--Rank-icon-disabled-color);
+  }
+
+  .hint {
+    font-size: var(--Rank-hint-font-size);
+    line-height: var(--Rank-hint-line-height);
+    margin-top: var(--Rank-item-gap);
+  }
+`
