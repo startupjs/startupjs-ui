@@ -7052,7 +7052,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/tabs@workspace:packages/tabs"
   dependencies:
-    "@startupjs-ui/core": "npm:^0.3.0"
     react-native-tab-view: "npm:^4.1.2"
   peerDependencies:
     react: "*"

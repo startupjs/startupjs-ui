@@ -73,7 +73,7 @@ export interface TabsProps {
     onTabLongPress?: (props: any) => void;
     /** Active label color @default 'primary' */
     activeColor?: string;
-    /** Inactive label color @default 'text-description' */
+    /** Inactive label color @default 'muted-foreground' */
     inactiveColor?: string;
     /** Ripple color for pressed tab */
     pressColor?: string;
