@@ -380,6 +380,16 @@
   --Pagination-icon-color: var(--color-secondary);
   --Pagination-icon-disabled-color: var(--color-muted-foreground);
 
+  --User-avatar-gap: 0.5rem;
+  --User-name-font-size-m: var(--text-sm);
+  --User-name-line-height-m: 1.25rem;
+  --User-name-font-size-l: var(--text-base);
+  --User-name-line-height-l: 1.5rem;
+  --User-description-font-size-m: var(--text-xs);
+  --User-description-line-height-m: 1rem;
+  --User-description-font-size-l: var(--text-sm);
+  --User-description-line-height-l: 1.25rem;
+
   --TextInput-color: var(--color-foreground);
   --TextInput-caret-color: var(--TextInput-color);
   --TextInput-icon-color: var(--color-secondary);
