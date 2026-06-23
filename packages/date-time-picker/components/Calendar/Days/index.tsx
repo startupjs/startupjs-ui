@@ -1,9 +1,8 @@
 import { useMemo, useCallback, type ReactNode } from 'react'
-import { pug, observer } from 'startupjs'
+import { css, pug, observer } from 'startupjs'
 import Span from '@startupjs-ui/span'
 import Div from '@startupjs-ui/div'
 import { useMoment } from '../../../helpers'
-import './index.cssx.styl'
 
 interface DaysProps {
   date: Date
@@ -138,3 +137,72 @@ function Days ({
 }
 
 export default observer(Days)
+
+css`
+  .shortName {
+    color: var(--DateTimePicker-muted-color);
+    font-size: var(--DateTimePicker-caption-font-size);
+    line-height: var(--DateTimePicker-caption-line-height);
+  }
+
+  .label {
+    font-size: var(--DateTimePicker-caption-font-size);
+    line-height: var(--DateTimePicker-caption-line-height);
+  }
+
+  .label.isMute {
+    color: var(--DateTimePicker-muted-color);
+  }
+
+  .label.isActive {
+    color: var(--DateTimePicker-active-color);
+  }
+
+  .cell {
+    justify-content: center;
+    align-items: center;
+    width: var(--DateTimePicker-day-cell-size);
+    height: var(--DateTimePicker-day-cell-size);
+    margin: var(--DateTimePicker-day-cell-margin);
+    border-radius: var(--DateTimePicker-day-cell-radius);
+  }
+
+  .cell:part(hover) {
+    background-color: var(--DateTimePicker-hover-bg);
+  }
+
+  .cell.isActive {
+    background-color: var(--DateTimePicker-active-bg);
+  }
+
+  .cell.isActive:part(hover) {
+    background-color: var(--DateTimePicker-active-hover-bg);
+  }
+
+  .cell.isActiveRangeStart {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    background-color: var(--DateTimePicker-active-bg);
+  }
+
+  .cell.isActiveRangeEnd {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background-color: var(--DateTimePicker-active-bg);
+  }
+
+  .cell.isActiveRange {
+    border-radius: 0;
+    background-color: var(--DateTimePicker-range-bg);
+  }
+
+  .row {
+    justify-content: center;
+  }
+
+  @media (--breakpoint-tablet) {
+    .row {
+      justify-content: flex-start;
+    }
+  }
+`

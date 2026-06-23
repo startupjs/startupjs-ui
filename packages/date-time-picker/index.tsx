@@ -10,7 +10,7 @@ import {
 import { Platform, type StyleProp, type ViewStyle } from 'react-native'
 import RNDateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { pug, observer, useBind, $, useMedia, themed } from 'startupjs'
+import { css, pug, observer, useBind, $, useMedia, themed } from 'startupjs'
 import Button from '@startupjs-ui/button'
 import Div from '@startupjs-ui/div'
 import Divider from '@startupjs-ui/divider'
@@ -20,7 +20,6 @@ import Drawer from '@startupjs-ui/drawer'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { getLocale, useMoment } from './helpers'
 import { Calendar, TimeSelect } from './components'
-import './index.cssx.styl'
 
 export default observer(themed('DateTimePicker', DateTimePicker))
 
@@ -494,3 +493,71 @@ function getTempDate (date: number | undefined, timezone: string, moment: any) {
     ? new Date(+moment.tz(date, timezone).seconds(0).milliseconds(0))
     : new Date()
 }
+
+css`
+  .content {
+    flex-direction: column;
+    padding: var(--DateTimePicker-content-padding);
+    flex-shrink: 1;
+  }
+
+  @media (--breakpoint-tablet) {
+    .content {
+      flex-direction: row;
+      height: var(--DateTimePicker-content-tablet-height);
+    }
+  }
+
+  .divider {
+    align-self: center;
+    width: var(--DateTimePicker-divider-width);
+    height: var(--DateTimePicker-divider-height);
+    margin-top: var(--DateTimePicker-divider-margin-y);
+    margin-bottom: var(--DateTimePicker-divider-margin-y);
+  }
+
+  @media (--breakpoint-tablet) {
+    .divider {
+      height: var(--DateTimePicker-divider-tablet-height);
+      width: var(--DateTimePicker-divider-tablet-width);
+      margin-top: 0;
+      margin-bottom: 0;
+      margin-left: var(--DateTimePicker-divider-tablet-margin-x);
+      margin-right: var(--DateTimePicker-divider-tablet-margin-x);
+    }
+  }
+
+  .drawer {
+    height: auto;
+    border-radius: 0;
+    padding-top: var(--DateTimePicker-drawer-padding-top);
+  }
+
+  .actions {
+    justify-content: space-between;
+  }
+
+  .rnPicker {
+    margin-top: var(--DateTimePicker-rn-picker-margin-top);
+  }
+
+  .swipe {
+    height: var(--DateTimePicker-swipe-height);
+  }
+
+  .popoverWrapper,
+  .popoverOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: default;
+  }
+
+  .popover {
+    background-color: var(--DateTimePicker-popover-bg);
+    border-radius: var(--DateTimePicker-popover-radius);
+    box-shadow: var(--DateTimePicker-popover-shadow);
+  }
+`
