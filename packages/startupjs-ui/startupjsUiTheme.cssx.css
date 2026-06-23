@@ -356,6 +356,10 @@
   --Drawer-bottom-height: 60%;
   --Drawer-bottom-radius: 1rem;
 
+  --Draggable-placeholder-bg: var(--color-muted);
+  --Draggable-placeholder-radius: var(--radius-sm);
+  --Draggable-placeholder-min-height: 2rem;
+
   --Toast-max-width: 20rem;
   --Toast-min-width: 15rem;
   --Toast-screen-padding: 1rem;
