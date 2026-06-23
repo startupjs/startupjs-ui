@@ -1,16 +1,20 @@
 import { useMemo, useState, type ReactNode } from 'react'
-import { StyleSheet, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, useCssVariable, themed } from 'startupjs'
-import { colorVariableRequest, isColorToken } from '@startupjs-ui/core'
+import { StyleSheet, type StyleProp, type TextStyle, type ViewStyle } from 'react-native'
+import { css, pug, observer, useCssColor, themed } from 'startupjs'
 import Div from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
 import Span from '@startupjs-ui/span'
-import './index.cssx.styl'
 
 const ICON_SIZES = {
   s: 'xs',
   m: 's',
   l: 'm'
+}
+
+const COLOR_TOKEN_RE = /^[A-Za-z][A-Za-z0-9_-]*$/
+
+function isSemanticColorToken (value: string): boolean {
+  return COLOR_TOKEN_RE.test(value.trim())
 }
 
 export default observer(themed('Badge', Badge))
@@ -22,6 +26,10 @@ export interface BadgeProps {
   style?: StyleProp<ViewStyle>
   /** Custom styles applied to the badge view */
   badgeStyle?: StyleProp<ViewStyle>
+  /** Custom styles applied to the badge icon */
+  iconStyle?: StyleProp<TextStyle>
+  /** Custom styles applied to the badge label */
+  labelStyle?: StyleProp<TextStyle>
   /** Content rendered inside Badge */
   children?: ReactNode
   /** Background color name @default 'primary' */
@@ -45,6 +53,8 @@ export interface BadgeProps {
 function Badge ({
   style,
   badgeStyle,
+  iconStyle,
+  labelStyle,
   children,
   color = 'primary',
   label,
@@ -56,18 +66,28 @@ function Badge ({
   testID
 }: BadgeProps): ReactNode {
   const [right, setRight] = useState(0)
-  const backgroundColorRequest = colorVariableRequest(color)
-  const colorTextRequest = colorVariableRequest(isColorToken(color) ? `text-on-${color}` : undefined)
-  const fallbackTextRequest = colorVariableRequest('text-on-color')
-  const backgroundColor = useCssVariable(backgroundColorRequest.name, backgroundColorRequest.fallback) as string | undefined
-  const colorText = useCssVariable(colorTextRequest.name, colorTextRequest.fallback) as string | undefined
-  const fallbackText = useCssVariable(fallbackTextRequest.name, fallbackTextRequest.fallback) as string | undefined
-  const textAndIconColor = colorText ?? fallbackText
+  const isSemanticColor = isSemanticColorToken(color)
+  const foregroundToken = isSemanticColor ? `${color}-foreground` : 'primary-foreground'
+  const resolvedBackgroundColor = useCssColor(color)
+  const backgroundColor = resolvedBackgroundColor ?? color
+  const foregroundColor = useCssColor(foregroundToken)
+  const fallbackForegroundColor = useCssColor('primary-foreground')
+  const textAndIconColor = foregroundColor ?? fallbackForegroundColor
+
+  if (!resolvedBackgroundColor && isSemanticColor) console.error(`Badge component: Unknown color token "${color}"`)
 
   badgeStyle = StyleSheet.flatten([
     { right, backgroundColor },
     badgeStyle
   ]) as StyleProp<ViewStyle>
+  iconStyle = StyleSheet.flatten([
+    { color: textAndIconColor },
+    iconStyle
+  ]) as StyleProp<TextStyle>
+  labelStyle = StyleSheet.flatten([
+    { color: textAndIconColor },
+    labelStyle
+  ]) as StyleProp<TextStyle>
 
   const hasLabel = useMemo(() => {
     return variant === 'default'
@@ -87,10 +107,11 @@ function Badge ({
   }
 
   return pug`
-    Div.root(style=style testID=testID)
+    Div.root(part='root' style=style testID=testID)
       = children
       if hasLabel || variant === 'dot'
         Div.badge(
+          part='badge'
           row
           style=badgeStyle
           onLayout=onLayout
@@ -104,10 +125,121 @@ function Badge ({
           if variant === 'default'
             if icon
               Icon(
-                style={ color: textAndIconColor }
+                part='icon'
+                style=iconStyle
                 icon=icon
                 size=ICON_SIZES[size]
               )
-            Span.label(style={ color: textAndIconColor } styleName=[size, { icon }])= getLabel(label, max)
+            Span.label(part='label' style=labelStyle styleName=[size, { icon }])= getLabel(label, max)
   `
 }
+
+css`
+  .root {
+    position: relative;
+    align-self: flex-start;
+  }
+
+  .badge {
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    border-width: 1px;
+    border-color: var(--Badge-border-color);
+    opacity: 0;
+  }
+
+  .badge.visible {
+    opacity: 1;
+  }
+
+  .badge.s {
+    min-width: var(--Badge-size-s);
+    height: var(--Badge-size-s);
+    border-radius: calc(var(--Badge-size-s) / 2);
+  }
+
+  .badge.s.top {
+    top: calc(var(--Badge-size-s) / -2);
+  }
+
+  .badge.s.bottom {
+    bottom: calc(var(--Badge-size-s) / -2);
+  }
+
+  .badge.m {
+    min-width: var(--Badge-size-m);
+    height: var(--Badge-size-m);
+    border-radius: calc(var(--Badge-size-m) / 2);
+  }
+
+  .badge.m.top {
+    top: calc(var(--Badge-size-m) / -2);
+  }
+
+  .badge.m.bottom {
+    bottom: calc(var(--Badge-size-m) / -2);
+  }
+
+  .badge.l {
+    min-width: var(--Badge-size-l);
+    height: var(--Badge-size-l);
+    border-radius: calc(var(--Badge-size-l) / 2);
+  }
+
+  .badge.l.top {
+    top: calc(var(--Badge-size-l) / -2);
+  }
+
+  .badge.l.bottom {
+    bottom: calc(var(--Badge-size-l) / -2);
+  }
+
+  .badge.dot {
+    min-width: var(--Badge-size-dot);
+    height: var(--Badge-size-dot);
+    border-radius: calc(var(--Badge-size-dot) / 2);
+  }
+
+  .badge.dot.top {
+    top: calc(var(--Badge-size-dot) / -2);
+  }
+
+  .badge.dot.bottom {
+    bottom: calc(var(--Badge-size-dot) / -2);
+  }
+
+  .badge.hasLabel.s {
+    padding-left: var(--Badge-padding-x-s);
+    padding-right: var(--Badge-padding-x-s);
+  }
+
+  .badge.hasLabel.m {
+    padding-left: var(--Badge-padding-x-m);
+    padding-right: var(--Badge-padding-x-m);
+  }
+
+  .badge.hasLabel.l {
+    padding-left: var(--Badge-padding-x-l);
+    padding-right: var(--Badge-padding-x-l);
+  }
+
+  .label.s {
+    font-size: var(--Badge-font-size-s);
+    line-height: var(--Badge-line-height-s);
+  }
+
+  .label.m {
+    font-size: var(--Badge-font-size-m);
+    line-height: var(--Badge-line-height-m);
+  }
+
+  .label.l {
+    font-size: var(--Badge-font-size-l);
+    line-height: var(--Badge-line-height-l);
+  }
+
+  .label.icon {
+    margin-left: var(--Badge-icon-gap);
+  }
+`

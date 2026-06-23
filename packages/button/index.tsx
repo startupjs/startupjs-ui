@@ -1,26 +1,46 @@
 import { Children, useState, type ReactNode } from 'react'
 import { StyleSheet, type GestureResponderEvent, type StyleProp, type TextStyle, type ViewStyle } from 'react-native'
-import { pug, observer, useCssVariable, useIsMountedRef, themed } from 'startupjs'
-import { colorToRGBA, colorVariableRequest, isColorToken } from '@startupjs-ui/core'
+import { css, pug, observer, useCssColor, useCssVariable, useIsMountedRef, themed } from 'startupjs'
 import Div from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
 import Loader from '@startupjs-ui/loader'
 import Span from '@startupjs-ui/span'
-import STYLES from './index.cssx.styl'
 
-const {
-  config: {
-    heights,
-    outlinedBorderWidth,
-    outlinedBorderColor,
-    useBgColorForFlat,
-    webNativeButton,
-    iconMargins
-  }
-} = STYLES
+const HEIGHT_FALLBACKS = {
+  xs: 16,
+  s: 24,
+  m: 32,
+  l: 40,
+  xl: 48,
+  xxl: 56
+}
+
+const ICON_MARGIN_FALLBACKS = {
+  xs: 4,
+  s: 4,
+  m: 8,
+  l: 8,
+  xl: 12,
+  xxl: 12
+}
+
+const COLOR_TOKEN_RE = /^[A-Za-z][A-Za-z0-9_-]*$/
 
 function isConfigEnabled (value: unknown): boolean {
   return value !== false && value !== 0 && value !== '0'
+}
+
+function isSemanticColorToken (value: string): boolean {
+  return COLOR_TOKEN_RE.test(value.trim())
+}
+
+function toNumber (value: unknown, fallback: number): number {
+  const number = Number(value)
+  return Number.isFinite(number) ? number : fallback
+}
+
+function isCustomBorderColor (value: unknown): value is string {
+  return typeof value === 'string' && value !== '' && value !== 'transparent'
 }
 
 export default observer(themed('Button', Button))
@@ -80,16 +100,24 @@ function Button ({
   const isMountedRef = useIsMountedRef()
   const [asyncActive, setAsyncActive] = useState(false)
   const isFlat = variant === 'flat'
-  const colorRequest = colorVariableRequest(color)
-  const flatBgColorRequest = colorVariableRequest(isColorToken(color) ? `bg-${color}` : undefined)
-  const flatTextColorRequest = colorVariableRequest(isColorToken(color) ? `text-on-${color}` : undefined)
-  const textOnColorRequest = colorVariableRequest('text-on-color')
-  const _color = useCssVariable(colorRequest.name, colorRequest.fallback) as string | undefined
-  const _flatBgColor = useCssVariable(flatBgColorRequest.name, flatBgColorRequest.fallback) as string | undefined
-  const _flatTextColor = useCssVariable(flatTextColorRequest.name, flatTextColorRequest.fallback) as string | undefined
-  const _textOnColor = useCssVariable(textOnColorRequest.name, textOnColorRequest.fallback) as string | undefined
-  const textColor = isFlat && _flatTextColor ? `text-on-${color}` : isFlat ? 'text-on-color' : color
-  const _textColor = isFlat ? (_flatTextColor ?? _textOnColor) : _color
+  const isSemanticColor = isSemanticColorToken(color)
+  const foregroundToken = isSemanticColor ? `${color}-foreground` : 'primary-foreground'
+  const resolvedColor = useCssColor(color)
+  const resolvedForegroundColor = useCssColor(foregroundToken)
+  const fallbackForegroundColor = useCssColor('primary-foreground')
+  const outlinedBorderColor = useCssColor(color, 0.5)
+  const hoverColor = useCssColor(color, 0.05)
+  const activeColor = useCssColor(color, 0.25)
+  const customOutlinedBorderColor = useCssVariable('--Button-outlined-border-color', 'transparent')
+  const webNativeButton = useCssVariable('--Button-web-native-button', 1)
+  const height = toNumber(useCssVariable(`--Button-height-${size}`), HEIGHT_FALLBACKS[size])
+  const iconMargin = toNumber(useCssVariable(`--Button-icon-margin-${size}`), ICON_MARGIN_FALLBACKS[size])
+  const outlinedBorderWidth = toNumber(useCssVariable('--Button-outlined-border-width', 1), 1)
+  const baseColor = resolvedColor ?? color
+  const textColor = isFlat
+    ? (resolvedForegroundColor ?? fallbackForegroundColor)
+    : baseColor
+  const loaderColor = isFlat && isSemanticColor ? foregroundToken : (textColor ?? 'primary-foreground')
 
   async function _onPress (event: GestureResponderEvent) {
     if (!onPress) return
@@ -110,41 +138,39 @@ function Button ({
     }
   }
 
-  if (!_color) console.error(`Button component: Unknown color token "${color}"`)
+  if (!resolvedColor && isSemanticColor) console.error(`Button component: Unknown color token "${color}"`)
 
-  const shouldUseBgColorForFlat = isConfigEnabled(useBgColorForFlat)
   const shouldUseWebNativeButton = isConfigEnabled(webNativeButton)
-  const _colorString = _color ?? ''
   const hasChildren = Children.count(children)
-  const height = heights[size] as number
   const rootStyle: Record<string, any> = { height }
-  const rootExtraProps: Record<string, any> = {}
   const iconWrapperStyle: Record<string, any> = {}
   let extraHoverStyle: StyleProp<ViewStyle>
   let extraActiveStyle: StyleProp<ViewStyle>
 
   textStyle = StyleSheet.flatten<TextStyle>([
-    { color: _textColor as any },
+    { color: textColor as any },
     textStyle
   ])
   iconStyle = StyleSheet.flatten<TextStyle>([
-    { color: _textColor as any },
+    { color: textColor as any },
     iconStyle
   ])
 
   switch (variant) {
     case 'flat':
-      rootStyle.backgroundColor = (shouldUseBgColorForFlat ? _flatBgColor : null) || _color
+      rootStyle.backgroundColor = baseColor
       break
     case 'outlined':
       rootStyle.borderWidth = outlinedBorderWidth
-      rootStyle.borderColor = outlinedBorderColor || colorToRGBA(_colorString, 0.5)
-      extraHoverStyle = { backgroundColor: colorToRGBA(_colorString, 0.05) }
-      extraActiveStyle = { backgroundColor: colorToRGBA(_colorString, 0.25) }
+      rootStyle.borderColor = isCustomBorderColor(customOutlinedBorderColor)
+        ? customOutlinedBorderColor
+        : outlinedBorderColor
+      extraHoverStyle = hoverColor ? { backgroundColor: hoverColor } : undefined
+      extraActiveStyle = activeColor ? { backgroundColor: activeColor } : undefined
       break
     case 'text':
-      extraHoverStyle = { backgroundColor: colorToRGBA(_colorString, 0.05) }
-      extraActiveStyle = { backgroundColor: colorToRGBA(_colorString, 0.25) }
+      extraHoverStyle = hoverColor ? { backgroundColor: hoverColor } : undefined
+      extraActiveStyle = activeColor ? { backgroundColor: activeColor } : undefined
       break
   }
 
@@ -156,11 +182,11 @@ function Button ({
 
     switch (iconPosition) {
       case 'left':
-        iconWrapperStyle.marginRight = iconMargins[size]
+        iconWrapperStyle.marginRight = iconMargin
         iconWrapperStyle.marginLeft = -quarterOfHeight
         break
       case 'right':
-        iconWrapperStyle.marginLeft = iconMargins[size]
+        iconWrapperStyle.marginLeft = iconMargin
         iconWrapperStyle.marginRight = -quarterOfHeight
         break
     }
@@ -175,6 +201,7 @@ function Button ({
 
   return pug`
     Div.root(
+      part='root'
       row
       _webNativeButton=shouldUseWebNativeButton
       shape=shape
@@ -191,12 +218,11 @@ function Button ({
       activeStyle=extraActiveStyle ? [extraActiveStyle, activeStyle] : activeStyle
       disabled=asyncActive || disabled
       onPress=onPress ? _onPress : undefined
-      ...rootExtraProps
       ...props
     )
       if asyncActive
-        Div.loader
-          Loader(size='s' color=textColor)
+        Div.loader(part='loader')
+          Loader(size='s' color=loaderColor)
       if icon
         Div.iconWrapper(
           style=iconWrapperStyle
@@ -206,6 +232,7 @@ function Button ({
           ]
         )
           Icon.icon(
+            part='icon'
             style=iconStyle
             styleName=[variant, { invisible: asyncActive }]
             icon=icon
@@ -213,8 +240,58 @@ function Button ({
           )
       if children != null
         Span.label(
+          part='text'
           style=[textStyle]
           styleName=[size, { invisible: asyncActive }]
         )= children
   `
 }
+
+css`
+  .root.disabled {
+    opacity: var(--Button-disabled-opacity);
+  }
+
+  .label {
+    font-weight: var(--Button-font-weight);
+  }
+
+  .label.invisible,
+  .icon.invisible {
+    opacity: 0;
+  }
+
+  .label.xs {
+    font-size: var(--Button-font-size-xs);
+    line-height: var(--Button-line-height-xs);
+  }
+
+  .label.s {
+    font-size: var(--Button-font-size-s);
+    line-height: var(--Button-line-height-s);
+  }
+
+  .label.m {
+    font-size: var(--Button-font-size-m);
+    line-height: var(--Button-line-height-m);
+  }
+
+  .label.l {
+    font-size: var(--Button-font-size-l);
+    line-height: var(--Button-line-height-l);
+  }
+
+  .label.xl {
+    font-size: var(--Button-font-size-xl);
+    line-height: var(--Button-line-height-xl);
+  }
+
+  .label.xxl {
+    font-size: var(--Button-font-size-xxl);
+    line-height: var(--Button-line-height-xxl);
+  }
+
+  .loader {
+    position: absolute;
+  }
+`

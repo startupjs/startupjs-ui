@@ -9,7 +9,7 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 Badges are small status descriptors that attach to UI elements, such as icons or buttons. They are commonly used to display counts (like unread messages) or to indicate a change in state.
 
-The component supports a `style` prop for custom styles on the root wrapper and a `badgeStyle` prop for custom styles on the badge indicator itself.
+The component supports `style`, `badgeStyle`, `labelStyle`, and `iconStyle` props for per-instance overrides. For app-wide customization, target `Badge`, `Badge:part(badge)`, `Badge:part(label)`, and `Badge:part(icon)` from provider styles.
 
 ```js
 import { Badge } from 'startupjs-ui'

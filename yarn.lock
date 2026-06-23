@@ -6264,7 +6264,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/badge@workspace:packages/badge"
   dependencies:
-    "@startupjs-ui/core": "npm:^0.3.0"
     "@startupjs-ui/div": "npm:^0.3.7"
     "@startupjs-ui/icon": "npm:^0.3.5"
     "@startupjs-ui/span": "npm:^0.3.4"
@@ -6307,7 +6306,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/button@workspace:packages/button"
   dependencies:
-    "@startupjs-ui/core": "npm:^0.3.0"
     "@startupjs-ui/div": "npm:^0.3.7"
     "@startupjs-ui/icon": "npm:^0.3.5"
     "@startupjs-ui/loader": "npm:^0.3.0"
@@ -7078,7 +7076,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/tag@workspace:packages/tag"
   dependencies:
-    "@startupjs-ui/core": "npm:^0.3.0"
     "@startupjs-ui/div": "npm:^0.3.7"
     "@startupjs-ui/icon": "npm:^0.3.5"
     "@startupjs-ui/span": "npm:^0.3.4"

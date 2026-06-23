@@ -5,7 +5,6 @@ import { Sandbox } from '@startupjs-ui/docs'
 import Tag, { _PropsJsonSchema as TagPropsJsonSchema } from './index'
 import Br from '@startupjs-ui/br'
 import Div from '@startupjs-ui/div'
-import './index.mdx.cssx.styl'
 
 # Tag
 
@@ -93,17 +92,12 @@ return (
 
 ## Icons
 
-Use the `icon` prop to add a left-side icon and the `secondaryIcon` prop for a right-side icon. To change the color of an icon, use the corresponding `iconStyleName` or `secondaryIconStyleName` prop.
-
-In your `.styl` file:
-```stylus
-.icon
-  color var(--color-text-main)
-.secondaryIcon
-  color var(--color-text-error)
-```
+Use the `icon` prop to add a left-side icon and the `secondaryIcon` prop for a right-side icon. To change an individual icon, use the corresponding `iconStyle` or `secondaryIconStyle` prop. For app-wide customization, target `Tag:part(icon)` and `Tag:part(secondaryIcon)` from provider styles.
 
 ```jsx example
+const iconStyle = { color: '#111827' }
+const secondaryIconStyle = { color: '#dc2626' }
+
 return (
   <Div row>
     <Tag icon={faStopCircle}>
@@ -117,8 +111,8 @@ return (
       Icon on the right
     </Tag>
     <Tag
-      iconStyleName='icon'
-      secondaryIconStyleName='secondaryIcon'
+      iconStyle={iconStyle}
+      secondaryIconStyle={secondaryIconStyle}
       variant='outlined'
       icon={faStopCircle}
       secondaryIcon={faTimesCircle}

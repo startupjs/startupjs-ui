@@ -1,15 +1,19 @@
 import { type ReactNode } from 'react'
 import { StyleSheet, type GestureResponderEvent, type StyleProp, type TextStyle, type ViewStyle } from 'react-native'
-import { pug, observer, useCssVariable, themed } from 'startupjs'
-import { colorToRGBA, colorVariableRequest, isColorToken } from '@startupjs-ui/core'
+import { css, pug, observer, useCssColor, themed } from 'startupjs'
 import Div, { type DivProps } from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
 import Span from '@startupjs-ui/span'
-import './index.cssx.styl'
 
 const ICON_SIZES = {
   s: 's',
   m: 's'
+}
+
+const COLOR_TOKEN_RE = /^[A-Za-z][A-Za-z0-9_-]*$/
+
+function isSemanticColorToken (value: string): boolean {
+  return COLOR_TOKEN_RE.test(value.trim())
 }
 
 export default observer(themed('Tag', Tag))
@@ -73,18 +77,21 @@ function Tag ({
   shape = 'circle',
   ...props
 }: TagProps): ReactNode {
-  const colorRequest = colorVariableRequest(color)
-  const colorTextRequest = colorVariableRequest(isColorToken(color) ? `text-on-${color}` : undefined)
-  const fallbackTextRequest = colorVariableRequest('text-on-color')
-  const resolvedColor = useCssVariable(colorRequest.name, colorRequest.fallback) as string | undefined
-  const colorText = useCssVariable(colorTextRequest.name, colorTextRequest.fallback) as string | undefined
-  const fallbackText = useCssVariable(fallbackTextRequest.name, fallbackTextRequest.fallback) as string | undefined
-  const flatTextColor = colorText ?? fallbackText
+  const isSemanticColor = isSemanticColorToken(color)
+  const foregroundToken = isSemanticColor ? `${color}-foreground` : 'primary-foreground'
+  const resolvedColor = useCssColor(color)
+  const resolvedForegroundColor = useCssColor(foregroundToken)
+  const fallbackForegroundColor = useCssColor('primary-foreground')
+  const outlinedBorderColor = useCssColor(color, 0.5)
+  const hoverColor = useCssColor(color, 0.05)
+  const activeColor = useCssColor(color, 0.25)
+  const subtleColor = useCssColor(color, 0.15)
 
-  if (!resolvedColor) console.error(`Tag component: Unknown color token "${color}"`)
+  if (!resolvedColor && isSemanticColor) console.error(`Tag component: Unknown color token "${color}"`)
 
   const isFlat = variant === 'flat'
   const _color = resolvedColor ?? color
+  const flatTextColor = resolvedForegroundColor ?? fallbackForegroundColor
   const rootStyle: StyleProp<ViewStyle> = {}
   let extraHoverStyle
   let extraActiveStyle
@@ -107,20 +114,21 @@ function Tag ({
       rootStyle.backgroundColor = _color
       break
     case 'outlined':
-      rootStyle.borderColor = colorToRGBA(_color, 0.5)
-      extraHoverStyle = { backgroundColor: colorToRGBA(_color, 0.05) }
-      extraActiveStyle = { backgroundColor: colorToRGBA(_color, 0.25) }
+      rootStyle.borderColor = outlinedBorderColor
+      extraHoverStyle = hoverColor ? { backgroundColor: hoverColor } : undefined
+      extraActiveStyle = activeColor ? { backgroundColor: activeColor } : undefined
       break
     case 'outlined-bg':
       rootStyle.borderColor = _color
-      rootStyle.backgroundColor = colorToRGBA(_color, 0.15)
-      extraHoverStyle = { backgroundColor: colorToRGBA(_color, 0.05) }
-      extraActiveStyle = { backgroundColor: colorToRGBA(_color, 0.25) }
+      rootStyle.backgroundColor = subtleColor
+      extraHoverStyle = hoverColor ? { backgroundColor: hoverColor } : undefined
+      extraActiveStyle = activeColor ? { backgroundColor: activeColor } : undefined
       break
   }
 
   return pug`
     Div.root(
+      part='root'
       style=[rootStyle, style]
       styleName=[
         variant,
@@ -141,6 +149,7 @@ function Tag ({
           onPress=onIconPress
         )
           Icon(
+            part='icon'
             style=iconStyle
             icon=icon
             size=ICON_SIZES[size]
@@ -151,6 +160,7 @@ function Tag ({
       //- Tag= value
       if children != null
         Span.label(
+          part='text'
           style=[textStyle]
           styleName=[size]
         )= children
@@ -161,6 +171,7 @@ function Tag ({
           onPress=onSecondaryIconPress
         )
           Icon.icon(
+            part='secondaryIcon'
             style=secondaryIconStyle
             styleName=[variant, size]
             icon=secondaryIcon
@@ -168,3 +179,66 @@ function Tag ({
           )
   `
 }
+
+css`
+  .root {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .root.s {
+    height: var(--Tag-height-s);
+    padding-left: var(--Tag-padding-x-s);
+    padding-right: var(--Tag-padding-x-s);
+  }
+
+  .root.m {
+    height: var(--Tag-height-m);
+    padding-left: var(--Tag-padding-x-m);
+    padding-right: var(--Tag-padding-x-m);
+  }
+
+  .root.disabled {
+    opacity: var(--Tag-disabled-opacity);
+  }
+
+  .root.outlined,
+  .root.outlined-bg {
+    border-width: var(--Tag-outlined-border-width);
+  }
+
+  .label {
+    font-weight: var(--Tag-font-weight);
+  }
+
+  .label.s {
+    font-size: var(--Tag-font-size-s);
+    line-height: var(--Tag-line-height-s);
+  }
+
+  .label.m {
+    font-size: var(--Tag-font-size-m);
+    line-height: var(--Tag-line-height-m);
+  }
+
+  .iconWrapper.left.s {
+    margin-right: var(--Tag-icon-inside-margin-s);
+    margin-left: var(--Tag-icon-outside-margin-s);
+  }
+
+  .iconWrapper.left.m {
+    margin-right: var(--Tag-icon-inside-margin-m);
+    margin-left: var(--Tag-icon-outside-margin-m);
+  }
+
+  .iconWrapper.right.s {
+    margin-left: var(--Tag-icon-inside-margin-s);
+    margin-right: var(--Tag-icon-outside-margin-s);
+  }
+
+  .iconWrapper.right.m {
+    margin-left: var(--Tag-icon-inside-margin-m);
+    margin-right: var(--Tag-icon-outside-margin-m);
+  }
+`
