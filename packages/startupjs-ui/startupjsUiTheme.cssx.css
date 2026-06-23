@@ -317,6 +317,13 @@
   --Content-width-desktop: var(--breakpoint-lg);
   --Content-width-wide: var(--breakpoint-xl);
 
+  --Card-padding: 1rem;
+  --Card-radius: var(--radius-md);
+  --Card-bg: var(--color-background);
+  --Card-outlined-bg: var(--color-background);
+  --Card-border-width: 1px;
+  --Card-border-color: var(--color-border);
+
   --TextInput-color: var(--color-foreground);
   --TextInput-caret-color: var(--TextInput-color);
   --TextInput-icon-color: var(--color-secondary);

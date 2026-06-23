@@ -3,7 +3,6 @@
 
 import { type ReactNode } from 'react';
 import { type DivProps } from '@startupjs-ui/div';
-import './index.cssx.styl';
 declare const _default: import("react").ComponentType<CardProps>;
 export default _default;
 export declare const _PropsJsonSchema: {};
