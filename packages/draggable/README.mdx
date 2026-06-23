@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { pug } from 'startupjs'
+import { css, pug } from 'startupjs'
 import { Sandbox } from '@startupjs-ui/docs'
 import {
   Draggable,
@@ -17,7 +17,26 @@ import {
   DroppableSandbox,
   DraggableSandbox
 } from './README.helpers'
-import './index.mdx.cssx.styl'
+
+css`
+  .droppable {
+    margin-right: 1rem;
+    background-color: var(--color-muted);
+    padding: 0.5rem;
+  }
+
+  .draggable {
+    width: 200px;
+    background-color: var(--color-background);
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    padding: 0.5rem 1rem;
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--color-border);
+    border-radius: var(--radius-md);
+  }
+`
 
 # Draggable
 
