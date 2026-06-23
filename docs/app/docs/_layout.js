@@ -312,7 +312,10 @@ const DOC_COMPONENT_CATEGORIES = [
   {
     name: 'Migration Guides',
     defaultOpen: false,
-    items: [{ name: '0.3', path: 'MigrationGuides03' }]
+    items: [
+      { name: '0.4', path: 'MigrationGuides04' },
+      { name: '0.3', path: 'MigrationGuides03' }
+    ]
   }
 ]
 
