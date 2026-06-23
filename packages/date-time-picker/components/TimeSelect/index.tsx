@@ -4,6 +4,7 @@ import {
   useRef,
   useCallback,
   useImperativeHandle,
+  type ReactElement,
   type ReactNode,
   type RefObject
 } from 'react'
@@ -90,7 +91,7 @@ function TimeSelect ({
     scrollToIndex()
   }, [scrollToIndex])
 
-  function renderItem ({ item }: { item: any }): ReactNode {
+  function renderItem ({ item }: { item: any }): ReactElement {
     const isActive = +moment(date) === item.value
 
     return pug`
@@ -101,7 +102,7 @@ function TimeSelect ({
       )
         Span.label(styleName={ isActive })
           = item.label
-    `
+    ` as ReactElement
   }
 
   const length = CELL_HEIGHT

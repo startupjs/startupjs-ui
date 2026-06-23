@@ -1,5 +1,5 @@
 import { Children, cloneElement, type ReactNode } from 'react'
-import { Image, type StyleProp, type ViewStyle } from 'react-native'
+import { Image, type StyleProp, type TextStyle, type ViewStyle } from 'react-native'
 import { css, pug, observer, themed } from 'startupjs'
 
 import Div, { type DivProps } from '@startupjs-ui/div'
@@ -144,7 +144,7 @@ export interface ItemContentProps {
 function ItemContent ({ style, children }: ItemContentProps): ReactNode {
   return pug`
     if typeof children === 'string'
-      Span.content(style=style numberOfLines=1)= children
+      Span.content(style=style as StyleProp<TextStyle> numberOfLines=1)= children
     else
       Div.content(style=style)= children
   `

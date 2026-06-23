@@ -220,7 +220,6 @@ function Dropdown ({
       renderContent.current.push(pug`
         View(
           key=index
-          value=child.props.value
           onLayout=onLayoutActive
         )=_child
       `)

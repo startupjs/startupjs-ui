@@ -2,7 +2,7 @@ import { type ReactNode } from 'react'
 import { ActivityIndicator, type ActivityIndicatorProps } from 'react-native'
 import { pug, observer, useCssColor, themed } from 'startupjs'
 
-const SIZES = { s: 'small', m: 'large' }
+const SIZES = { s: 'small', m: 'large' } as const
 const COLOR_TOKEN_RE = /^[A-Za-z][A-Za-z0-9_-]*$/
 
 function isSemanticColorToken (value: string): boolean {

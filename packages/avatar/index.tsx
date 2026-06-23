@@ -110,7 +110,7 @@ function Avatar ({
               backgroundColor: randomcolor({
                 luminosity: 'bright',
                 seed: _fallback
-              })
+              }) as string
             }
           )
             Span.fallback(part='fallback' bold style=_fallbackStyle)

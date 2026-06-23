@@ -57,6 +57,7 @@ async function main () {
   const tsconfig = {
     extends: '../../tsconfig.json',
     compilerOptions: {
+      noEmit: false,
       emitDeclarationOnly: true,
       declaration: true,
       declarationMap: false,

@@ -68,7 +68,7 @@ function Link ({
   if (!resolvedDisplay) resolvedDisplay = typeof children === 'string' ? 'inline' : 'block'
 
   const isBlock = resolvedDisplay === 'block'
-  const Component = isBlock ? Div : Span
+  const Component: any = isBlock ? Div : Span
   const extraProps: Record<string, any> = { role: 'link', onPress: handlePress }
   const {
     navigate: routerNavigate,

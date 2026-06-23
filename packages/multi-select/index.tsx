@@ -226,7 +226,7 @@ function MultiSelect ({
       Popover.popover(
         part='root'
         ...props
-        captionStyle=style
+        style=style
         visible=focused
         openOnAnchorPress=false
         matchAnchorWidth=hasWidthCaption
@@ -385,14 +385,12 @@ function MultiSelectInput ({
         - const isLast = index + 1 === values.length
         TagComponent(
           key=value
-          index=index
           isLast=isLast
           record=record
         )
       if hiddenTagsLength
         Span.ellipsis ...
         DefaultTag(
-          index=0
           record={ label: '+' + hiddenTagsLength }
         )
   `

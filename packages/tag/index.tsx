@@ -8,7 +8,7 @@ import Span from '@startupjs-ui/span'
 const ICON_SIZES = {
   s: 's',
   m: 's'
-}
+} as const
 
 const COLOR_TOKEN_RE = /^[A-Za-z][A-Za-z0-9_-]*$/
 

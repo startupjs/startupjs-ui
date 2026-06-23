@@ -6,6 +6,8 @@ import Label from './Label'
 
 export default themed('RangeInput', observer(RangeInput))
 
+const UIMultiSlider = MultiSlider as any
+
 export const _PropsJsonSchema = {/* RangeInputProps */}
 
 export interface RangeInputProps {
@@ -99,7 +101,7 @@ function RangeInput ({
   }
 
   return pug`
-    MultiSlider.root(
+    UIMultiSlider.root(
       ...props
       part='root'
       testID=testID

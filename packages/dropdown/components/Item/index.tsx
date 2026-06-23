@@ -104,7 +104,7 @@ function DropdownItem ({
     )
       View.item(
         style=(!isPure && _activeValue === value) ? _styleActiveItem : undefined
-        styleName=[!isPure && _variant, {
+        styleName=[!isPure ? _variant : undefined, {
           active: !isPure && (_activeValue === value),
           itemUp: !isPure && (_index === 0),
           itemDown: !isPure && (_index === (_childrenLength || 0) - 1),

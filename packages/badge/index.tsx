@@ -9,7 +9,7 @@ const ICON_SIZES = {
   s: 'xs',
   m: 's',
   l: 'm'
-}
+} as const
 
 const COLOR_TOKEN_RE = /^[A-Za-z][A-Za-z0-9_-]*$/
 
@@ -130,7 +130,7 @@ function Badge ({
                 icon=icon
                 size=ICON_SIZES[size]
               )
-            Span.label(part='label' style=labelStyle styleName=[size, { icon }])= getLabel(label, max)
+            Span.label(part='label' style=labelStyle styleName=[size, { icon: !!icon }])= getLabel(label, max)
   `
 }
 

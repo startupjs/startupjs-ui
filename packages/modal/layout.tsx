@@ -77,7 +77,7 @@ function Modal ({
   dismissLabel,
   cancelLabel = DEFAULT_CANCEL_LABEL,
   confirmLabel = DEFAULT_CONFIRM_LABEL,
-  ModalElement,
+  ModalElement = View,
   showCross,
   enableBackdropPress,
   onRequestClose,

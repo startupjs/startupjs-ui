@@ -16,7 +16,7 @@ import { css, pug, observer, themed } from 'startupjs'
 
 import Div from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
-import TextInput from '@startupjs-ui/text-input'
+import TextInput, { type UITextInputProps } from '@startupjs-ui/text-input'
 import Buttons from './buttons'
 
 const IS_IOS = Platform.OS === 'ios'
@@ -49,7 +49,7 @@ export interface NumberInputProps {
   /** Units position @default 'left' */
   unitsPosition?: 'left' | 'right'
   /** Return key type for the keyboard @default 'done' */
-  returnKeyType?: string
+  returnKeyType?: UITextInputProps['returnKeyType']
   /** Handler triggered when numeric value changes */
   onChangeNumber?: (value?: number) => void
   /** Ref to access the underlying TextInput */
@@ -161,8 +161,8 @@ function NumberInput ({
     onChangeText(String(newValue))
   }
 
-  function getReturnKeyType (): string | undefined {
-    let res
+  function getReturnKeyType (): UITextInputProps['returnKeyType'] {
+    let res: UITextInputProps['returnKeyType']
 
     if (IS_IOS && returnKeyType === 'none') {
       res = 'default'
@@ -228,10 +228,10 @@ function NumberInput ({
   }
 
   return pug`
-    TextInput(
+    TextInput.input(
       style=style
       ref=ref
-      inputStyleName=['input-input', buttonsMode, size]
+      styleName=[buttonsMode, size]
       value=inputValue
       size=size
       disabled=disabled
@@ -291,29 +291,29 @@ css`
     margin-right: var(--NumberInput-units-gap);
   }
 
-  .input-input.vertical.l {
+  .input.vertical.l:part(input) {
     padding-right: var(--NumberInput-button-padding-l);
   }
 
-  .input-input.vertical.m {
+  .input.vertical.m:part(input) {
     padding-right: var(--NumberInput-button-padding-m);
   }
 
-  .input-input.vertical.s {
+  .input.vertical.s:part(input) {
     padding-right: var(--NumberInput-button-padding-s);
   }
 
-  .input-input.horizontal.l {
+  .input.horizontal.l:part(input) {
     padding-left: var(--NumberInput-button-padding-l);
     padding-right: var(--NumberInput-button-padding-l);
   }
 
-  .input-input.horizontal.m {
+  .input.horizontal.m:part(input) {
     padding-left: var(--NumberInput-button-padding-m);
     padding-right: var(--NumberInput-button-padding-m);
   }
 
-  .input-input.horizontal.s {
+  .input.horizontal.s:part(input) {
     padding-left: var(--NumberInput-button-padding-s);
     padding-right: var(--NumberInput-button-padding-s);
   }

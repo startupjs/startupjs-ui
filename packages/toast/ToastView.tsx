@@ -32,6 +32,8 @@ const TITLES = {
 export const _PropsJsonSchema = {/* ToastProps */}
 
 export interface ToastProps {
+  /** Stable key used by ToastProvider when rendering the active toast list */
+  key?: string | number
   /** Visual style variant @default 'info' */
   type?: 'info' | 'error' | 'warning' | 'success'
   /** Y offset used to stack multiple toasts */

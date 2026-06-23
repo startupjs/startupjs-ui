@@ -83,7 +83,7 @@ function Icon ({
       FontAwesomeIcon(
         style=style
         styleName='root'
-        icon=icon
+        icon=icon as any
         ...props
       )
     `
@@ -92,7 +92,7 @@ function Icon ({
       FontAwesomeIcon(
         style=style
         styleName='root'
-        icon=icon
+        icon=icon as any
         size=_size
         ...props
       )

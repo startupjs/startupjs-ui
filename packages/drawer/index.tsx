@@ -156,7 +156,7 @@ function Drawer ({
     { opacity: isShow ? 1 : 0 }
   ])
 
-  const _styleContent = StyleSheet.flatten([
+  const _styleContent: any = StyleSheet.flatten([
     { transform: [{ [POSITION_NAMES[position]]: animateStates.position }] },
     style
   ])

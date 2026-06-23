@@ -2,6 +2,8 @@ import { type ReactNode } from 'react'
 import { TabBar } from 'react-native-tab-view'
 import { pug, observer } from 'startupjs'
 
+const UITabBar = TabBar as any
+
 export const TAB_BAR_PROP_NAMES = [
   'renderIcon',
   'renderTabBarItem',
@@ -30,7 +32,7 @@ function Bar ({
   ...props
 }: BarProps): ReactNode {
   return pug`
-    TabBar(...props)
+    UITabBar(...props)
   `
 }
 

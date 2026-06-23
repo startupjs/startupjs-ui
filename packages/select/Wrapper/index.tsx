@@ -188,7 +188,7 @@ function SelectWrapperIOS ({
       = children
       if !disabled
         Div.overlay(
-          activeOpacity=1
+          feedback=false
           onPress=() => setShowModal(true)
         )
         Modal(

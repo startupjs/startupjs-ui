@@ -119,7 +119,7 @@ function DateTimePicker ({
   ...props
 }: DateTimePickerProps): ReactNode {
   const moment = useMoment()
-  timezone ??= moment.tz.guess()
+  const timezoneName = timezone ?? moment.tz.guess()
   const media: any = useMedia()
   const [textInput, setTextInput] = useState('')
   const refTimeSelect = useRef<any>(null)
@@ -238,7 +238,7 @@ function DateTimePicker ({
   let { onChangeVisible } = bindProps
   ;({ visible, onChangeVisible } = useBind({ $visible, visible, onChangeVisible }) as any)
 
-  const [tempDate, setTempDate] = useTempDate({ visible: !!visible, date, timezone: timezone as any, moment })
+  const [tempDate, setTempDate] = useTempDate({ visible: !!visible, date, timezone: timezoneName, moment })
 
   useEffect(() => {
     // Prevent crashes when custom renderer passed via props
@@ -273,10 +273,10 @@ function DateTimePicker ({
       return
     }
 
-    const value = +moment.tz(date, timezone).seconds(0).milliseconds(0)
-    setTextInput(moment.tz(value, timezone).format(_dateFormat))
+    const value = +moment.tz(date, timezoneName).seconds(0).milliseconds(0)
+    setTextInput(moment.tz(value, timezoneName).format(_dateFormat))
     setTempDate(new Date(value))
-  }, [date, timezone, _dateFormat, setTempDate, moment])
+  }, [date, timezoneName, _dateFormat, setTempDate, moment])
 
   function _onChangeDate (value: any) {
     const timestamp = getTimestampFromValue(value)
@@ -357,14 +357,13 @@ function DateTimePicker ({
               date=tempDate
               exactLocale=exactLocale
               disabledDays=disabledDays
-              locale=locale
               maxDate=maxDate
               minDate=minDate
               range=range
-              timezone=timezone
+              timezone=timezoneName
               testID=calendarTestID
               onChangeDate=(newDate) => {
-                setTempDate(newDate)
+                setTempDate(new Date(newDate))
                 if (mode === 'date') _onChangeDate(newDate)
               }
             )
@@ -378,7 +377,7 @@ function DateTimePicker ({
               ref=refTimeSelect
               maxDate=maxDate
               minDate=minDate
-              timezone=timezone
+              timezone=timezoneName
               exactLocale=exactLocale
               is24Hour=is24Hour
               timeInterval=timeInterval
@@ -417,10 +416,10 @@ function DateTimePicker ({
             textColor='#000000cc'
             maximumDate=maxDate ? new Date(maxDate) : undefined
             minimumDate=minDate ? new Date(minDate) : undefined
-            timeZoneName=timezone
+            timeZoneName=timezoneName
             onChange=(event, selectedDate) => {
               if (event.type !== 'dismissed') {
-                setTempDate(selectedDate)
+                if (selectedDate) setTempDate(selectedDate)
               }
             }
           )
@@ -460,7 +459,6 @@ function DateTimePicker ({
         Drawer.drawer(
           visible=visible
           position='bottom'
-          swipeStyleName='swipe'
           AreaComponent=Div
           onDismiss=onDismiss
         )= renderPopoverContent()
@@ -541,7 +539,7 @@ css`
     margin-top: var(--DateTimePicker-rn-picker-margin-top);
   }
 
-  .swipe {
+  .drawer:part(swipe) {
     height: var(--DateTimePicker-swipe-height);
   }
 

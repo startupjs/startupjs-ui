@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo, type ReactNode } from 'react'
+import { useState, useRef, useEffect, useMemo, type ReactElement, type ReactNode } from 'react'
 import {
   TouchableOpacity, TouchableWithoutFeedback, View, type StyleProp, type TextStyle, type ViewStyle
 } from 'react-native'
@@ -172,14 +172,14 @@ function AutoSuggest ({
     onClose()
   }
 
-  function _renderItem ({ item, index }: { item: AutoSuggestOption, index: number }): ReactNode {
+  function _renderItem ({ item, index }: { item: AutoSuggestOption, index: number }): ReactElement {
     if (renderItem) {
       return pug`
         TouchableOpacity(
           key=index
           onPress=() => { _onPress(item) }
         )= renderItem(item, index, selectIndexValue)
-      `
+      ` as ReactElement
     }
 
     const optionLabel = getOptionLabel(item)
@@ -195,7 +195,7 @@ function AutoSuggest ({
         aria-selected=isSelected
         aria-label=optionLabel != null ? String(optionLabel) : undefined
       )= optionLabel
-    `
+    ` as ReactElement
   }
 
   function onScroll ({ nativeEvent }: any) {
@@ -263,7 +263,7 @@ function AutoSuggest ({
       durationOpen=200
       durationClose=200
       renderWrapper=renderWrapper
-      onCloseComplete=() => setTextToFilter()
+      onCloseComplete=() => setTextToFilter(undefined)
     )
       if isLoading
         View.loaderCase

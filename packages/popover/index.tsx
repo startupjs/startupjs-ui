@@ -9,7 +9,7 @@ export const _PropsJsonSchema = {/* PopoverProps */}
 
 export interface PopoverProps extends Omit<AbstractPopoverProps, 'anchorRef' | 'children' | 'style' | 'visible'> {
   /** Ref to control popover programmatically */
-  ref?: RefObject<PopoverRef>
+  ref?: RefObject<PopoverRef | null>
   /** Custom styles for the anchor wrapper */
   style?: StyleProp<ViewStyle>
   /** Custom styles for the popover container */
@@ -107,7 +107,7 @@ function Popover ({
       part='root'
       style=style
       ref=anchorRef
-      onPress=shouldOpenOnAnchorPress ? setVisibleTrue : null
+      onPress=shouldOpenOnAnchorPress ? setVisibleTrue : undefined
     )= children
     AbstractPopover.attachment(
       part='attachment'

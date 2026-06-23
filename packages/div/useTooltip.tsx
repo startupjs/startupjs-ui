@@ -10,7 +10,7 @@ const DEFAULT_TOOLTIP_PROPS = {
   position: 'top',
   attachment: 'center',
   arrow: true
-}
+} as const
 
 export interface UseTooltipProps {
   style?: any

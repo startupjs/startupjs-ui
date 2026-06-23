@@ -211,7 +211,7 @@ const Tether = observer(function TetherComponent ({
   const arrowGeometryStyle = geometry && {
     left: geometry.arrowLeft,
     top: geometry.arrowTop
-  }
+  } as ViewStyle
 
   const popover = pug`
     Animated.View.root(

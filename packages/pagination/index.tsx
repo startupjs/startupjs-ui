@@ -17,6 +17,11 @@ const ICONS = {
   previous: faAngleLeft,
   next: faAngleRight
 }
+const ICON_TYPES = ['first', 'last', 'previous', 'next']
+
+function isIconType (value: string): value is keyof typeof ICONS {
+  return ICON_TYPES.includes(value)
+}
 
 export default themed('Pagination', observer(Pagination))
 
@@ -129,8 +134,8 @@ function Pagination ({
               disabled=disabled
               ...itemProps
             )
-              Span.page(part='page' styleName={ selected })= value + 1
-          else if ['first', 'last', 'previous', 'next'].includes(type)
+              Span.page(part='page' styleName={ selected })= Number(value) + 1
+          else if isIconType(type)
             Div.item(
               part='item'
               variant='highlight'

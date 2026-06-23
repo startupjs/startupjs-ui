@@ -7,7 +7,7 @@ import { type AbstractPopoverProps } from '@startupjs-ui/abstract-popover';
 export declare const _PropsJsonSchema: {};
 export interface PopoverProps extends Omit<AbstractPopoverProps, 'anchorRef' | 'children' | 'style' | 'visible'> {
     /** Ref to control popover programmatically */
-    ref?: RefObject<PopoverRef>;
+    ref?: RefObject<PopoverRef | null>;
     /** Custom styles for the anchor wrapper */
     style?: StyleProp<ViewStyle>;
     /** Custom styles for the popover container */

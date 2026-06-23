@@ -6,6 +6,8 @@ import findIndex from 'lodash/findIndex'
 import pick from 'lodash/pick'
 import Bar, { TAB_BAR_PROP_NAMES } from './Bar'
 
+const UITabView = TabView as any
+
 export const _PropsJsonSchema = {/* TabsProps */} // used in docs generation
 
 const TAB_VIEW_PROP_NAMES = [
@@ -53,7 +55,7 @@ export interface TabsProps {
   /** Initial layout configuration passed to TabView */
   initialLayout?: any
   /** Controls keyboard dismiss mode for TabView */
-  keyboardDismissMode?: string
+  keyboardDismissMode?: 'none' | 'auto' | 'on-drag'
   /** Enable lazy rendering for scenes */
   lazy?: boolean
   /** Distance of routes to preload while lazy loading */
@@ -186,7 +188,7 @@ function Tabs ({
   }
 
   return pug`
-    TabView(
+    UITabView(
       part='root'
       style=tabsStyle
       navigationState={ index: tabIndex, routes }

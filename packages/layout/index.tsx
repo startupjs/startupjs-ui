@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react'
 import { SafeAreaView, StatusBar, type StyleProp, type ViewStyle } from 'react-native'
-import { css, pug, observer, useCssVariable, themed } from 'startupjs'
+import { css, pug, observer, useCssColor, themed } from 'startupjs'
 
 export const _PropsJsonSchema = {/* LayoutProps */}
 
@@ -14,7 +14,7 @@ export interface LayoutProps {
 }
 
 function Layout ({ style, children, testID }: LayoutProps): ReactNode {
-  const backgroundColor = useCssVariable('--Layout-bg', 'var(--color-background)')
+  const backgroundColor = useCssColor('var(--Layout-bg, var(--color-background))')
 
   return pug`
     SafeAreaView.root(part='root' style=style testID=testID)

@@ -28,7 +28,7 @@ export interface TabsProps {
     /** Initial layout configuration passed to TabView */
     initialLayout?: any;
     /** Controls keyboard dismiss mode for TabView */
-    keyboardDismissMode?: string;
+    keyboardDismissMode?: 'none' | 'auto' | 'on-drag';
     /** Enable lazy rendering for scenes */
     lazy?: boolean;
     /** Distance of routes to preload while lazy loading */

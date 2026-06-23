@@ -1,4 +1,4 @@
-import { useCallback, useMemo, type ReactNode } from 'react'
+import { useCallback, useMemo, type ReactElement, type ReactNode } from 'react'
 import { css, pug, observer, $ } from 'startupjs'
 import Button from '@startupjs-ui/button'
 import Div from '@startupjs-ui/div'
@@ -129,28 +129,27 @@ const Years = observer(function YearsComponent ({
       FlatList(
         data=years
         renderItem=renderYear
-        keyExtractor=item => item
+        keyExtractor=item => String(item)
         getItemLayout=getItemLayout
       )
     `
   }
 
-  function renderYear ({ item }: { item: number }): ReactNode {
+  function renderYear ({ item }: { item: number }): ReactElement {
     return pug`
       Div.years-item(
-        variant='higlight'
+        variant='highlight'
         onPress=() => onChangeYear(item)
       )
         Span= item
-    `
+    ` as ReactElement
   }
 
   return pug`
     Div(style=style)
-      Popover(
+      Popover.yearsPopover(
         $visible=$visible
         renderContent=renderYears
-        attachmentStyleName='years-popover'
       )
         Div(vAlign='center' row)
           Span.year(bold)= moment.tz($uiDate.get(), timezone).year()
@@ -199,7 +198,7 @@ css`
     margin-left: var(--DateTimePicker-header-button-margin-left);
   }
 
-  .years-popover {
+  .yearsPopover:part(attachment) {
     padding: 0;
     max-height: var(--DateTimePicker-years-popover-max-height);
   }

@@ -16,7 +16,7 @@ function ProgressFiller ({ style, value }: ProgressFillerProps): ReactNode {
   const duration = toNumber(useCssVariable('--Progress-duration', 300), 300)
 
   return pug`
-    View.filler(style=[{ width: value + '%', transition: 'width ' + (duration / 1000) + 's' }, style])
+    View.filler(style=[{ width: value + '%', transition: 'width ' + (duration / 1000) + 's' } as any, style])
   `
 }
 

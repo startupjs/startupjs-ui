@@ -89,6 +89,7 @@ export default defineConfig({
   plugins: [cssxCssPlugin(), reanimatedWorkletsBabelPlugin()],
   resolve: {
     conditions: ['cssx-ts'],
+    dedupe: ['react', 'react-dom'],
     alias: {
       // Storybook web runs through Vite ESM, but Reanimated currently imports this
       // internal validator as a default export from a CommonJS file. Alias just this
@@ -144,12 +145,25 @@ export default defineConfig({
       '@fortawesome/react-native-fontawesome',
       '@react-native-picker/picker',
       '@startupjs-ui/react-native-multi-slider',
+      '@colordx/core',
+      '@colordx/core/plugins/names',
+      'axios/dist/browser/axios.cjs',
+      'color',
+      'css-mediaquery',
+      'css/lib/parse/index.js',
+      'fbemitter',
+      'lodash/set.js',
+      'postcss-value-parser',
       'randomcolor',
       'react-native-collapsible',
       'react-native-svg',
       'react-native-tab-view',
       'semver/functions/prerelease.js',
-      'semver/functions/satisfies.js'
+      'semver/functions/satisfies.js',
+      'teamplay',
+      'teamplay/file-based-models',
+      'teamplay/orm',
+      'teamplay/schema'
     ]
   }
 })

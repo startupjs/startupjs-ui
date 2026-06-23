@@ -24,7 +24,7 @@ const ICON_SIZES = {
   s: 'm',
   m: 'm',
   l: 'l'
-}
+} as const
 const HEIGHT_FALLBACKS = {
   s: 16,
   m: 20,
@@ -130,7 +130,7 @@ function TextInput ({
 
   const caretColor = useCssVariable('--TextInput-caret-color', 'var(--TextInput-color)') as string
   const resolvedIconColor = useCssVariable('--TextInput-icon-color', 'var(--color-secondary)') as string
-  const placeholderTextColor = useCssVariable('--TextInput-placeholder-color', 'var(--color-muted-foreground)')
+  const placeholderTextColor = useCssVariable('--TextInput-placeholder-color', 'var(--color-muted-foreground)') as string
   const borderWidth = toNumber(useCssVariable('--TextInput-border-width', 1), 1)
   const inputHeight = toNumber(useCssVariable(`--TextInput-height-${size}`), HEIGHT_FALLBACKS[size])
   const inputPadding = toNumber(useCssVariable(`--TextInput-padding-y-${size}`), PADDING_FALLBACKS[size])
@@ -222,6 +222,7 @@ function TextInput ({
   }
 
   const inputExtraProps: Record<string, any> = {}
+  if (IS_WEB) inputExtraProps.disabled = disabled
   if (IS_ANDROID && multiline) inputExtraProps.textAlignVertical = 'top'
   const inputMinHeightStyle = legacySizing ? null : { minHeight: fullHeight }
   const inputStyleName = [
@@ -253,10 +254,9 @@ function TextInput ({
       style=[inputMinHeightStyle, legacySizing?.inputStyle, inputStyle]
       styleName=inputStyleName
       selectionColor=caretColor
-      placeholder=placeholder
+      placeholder=placeholder == null ? undefined : String(placeholder)
       placeholderTextColor=placeholderTextColor
       value=value
-      disabled=IS_WEB ? disabled : undefined
       editable=IS_WEB ? undefined : !disabled
       multiline=multiline
       selectTextOnFocus=false
