@@ -4,7 +4,6 @@
 import { type ReactNode } from 'react';
 import { type StyleProp, type ViewStyle } from 'react-native';
 import { type DivProps } from '@startupjs-ui/div';
-import './index.cssx.styl';
 export declare const _PropsJsonSchema: {};
 export interface MenuProps extends Omit<DivProps, 'variant' | 'style'> {
     /** Custom styles applied to the root view */

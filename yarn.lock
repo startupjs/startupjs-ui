@@ -6752,7 +6752,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/menu@workspace:packages/menu"
   dependencies:
-    "@startupjs-ui/core": "npm:^0.3.0"
     "@startupjs-ui/div": "npm:^0.3.7"
     "@startupjs-ui/icon": "npm:^0.3.5"
     "@startupjs-ui/item": "npm:^0.3.7"

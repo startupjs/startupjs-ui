@@ -267,6 +267,8 @@
   --Sidebar-bg: var(--color-background);
   --DrawerSidebar-bg: var(--color-background);
 
+  --MenuItem-active-border-size: 2px;
+
   --Progress-width: 0.25rem;
   --Progress-duration: 300;
   --Progress-track-bg: var(--color-muted);

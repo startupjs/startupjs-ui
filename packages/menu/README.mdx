@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { pug, u } from 'startupjs'
+import { pug } from 'startupjs'
 import useRouter from 'startupjs/useRouter'
 import { faShareAlt } from '@fortawesome/free-solid-svg-icons/faShareAlt'
 import { faHouseUser } from '@fortawesome/free-solid-svg-icons/faHouseUser'
@@ -240,7 +240,7 @@ return (
           Option-2
         </Menu.Item>
         <Collapse
-          style={{ marginLeft: u(2) }}
+          style={{ marginLeft: 16 }}
           variant='pure'
           open={showSubMenu}
           onChange={() => setShowSubMenu(!showSubMenu)}

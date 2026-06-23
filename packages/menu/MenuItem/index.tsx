@@ -1,13 +1,11 @@
 import { useContext, type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, useCssVariable, themed } from 'startupjs'
-import { colorVariableRequest } from '@startupjs-ui/core'
+import { css, pug, observer, useCssColor, themed } from 'startupjs'
 import Div from '@startupjs-ui/div'
 import Icon, { type IconProps } from '@startupjs-ui/icon'
 import Item, { type ItemProps } from '@startupjs-ui/item'
 import Span from '@startupjs-ui/span'
 import MenuContext from '../context'
-import './index.cssx.styl'
 
 export const _PropsJsonSchema = {/* MenuItemProps */} // used in docs generation
 
@@ -55,27 +53,16 @@ function MenuItem ({
 }: MenuItemProps): ReactNode {
   const context = useContext(MenuContext)
 
-  // TODO
-  // we should think about a better api
-  // and remove color, activeColor, activeBorder props
-  let color: string | undefined = props.color ?? context.color
-  const colorRequest = colorVariableRequest(color)
-  color = (useCssVariable(colorRequest.name, colorRequest.fallback) as string | undefined) ?? color
-  let activeColor = props.activeColor ?? context.activeColor
-  const activeColorRequest = colorVariableRequest(activeColor)
-  activeColor = (useCssVariable(activeColorRequest.name, activeColorRequest.fallback) as string | undefined) ?? activeColor
-  const textPrimaryColorRequest = colorVariableRequest('text-primary')
-  const textMainColorRequest = colorVariableRequest('text-main')
-  const borderPrimaryColorRequest = colorVariableRequest('border-primary')
-  const textPrimaryColor = useCssVariable(textPrimaryColorRequest.name, textPrimaryColorRequest.fallback) as string | undefined
-  const textMainColor = useCssVariable(textMainColorRequest.name, textMainColorRequest.fallback) as string | undefined
-  const borderPrimaryColor = useCssVariable(borderPrimaryColorRequest.name, borderPrimaryColorRequest.fallback) as string | undefined
+  const colorToken = props.color ?? context.color ?? 'foreground'
+  const activeColorToken = props.activeColor ?? context.activeColor ?? 'primary'
+  const resolvedColor = useCssColor(colorToken) ?? colorToken
+  const resolvedActiveColor = useCssColor(activeColorToken) ?? activeColorToken
   const activeBorder = props.activeBorder ?? context.activeBorder ?? 'none'
   const iconPosition = props.iconPosition ?? context.iconPosition ?? 'left'
 
   // TODO: prevent click if already active (for link and for div)
-  color = active ? (activeColor ?? textPrimaryColor) : (color ?? textMainColor)
-  const borderStyle: StyleProp<ViewStyle> = { backgroundColor: activeColor ?? borderPrimaryColor }
+  const color = active ? resolvedActiveColor : resolvedColor
+  const borderStyle: StyleProp<ViewStyle> = { backgroundColor: resolvedActiveColor }
 
   const optionLabel = ariaLabel ??
     (typeof children === 'string' || typeof children === 'number' ? String(children) : undefined)
@@ -105,3 +92,39 @@ function MenuItem ({
 }
 
 export default observer(themed('MenuItem', MenuItem))
+
+css`
+  .border {
+    position: absolute;
+  }
+
+  .border.top,
+  .border.bottom {
+    left: 0;
+    right: 0;
+    height: var(--MenuItem-active-border-size);
+  }
+
+  .border.top {
+    top: 0;
+  }
+
+  .border.bottom {
+    bottom: 0;
+  }
+
+  .border.left,
+  .border.right {
+    top: 0;
+    bottom: 0;
+    width: var(--MenuItem-active-border-size);
+  }
+
+  .border.left {
+    left: 0;
+  }
+
+  .border.right {
+    right: 0;
+  }
+`

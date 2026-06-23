@@ -1,11 +1,10 @@
 import { useMemo, type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, themed } from 'startupjs'
+import { css, pug, observer, themed } from 'startupjs'
 
 import Div, { type DivProps } from '@startupjs-ui/div'
 import MenuItem from './MenuItem'
 import Context, { type MenuContextValue } from './context'
-import './index.cssx.styl'
 
 export const _PropsJsonSchema = {/* MenuProps */} // used in docs generation
 
@@ -40,12 +39,19 @@ function Menu ({
   return pug`
     Context.Provider(value=value)
       Div.root(
+        part='root'
         style=style
         styleName=[variant]
         ...props
       )= children
   `
 }
+
+css`
+  .root.horizontal {
+    flex-direction: row;
+  }
+`
 
 const ObservedMenu: any = observer(themed('Menu', Menu))
 
