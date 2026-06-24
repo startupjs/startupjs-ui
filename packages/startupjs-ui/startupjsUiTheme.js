@@ -2,6 +2,8 @@ import { css } from 'startupjs'
 
 export default css`
 :root {
+  --primary: var(--color-blue-600);
+  --primary-foreground: white;
   --color-shadow-main: rgba(0, 0, 0, 0.2);
   --color-main: var(--color-background);
   --color-error: var(--color-destructive);

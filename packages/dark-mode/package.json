@@ -1,0 +1,19 @@
+{
+  "name": "@startupjs-ui/dark-mode",
+  "version": "0.4.0-alpha.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "index.tsx",
+  "types": "index.d.ts",
+  "type": "module",
+  "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "@startupjs-ui/button": "^0.4.0-alpha.0"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "startupjs": "*"
+  }
+}

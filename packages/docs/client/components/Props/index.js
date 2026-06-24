@@ -116,7 +116,6 @@ export default observer(themed('PropsComponent', function PComponent ({
 
     return pug`
       ScrollView.scroll(
-        contentContainerStyleName='scrollContent'
         horizontal
       )= children
     `

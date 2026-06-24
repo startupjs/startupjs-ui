@@ -6540,6 +6540,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@startupjs-ui/dark-mode@npm:^0.4.0-alpha.0, @startupjs-ui/dark-mode@workspace:packages/dark-mode":
+  version: 0.0.0-use.local
+  resolution: "@startupjs-ui/dark-mode@workspace:packages/dark-mode"
+  dependencies:
+    "@fortawesome/free-solid-svg-icons": "npm:^7.1.0"
+    "@startupjs-ui/button": "npm:^0.4.0-alpha.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    startupjs: "*"
+  languageName: unknown
+  linkType: soft
+
 "@startupjs-ui/date-time-picker@npm:^0.4.0-alpha.0, @startupjs-ui/date-time-picker@workspace:packages/date-time-picker":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/date-time-picker@workspace:packages/date-time-picker"
@@ -7311,20 +7324,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@startupjs/cli@npm:^0.64.0-alpha.1":
-  version: 0.64.0-alpha.1
-  resolution: "@startupjs/cli@npm:0.64.0-alpha.1"
+"@startupjs/cli@npm:^0.64.0-alpha.3":
+  version: 0.64.0-alpha.3
+  resolution: "@startupjs/cli@npm:0.64.0-alpha.3"
   dependencies:
     "@startupjs/patches": "npm:^0.64.0-alpha.0"
     "@startupjs/pm": "npm:^0.64.0-alpha.0"
     "@startupjs/skills": "npm:^0.64.0-alpha.0"
     chalk: "npm:^5.3.0"
     commander: "npm:^12.0.0"
-    create-startupjs: "npm:^0.64.0-alpha.1"
+    create-startupjs: "npm:^0.64.0-alpha.3"
     execa: "npm:^8.0.1"
   peerDependencies:
     cssxjs: "*"
-  checksum: 10c0/80402083d8ad5f1c65a92c4b3d5ff339066daf8579007e3aaa90ba728e395702873be4697309b6c8dce3db57ffb16f56be0a062fadd792973429f2c76c878f1a
+  checksum: 10c0/79259100bf551565b34a990317c524c180e9df2eaf5f274ee60b540350689a7ae0a8aa2f9f7d562da9935e59238bb459d852d8616524189f5865097befb285b0
   languageName: node
   linkType: hard
 
@@ -11193,9 +11206,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"create-startupjs@npm:^0.64.0-alpha.1":
-  version: 0.64.0-alpha.1
-  resolution: "create-startupjs@npm:0.64.0-alpha.1"
+"create-startupjs@npm:^0.64.0-alpha.3":
+  version: 0.64.0-alpha.3
+  resolution: "create-startupjs@npm:0.64.0-alpha.3"
   dependencies:
     "@startupjs/skills": "npm:^0.64.0-alpha.0"
     chalk: "npm:^5.3.0"
@@ -11205,7 +11218,7 @@ __metadata:
     lodash: "npm:^4.17.20"
   bin:
     create-startupjs: index.js
-  checksum: 10c0/e677257bd667e0d605f68f29c8d530012024fd12491d169f244ec2044f88d1f8a45448be8343f356ce1f9268939907a3e596032461eaf5518ae28f5f3e9fa669
+  checksum: 10c0/136edb1aa8917877174822eb90a9b0bf6a299c3b3521025dde25f211d98c52d7ed12e8db5e2001c59b3424dc0e8e256ea4f03134f350461050090697bb571d67
   languageName: node
   linkType: hard
 
@@ -22521,6 +22534,7 @@ __metadata:
     "@startupjs-ui/color-picker": "npm:^0.4.0-alpha.0"
     "@startupjs-ui/content": "npm:^0.4.0-alpha.0"
     "@startupjs-ui/core": "npm:^0.4.0-alpha.0"
+    "@startupjs-ui/dark-mode": "npm:^0.4.0-alpha.0"
     "@startupjs-ui/date-time-picker": "npm:^0.4.0-alpha.0"
     "@startupjs-ui/dialogs": "npm:^0.4.0-alpha.0"
     "@startupjs-ui/div": "npm:^0.4.0-alpha.0"
@@ -22571,12 +22585,12 @@ __metadata:
   linkType: soft
 
 "startupjs@npm:^0.64.0-alpha.2":
-  version: 0.64.0-alpha.2
-  resolution: "startupjs@npm:0.64.0-alpha.2"
+  version: 0.64.0-alpha.3
+  resolution: "startupjs@npm:0.64.0-alpha.3"
   dependencies:
     "@startupjs/auth": "npm:^0.64.0-alpha.2"
     "@startupjs/bundler": "npm:^0.64.0-alpha.2"
-    "@startupjs/cli": "npm:^0.64.0-alpha.1"
+    "@startupjs/cli": "npm:^0.64.0-alpha.3"
     "@startupjs/hooks": "npm:^0.64.0-alpha.2"
     "@startupjs/isomorphic-helpers": "npm:^0.64.0-alpha.0"
     "@startupjs/registry": "npm:^0.64.0-alpha.0"
@@ -22598,7 +22612,7 @@ __metadata:
       optional: true
   bin:
     startupjs: cli.js
-  checksum: 10c0/2ed173af8195dd97583b1c3dee61c93f0b5922f472d8ca41c98119d271786171f444470656246eb45851d7252dd93abffb3e5752ece027dbac995df009e32496
+  checksum: 10c0/1c11e1fc95b5562e064f0297288bc9629a944e133b703ec04c2fff52776ceee29708582373aec29aa15884987a86589d330394ab564f5deafdee990e8667ccc6
   languageName: node
   linkType: hard
 

@@ -37,6 +37,12 @@ const OVERLAY_STYLE: any = {
     ? { opacity: 0 }
     : null)
 }
+const ROOT_STYLE: any = {
+  position: 'relative',
+  width: '100%',
+  flexDirection: 'row',
+  alignItems: 'center'
+}
 
 export interface SelectWrapperProps {
   /** Custom styles for wrapper */
@@ -104,7 +110,7 @@ function SelectWrapperWeb ({
   }
 
   return pug`
-    Div.root(style=style testID=testID)
+    Div.root(style=[ROOT_STYLE, style] testID=testID)
       = children
       select(
         id=id
@@ -220,10 +226,6 @@ function SelectWrapperIOS ({
 export default themed('Select', observer(SelectWrapper))
 
 css`
-  .root {
-    position: relative;
-  }
-
   .overlay {
     position: absolute;
     top: 0;

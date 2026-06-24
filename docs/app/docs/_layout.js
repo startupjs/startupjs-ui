@@ -1,8 +1,9 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
-import { View, ScrollView, TextInput, Pressable, Dimensions, Text, useColorScheme } from 'react-native'
+import { View, ScrollView, TextInput, Pressable, Dimensions, Text } from 'react-native'
 import Animated from 'react-native-reanimated'
-import { pug, styl, observer, useCssVariable } from 'startupjs'
+import { pug, styl, observer, useCssVariable, useTheme } from 'startupjs'
 import { Slot, Link, usePathname, Stack } from 'expo-router'
+import DarkMode from '../../../packages/dark-mode'
 import GitHubIcon from '../../svg/github-mark.svg'
 import ProjectsSidebar from '../../components/ProjectsSidebar'
 
@@ -11,7 +12,8 @@ const TABLET_BREAKPOINT = 768
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable)
 
 export default observer(({ children }) => {
-  const colorScheme = useColorScheme() ?? 'light'
+  const [theme] = useTheme()
+  const colorScheme = theme === 'dark' ? 'dark' : 'light'
   const placeholderTextColor = useCssVariable('--color-muted-foreground') || '#999'
   const initialWidth = useMemo(() => Dimensions.get('window').width, [])
   const [showSidebar, setShowSidebar] = useState(initialWidth >= TABLET_BREAKPOINT)
@@ -53,7 +55,9 @@ export default observer(({ children }) => {
         Animated.View.sidebar(styleName={ show: showSidebar })
           View.header
             Link.title(href='/') StartupJS UI
-            GitHubLink
+            View.headerActions
+              DarkMode.darkMode(size='s')
+              GitHubLink
           TextInput.search(
             placeholder='Search...'
             placeholderTextColor=placeholderTextColor
@@ -88,6 +92,11 @@ export default observer(({ children }) => {
       flex-direction: row
       align-items: center
       justify-content: space-between
+    .headerActions
+      flex-direction: row
+      align-items: center
+    .darkMode
+      margin-right: 8px
     .title
       font-family monospace
       color: var(--color-foreground)
@@ -287,7 +296,7 @@ const DOC_COMPONENT_CATEGORIES = [
   },
   {
     name: 'Buttons & Actions',
-    items: ['Button', 'Link', 'Tag']
+    items: ['Button', 'DarkMode', 'Link', 'Tag']
   },
   {
     name: 'Form Inputs',

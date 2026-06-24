@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode, type RefObject } from 'react'
-import { Platform, Text } from 'react-native'
+import { Platform, Text, type ViewStyle } from 'react-native'
 import { css, pug, observer, themed } from 'startupjs'
 
 import Div from '@startupjs-ui/div'
@@ -12,6 +12,9 @@ import useLayout from './useLayout'
 
 export const IS_WRAPPED = Symbol('wrapped into wrapInput()')
 const IS_WEB = Platform.OS === 'web'
+const ROOT_STYLE: ViewStyle = {
+  width: '100%'
+}
 
 export type InputLayout = 'pure' | 'rows' | 'columns'
 
@@ -239,7 +242,10 @@ export default function wrapInput (Component: any, configuration: InputWrapperCo
     return pug`
       Div.root(
         part='root'
+        style=ROOT_STYLE
         styleName=[currentLayout]
+        row=currentLayout === 'columns'
+        vAlign=currentLayout === 'columns' ? 'center' : undefined
       )
         if currentLayout === 'rows'
           if labelPosition === 'top'
@@ -358,8 +364,4 @@ css`
     margin-left: var(--InputWrapper-column-gap);
   }
 
-  .root.columns {
-    flex-direction: row;
-    align-items: center;
-  }
 `

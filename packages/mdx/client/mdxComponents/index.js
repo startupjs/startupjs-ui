@@ -341,7 +341,6 @@ export default {
       `
       : ({ children }) => pug`
         ScrollView.example(
-          contentContainerStyleName=['exampleContent', 'padding']
           horizontal
         )= children
       `
@@ -454,6 +453,13 @@ css`
   .exampleContent {
     flex-direction: column;
     flex-grow: 1;
+  }
+
+  .example:part(contentContainer) {
+    flex-direction: column;
+    flex-grow: 1;
+    min-width: 100%;
+    padding: var(--Mdx-example-padding);
   }
 
   .padding {

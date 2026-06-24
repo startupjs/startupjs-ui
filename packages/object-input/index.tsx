@@ -23,6 +23,9 @@ type ObjectInputWrapperProps = {
 export default observer(
   themed('ObjectInput', ObjectInput)
 )
+const ROOT_STYLE: ViewStyle = {
+  width: '100%'
+}
 
 export const _PropsJsonSchema = {/* ObjectInputProps */}
 
@@ -141,9 +144,9 @@ function ObjectInput ({
       'aria-readonly': ariaReadonly
     }, children): ReactNode => {
       return pug`
-        Div(
+        Div.root(
           part='root'
-          style=style
+          style=[ROOT_STYLE, style]
           testID=testID
           id=id
           role=role

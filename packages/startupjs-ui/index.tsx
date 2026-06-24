@@ -19,6 +19,7 @@ export { DialogsProvider, alert, confirm, prompt } from '@startupjs-ui/dialogs'
 
 export { default as Div } from '@startupjs-ui/div'
 export { default as Divider } from '@startupjs-ui/divider'
+export { default as DarkMode } from '@startupjs-ui/dark-mode'
 
 // draggable
 export { DragDropProvider, Draggable, Droppable } from '@startupjs-ui/draggable'

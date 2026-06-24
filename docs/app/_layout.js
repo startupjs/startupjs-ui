@@ -1,27 +1,31 @@
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
-import { useColorScheme } from 'react-native'
-import { StartupjsProvider } from 'startupjs'
+import { StartupjsProvider, useCssVariable } from 'startupjs'
 import UiProvider from 'startupjs-ui/UiProvider'
 import { Stack } from 'expo-router'
 
 export default function RootLayout () {
-  const colorScheme = useColorScheme()
-  const backgroundColor = colorScheme === 'dark' ? '#171717' : '#ffffff'
-
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1, backgroundColor }}>
-        <StartupjsProvider theme='auto'>
-          <UiProvider theme='auto'>
-            <Stack
-              screenOptions={{
-                contentStyle: { backgroundColor },
-                headerShown: false
-              }}
-            />
-          </UiProvider>
-        </StartupjsProvider>
-      </SafeAreaView>
+      <StartupjsProvider>
+        <UiProvider>
+          <ThemedAppShell />
+        </UiProvider>
+      </StartupjsProvider>
     </SafeAreaProvider>
+  )
+}
+
+function ThemedAppShell () {
+  const backgroundColor = useCssVariable('--color-background') || '#ffffff'
+
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor }}>
+      <Stack
+        screenOptions={{
+          contentStyle: { backgroundColor },
+          headerShown: false
+        }}
+      />
+    </SafeAreaView>
   )
 }

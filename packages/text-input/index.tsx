@@ -35,6 +35,11 @@ const PADDING_FALLBACKS = {
   m: 6,
   l: 8
 }
+const ROOT_STYLE: ViewStyle = {
+  width: '100%',
+  flexDirection: 'row',
+  alignItems: 'center'
+}
 
 function toNumber (value: unknown, fallback: number): number {
   const number = Number(value)
@@ -147,7 +152,7 @@ function TextInput ({
 
   if (!_renderWrapper) {
     _renderWrapper = ({ style }: { style?: StyleProp<ViewStyle> }, children: ReactNode): ReactNode => pug`
-      Div(style=style)= children
+      Div(style=[ROOT_STYLE, style])= children
     `
   }
 

@@ -1,0 +1,44 @@
+import DarkMode, { _PropsJsonSchema as DarkModePropsJsonSchema } from './index'
+import { Sandbox } from '@startupjs-ui/docs'
+
+# DarkMode
+
+A small theme toggle button for apps that use the CSSX theme provider. It switches between the light and dark theme preference and persists that preference through CSSX.
+
+```jsx
+import { DarkMode } from 'startupjs-ui'
+```
+
+## Simple example
+
+```jsx example
+return <DarkMode />
+```
+
+## With label
+
+```jsx example
+return <DarkMode>Theme</DarkMode>
+```
+
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
+
+### Parts
+
+| Part | Description |
+| --- | --- |
+| `root` | Root button. |
+
+### CSS variables
+
+This component does not define custom variables. It inherits Button variables and color tokens.
+
+## Sandbox
+
+<Sandbox
+  Component={DarkMode}
+  propsJsonSchema={DarkModePropsJsonSchema}
+/>

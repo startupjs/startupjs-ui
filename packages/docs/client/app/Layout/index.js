@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { pug, emit, observer, useModel } from 'startupjs'
 import { pathFor, useLocation } from 'startupjs/app'
-import { AutoSuggest, Button, Div, Layout, Menu, Span } from '@startupjs/ui'
+import { AutoSuggest, Button, DarkMode, Div, Layout, Menu, Span } from '@startupjs/ui'
 import { ScrollableProvider } from '@startupjs/scrollable-anchors'
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars'
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch'
@@ -79,8 +79,10 @@ const Topbar = observer(function Topbar () {
   return pug`
     Div.topbar(row)
       Button(testID='button' variant='ghost' icon=faBars onPress=toggleSidebar color='text-description')
-      Div.searchWrapper
-        Search
+      Div.actions(row vAlign='center')
+        DarkMode.darkMode(testID='darkModeToggle')
+        Div.searchWrapper
+          Search
   `
 })
 

@@ -39,6 +39,7 @@ export default defineConfig([
       'packages/collapse/index.d.ts',
       'packages/color-picker/index.d.ts',
       'packages/content/index.d.ts',
+      'packages/dark-mode/index.d.ts',
       'packages/date-time-picker/index.d.ts',
       'packages/dialogs/index.d.ts',
       'packages/div/index.d.ts',

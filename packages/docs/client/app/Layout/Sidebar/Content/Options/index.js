@@ -1,5 +1,5 @@
 import React from 'react'
-import { pug, observer, useValue, $ } from 'startupjs'
+import { pug, observer, useTheme, useValue } from 'startupjs'
 import { Br, Input, Button, Modal } from '@startupjs/ui'
 import { faSlidersH } from '@fortawesome/free-solid-svg-icons/faSlidersH'
 import {
@@ -18,15 +18,10 @@ export default observer(function Options ({
   //       initially. While $showSizes.get() works fine for some reason.
   const [, $showSizes] = useShowSizes()
   // const [, $validateWidth] = useValidateWidth()
-  const $theme = $.session.theme
-  const theme = $theme.get() || 'light'
+  const [theme, setTheme] = useTheme()
 
   function toggleTheme () {
-    if (theme === 'light') {
-      $theme.set('dark')
-    } else {
-      $theme.set('light')
-    }
+    setTheme(theme === 'dark' ? 'light' : 'dark')
   }
 
   return pug`
