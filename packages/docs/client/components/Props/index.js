@@ -1,12 +1,11 @@
 import React, { useMemo, useState } from 'react'
-import { pug, observer, $, useId, themed } from 'startupjs'
+import { css, pug, observer, $, useId, themed } from 'startupjs'
 
 import Button from '@startupjs-ui/button'
 import Div from '@startupjs-ui/div'
 import ScrollView from '@startupjs-ui/scroll-view'
 import Constructor from './Constructor'
 import Renderer from './Renderer'
-import './index.styl'
 
 function useEntries ({ Component, props, extraParams, propsJsonSchema }) {
   return useMemo(() => {
@@ -157,3 +156,43 @@ export default observer(themed('PropsComponent', function PComponent ({
           ) block
   `
 }))
+
+css`
+  .root {
+    margin-top: 1rem;
+  }
+
+  .top {
+    background-color: var(--color-bg-main);
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    padding-top: 0.5rem;
+  }
+
+  .bottom {
+    padding-top: 2rem;
+    background-color: var(--color-bg-main-subtle);
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+  }
+
+  .scroll {
+    padding-bottom: 1rem;
+  }
+
+  .scroll.scrollContent {
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 0 1rem;
+  }
+
+  .scroll:part(contentContainer) {
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 0 1rem;
+  }
+
+  .display {
+    margin: 0.25rem 1rem;
+  }
+`

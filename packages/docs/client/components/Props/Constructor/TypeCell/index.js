@@ -1,9 +1,7 @@
 import React, { useCallback, useMemo } from 'react'
-import { pug, observer, $, themed } from 'startupjs'
+import { css, pug, observer, $, themed } from 'startupjs'
 import Button from '@startupjs-ui/button'
 import Span from '@startupjs-ui/span'
-
-import '../index.styl'
 
 const MAX_ITEMS = 10
 
@@ -53,3 +51,23 @@ export default observer(themed('TypeCell', function TypeCell ({ possibleValues, 
       Span.type(styleName=[theme])= type
   `
 }))
+
+css`
+  .possibleValue {
+    flex-direction: row;
+  }
+
+  .value {
+    color: var(--color-text-success);
+    font-style: italic;
+  }
+
+  .type {
+    color: var(--color-text-info);
+    font-style: italic;
+  }
+
+  .separator {
+    color: var(--color-text-placeholder);
+  }
+`

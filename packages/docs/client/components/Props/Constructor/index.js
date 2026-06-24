@@ -1,6 +1,6 @@
 import React from 'react'
 import { Platform } from 'react-native'
-import { pug, observer, $, themed } from 'startupjs'
+import { css, pug, observer, $, themed } from 'startupjs'
 import Span from '@startupjs-ui/span'
 import Tag from '@startupjs-ui/tag'
 
@@ -12,7 +12,6 @@ import Tr from './Tr'
 import Td from './Td'
 import TypeCell from './TypeCell'
 import ValueCell from './ValueCell'
-import './index.styl'
 
 export default observer(themed('Constructor', function Constructor ({
   Component,
@@ -82,3 +81,71 @@ export default observer(themed('Constructor', function Constructor ({
             = renderEntry(entry)
   `
 }))
+
+css`
+  .header {
+    color: var(--color-text-description);
+    font-family: monospace;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  .header.right {
+    text-align: right;
+  }
+
+  .extends {
+    border-bottom-width: 2px;
+    border-bottom-color: var(--color-border-main);
+    background-color: rgba(0, 0, 0, 0.03);
+  }
+
+  .collapsibleHeader {
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
+  }
+
+  .possibleValue {
+    flex-direction: row;
+  }
+
+  .value {
+    color: var(--color-text-success);
+    font-style: italic;
+  }
+
+  .valueDefault {
+    padding-left: 2rem;
+  }
+
+  .type {
+    color: var(--color-text-info);
+    font-style: italic;
+  }
+
+  .checkbox {
+    align-self: flex-end;
+  }
+
+  .unsupported {
+    color: var(--color-text-description);
+    text-align: right;
+  }
+
+  .separator {
+    color: var(--color-text-placeholder);
+  }
+
+  .vCenter {
+    justify-content: center;
+  }
+
+  .required {
+    margin-top: 0.25rem;
+    align-self: flex-start;
+  }
+
+  .badJSON {
+    color: var(--color-text-error);
+  }
+`

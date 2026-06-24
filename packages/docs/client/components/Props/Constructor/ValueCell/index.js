@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
-import { pug, batch, observer, $ } from 'startupjs'
+import { css, pug, batch, observer, $ } from 'startupjs'
 import Br from '@startupjs-ui/br'
 import Input from '@startupjs-ui/input'
 import Span from '@startupjs-ui/span'
@@ -10,7 +10,6 @@ import omit from 'lodash/omit'
 import { faHouseUser } from '@fortawesome/free-solid-svg-icons/faHouseUser'
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons/faCoffee'
-import '../index.styl'
 
 const EDITABLE_TYPES = ['string', 'number', 'boolean', 'oneOf', 'array', 'object']
 const DEMO_ICONS = {
@@ -86,6 +85,21 @@ const JSONInput = observer(function ({ $value, type }) {
     )
   `
 })
+
+css`
+  .checkbox {
+    align-self: flex-end;
+  }
+
+  .unsupported {
+    color: var(--color-text-description);
+    text-align: right;
+  }
+
+  .badJSON {
+    color: var(--color-text-error);
+  }
+`
 
 const PropInput = observer(function ({ $value, extraParams = {}, options, type, value }) {
   switch (type) {

@@ -55,9 +55,7 @@ export default observer(({ children }) => {
         Animated.View.sidebar(styleName={ show: showSidebar })
           View.header
             Link.title(href='/') StartupJS UI
-            View.headerActions
-              DarkMode.darkMode(size='s')
-              GitHubLink
+            GitHubLink
           TextInput.search(
             placeholder='Search...'
             placeholderTextColor=placeholderTextColor
@@ -76,6 +74,7 @@ export default observer(({ children }) => {
                   Item(key=getItemPath(item) path=getItemPath(item) setShowSidebar=setShowSidebar)= getItemName(item)
         ScrollView.contentWrapper
           View.content
+            DarkMode.pageDarkMode(size='m' variant='outline')
             Slot
   `
   styl`
@@ -92,11 +91,6 @@ export default observer(({ children }) => {
       flex-direction: row
       align-items: center
       justify-content: space-between
-    .headerActions
-      flex-direction: row
-      align-items: center
-    .darkMode
-      margin-right: 8px
     .title
       font-family monospace
       color: var(--color-foreground)
@@ -155,6 +149,12 @@ export default observer(({ children }) => {
       width: 100%
       align-self: center
       padding: 20px 20px 0 20px
+      position: relative
+    .pageDarkMode
+      position: absolute
+      top: 12px
+      right: 20px
+      z-index: 3
     .items
       padding-bottom 20px
     .search

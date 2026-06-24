@@ -70,10 +70,12 @@ function DrawerSidebar ({
 
   const renderNavigationView = (): ReactNode => {
     const render = lazy ? open : true
+    const RenderContent = renderContent
     if (!render) return null
     return pug`
       ScrollView(testID=testID contentContainerStyle={ flex: 1 })
-        = renderContent && renderContent()
+        if RenderContent
+          RenderContent
     `
   }
 
