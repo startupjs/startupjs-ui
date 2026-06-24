@@ -89,7 +89,7 @@ function FileInput ({
       if fileId
         Div(row)
           Button(testID=testID onPress=pickFile) Change
-          Button(testID=deleteTestID pushed onPress=handleDeleteFile variant='text' icon=faTrashAlt)
+          Button(testID=deleteTestID pushed onPress=handleDeleteFile variant='ghost' icon=faTrashAlt)
       else
         Button(testID=testID onPress=pickFile) Upload file
     `

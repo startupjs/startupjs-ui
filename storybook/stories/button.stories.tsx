@@ -32,9 +32,12 @@ function ButtonStatesStory (args: Record<string, any>) {
     <StoryStack>
       <StorySection title='Variants'>
         <InlineRow>
-          <Button {...args} variant='flat'>Save</Button>
-          <Button {...args} variant='outlined'>Save</Button>
-          <Button {...args} variant='text'>Save</Button>
+          <Button {...args}>Save</Button>
+          <Button {...args} variant='outline'>Save</Button>
+          <Button {...args} variant='secondary'>Save</Button>
+          <Button {...args} variant='ghost'>Save</Button>
+          <Button {...args} variant='destructive'>Delete</Button>
+          <Button {...args} variant='link'>Learn more</Button>
         </InlineRow>
       </StorySection>
       <StorySection title='Sizes and icons'>

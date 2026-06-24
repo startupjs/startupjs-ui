@@ -29,7 +29,7 @@ function DropdownCaption ({
   if (variant === 'button') {
     return pug`
       Button(
-        variant='flat'
+        variant='default'
         color='primary'
         pointerEvents='box-none'
       )= placeholder

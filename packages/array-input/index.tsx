@@ -162,7 +162,7 @@ function ArrayInput ({
               part='remove'
               tabIndex=-1
               size='s'
-              variant='text'
+              variant='ghost'
               icon=faTimes
               onPress=() => $value[index].del()
               color='text-subtle'

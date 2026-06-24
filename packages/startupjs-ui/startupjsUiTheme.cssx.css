@@ -620,8 +620,10 @@
   --Button-line-height-xl: 1.75rem;
   --Button-line-height-xxl: 2rem;
   --Button-font-weight: var(--font-weight-medium);
-  --Button-outlined-border-width: 1px;
-  --Button-outlined-border-color: transparent;
+  --Button-outline-border-width: 1px;
+  --Button-outline-border-color: transparent;
+  --Button-outlined-border-width: var(--Button-outline-border-width);
+  --Button-outlined-border-color: var(--Button-outline-border-color);
   --Button-web-native-button: 1;
   --Button-disabled-opacity: 0.25;
   --Button-icon-margin-xs: calc(var(--spacing) * 1);

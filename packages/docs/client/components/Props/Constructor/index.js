@@ -34,7 +34,7 @@ export default observer(themed('Constructor', function Constructor ({
           )= name
           if isRequired
             Tag.required(
-              variant='outlined'
+              variant='outline'
               size='s'
               color='error'
               shape='rounded'

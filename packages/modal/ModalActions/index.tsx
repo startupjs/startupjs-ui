@@ -57,7 +57,7 @@ function ModalActions ({
             part='action'
             style=actionStyle
             color='primary'
-            variant='flat'
+            variant='default'
             data-part='confirm'
             onPress=onConfirm
           )= confirmLabel

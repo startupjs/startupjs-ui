@@ -35,7 +35,7 @@ function NumberInputButtons ({
         disabled=disabled
         icon=mode === 'horizontal' ? faPlus : faAngleUp
         size=size
-        variant='outlined'
+        variant='outline'
         onPress=() => onIncrement?.(1)
       )
       Button.input-button.decrease(
@@ -46,7 +46,7 @@ function NumberInputButtons ({
         disabled=disabled
         icon=mode === 'horizontal' ? faMinus : faAngleDown
         size=size
-        variant='outlined'
+        variant='outline'
         onPress=() => onIncrement?.(-1)
       )
   `

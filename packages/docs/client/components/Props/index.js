@@ -146,13 +146,13 @@ export default observer(themed('PropsComponent', function PComponent ({
         Div.display(align='right' row)
           Button(
             size='s'
-            variant='text'
+            variant='ghost'
             color=block ? undefined : 'primary'
             onPress=() => setBlock(false)
           ) inline
           Button(
             size='s'
-            variant='text'
+            variant='ghost'
             color=block ? 'primary' : undefined
             onPress=() => setBlock(true)
           ) block

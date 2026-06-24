@@ -26,6 +26,33 @@ const ICON_MARGIN_FALLBACKS = {
 
 const COLOR_TOKEN_RE = /^[A-Za-z][A-Za-z0-9_-]*$/
 
+export type ButtonVariant =
+  | 'default'
+  | 'destructive'
+  | 'outline'
+  | 'secondary'
+  | 'ghost'
+  | 'link'
+  | 'flat'
+  | 'outlined'
+  | 'text'
+
+type CanonicalButtonVariant =
+  | 'default'
+  | 'destructive'
+  | 'outline'
+  | 'secondary'
+  | 'ghost'
+  | 'link'
+
+const DEPRECATED_VARIANT_ALIASES: Partial<Record<ButtonVariant, CanonicalButtonVariant>> = {
+  flat: 'default',
+  outlined: 'outline',
+  text: 'ghost'
+}
+
+const warnedVariantAliases = new Set<string>()
+
 function isConfigEnabled (value: unknown): boolean {
   return value !== false && value !== 0 && value !== '0'
 }
@@ -43,14 +70,28 @@ function isCustomBorderColor (value: unknown): value is string {
   return typeof value === 'string' && value !== '' && value !== 'transparent'
 }
 
+function normalizeVariant (variant: ButtonVariant): CanonicalButtonVariant {
+  const nextVariant = DEPRECATED_VARIANT_ALIASES[variant]
+  if (!nextVariant) return variant as CanonicalButtonVariant
+
+  if (!warnedVariantAliases.has(variant)) {
+    warnedVariantAliases.add(variant)
+    console.warn(
+      `[@startupjs/ui] Button: variant='${variant}' is deprecated, use variant='${nextVariant}' instead.`
+    )
+  }
+
+  return nextVariant
+}
+
 export default themed('Button', observer(Button))
 
 export const _PropsJsonSchema = {/* ButtonProps */} // used in docs generation
 export interface ButtonProps {
-  /** color name @default 'primary' */
+  /** color name */
   color?: string
-  /** variant @default 'outlined' */
-  variant?: 'flat' | 'outlined' | 'text'
+  /** variant @default 'default' */
+  variant?: ButtonVariant
   /** size @default 'm' */
   size?: 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl'
   /** icon component */
@@ -85,8 +126,8 @@ function Button ({
   iconStyle,
   textStyle,
   children,
-  color = 'primary',
-  variant = 'outlined',
+  color,
+  variant = 'default',
   size = 'm',
   shape = 'rounded',
   icon,
@@ -99,25 +140,39 @@ function Button ({
 }: ButtonProps): ReactNode {
   const isMountedRef = useIsMountedRef()
   const [asyncActive, setAsyncActive] = useState(false)
-  const isFlat = variant === 'flat'
-  const isSemanticColor = isSemanticColorToken(color)
-  const foregroundToken = isSemanticColor ? `${color}-foreground` : 'primary-foreground'
-  const resolvedColor = useCssColor(color)
+  const normalizedVariant = normalizeVariant(variant)
+  const hasCustomColor = color != null && color !== ''
+  const colorToken = color ?? (
+    normalizedVariant === 'destructive'
+      ? 'destructive'
+      : normalizedVariant === 'secondary'
+        ? 'secondary'
+        : 'primary'
+  )
+  const isSemanticColor = isSemanticColorToken(colorToken)
+  const foregroundToken = isSemanticColor ? `${colorToken}-foreground` : 'primary-foreground'
+  const resolvedColor = useCssColor(colorToken)
   const resolvedForegroundColor = useCssColor(foregroundToken)
   const fallbackForegroundColor = useCssColor('primary-foreground')
-  const outlinedBorderColor = useCssColor(color, 0.5)
-  const hoverColor = useCssColor(color, 0.05)
-  const activeColor = useCssColor(color, 0.25)
-  const customOutlinedBorderColor = useCssVariable('--Button-outlined-border-color', 'transparent')
+  const customBorderColor = useCssColor(colorToken, 0.5)
+  const customHoverColor = useCssColor(colorToken, 0.05)
+  const customActiveColor = useCssColor(colorToken, 0.25)
+  const backgroundColor = useCssColor('background')
+  const foregroundColor = useCssColor('foreground')
+  const inputColor = useCssColor('input')
+  const accentColor = useCssColor('accent')
+  const primaryColor = useCssColor('primary')
+  const deprecatedOutlinedBorderColor = useCssVariable('--Button-outlined-border-color', 'transparent')
+  const customOutlineBorderColor = useCssVariable('--Button-outline-border-color', deprecatedOutlinedBorderColor)
   const webNativeButton = useCssVariable('--Button-web-native-button', 1)
   const height = toNumber(useCssVariable(`--Button-height-${size}`), HEIGHT_FALLBACKS[size])
   const iconMargin = toNumber(useCssVariable(`--Button-icon-margin-${size}`), ICON_MARGIN_FALLBACKS[size])
-  const outlinedBorderWidth = toNumber(useCssVariable('--Button-outlined-border-width', 1), 1)
-  const baseColor = resolvedColor ?? color
-  const textColor = isFlat
-    ? (resolvedForegroundColor ?? fallbackForegroundColor)
-    : baseColor
-  const loaderColor = isFlat && isSemanticColor ? foregroundToken : (textColor ?? 'primary-foreground')
+  const deprecatedOutlinedBorderWidth = useCssVariable('--Button-outlined-border-width', 1)
+  const outlineBorderWidth = toNumber(useCssVariable('--Button-outline-border-width', deprecatedOutlinedBorderWidth), 1)
+  const baseColor = resolvedColor ?? colorToken
+  const onColor = resolvedForegroundColor ?? fallbackForegroundColor
+  let textColor = foregroundColor ?? 'var(--color-foreground)'
+  let loaderColor = 'primary-foreground'
 
   async function _onPress (event: GestureResponderEvent) {
     if (!onPress) return
@@ -138,7 +193,7 @@ function Button ({
     }
   }
 
-  if (!resolvedColor && isSemanticColor) console.error(`Button component: Unknown color token "${color}"`)
+  if (!resolvedColor && isSemanticColor) console.error(`Button component: Unknown color token "${colorToken}"`)
 
   const shouldUseWebNativeButton = isConfigEnabled(webNativeButton)
   const hasChildren = Children.count(children)
@@ -146,33 +201,58 @@ function Button ({
   const iconWrapperStyle: Record<string, any> = {}
   let extraHoverStyle: StyleProp<ViewStyle>
   let extraActiveStyle: StyleProp<ViewStyle>
+  const customStateHoverColor = hasCustomColor ? customHoverColor : accentColor
+  const customStateActiveColor = hasCustomColor ? customActiveColor : accentColor
+
+  switch (normalizedVariant) {
+    case 'default':
+      rootStyle.backgroundColor = baseColor
+      textColor = onColor ?? textColor
+      loaderColor = isSemanticColor ? foregroundToken : 'primary-foreground'
+      break
+    case 'destructive':
+      rootStyle.backgroundColor = baseColor
+      textColor = onColor ?? textColor
+      loaderColor = isSemanticColor ? foregroundToken : 'destructive-foreground'
+      break
+    case 'secondary':
+      rootStyle.backgroundColor = baseColor
+      textColor = onColor ?? textColor
+      loaderColor = isSemanticColor ? foregroundToken : 'secondary-foreground'
+      break
+    case 'outline':
+      rootStyle.borderWidth = outlineBorderWidth
+      rootStyle.borderColor = isCustomBorderColor(customOutlineBorderColor)
+        ? customOutlineBorderColor
+        : hasCustomColor
+          ? customBorderColor
+          : inputColor
+      rootStyle.backgroundColor = backgroundColor
+      textColor = hasCustomColor ? baseColor : (foregroundColor ?? textColor)
+      if (customStateHoverColor) extraHoverStyle = { backgroundColor: customStateHoverColor }
+      if (customStateActiveColor) extraActiveStyle = { backgroundColor: customStateActiveColor }
+      break
+    case 'ghost':
+      textColor = hasCustomColor ? baseColor : (foregroundColor ?? textColor)
+      if (customStateHoverColor) extraHoverStyle = { backgroundColor: customStateHoverColor }
+      if (customStateActiveColor) extraActiveStyle = { backgroundColor: customStateActiveColor }
+      break
+    case 'link':
+      textColor = hasCustomColor ? baseColor : (primaryColor ?? textColor)
+      break
+  }
 
   textStyle = StyleSheet.flatten<TextStyle>([
-    { color: textColor as any },
+    {
+      color: textColor as any,
+      textDecorationLine: normalizedVariant === 'link' ? 'underline' : 'none'
+    },
     textStyle
   ])
   iconStyle = StyleSheet.flatten<TextStyle>([
     { color: textColor as any },
     iconStyle
   ])
-
-  switch (variant) {
-    case 'flat':
-      rootStyle.backgroundColor = baseColor
-      break
-    case 'outlined':
-      rootStyle.borderWidth = outlinedBorderWidth
-      rootStyle.borderColor = isCustomBorderColor(customOutlinedBorderColor)
-        ? customOutlinedBorderColor
-        : outlinedBorderColor
-      extraHoverStyle = hoverColor ? { backgroundColor: hoverColor } : undefined
-      extraActiveStyle = activeColor ? { backgroundColor: activeColor } : undefined
-      break
-    case 'text':
-      extraHoverStyle = hoverColor ? { backgroundColor: hoverColor } : undefined
-      extraActiveStyle = activeColor ? { backgroundColor: activeColor } : undefined
-      break
-  }
 
   let padding: number
   const quarterOfHeight = height / 4
@@ -194,7 +274,7 @@ function Button ({
     padding = quarterOfHeight
   }
 
-  if (variant === 'outlined') padding -= outlinedBorderWidth
+  if (normalizedVariant === 'outline') padding -= outlineBorderWidth
 
   rootStyle.paddingLeft = padding
   rootStyle.paddingRight = padding
@@ -234,7 +314,7 @@ function Button ({
           Icon.icon(
             part='icon'
             style=iconStyle
-            styleName=[variant, { invisible: asyncActive }]
+            styleName=[normalizedVariant, { invisible: asyncActive }]
             icon=icon
             size=size
           )

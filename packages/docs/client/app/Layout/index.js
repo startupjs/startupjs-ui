@@ -78,7 +78,7 @@ const Topbar = observer(function Topbar () {
 
   return pug`
     Div.topbar(row)
-      Button(testID='button' variant='text' icon=faBars onPress=toggleSidebar color='text-description')
+      Button(testID='button' variant='ghost' icon=faBars onPress=toggleSidebar color='text-description')
       Div.searchWrapper
         Search
   `

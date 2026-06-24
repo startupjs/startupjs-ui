@@ -34,7 +34,7 @@ export default observer(function Options ({
       style=style
       icon=faSlidersH
       color='text-description'
-      variant='text'
+      variant='ghost'
       onPress=() => $open.set(true)
     )
     Modal(

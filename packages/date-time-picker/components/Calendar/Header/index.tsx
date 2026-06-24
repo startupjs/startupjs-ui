@@ -59,14 +59,14 @@ function Header ({
       Div.actions(row)
         Button.button(
           color='text-description'
-          variant='text'
+          variant='ghost'
           disabled=isPrevDisabled
           icon=faAngleLeft
           onPress=() => onChangeMonth(-1)
         )
         Button.button(
           color='text-description'
-          variant='text'
+          variant='ghost'
           disabled=isNextDisabled
           icon=faAngleRight
           onPress=() => onChangeMonth(1)

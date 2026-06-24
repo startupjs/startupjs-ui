@@ -393,7 +393,7 @@ function DateTimePicker ({
             Button(
               size='s'
               color='secondary'
-              variant='text'
+              variant='ghost'
               onPress=() => {
                 onDismiss()
               }
@@ -401,7 +401,7 @@ function DateTimePicker ({
             Button(
               size='s'
               color='primary'
-              variant='text'
+              variant='ghost'
               onPress=() => {
                 _onChangeDate(tempDate)
               }

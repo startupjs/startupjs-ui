@@ -26,7 +26,7 @@ export default observer(themed('TypeCell', function TypeCell ({ possibleValues, 
       Button(
         color='primary'
         size='s'
-        variant='text'
+        variant='ghost'
         onPress=toggleList
       )= $collapsed.get() ? 'More...' : 'Less'
     `

@@ -69,7 +69,7 @@ function ColorPicker ({
         ...props
         disabled=disabled
         style={ backgroundColor: value }
-        variant='flat'
+        variant='default'
         size=size
         textStyle={ color: getLabelColor(value) }
         onPress=() => {
