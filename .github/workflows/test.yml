@@ -27,6 +27,12 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
+      - name: Run ESLint
+        run: yarn lint
+
+      - name: Run StartupJS type check
+        run: yarn check
+
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
 

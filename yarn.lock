@@ -7311,20 +7311,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@startupjs/cli@npm:^0.64.0-alpha.0":
-  version: 0.64.0-alpha.0
-  resolution: "@startupjs/cli@npm:0.64.0-alpha.0"
+"@startupjs/cli@npm:^0.64.0-alpha.1":
+  version: 0.64.0-alpha.1
+  resolution: "@startupjs/cli@npm:0.64.0-alpha.1"
   dependencies:
     "@startupjs/patches": "npm:^0.64.0-alpha.0"
     "@startupjs/pm": "npm:^0.64.0-alpha.0"
     "@startupjs/skills": "npm:^0.64.0-alpha.0"
     chalk: "npm:^5.3.0"
     commander: "npm:^12.0.0"
-    create-startupjs: "npm:^0.64.0-alpha.0"
+    create-startupjs: "npm:^0.64.0-alpha.1"
     execa: "npm:^8.0.1"
   peerDependencies:
     cssxjs: "*"
-  checksum: 10c0/f0100aaa5bc344e5d7e74dba35746cb4865465d5ee4fe5beae52346bc45bf7c27f4a906f0c9d379d5a056701117f733c553e006d48f3ea276743f10f03f9c061
+  checksum: 10c0/80402083d8ad5f1c65a92c4b3d5ff339066daf8579007e3aaa90ba728e395702873be4697309b6c8dce3db57ffb16f56be0a062fadd792973429f2c76c878f1a
   languageName: node
   linkType: hard
 
@@ -11193,9 +11193,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"create-startupjs@npm:^0.64.0-alpha.0":
-  version: 0.64.0-alpha.0
-  resolution: "create-startupjs@npm:0.64.0-alpha.0"
+"create-startupjs@npm:^0.64.0-alpha.1":
+  version: 0.64.0-alpha.1
+  resolution: "create-startupjs@npm:0.64.0-alpha.1"
   dependencies:
     "@startupjs/skills": "npm:^0.64.0-alpha.0"
     chalk: "npm:^5.3.0"
@@ -11205,7 +11205,7 @@ __metadata:
     lodash: "npm:^4.17.20"
   bin:
     create-startupjs: index.js
-  checksum: 10c0/bf02d18f572f5c54777356668ca854a4db18e9c8438306fa3739c2a52af2f47947e3274d17796c7aea6f95473fea65b67a307dc511c9ffa0d34541e13df98230
+  checksum: 10c0/e677257bd667e0d605f68f29c8d530012024fd12491d169f244ec2044f88d1f8a45448be8343f356ce1f9268939907a3e596032461eaf5518ae28f5f3e9fa669
   languageName: node
   linkType: hard
 
@@ -22571,12 +22571,12 @@ __metadata:
   linkType: soft
 
 "startupjs@npm:^0.64.0-alpha.0":
-  version: 0.64.0-alpha.0
-  resolution: "startupjs@npm:0.64.0-alpha.0"
+  version: 0.64.0-alpha.1
+  resolution: "startupjs@npm:0.64.0-alpha.1"
   dependencies:
     "@startupjs/auth": "npm:^0.64.0-alpha.0"
     "@startupjs/bundler": "npm:^0.64.0-alpha.0"
-    "@startupjs/cli": "npm:^0.64.0-alpha.0"
+    "@startupjs/cli": "npm:^0.64.0-alpha.1"
     "@startupjs/hooks": "npm:^0.64.0-alpha.0"
     "@startupjs/isomorphic-helpers": "npm:^0.64.0-alpha.0"
     "@startupjs/registry": "npm:^0.64.0-alpha.0"
@@ -22598,7 +22598,7 @@ __metadata:
       optional: true
   bin:
     startupjs: cli.js
-  checksum: 10c0/f29e7311b04afc9332ad30654739b5138a950f705a56fcfd069acf06058fb70d1191501302fe04254146d4a0ebf643cfeb632dd29e14b701041c35a3cb9c81ea
+  checksum: 10c0/0138a40f73c2b133d1c19b4a34e4042a7a62da0c4baf0fc235f0a987118c14ea8f17cd84e17af92dc192abd3445ab50103c524bd2f33e00c6e011f32e598970d
   languageName: node
   linkType: hard
 

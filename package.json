@@ -26,6 +26,8 @@
     "storybook:native:web": "yarn workspace startupjs-ui-storybook web",
     "storybook:native:build": "yarn workspace startupjs-ui-storybook build",
     "test": "sh -c 'set -e; for dir in packages/*/; do echo \"Testing $dir\"; (cd \"$dir\" && yarn test) || { echo \"\\033[31mERROR: Tests failed for $dir\\033[0m\"; exit 1; }; done'",
+    "lint": "eslint .",
+    "check": "npx startupjs check",
     "docs:style-reference": "node scripts/update-style-reference-docs.mjs",
     "generate-package-dts": "node scripts/generate-package-dts.mjs",
     "publish-patch": "dotenv -- npx lerna publish patch --conventional-commits --create-release=github",
@@ -53,8 +55,19 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn generate-package-dts && node scripts/check-startupjs-ui-exports.mjs && (! grep -q '\"resolutions\":' ./package.json || (echo '\\033[0;31mError: \"resolutions\" found in package.json. Remove \"resolutions\" to proceed with commit.\\033[0m' && exit 1)) && lint-staged"
+      "pre-commit": "yarn generate-package-dts && node scripts/check-startupjs-ui-exports.mjs && (! grep -q '\"resolutions\":' ./package.json || (echo '\\033[0;31mError: \"resolutions\" found in package.json. Remove \"resolutions\" to proceed with commit.\\033[0m' && exit 1)) && lint-staged && yarn lint && yarn check"
     }
   },
-  "packageManager": "yarn@4.13.0+sha512.5c20ba010c99815433e5c8453112165e673f1c7948d8d2b267f4b5e52097538658388ebc9f9580656d9b75c5cc996f990f611f99304a2197d4c56d21eea370e7"
+  "packageManager": "yarn@4.13.0+sha512.5c20ba010c99815433e5c8453112165e673f1c7948d8d2b267f4b5e52097538658388ebc9f9580656d9b75c5cc996f990f611f99304a2197d4c56d21eea370e7",
+  "//resolutions": {
+    "startupjs": "portal:../startupjs/core/startupjs",
+    "@startupjs/utils": "portal:../startupjs/core/utils",
+    "cssxjs": "portal:../cssx/packages/cssxjs",
+    "@cssxjs/babel-plugin-rn-stylename-inline": "portal:../cssx/packages/babel-plugin-rn-stylename-inline",
+    "@cssxjs/babel-plugin-rn-stylename-to-style": "portal:../cssx/packages/babel-plugin-rn-stylename-to-style",
+    "@cssxjs/bundler": "portal:../cssx/packages/bundler",
+    "@cssxjs/css-to-rn": "portal:../cssx/packages/css-to-rn",
+    "@cssxjs/loaders": "portal:../cssx/packages/loaders",
+    "babel-preset-cssxjs": "portal:../cssx/packages/babel-preset-cssxjs"
+  }
 }
