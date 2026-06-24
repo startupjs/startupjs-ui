@@ -1,4 +1,4 @@
-import React, { useMemo, memo } from 'react'
+import React, { memo } from 'react'
 import { css, pug } from 'startupjs'
 import Div from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
@@ -116,15 +116,15 @@ export default memo(function Code ({
   ...props
 }) {
   if (typeof children !== 'string') throw Error('[Code] Code must be a string')
-  const code = useMemo(() => {
-    if (!language) {
-      return pug`
-        Span= children
-      `
-    }
 
-    return renderer(highlight(children, language), textStyle)
-  }, [children, language]) // eslint-disable-line react-hooks/exhaustive-deps
+  let code
+  if (!language) {
+    code = pug`
+      Span= children
+    `
+  } else {
+    code = renderer(highlight(children, language), textStyle)
+  }
 
   return pug`
     ScrollView.root(
