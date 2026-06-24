@@ -2076,36 +2076,36 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cssxjs/babel-plugin-rn-stylename-inline@npm:^0.4.0-alpha.0":
-  version: 0.4.0-alpha.0
-  resolution: "@cssxjs/babel-plugin-rn-stylename-inline@npm:0.4.0-alpha.0"
+"@cssxjs/babel-plugin-rn-stylename-inline@npm:^0.4.0-alpha.2":
+  version: 0.4.0-alpha.2
+  resolution: "@cssxjs/babel-plugin-rn-stylename-inline@npm:0.4.0-alpha.2"
   dependencies:
     "@babel/parser": "npm:^7.0.0"
     "@babel/template": "npm:^7.4.0"
     "@babel/types": "npm:^7.0.0"
-    "@cssxjs/loaders": "npm:^0.4.0-alpha.0"
-  checksum: 10c0/d733a57477dcffb62b9cb7df5b6340d6c366fac33ccb1b8151578d536c16be093f041f6726871a654efa2383e4c358a184a558936bd3be33edaa37810e2e93dc
+    "@cssxjs/loaders": "npm:^0.4.0-alpha.2"
+  checksum: 10c0/ea872ffc2308f6ffeaecbbdb0fe6342d3e731ca5a2ef7a2c2ef48a68caf0f4c0caea69a4c605f05b9df0ca5b576a52564f01ba829f144b7237cd04378071abda
   languageName: node
   linkType: hard
 
-"@cssxjs/babel-plugin-rn-stylename-to-style@npm:^0.4.0-alpha.0":
-  version: 0.4.0-alpha.0
-  resolution: "@cssxjs/babel-plugin-rn-stylename-to-style@npm:0.4.0-alpha.0"
+"@cssxjs/babel-plugin-rn-stylename-to-style@npm:^0.4.0-alpha.2":
+  version: 0.4.0-alpha.2
+  resolution: "@cssxjs/babel-plugin-rn-stylename-to-style@npm:0.4.0-alpha.2"
   dependencies:
     "@babel/helper-module-imports": "npm:^7.0.0"
     "@babel/parser": "npm:^7.0.0"
     "@babel/template": "npm:^7.4.0"
     "@babel/types": "npm:^7.0.0"
-  checksum: 10c0/90b23f3f479682142685be73502884f7b9f6d38554717f6466b623042a175d6c9286578967e64c2056709438442fd7a38af6320bc87df3f69c2bf9bc4b77edd7
+  checksum: 10c0/a03c719c3b1733bda7fcd228c660a974d05df05c194d4f2176d814f1ff36eb7c9fbc23d787cb5a61d773fc300cd3d8d0bcda050e2308a860e0193831812cb9ab
   languageName: node
   linkType: hard
 
-"@cssxjs/bundler@npm:^0.4.0-alpha.0":
-  version: 0.4.0-alpha.0
-  resolution: "@cssxjs/bundler@npm:0.4.0-alpha.0"
+"@cssxjs/bundler@npm:^0.4.0-alpha.2":
+  version: 0.4.0-alpha.2
+  resolution: "@cssxjs/bundler@npm:0.4.0-alpha.2"
   dependencies:
-    "@cssxjs/loaders": "npm:^0.4.0-alpha.0"
-  checksum: 10c0/f555f982c694e91cfe4dddc899da99c26eb974c43a2c851bb3cf6e06b33c017959fb874c23684c705b17ca494dd4c241b22dfc07963741c967e92f71b3b894c5
+    "@cssxjs/loaders": "npm:^0.4.0-alpha.2"
+  checksum: 10c0/801d9099a8374ffbc0244ae982787dd248f0450add1a194df224357aa7dec443d048888a0cc98f425ba0de538660839b0dcab4d8a74c9846f2a5dc9e40a67467
   languageName: node
   linkType: hard
 
@@ -2129,13 +2129,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cssxjs/loaders@npm:^0.4.0-alpha.0":
-  version: 0.4.0-alpha.0
-  resolution: "@cssxjs/loaders@npm:0.4.0-alpha.0"
+"@cssxjs/loaders@npm:^0.4.0-alpha.2":
+  version: 0.4.0-alpha.2
+  resolution: "@cssxjs/loaders@npm:0.4.0-alpha.2"
   dependencies:
     "@cssxjs/css-to-rn": "npm:^0.4.0-alpha.0"
     stylus: "npm:0.64.0"
-  checksum: 10c0/1656c33ed60945d5172b82b5c01824336987191bf6f5f25cd40002096eb00dc58366938a987d7b3a2b03db1a6fbd9bbaaf3f379adda10e1b887eb6230caaf6cd
+  checksum: 10c0/d26c64442a825820616c8b5c59a583d5e17a8ba3618f65a6612a4603fecb1fff16cfc94e3432dfbc169316c82b3678e557868b8cb201cacf524f3290966b2dd6
   languageName: node
   linkType: hard
 
@@ -7212,12 +7212,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs/auth@npm:^0.64.0-alpha.0":
-  version: 0.64.0-alpha.0
-  resolution: "@startupjs/auth@npm:0.64.0-alpha.0"
+"@startupjs/auth@npm:^0.64.0-alpha.2":
+  version: 0.64.0-alpha.2
+  resolution: "@startupjs/auth@npm:0.64.0-alpha.2"
   dependencies:
     "@startupjs/registry": "npm:^0.64.0-alpha.0"
-    "@startupjs/utils": "npm:^0.64.0-alpha.0"
+    "@startupjs/utils": "npm:^0.64.0-alpha.2"
     bcrypt: "npm:^5.1.1"
     jsonwebtoken: "npm:^9.0.2"
     jwks-rsa: "npm:^3.1.0"
@@ -7226,7 +7226,7 @@ __metadata:
   peerDependencies:
     "@react-native-async-storage/async-storage": "*"
     teamplay: "*"
-  checksum: 10c0/e0c755044478f3fdbecba23f04d4304f27c2bfb4397746d1484cc1260e605f68220b01ea1cc8d07e4fae5a9c99daedf74608374bbe8b1facf5972543423e032d
+  checksum: 10c0/c8347401f32bb3293b856577dfab7b7bfb982735b9f319a35e1142ed4d5369145b048a6bb30b878dac638db131357d5732b1d547b69b1a69f67189650bc122be
   languageName: node
   linkType: hard
 
@@ -7287,9 +7287,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@startupjs/bundler@npm:^0.64.0-alpha.0":
-  version: 0.64.0-alpha.0
-  resolution: "@startupjs/bundler@npm:0.64.0-alpha.0"
+"@startupjs/bundler@npm:^0.64.0-alpha.2":
+  version: 0.64.0-alpha.2
+  resolution: "@startupjs/bundler@npm:0.64.0-alpha.2"
   dependencies:
     "@babel/core": "npm:^7.9.0"
     "@babel/plugin-syntax-jsx": "npm:^7.0.0"
@@ -7300,14 +7300,14 @@ __metadata:
     "@svgr/core": "npm:^8.1.0"
     "@svgr/plugin-jsx": "npm:^8.1.0"
     "@svgr/plugin-svgo": "npm:^8.1.0"
-    babel-preset-startupjs: "npm:^0.64.0-alpha.0"
+    babel-preset-startupjs: "npm:^0.64.0-alpha.2"
     connect: "npm:^3.7.0"
     lodash: "npm:^4.17.20"
     remark-gfm: "npm:4.0.1"
   peerDependencies:
     cssxjs: "*"
     react-native-svg: "*"
-  checksum: 10c0/dea84fab84106d89c303875f5ee4b3a9855ae54cec59b28f84461d2fadea1678f372d4b98cfdeb15d055c36cc632e90e173ca7354b9705abb3c351ea12e98b66
+  checksum: 10c0/c5acd8105d7dd1049bdd41ca2d394db05b2ca6a12636c18353a503ff17fcfd9ea17d8ebc3414bb0b904972e9b7965f29456daea6e2f6868eaff08ad171e7636c
   languageName: node
   linkType: hard
 
@@ -7328,15 +7328,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@startupjs/hooks@npm:^0.64.0-alpha.0":
-  version: 0.64.0-alpha.0
-  resolution: "@startupjs/hooks@npm:0.64.0-alpha.0"
+"@startupjs/hooks@npm:^0.64.0-alpha.2":
+  version: 0.64.0-alpha.2
+  resolution: "@startupjs/hooks@npm:0.64.0-alpha.2"
   dependencies:
-    "@startupjs/utils": "npm:^0.64.0-alpha.0"
+    "@startupjs/utils": "npm:^0.64.0-alpha.2"
     lodash: "npm:^4.17.20"
   peerDependencies:
     react: "*"
-  checksum: 10c0/bc0ab81c5d5c608239999a0fd3c3973385106bef95db56abf27a7b65befae13fb50127139dde5d211fd6fbf134cd739749ba727b4c2c83b9d799aae3c9798031
+  checksum: 10c0/98a83c311abf89133ff665b136dbe593d0e3d4e9c0b106419b9f7d071d0d43b76547c6488b1f72919a70651daa5d8464dec867fd26cf4b409a0e45f916ae7a7d
   languageName: node
   linkType: hard
 
@@ -7375,11 +7375,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@startupjs/router@npm:^0.64.0-alpha.0":
-  version: 0.64.0-alpha.0
-  resolution: "@startupjs/router@npm:0.64.0-alpha.0"
+"@startupjs/router@npm:^0.64.0-alpha.2":
+  version: 0.64.0-alpha.2
+  resolution: "@startupjs/router@npm:0.64.0-alpha.2"
   dependencies:
-    "@startupjs/utils": "npm:^0.64.0-alpha.0"
+    "@startupjs/utils": "npm:^0.64.0-alpha.2"
     react-router: "npm:^6.22.3"
   peerDependencies:
     expo-router: "*"
@@ -7388,7 +7388,7 @@ __metadata:
   peerDependenciesMeta:
     expo-router:
       optional: true
-  checksum: 10c0/f780ecf07c90e80531787d2f4c706aa99ea189cb1b8de8a7037105f4a8a17cb817ee62f93e5554182e1be8c84e33b02866ac52daf5f0ea6c81418ee1e455cf40
+  checksum: 10c0/5d15a999671da228dba9c9444ced9713f4fe035a02645289323d70fbfb20ab5bac8ca6fa1606413da53698dd97595d8be99d59b0494a56950aa8162777b14078
   languageName: node
   linkType: hard
 
@@ -7434,9 +7434,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@startupjs/utils@npm:^0.64.0-alpha.0":
-  version: 0.64.0-alpha.0
-  resolution: "@startupjs/utils@npm:0.64.0-alpha.0"
+"@startupjs/utils@npm:^0.64.0-alpha.2":
+  version: 0.64.0-alpha.2
+  resolution: "@startupjs/utils@npm:0.64.0-alpha.2"
   dependencies:
     axios: "npm:^1.6.5"
   peerDependencies:
@@ -7456,7 +7456,7 @@ __metadata:
       optional: true
     react:
       optional: true
-  checksum: 10c0/e114b8a260df9b629658370f91c6b0a962bf8339aead00cfac4aa4d37752d361a9d8725e7bbc4356967e9b94af0e69ee2b7d22d8bb5b19327f459f9fd0e48023
+  checksum: 10c0/f33b68c6aa7a0495e59606b646da2ed55941c591b7169490cf35a63c9f1db51404484aa7feaf3ab5745574dc8466641dfd7dd38ff3fef12c25ed96124d398f24
   languageName: node
   linkType: hard
 
@@ -9747,16 +9747,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-preset-cssxjs@npm:^0.4.0-alpha.0":
-  version: 0.4.0-alpha.0
-  resolution: "babel-preset-cssxjs@npm:0.4.0-alpha.0"
+"babel-preset-cssxjs@npm:^0.4.0-alpha.2":
+  version: 0.4.0-alpha.2
+  resolution: "babel-preset-cssxjs@npm:0.4.0-alpha.2"
   dependencies:
     "@babel/plugin-syntax-jsx": "npm:^7.0.0"
     "@babel/plugin-syntax-typescript": "npm:^7.23.3"
-    "@cssxjs/babel-plugin-rn-stylename-inline": "npm:^0.4.0-alpha.0"
-    "@cssxjs/babel-plugin-rn-stylename-to-style": "npm:^0.4.0-alpha.0"
+    "@cssxjs/babel-plugin-rn-stylename-inline": "npm:^0.4.0-alpha.2"
+    "@cssxjs/babel-plugin-rn-stylename-to-style": "npm:^0.4.0-alpha.2"
     "@react-pug/babel-plugin-react-pug": "npm:^0.1.18"
-  checksum: 10c0/3eb47c3bdfc1dfd2633217972229ccdf78a8705c23aff5197ee272ccd24c18e895432d8c981a7acdc07b3be907b7c5799ef8870ebe2b0da26d13be9fef4c096c
+  checksum: 10c0/0b552c94d6d76dbcb4d822947242033eebf5b38c7ca4e458ff5e355f489e4db71a34047ca31d2eba8f84843d9081d3d8ff67b25a568dae5a5171b420495b3832
   languageName: node
   linkType: hard
 
@@ -9840,9 +9840,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-preset-startupjs@npm:^0.64.0-alpha.0":
-  version: 0.64.0-alpha.0
-  resolution: "babel-preset-startupjs@npm:0.64.0-alpha.0"
+"babel-preset-startupjs@npm:^0.64.0-alpha.2":
+  version: 0.64.0-alpha.2
+  resolution: "babel-preset-startupjs@npm:0.64.0-alpha.2"
   dependencies:
     "@babel/core": "npm:^7.9.0"
     "@babel/plugin-syntax-jsx": "npm:^7.0.0"
@@ -9855,7 +9855,7 @@ __metadata:
     "@startupjs/babel-plugin-ts-to-json-schema": "npm:^0.64.0-alpha.0"
   peerDependencies:
     cssxjs: "*"
-  checksum: 10c0/f131ace93338b6d94f09bfda61c734b2240b39d2b6187157c5f2538260a600d44bab0991e91cbb6430023e5938ed59f7bb5455751e52f517dce84f5d9caa3bd0
+  checksum: 10c0/57e1057ea2252485a952cd88f6c245b86fe20d6f54247c25d2a167fa4ef2b322ab9e9a1b6aff6b8f759bc0a7c0f8601f6cf1e79cb10ae9781275527c75096282
   languageName: node
   linkType: hard
 
@@ -11338,23 +11338,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cssxjs@npm:^0.4.0-alpha.0":
-  version: 0.4.0-alpha.0
-  resolution: "cssxjs@npm:0.4.0-alpha.0"
+"cssxjs@npm:^0.4.0-alpha.2":
+  version: 0.4.0-alpha.2
+  resolution: "cssxjs@npm:0.4.0-alpha.2"
   dependencies:
-    "@cssxjs/babel-plugin-rn-stylename-inline": "npm:^0.4.0-alpha.0"
-    "@cssxjs/babel-plugin-rn-stylename-to-style": "npm:^0.4.0-alpha.0"
-    "@cssxjs/bundler": "npm:^0.4.0-alpha.0"
+    "@cssxjs/babel-plugin-rn-stylename-inline": "npm:^0.4.0-alpha.2"
+    "@cssxjs/babel-plugin-rn-stylename-to-style": "npm:^0.4.0-alpha.2"
+    "@cssxjs/bundler": "npm:^0.4.0-alpha.2"
     "@cssxjs/css-to-rn": "npm:^0.4.0-alpha.0"
-    "@cssxjs/loaders": "npm:^0.4.0-alpha.0"
+    "@cssxjs/loaders": "npm:^0.4.0-alpha.2"
     "@react-pug/babel-plugin-react-pug": "npm:^0.1.18"
     "@react-pug/check-types": "npm:^0.1.18"
-    babel-preset-cssxjs: "npm:^0.4.0-alpha.0"
+    babel-preset-cssxjs: "npm:^0.4.0-alpha.2"
   peerDependencies:
     react: "*"
   bin:
     cssxjs: cli.js
-  checksum: 10c0/547da1b5a26d67418431cb31781a8185766aacc5e487e11e3eacd8c62cfce7fc2f14b37ab0f71ff900fcd8d10506588484340f3c4559fa02c41605511c7b038b
+  checksum: 10c0/6595371aee778150f88ee04dc93a130d50c335221488ec72efcd4d944ccc84b6cffffca2f876c68f133ef74acd312bdc7bcf50986fa461ab61ecc9e3d5e85fa5
   languageName: node
   linkType: hard
 
@@ -11706,7 +11706,7 @@ __metadata:
     "@react-navigation/native": "npm:^7.1.8"
     "@startupjs-ui/docs": "npm:^0.4.0-alpha.0"
     "@startupjs-ui/mdx": "npm:^0.4.0-alpha.0"
-    "@startupjs/router": "npm:^0.64.0-alpha.0"
+    "@startupjs/router": "npm:^0.64.0-alpha.2"
     "@types/react": "npm:~19.2.10"
     eslint-config-expo: "npm:~55.0.0"
     expo: "npm:~55.0.11"
@@ -11738,7 +11738,7 @@ __metadata:
     react-native-web: "npm:~0.21.0"
     react-native-worklets: "npm:0.7.2"
     serve: "npm:^14.2.5"
-    startupjs: "npm:^0.64.0-alpha.0"
+    startupjs: "npm:^0.64.0-alpha.2"
     typescript: "npm:~5.9.2"
   languageName: unknown
   linkType: soft
@@ -22452,7 +22452,7 @@ __metadata:
     "@react-navigation/bottom-tabs": "npm:^7.4.0"
     "@react-navigation/elements": "npm:^2.6.3"
     "@react-navigation/native": "npm:^7.1.8"
-    "@startupjs/router": "npm:^0.64.0-alpha.0"
+    "@startupjs/router": "npm:^0.64.0-alpha.2"
     "@storybook/addon-a11y": "npm:^10.3.6"
     "@storybook/addon-docs": "npm:^10.3.6"
     "@storybook/addon-ondevice-actions": "npm:^10.3.2"
@@ -22492,7 +22492,7 @@ __metadata:
     react-native-svg: "npm:15.15.3"
     react-native-web: "npm:~0.21.0"
     react-native-worklets: "npm:0.7.2"
-    startupjs: "npm:^0.64.0-alpha.0"
+    startupjs: "npm:^0.64.0-alpha.2"
     startupjs-ui: "workspace:*"
     storybook: "npm:^10.3.6"
     typescript: "npm:~5.9.2"
@@ -22570,21 +22570,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"startupjs@npm:^0.64.0-alpha.0":
-  version: 0.64.0-alpha.1
-  resolution: "startupjs@npm:0.64.0-alpha.1"
+"startupjs@npm:^0.64.0-alpha.2":
+  version: 0.64.0-alpha.2
+  resolution: "startupjs@npm:0.64.0-alpha.2"
   dependencies:
-    "@startupjs/auth": "npm:^0.64.0-alpha.0"
-    "@startupjs/bundler": "npm:^0.64.0-alpha.0"
+    "@startupjs/auth": "npm:^0.64.0-alpha.2"
+    "@startupjs/bundler": "npm:^0.64.0-alpha.2"
     "@startupjs/cli": "npm:^0.64.0-alpha.1"
-    "@startupjs/hooks": "npm:^0.64.0-alpha.0"
+    "@startupjs/hooks": "npm:^0.64.0-alpha.2"
     "@startupjs/isomorphic-helpers": "npm:^0.64.0-alpha.0"
     "@startupjs/registry": "npm:^0.64.0-alpha.0"
     "@startupjs/server": "npm:^0.64.0-alpha.0"
     "@startupjs/skills": "npm:^0.64.0-alpha.0"
-    "@startupjs/utils": "npm:^0.64.0-alpha.0"
-    babel-preset-startupjs: "npm:^0.64.0-alpha.0"
-    cssxjs: "npm:^0.4.0-alpha.0"
+    "@startupjs/utils": "npm:^0.64.0-alpha.2"
+    babel-preset-startupjs: "npm:^0.64.0-alpha.2"
+    cssxjs: "npm:^0.4.0-alpha.2"
     lodash: "npm:^4.17.20"
     teamplay: "npm:^0.5.0"
   peerDependencies:
@@ -22598,7 +22598,7 @@ __metadata:
       optional: true
   bin:
     startupjs: cli.js
-  checksum: 10c0/0138a40f73c2b133d1c19b4a34e4042a7a62da0c4baf0fc235f0a987118c14ea8f17cd84e17af92dc192abd3445ab50103c524bd2f33e00c6e011f32e598970d
+  checksum: 10c0/2ed173af8195dd97583b1c3dee61c93f0b5922f472d8ca41c98119d271786171f444470656246eb45851d7252dd93abffb3e5752ece027dbac995df009e32496
   languageName: node
   linkType: hard
 
