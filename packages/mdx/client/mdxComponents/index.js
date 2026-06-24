@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { Image, ScrollView, Platform, Text } from 'react-native'
-import { pug, observer, $, BASE_URL } from 'startupjs'
+import { css, pug, observer, $, BASE_URL } from 'startupjs'
 import Alert from '@startupjs-ui/alert'
 import Div from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
@@ -17,7 +17,6 @@ import { faCode } from '@fortawesome/free-solid-svg-icons/faCode'
 import { faCopy } from '@fortawesome/free-solid-svg-icons/faCopy'
 // import _kebabCase from 'lodash/kebabCase'
 // import _get from 'lodash/get'
-import './index.cssx.styl'
 import Code from '../Code'
 
 // const RowComponent = props => pug`Div(...props row)`
@@ -359,3 +358,145 @@ export default {
   },
   code: MdxCode
 }
+
+css`
+  .p,
+  .blockquoteP,
+  .link,
+  .listIndex,
+  .inlineCode,
+  .inlineCodeSpacer {
+    font-family: var(--Mdx-font-family);
+    font-size: var(--Mdx-font-size);
+    line-height: var(--Mdx-line-height);
+  }
+
+  .h2 {
+    margin-top: var(--Mdx-h2-margin-top);
+  }
+
+  .h2-text {
+    font-family: var(--Mdx-heading-font-family);
+    font-weight: var(--Mdx-heading-font-weight);
+  }
+
+  .h3 {
+    margin-top: var(--Mdx-h3-margin-top);
+  }
+
+  .h3-text {
+    font-family: var(--Mdx-heading-font-family);
+    font-weight: var(--Mdx-heading-font-weight);
+  }
+
+  .anchor {
+    align-self: flex-start;
+    word-break: break-word;
+  }
+
+  .anchor-link {
+    margin-left: var(--Mdx-anchor-link-margin-left);
+    opacity: 0;
+  }
+
+  .anchor-link.hover {
+    opacity: 1;
+  }
+
+  .divider {
+    height: var(--Mdx-divider-height);
+    background-color: var(--Mdx-divider-bg);
+    margin-bottom: var(--Mdx-divider-margin-bottom);
+  }
+
+  .p {
+    margin-top: var(--Mdx-block-margin-top);
+  }
+
+  .center {
+    text-align: center;
+  }
+
+  .listIndex {
+    width: var(--Mdx-list-index-width);
+    margin-top: var(--Mdx-block-margin-top);
+    text-align: center;
+    padding-right: 2px;
+  }
+
+  .listContent {
+    flex: 1;
+  }
+
+  .alert {
+    margin-top: var(--Mdx-block-margin-top);
+  }
+
+  .img {
+    margin-top: var(--Mdx-block-margin-top);
+    width: 100%;
+  }
+
+  .inlineCodeWrapper {
+    background-color: var(--Mdx-code-bg);
+    border-width: var(--Mdx-code-border-width);
+    border-color: var(--Mdx-code-border-color);
+    border-radius: var(--Mdx-code-radius);
+  }
+
+  .example {
+    margin-top: var(--Mdx-block-margin-top);
+    background-color: var(--Mdx-example-bg);
+    border-top-left-radius: var(--Mdx-example-radius);
+    border-top-right-radius: var(--Mdx-example-radius);
+  }
+
+  .exampleContent {
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .padding {
+    padding: var(--Mdx-example-padding);
+  }
+
+  .code {
+    margin-top: var(--Mdx-block-margin-top);
+  }
+
+  .code-example {
+    margin-top: 0;
+  }
+
+  .code-collapse {
+    background-color: var(--Mdx-example-bg);
+    border-bottom-left-radius: var(--Mdx-example-radius);
+    border-bottom-right-radius: var(--Mdx-example-radius);
+  }
+
+  .code-collapse-header {
+    padding-top: var(--Mdx-code-collapse-header-padding-top);
+    padding-bottom: var(--Mdx-code-collapse-header-padding-bottom);
+    padding-left: var(--Mdx-example-padding);
+    padding-right: var(--Mdx-example-padding);
+  }
+
+  @media (--breakpoint-tablet) {
+    .code-collapse-header {
+      padding-top: var(--Mdx-example-padding);
+    }
+  }
+
+  .code-collapse-content {
+    padding: var(--Mdx-example-padding);
+  }
+
+  .code-action {
+    margin-left: var(--Mdx-code-action-margin-left);
+  }
+
+  .code-action-collapse,
+  .code-action-copy {
+    color: var(--Mdx-action-color);
+  }
+`

@@ -1,4 +1,4 @@
-import { useMedia } from '@startupjs-ui/core'
+import { useMedia } from 'startupjs'
 
 export default function useLayout ({
   layout,

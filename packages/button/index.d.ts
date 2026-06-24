@@ -3,14 +3,15 @@
 
 import { type ReactNode } from 'react';
 import { type GestureResponderEvent, type StyleProp, type TextStyle, type ViewStyle } from 'react-native';
+export type ButtonVariant = 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link' | 'flat' | 'outlined' | 'text';
 declare const _default: import("react").ComponentType<ButtonProps>;
 export default _default;
 export declare const _PropsJsonSchema: {};
 export interface ButtonProps {
-    /** color name @default 'secondary' */
+    /** color name */
     color?: string;
-    /** variant @default 'outlined' */
-    variant?: 'flat' | 'outlined' | 'text';
+    /** variant @default 'default' */
+    variant?: ButtonVariant;
     /** size @default 'm' */
     size?: 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
     /** icon component */

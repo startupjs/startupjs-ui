@@ -1,12 +1,11 @@
 import React, { useRef, type ReactNode } from 'react'
 import { Animated, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, useDidUpdate } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { css, pug, observer, useDidUpdate, themed } from 'startupjs'
+
 import Div from '@startupjs-ui/div'
 import Icon, { type IconProps } from '@startupjs-ui/icon'
 import Span from '@startupjs-ui/span'
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons/faCaretRight'
-import './index.cssx.styl'
 
 export const _PropsJsonSchema = {/* CollapseHeaderProps */}
 
@@ -60,6 +59,7 @@ function CollapseHeader ({
 
   return pug`
     Div.root(
+      part='root'
       row
       style=style
       styleName=[variant]
@@ -78,13 +78,33 @@ function CollapseHeader ({
             }]
           }
         )
-          Icon(icon=icon style=iconStyle)
-      Div.container(style=containerStyle styleName={ reverse })
+          Icon(part='icon' icon=icon style=iconStyle)
+      Div.container(part='container' style=containerStyle styleName={ reverse })
         if typeof children === 'string'
-          Span= children
+          Span(part='title')= children
         else
           = children
   `
 }
 
-export default observer(themed('CollapseHeader', CollapseHeader))
+export default themed('CollapseHeader', observer(CollapseHeader))
+
+css`
+  .root {
+    align-items: center;
+  }
+
+  .root.full {
+    padding: var(--Collapse-header-padding);
+  }
+
+  .container {
+    flex: 1;
+    margin-left: var(--Collapse-header-icon-gap);
+  }
+
+  .container.reverse {
+    margin-right: var(--Collapse-header-icon-gap);
+    margin-left: 0;
+  }
+`

@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react'
-import { pug, observer, $, useId } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, $, useId, themed } from 'startupjs'
+
 import Button from '@startupjs-ui/button'
 import Div from '@startupjs-ui/div'
 import ScrollView from '@startupjs-ui/scroll-view'
@@ -77,7 +77,7 @@ function useInitDefaultProps ({ entries, $theProps }) {
   }
 }
 
-export default observer(themed(function PComponent ({
+export default observer(themed('PropsComponent', function PComponent ({
   style,
   rendererStyle,
   Component,
@@ -146,13 +146,13 @@ export default observer(themed(function PComponent ({
         Div.display(align='right' row)
           Button(
             size='s'
-            variant='text'
+            variant='ghost'
             color=block ? undefined : 'primary'
             onPress=() => setBlock(false)
           ) inline
           Button(
             size='s'
-            variant='text'
+            variant='ghost'
             color=block ? 'primary' : undefined
             onPress=() => setBlock(true)
           ) block

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { pug, styl } from 'startupjs'
+import { css } from 'startupjs'
 import Span, { _PropsJsonSchema as SpanPropsJsonSchema } from './index'
 import { View, Pressable } from 'react-native'
 import { Sandbox } from '@startupjs-ui/docs'
@@ -63,37 +63,55 @@ return (
     </Pressable>
   </View>
 )
-styl`
-  .text
-    color red
-    transition color 1s
-    animation none
-    &.isActive
-      color green
-      animation shake 0.5s infinite, pulse 1s infinite, highlight 1s infinite
-  .root
-    height 60px
-    flex-direction row
-    align-items center
-    gap 16px
-  .button
-    padding 8px 16px
-    background-color #2962FF
-    border-radius 4px
-  @keyframes shake
-    0%, 100%
-      transform translateX(0) translateY(0)
-    25%
-      transform translateX(-10px) translateY(-10px)
-    75%
-      transform translateX(10px) translateY(10px)
-  @keyframes pulse
-    50%
-      font-size 24px
-  @keyframes highlight
-    50%
-      background-color rgba(green, 0.2)
-      box-shadow 0px 0px 10px rgba(green, 1)
+css`
+  .text {
+    color: red;
+    transition: color 1s;
+    animation: none;
+  }
+
+  .text.isActive {
+    color: green;
+    animation: shake 0.5s infinite, pulse 1s infinite, highlight 1s infinite;
+  }
+
+  .root {
+    height: 60px;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .button {
+    padding: 8px 16px;
+    background-color: #2962FF;
+    border-radius: 4px;
+  }
+
+  @keyframes shake {
+    0%, 100% {
+      transform: translateX(0) translateY(0);
+    }
+    25% {
+      transform: translateX(-10px) translateY(-10px);
+    }
+    75% {
+      transform: translateX(10px) translateY(10px);
+    }
+  }
+
+  @keyframes pulse {
+    50% {
+      font-size: 24px;
+    }
+  }
+
+  @keyframes highlight {
+    50% {
+      background-color: rgba(0, 128, 0, 0.2);
+      box-shadow: 0px 0px 10px green;
+    }
+  }
 `
 ```
 
@@ -110,6 +128,42 @@ Span extends React Native's `TextProps`, so all standard Text props are supporte
 - **theme** -- apply a named theme
 - **style** -- custom text styles
 - **ref** -- ref to access the underlying `Text` element
+
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
+
+### Parts
+
+This component does not expose named parts.
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--Span-color` | `var(--color-foreground)` | Controls the color. |
+| `--Span-description-color` | `var(--color-muted-foreground)` | Controls the description color. |
+| `--Span-font-family` | `var(--font-sans)` | Controls the font family. |
+| `--Span-heading-font-family` | `var(--font-sans)` | Controls the heading font family. |
+| `--Span-font-size` | `var(--text-sm)` | Controls the font size. |
+| `--Span-line-height` | `1.25rem` | Controls the line height. |
+| `--Span-font-weight` | `var(--font-weight-normal)` | Controls the font weight. |
+| `--Span-font-weight-bold` | `var(--font-weight-semibold)` | Controls the font weight bold. |
+| `--Span-heading-font-weight` | `var(--font-weight-normal)` | Controls the heading font weight. |
+| `--Span-heading-font-weight-bold` | `var(--font-weight-semibold)` | Controls the heading font weight bold. |
+| `--Span-h1-font-size` | `var(--text-7xl)` | Controls the h1 font size. |
+| `--Span-h1-line-height` | `6rem` | Controls the h1 line height. |
+| `--Span-h2-font-size` | `var(--text-5xl)` | Controls the h2 font size. |
+| `--Span-h2-line-height` | `4rem` | Controls the h2 line height. |
+| `--Span-h3-font-size` | `var(--text-4xl)` | Controls the h3 font size. |
+| `--Span-h3-line-height` | `3rem` | Controls the h3 line height. |
+| `--Span-h4-font-size` | `var(--text-2xl)` | Controls the h4 font size. |
+| `--Span-h4-line-height` | `2rem` | Controls the h4 line height. |
+| `--Span-h5-font-size` | `var(--text-xl)` | Controls the h5 font size. |
+| `--Span-h5-line-height` | `1.75rem` | Controls the h5 line height. |
+| `--Span-h6-font-size` | `var(--text-base)` | Controls the h6 font size. |
+| `--Span-h6-line-height` | `1.5rem` | Controls the h6 line height. |
 
 ## Sandbox
 

@@ -1,11 +1,10 @@
 import { type ReactNode, useRef } from 'react'
 import { Animated, Easing, Platform, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, useDidUpdate } from 'startupjs'
+import { css, pug, observer, useDidUpdate, themed } from 'startupjs'
 import Div from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
-import { themed } from '@startupjs-ui/core'
+
 import { parseValue } from './helpers'
-import './index.cssx.styl'
 
 const IS_ANDROID = Platform.OS === 'android'
 const ANIMATION_TIMING = 100
@@ -76,6 +75,7 @@ const RadioInput = function ({
 
   return pug`
     Div.input-input(
+      part='root'
       style=style
       vAlign='center'
       disabled=disabled || readonly
@@ -86,18 +86,68 @@ const RadioInput = function ({
       row
     )
       Div.radio(
+        part='control'
         styleName=[{ checked, error }]
       )
         Animated.View.circle(
+          part='circle'
           style={ transform: [{ scale: animation }] }
           styleName={ error }
         )
       if children
-        Div.container
-          Span.label= children
+        Div.container(part='content')
+          Span.label(part='label')= children
           if description
-            Span.description(description)= description
+            Span.description(part='description' description)= description
   `
 }
 
-export default observer(themed('Radio', RadioInput))
+export default themed('Radio', observer(RadioInput))
+
+css`
+  .input-input {
+    align-self: flex-start;
+    padding-top: var(--Radio-input-padding-y);
+    padding-bottom: var(--Radio-input-padding-y);
+  }
+
+  .radio {
+    width: var(--Radio-size);
+    height: var(--Radio-size);
+    border-color: var(--Radio-border-color);
+    border-radius: var(--Radio-radius);
+    border-width: var(--Radio-border-width);
+    justify-content: center;
+    align-items: center;
+  }
+
+  .radio.checked {
+    border-color: var(--Radio-checked-border-color);
+  }
+
+  .radio.error {
+    border-color: var(--Radio-error-border-color);
+  }
+
+  .circle {
+    border-radius: var(--Radio-circle-radius);
+    width: var(--Radio-circle-size);
+    height: var(--Radio-circle-size);
+    background-color: var(--Radio-circle-bg);
+  }
+
+  .circle.error {
+    background-color: var(--Radio-circle-bg-error);
+  }
+
+  .container {
+    margin-left: var(--Radio-label-gap);
+    flex-shrink: 1;
+  }
+
+  .description {
+    font-size: var(--Radio-description-font-size);
+    line-height: var(--Radio-description-line-height);
+    color: var(--Radio-description-color);
+  }
+`

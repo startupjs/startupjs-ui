@@ -1,9 +1,5 @@
-$major = rgba(green, 0.15)
-$minor = rgba(black, 0.05)
-$size = 1u
-$double = $size * 2
-$bar = 2u
-$barMargin = 1u
+$bar = 1rem
+$barMargin = 0.5rem
 $valid = rgba(black, 0.2)
 $validLine = rgba(black, 0.1)
 $invalid = red
@@ -14,28 +10,24 @@ $darkValid = rgba(white, 0.3)
 $darkInvalid = lighten(red, 40%)
 $darkValidLine = rgba(white, 0.2)
 
-grid(direction, color, size)
-  return linear-gradient(direction, color 0px, color 1px, transparent 1px, transparent size)
-
 .gridVisualizer
   position absolute
   top 0
   right 0
   bottom 0
   left 0
-  +web()
-    pointer-events none
-    background-image grid(to right, $major, $double), grid(to bottom, $major, $double), grid(to right, $minor, $double), grid(to bottom, $minor, $double)
-    background-size $double $double, $double $double, $double $double, $double $double
-    background-position 0 0, 0 0, $size $size, $size $size
-    background-repeat repeat, repeat, repeat, repeat
+  pointer-events none
+  background-image linear-gradient(to right, rgba(0, 128, 0, 0.15) 0px, rgba(0, 128, 0, 0.15) 1px, transparent 1px, transparent 1rem), linear-gradient(to bottom, rgba(0, 128, 0, 0.15) 0px, rgba(0, 128, 0, 0.15) 1px, transparent 1px, transparent 1rem), linear-gradient(to right, rgba(0, 0, 0, 0.05) 0px, rgba(0, 0, 0, 0.05) 1px, transparent 1px, transparent 1rem), linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 0px, rgba(0, 0, 0, 0.05) 1px, transparent 1px, transparent 1rem)
+  background-size 1rem 1rem, 1rem 1rem, 1rem 1rem, 1rem 1rem
+  background-position 0 0, 0 0, 0.5rem 0.5rem, 0.5rem 0.5rem
+  background-repeat repeat, repeat, repeat, repeat
 
 .filler
   height $bar + $barMargin
   width $bar
 
 .content
-  margin-left 2u
+  margin-left 1rem
 
   &.block
     flex-grow 1
@@ -52,7 +44,7 @@ grid(direction, color, size)
   &Text
     font-size 10px
     color $invalid
-    margin 0 .5u
+    margin 0 0.25rem
 
     &.valid
       color $valid
@@ -64,7 +56,7 @@ grid(direction, color, size)
 
   &Line
     flex 1
-    height 0.5u
+    height 0.25rem
     background-color $invalid
     &.valid
       height 1px
@@ -97,7 +89,7 @@ grid(direction, color, size)
 
   &Line
     flex 1
-    height 0.5u
+    height 0.25rem
     background-color $invalid
     &.valid
       height 1px

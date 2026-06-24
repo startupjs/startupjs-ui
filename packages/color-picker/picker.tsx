@@ -1,9 +1,8 @@
 import { useRef, useImperativeHandle, type ReactNode, type RefObject } from 'react'
 import { ColorPicker as RNColorPicker } from 'react-native-color-picker'
-import { pug, observer, $ } from 'startupjs'
+import { css, pug, observer, $ } from 'startupjs'
 import ScrollView from '@startupjs-ui/scroll-view'
 import Modal from '@startupjs-ui/modal'
-import './index.cssx.styl'
 
 interface PickerProps {
   onChangeColor?: (color: string) => void
@@ -43,3 +42,18 @@ function Picker ({
 }
 
 export default observer(Picker)
+
+css`
+  .content {
+    flex-grow: 1;
+    justify-content: center;
+  }
+
+  .picker {
+    /*
+      react-native-color-picker has unusual sizing and positioning logic.
+      Keep an explicit height until the upstream picker can size itself correctly.
+    */
+    height: var(--ColorPicker-picker-height);
+  }
+`

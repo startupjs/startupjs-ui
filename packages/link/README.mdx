@@ -3,7 +3,6 @@ import Br from '@startupjs-ui/br'
 import Button from '@startupjs-ui/button'
 import Div from '@startupjs-ui/div'
 import Rating from '@startupjs-ui/rating'
-import { u } from 'startupjs'
 import { Sandbox } from '@startupjs-ui/docs'
 
 # Link
@@ -46,7 +45,7 @@ return (
 
 ## Colors
 
-To change the link color, pass the `color` prop. This only applies when `display` is `'inline'`.
+To change the link color, pass a CSSX color token to the `color` prop. This only applies when `display` is `'inline'`.
 
 ```jsx example
 return (
@@ -89,7 +88,7 @@ You can change the hover style like in the [Div component](/docs/Div) by passing
 
 ```jsx example
 const style = {
-  height: u(10),
+  height: 80,
   backgroundColor: 'white',
   alignItems: 'center',
   justifyContent: 'center'
@@ -114,7 +113,7 @@ return (
   <Link
     to='/docs/Card'
   >
-    <Button color='primary' variant='flat'>Card</Button>
+    <Button>Card</Button>
   </Link>
 )
 ```
@@ -137,6 +136,26 @@ return (
   </Link>
 )
 ```
+
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
+
+### Parts
+
+| Part | Description |
+| --- | --- |
+| `root` | Root element. |
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--Link-color` | `var(--color-primary)` | Controls the color. |
+| `--Link-primary-color` | `var(--color-primary)` | Controls the primary color. |
+| `--Link-decoration-color` | `var(--Link-color)` | Controls the decoration color. |
+| `--Link-primary-decoration-color` | `var(--Link-primary-color)` | Controls the primary decoration color. |
 
 ## Sandbox
 

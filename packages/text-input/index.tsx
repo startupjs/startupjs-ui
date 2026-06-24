@@ -13,23 +13,10 @@ import {
   type ViewStyle,
   type TextInputProps
 } from 'react-native'
-import { pug, observer, useIsomorphicLayoutEffect } from 'startupjs'
-import { themed, useColors } from '@startupjs-ui/core'
+import { css, pug, observer, useCssVariable, useIsomorphicLayoutEffect, themed } from 'startupjs'
 import Div from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
 import Span from '@startupjs-ui/span'
-import STYLES from './index.cssx.styl'
-
-const {
-  config: {
-    caretColor,
-    iconColor,
-    borderWidth,
-    heights,
-    lineHeights,
-    paddings
-  }
-} = STYLES
 
 const IS_WEB = Platform.OS === 'web'
 const IS_ANDROID = Platform.OS === 'android'
@@ -37,9 +24,29 @@ const ICON_SIZES = {
   s: 'm',
   m: 'm',
   l: 'l'
+} as const
+const HEIGHT_FALLBACKS = {
+  s: 16,
+  m: 20,
+  l: 24
+}
+const PADDING_FALLBACKS = {
+  s: 4,
+  m: 6,
+  l: 8
 }
 
-export default observer(themed('TextInput', TextInput))
+function toNumber (value: unknown, fallback: number): number {
+  const number = Number(value)
+  return Number.isFinite(number) ? number : fallback
+}
+
+function toOptionalNumber (value: unknown): number | undefined {
+  const number = Number(value)
+  return Number.isFinite(number) ? number : undefined
+}
+
+export default themed('TextInput', observer(TextInput))
 
 export const _PropsJsonSchema = {/* TextInputProps */}
 
@@ -121,7 +128,13 @@ function TextInput ({
   const fallbackRef = useRef<any>(null)
   const inputRef = ref ?? fallbackRef
 
-  const getColor = useColors()
+  const caretColor = useCssVariable('--TextInput-caret-color', 'var(--TextInput-color)') as string
+  const resolvedIconColor = useCssVariable('--TextInput-icon-color', 'var(--color-muted-foreground)') as string
+  const placeholderTextColor = useCssVariable('--TextInput-placeholder-color', 'var(--color-muted-foreground)') as string
+  const borderWidth = toNumber(useCssVariable('--TextInput-border-width', 1), 1)
+  const inputHeight = toNumber(useCssVariable(`--TextInput-height-${size}`), HEIGHT_FALLBACKS[size])
+  const inputPadding = toNumber(useCssVariable(`--TextInput-padding-y-${size}`), PADDING_FALLBACKS[size])
+  const lineHeight = toOptionalNumber(useCssVariable(`--TextInput-line-height-${size}`))
 
   function handleFocus (...args: any[]) {
     onFocus && onFocus(...args)
@@ -181,13 +194,10 @@ function TextInput ({
   }, [resize, numberOfLines])
 
   const legacySizing = useMemo(() => {
-    const inputHeight = heights[size]
-    const lineHeight = lineHeights?.[size]
     if (typeof inputHeight !== 'number' || typeof lineHeight !== 'number') return
 
-    const inputBorderWidth = typeof borderWidth === 'number' ? borderWidth : 0
-    const verticalPadding = Math.max((inputHeight - lineHeight) / 2 - inputBorderWidth, 0)
-    const fullHeight = currentNumberOfLines * lineHeight + 2 * (verticalPadding + inputBorderWidth)
+    const verticalPadding = Math.max((inputHeight - lineHeight) / 2 - borderWidth, 0)
+    const fullHeight = currentNumberOfLines * lineHeight + 2 * (verticalPadding + borderWidth)
 
     return {
       fullHeight,
@@ -197,12 +207,12 @@ function TextInput ({
         paddingBottom: verticalPadding
       }
     }
-  }, [currentNumberOfLines, size])
+  }, [borderWidth, currentNumberOfLines, inputHeight, lineHeight])
 
   const fullHeight = useMemo(() => {
     if (legacySizing) return legacySizing.fullHeight
-    return currentNumberOfLines * (heights[size] as number) + (paddings[size] as number) * 2
-  }, [currentNumberOfLines, legacySizing, size])
+    return currentNumberOfLines * inputHeight + inputPadding * 2
+  }, [currentNumberOfLines, inputHeight, inputPadding, legacySizing])
 
   function onLayoutIcon (e: any) {
     if (IS_WEB) {
@@ -212,10 +222,9 @@ function TextInput ({
   }
 
   const inputExtraProps: Record<string, any> = {}
+  if (IS_WEB) inputExtraProps.disabled = disabled
   if (IS_ANDROID && multiline) inputExtraProps.textAlignVertical = 'top'
   const inputMinHeightStyle = legacySizing ? null : { minHeight: fullHeight }
-  const resolvedIconColor = getColor(iconColor) || iconColor
-
   const inputStyleName = [
     size,
     {
@@ -245,10 +254,9 @@ function TextInput ({
       style=[inputMinHeightStyle, legacySizing?.inputStyle, inputStyle]
       styleName=inputStyleName
       selectionColor=caretColor
-      placeholder=placeholder
-      placeholderTextColor=getColor('text-placeholder')
+      placeholder=placeholder == null ? undefined : String(placeholder)
+      placeholderTextColor=placeholderTextColor
       value=value
-      disabled=IS_WEB ? disabled : undefined
       editable=IS_WEB ? undefined : !disabled
       multiline=multiline
       selectTextOnFocus=false
@@ -291,3 +299,89 @@ function TextInput ({
 function getOppositePosition (position: 'left' | 'right') {
   return position === 'left' ? 'right' : 'left'
 }
+
+css`
+  .input-input {
+    margin: 0;
+    flex: 1;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: var(--TextInput-padding-x);
+    padding-right: var(--TextInput-padding-x);
+    color: var(--TextInput-color);
+    background-color: var(--TextInput-bg);
+    border-width: var(--TextInput-border-width);
+    border-style: solid;
+    border-color: var(--TextInput-border-color);
+    border-radius: var(--TextInput-radius);
+    min-width: var(--TextInput-min-width);
+    font-family: var(--font-sans);
+  }
+
+  .input-input.s {
+    padding-top: var(--TextInput-padding-y-s);
+    padding-bottom: var(--TextInput-padding-y-s);
+    font-size: var(--TextInput-font-size-s);
+    line-height: var(--TextInput-height-s);
+  }
+
+  .input-input.m {
+    padding-top: var(--TextInput-padding-y-m);
+    padding-bottom: var(--TextInput-padding-y-m);
+    font-size: var(--TextInput-font-size-m);
+    line-height: var(--TextInput-height-m);
+  }
+
+  .input-input.l {
+    padding-top: var(--TextInput-padding-y-l);
+    padding-bottom: var(--TextInput-padding-y-l);
+    font-size: var(--TextInput-font-size-l);
+    line-height: var(--TextInput-height-l);
+  }
+
+  .input-input.disabled {
+    background-color: var(--TextInput-bg-disabled);
+  }
+
+  .input-input.focused {
+    border-color: var(--TextInput-border-color-focused);
+  }
+
+  .input-input.error {
+    border-color: var(--TextInput-border-color-error);
+  }
+
+  .input-input.icon-left.s,
+  .input-input.icon-left.m {
+    padding-left: var(--TextInput-icon-padding-m);
+  }
+
+  .input-input.icon-right.s,
+  .input-input.icon-right.m {
+    padding-right: var(--TextInput-icon-padding-m);
+  }
+
+  .input-input.icon-left.l {
+    padding-left: var(--TextInput-icon-padding-l);
+  }
+
+  .input-input.icon-right.l {
+    padding-right: var(--TextInput-icon-padding-l);
+  }
+
+  .input-icon {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    justify-content: center;
+    z-index: 1;
+  }
+
+  .input-icon.left {
+    left: var(--TextInput-icon-offset);
+  }
+
+  .input-icon.right {
+    right: var(--TextInput-icon-offset);
+  }
+`

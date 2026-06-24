@@ -7,7 +7,6 @@ import Content from '@startupjs-ui/content'
 import Span from '@startupjs-ui/span'
 import { pug, $ } from 'startupjs'
 import { Sandbox } from '@startupjs-ui/docs'
-import './index.mdx.cssx.styl'
 
 # SmartSidebar
 
@@ -243,30 +242,42 @@ return (
 )
 ```
 
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
+
+### Parts
+
+This component does not expose named parts.
+
+### CSS variables
+
+This component does not expose component-specific CSS variables.
+
 ## Sandbox
 
 <Sandbox Component={SmartSidebar}
   props={{
     $open: $.session.Sandbox.SmartSidebar,
     renderContent: () => {
-      return pug`
-        Div.sidebar
-          Span Sidebar content
-      `
+      return <Div style={{ padding: 16, height: 160 }}><Span>Sidebar content</Span></Div>
     },
-    children: pug`
-      Div.content
-        Button.button(
-          onPress=() => {
+    children: (
+      <Div style={{ padding: 16, height: 160, backgroundColor: 'var(--color-background)' }}>
+        <Button
+          style={{ width: 80 }}
+          onPress={() => {
             const value = $.session.Sandbox.SmartSidebar.get()
             $.session.Sandbox.SmartSidebar.set(!value)
-          }
-        ) Toggle
-        Br
-        Span Children content
-    `
+          }}
+        >Toggle</Button>
+        <Br />
+        <Span>Children content</Span>
+      </Div>
+    )
   }}
   propsJsonSchema={SmartSidebarPropsJsonSchema}
-  rendererStyleName='renderer'
+  rendererStyle={{ overflow: 'hidden' }}
   block
 />

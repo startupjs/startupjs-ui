@@ -68,6 +68,32 @@ return (
 )
 ```
 
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
+
+### Parts
+
+| Part | Description |
+| --- | --- |
+| `root` | Root element. |
+| `filler` | Progress fill. |
+| `progress` | Progress track. |
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--Progress-width` | `0.25rem` | Controls the width. |
+| `--Progress-duration` | `300` | Controls the duration. |
+| `--Progress-track-bg` | `var(--color-muted)` | Controls the track background. |
+| `--Progress-filler-bg` | `var(--color-success)` | Controls the filler background. |
+| `--Progress-circular-size` | `2.5rem` | Controls the circular size. |
+| `--Progress-label-margin-top` | `2px` | Controls the label margin top. |
+| `--Progress-label-font-size` | `var(--text-xs)` | Controls the label font size. |
+| `--Progress-label-line-height` | `1rem` | Controls the label line height. |
+
 ## Sandbox
 
 <Sandbox Component={Progress} propsJsonSchema={ProgressPropsJsonSchema} block />

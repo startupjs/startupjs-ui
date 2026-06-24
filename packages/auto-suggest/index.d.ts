@@ -3,7 +3,6 @@
 
 import { type ReactNode } from 'react';
 import { type StyleProp, type TextStyle, type ViewStyle } from 'react-native';
-import './index.cssx.styl';
 interface AutoSuggestOptionObject {
     value?: any;
     label?: string | number;

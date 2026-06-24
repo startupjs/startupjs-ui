@@ -1,9 +1,9 @@
 import React from 'react'
 import { Platform } from 'react-native'
-import { pug, observer, $ } from 'startupjs'
+import { pug, observer, $, themed } from 'startupjs'
 import Span from '@startupjs-ui/span'
 import Tag from '@startupjs-ui/tag'
-import { themed } from '@startupjs-ui/core'
+
 import Div from '@startupjs-ui/div'
 import Table from './Table'
 import Tbody from './Tbody'
@@ -14,7 +14,7 @@ import TypeCell from './TypeCell'
 import ValueCell from './ValueCell'
 import './index.styl'
 
-export default observer(themed(function Constructor ({
+export default observer(themed('Constructor', function Constructor ({
   Component,
   extendedFrom,
   entries,
@@ -34,7 +34,7 @@ export default observer(themed(function Constructor ({
           )= name
           if isRequired
             Tag.required(
-              variant='outlined'
+              variant='outline'
               size='s'
               color='error'
               shape='rounded'

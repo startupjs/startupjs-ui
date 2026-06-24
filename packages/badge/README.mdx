@@ -9,7 +9,7 @@ import { Sandbox } from '@startupjs-ui/docs'
 
 Badges are small status descriptors that attach to UI elements, such as icons or buttons. They are commonly used to display counts (like unread messages) or to indicate a change in state.
 
-The component supports a `style` prop for custom styles on the root wrapper and a `badgeStyle` prop for custom styles on the badge indicator itself.
+The component supports `style`, `badgeStyle`, `labelStyle`, and `iconStyle` props for per-instance overrides. For app-wide customization, target `Badge`, `Badge:part(badge)`, `Badge:part(label)`, and `Badge:part(icon)` from provider styles.
 
 ```js
 import { Badge } from 'startupjs-ui'
@@ -64,7 +64,7 @@ return (
 
 ## Colors
 
-The default color is `'primary'`. You can change it by passing a color name from the theme configuration to the `color` prop. See the Sandbox section at the bottom of the page for all available values.
+The default color is `'primary'`. You can change it by passing a CSSX color token, such as `success`, `warning`, or `error`, to the `color` prop. Tokens resolve through variables like `--color-primary`.
 
 ```jsx example
 return (
@@ -114,6 +114,40 @@ return (
   </Badge>
 )
 ```
+
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
+
+### Parts
+
+| Part | Description |
+| --- | --- |
+| `root` | Root element. |
+| `badge` | Badge body. |
+| `icon` | Primary icon. |
+| `label` | Label text. |
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--Badge-size-s` | `1rem` | Controls the small size. |
+| `--Badge-size-m` | `1.25rem` | Controls the medium size. |
+| `--Badge-size-l` | `1.5rem` | Controls the large size. |
+| `--Badge-size-dot` | `0.5rem` | Controls the size dot. |
+| `--Badge-border-color` | `var(--color-background)` | Controls the border color. |
+| `--Badge-font-size-s` | `0.625rem` | Controls the small font size. |
+| `--Badge-line-height-s` | `0.75rem` | Controls the small line height. |
+| `--Badge-font-size-m` | `0.75rem` | Controls the medium font size. |
+| `--Badge-line-height-m` | `1rem` | Controls the medium line height. |
+| `--Badge-font-size-l` | `1rem` | Controls the large font size. |
+| `--Badge-line-height-l` | `1.25rem` | Controls the large line height. |
+| `--Badge-padding-x-s` | `calc(var(--spacing) * 1)` | Controls the small padding horizontal. |
+| `--Badge-padding-x-m` | `calc(var(--spacing) * 1)` | Controls the medium padding horizontal. |
+| `--Badge-padding-x-l` | `calc(var(--spacing) * 2)` | Controls the large padding horizontal. |
+| `--Badge-icon-gap` | `calc(var(--spacing) * 0.5)` | Controls the icon gap. |
 
 ## Sandbox
 

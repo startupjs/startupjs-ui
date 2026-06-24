@@ -5,10 +5,8 @@ import Button from '@startupjs-ui/button'
 import Br from '@startupjs-ui/br'
 import Content from '@startupjs-ui/content'
 import Span from '@startupjs-ui/span'
-import { $, pug } from 'startupjs'
-import { useMedia } from '@startupjs-ui/core'
+import { $, pug, useMedia } from 'startupjs'
 import { Sandbox } from '@startupjs-ui/docs'
-import './index.mdx.cssx.styl'
 
 # Sidebar
 
@@ -76,7 +74,7 @@ return (
     >
       <Div row>
         <Button
-          variant='flat'
+          variant='default'
           onPress={() => { $open.set(!$open.get()) }}
         >
           Toggle right sidebar
@@ -148,7 +146,7 @@ return (
       }}
     >
       <Div row>
-        <Button variant='flat' onPress={() => $open.set(!$open.get())}>
+        <Button onPress={() => $open.set(!$open.get())}>
           Toggle sidebar
         </Button>
       </Div>
@@ -169,6 +167,24 @@ return (
 - `width` -- sidebar width in density-independent pixels (default `264`)
 - `disabled` -- when `true`, forces the sidebar to stay closed regardless of the `$open` value (default `false`)
 
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
+
+### Parts
+
+| Part | Description |
+| --- | --- |
+| `root` | Root element. |
+| `content` | Content container. |
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--Sidebar-bg` | `var(--color-background)` | Controls the background. |
+
 ## Sandbox
 
 <Sandbox Component={Sidebar}
@@ -176,15 +192,12 @@ return (
     // TODO: $open is not working here probably because Sandbox doesn't accept model props correctly
     $open: $.session.Sandbox.Sidebar,
     renderContent: () => {
-      return pug`
-        Div.sidebar
-          Span Sidebar content
-      `
+      return <Div style={{ padding: 16, height: 160 }}><Span>Sidebar content</Span></Div>
     },
     children: (
-      <Div styleName='content'>
+      <Div style={{ padding: 16, height: 160, backgroundColor: 'var(--color-background)' }}>
         <Button
-          styleName='button'
+          style={{ width: 80 }}
           onPress={() => {
             console.log('Toggle sidebar')
             const value = $.session.Sandbox.Sidebar.get()

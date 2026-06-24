@@ -1,22 +1,17 @@
 import { Children, cloneElement, type ReactNode } from 'react'
 import { Linking, Platform, type StyleProp, type TextStyle, type ViewStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
+import { css, pug, observer, themed } from 'startupjs'
 import useRouter from 'startupjs/useRouter'
-import { themed } from '@startupjs-ui/core'
+
 import Button from '@startupjs-ui/button'
 import Div, { type DivProps } from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
-import STYLES from './index.cssx.styl'
 
 const isWeb = Platform.OS === 'web'
 const EXTERNAL_LINK_REGEXP = /^(https?:\/\/|\/\/|mailto:)/i
-const {
-  config: {
-    color: defaultColor
-  }
-} = STYLES
+const DEFAULT_COLOR = 'default'
 
-export default observer(themed('Link', Link))
+export default themed('Link', observer(Link))
 
 export const _PropsJsonSchema = {/* LinkProps */} // used in docs generation
 export interface LinkProps extends Omit<DivProps, 'style'> {
@@ -50,7 +45,7 @@ function Link ({
   style,
   to,
   href,
-  color = defaultColor,
+  color = DEFAULT_COLOR,
   theme,
   display,
   push,
@@ -73,7 +68,7 @@ function Link ({
   if (!resolvedDisplay) resolvedDisplay = typeof children === 'string' ? 'inline' : 'block'
 
   const isBlock = resolvedDisplay === 'block'
-  const Component = isBlock ? Div : Span
+  const Component: any = isBlock ? Div : Span
   const extraProps: Record<string, any> = { role: 'link', onPress: handlePress }
   const {
     navigate: routerNavigate,
@@ -149,6 +144,7 @@ function Link ({
 
   return pug`
     Component.root(
+      part='root'
       style=style
       styleName=[theme, color, resolvedDisplay]
       ...restProps
@@ -160,3 +156,21 @@ function Link ({
 function isModifiedEvent (event: any) {
   return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey)
 }
+
+css`
+  .root {
+    color: var(--Link-color);
+    text-decoration-line: underline;
+    text-decoration-color: var(--Link-decoration-color);
+  }
+
+  .root.primary {
+    color: var(--Link-primary-color);
+    text-decoration-color: var(--Link-primary-decoration-color);
+  }
+
+  .root.block {
+    display: flex;
+    text-decoration-line: none;
+  }
+`

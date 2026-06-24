@@ -198,6 +198,33 @@ return (
 )
 ```
 
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
+
+### Parts
+
+| Part | Description |
+| --- | --- |
+| `root` | Root element. |
+| `area` | Drawer area. |
+| `case` | Drawer content case. |
+| `overlay` | Overlay element. |
+| `responder` | Swipe responder area. |
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--Drawer-bg` | `var(--color-background)` | Controls the background. |
+| `--Drawer-overlay-bg` | `color-mix(in srgb, var(--color-foreground) 50%, transparent)` | Controls the overlay background. |
+| `--Drawer-shadow` | `var(--shadow-sm)` | Controls the shadow. |
+| `--Drawer-vertical-size` | `80%` | Controls the vertical size. |
+| `--Drawer-horizontal-size` | `80%` | Controls the horizontal size. |
+| `--Drawer-bottom-height` | `60%` | Controls the bottom height. |
+| `--Drawer-bottom-radius` | `1rem` | Controls the bottom radius. |
+
 ## Sandbox
 
 <Sandbox

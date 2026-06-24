@@ -2,8 +2,7 @@
 // DO NOT MODIFY THIS FILE - IT IS AUTOMATICALLY GENERATED ON COMMITS.
 
 import { type ReactNode } from 'react';
-import { type StyleProp, type ViewStyle } from 'react-native';
-import './index.cssx.styl';
+import { type StyleProp, type TextStyle, type ViewStyle } from 'react-native';
 declare const _default: import("react").ComponentType<BadgeProps>;
 export default _default;
 export declare const _PropsJsonSchema: {};
@@ -12,6 +11,10 @@ export interface BadgeProps {
     style?: StyleProp<ViewStyle>;
     /** Custom styles applied to the badge view */
     badgeStyle?: StyleProp<ViewStyle>;
+    /** Custom styles applied to the badge icon */
+    iconStyle?: StyleProp<TextStyle>;
+    /** Custom styles applied to the badge label */
+    labelStyle?: StyleProp<TextStyle>;
     /** Content rendered inside Badge */
     children?: ReactNode;
     /** Background color name @default 'primary' */

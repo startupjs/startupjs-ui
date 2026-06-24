@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Image } from 'react-native'
-import { u } from 'startupjs'
 import { Sandbox } from '@startupjs-ui/docs'
 import Span from '@startupjs-ui/span'
 import Collapse from '@startupjs-ui/collapse'
@@ -90,8 +89,8 @@ return (
 ## Complex interaction (integration with other components)
 
 ```jsx example
-const style = { maxWidth: u(50) }
-const imageStyle = { height: u(40), resizeMode: 'cover' }
+const style = { maxWidth: 400 }
+const imageStyle = { height: 320, resizeMode: 'cover' }
 const [collapsed, setCollapsed] = useState(false)
 return (
   <Card
@@ -111,7 +110,7 @@ return (
     <Div row align='between'>
       <Button
         onPress={() => setCollapsed(!collapsed)}
-        variant='flat'
+        variant='default'
       >
         Learn more
       </Button>
@@ -132,6 +131,28 @@ return (
   </Card>
 )
 ```
+
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
+
+### Parts
+
+| Part | Description |
+| --- | --- |
+| `root` | Root element. |
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--Card-padding` | `1rem` | Controls the padding. |
+| `--Card-radius` | `var(--radius-md)` | Controls the radius. |
+| `--Card-bg` | `var(--color-background)` | Controls the background. |
+| `--Card-outlined-bg` | `var(--color-background)` | Controls the outlined background. |
+| `--Card-border-width` | `1px` | Controls the border width. |
+| `--Card-border-color` | `var(--color-border)` | Controls the border color. |
 
 ## Sandbox
 

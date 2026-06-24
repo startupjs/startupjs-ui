@@ -9,7 +9,6 @@
   "type": "module",
   "dependencies": {
     "@startupjs-ui/abstract-popover": "^0.3.0",
-    "@startupjs-ui/core": "^0.3.0",
     "@startupjs-ui/div": "^0.3.7"
   },
   "peerDependencies": {

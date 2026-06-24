@@ -12,7 +12,7 @@ export default createPlugin({
   enabled: true,
   order: 'system ui',
   client: ({ routerPortal = false, ...props } = {}) => ({
-    renderRoot ({ children }) {
+    renderRoot ({ children, style, theme }) {
       if (!hasCustomElementsInitialized) {
         hasCustomElementsInitialized = true
         const mergePlugins = (hookName, errorMessage, setFunction) => {
@@ -30,7 +30,12 @@ export default createPlugin({
         mergePlugins('customIcons', ERRORS.iconAlreadyDefined, setCustomIcons)
         mergePlugins('customInputs', ERRORS.inputAlreadyDefined, setCustomInputs)
       }
-      return el(UiProvider, props, children)
+      const providerStyle = props.style == null ? style : [props.style, style]
+      return el(UiProvider, {
+        ...props,
+        style: providerStyle,
+        theme: theme ?? props.theme
+      }, children)
     },
     renderRouter ({ children }) {
       if (!routerPortal) return children

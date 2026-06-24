@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useRef, type ReactNode } from 'react'
 import { View, StyleSheet, Platform, type StyleProp, type ViewStyle } from 'react-native'
 import { State, PanGestureHandler } from 'react-native-gesture-handler'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, themed, useCssVariable } from 'startupjs'
+
 import Portal from '@startupjs-ui/portal'
 import { DragDropContext } from '../DragDropProvider'
-import '../index.cssx.styl'
 
 export const _PropsJsonSchema = {/* DraggableProps */}
 
@@ -50,6 +49,9 @@ function Draggable ({
 }: DraggableProps): ReactNode {
   const ref = useRef<any>(null)
   const $dndContext = useContext(DragDropContext)
+  const placeholderBg = useCssVariable('--Draggable-placeholder-bg', 'var(--color-muted)')
+  const placeholderRadius = Number(useCssVariable('--Draggable-placeholder-radius', 4)) || 4
+  const placeholderMinHeight = Number(useCssVariable('--Draggable-placeholder-min-height', 32)) || 32
 
   useEffect(() => {
     if (!$dndContext) return
@@ -315,9 +317,9 @@ function Draggable ({
 
   const placeholderStyle: ViewStyle = {
     ...flatStyle,
-    backgroundColor: 'var(--color-bg-main-subtle-alt, #e5e7eb)' as any,
-    minHeight: 32,
-    borderRadius: flatStyle.borderRadius ?? 4,
+    backgroundColor: placeholderBg as any,
+    minHeight: placeholderMinHeight,
+    borderRadius: flatStyle.borderRadius ?? placeholderRadius,
     ...(typeof phHeight === 'number' && phHeight > 0 && { height: phHeight }),
     ...(typeof phWidth === 'number' && phWidth > 0 && { width: phWidth })
   }
@@ -342,4 +344,4 @@ function Draggable ({
   `
 }
 
-export default observer(themed('Draggable', Draggable), { cache: false })
+export default themed('Draggable', observer(Draggable, { cache: false }))

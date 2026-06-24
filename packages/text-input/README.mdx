@@ -5,7 +5,6 @@ import Br from '@startupjs-ui/br'
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { Sandbox } from '@startupjs-ui/docs'
-import './index.mdx.cssx.styl'
 
 # TextInput
 
@@ -91,12 +90,6 @@ return (
 
 An icon can be added using the `icon` prop, and a secondary icon using `secondaryIcon`. The primary icon's position is controlled by `iconPosition` (`'left'` by default), and the secondary icon is placed on the opposite side. Use `onIconPress` and `onSecondaryIconPress` to handle clicks on the icons. To customize icon styles, use the `iconStyle` and `secondaryIconStyle` props.
 
-In `.styl` file
-```stylus
-.icon
-  color var(--color-text-primary)
-```
-
 ```jsx example
 const [valueLeft, setLeftValue] = useState()
 const [valueRight, setRightValue] = useState()
@@ -105,7 +98,7 @@ return (
     <TextInput
       icon={faSearch}
       secondaryIcon={faTimesCircle}
-      secondaryIconStyleName='icon'
+      secondaryIconStyle={{ color: '#2563eb' }}
       value={valueLeft}
       onChangeText={setLeftValue}
       onSecondaryIconPress={() => setLeftValue()}
@@ -122,14 +115,6 @@ return (
 )
 ```
 
-## Custom styles and theme configuration
-
-Use `style` for the wrapper, `inputStyle` for the underlying input element, `iconStyle` for the primary icon, and `secondaryIconStyle` for the secondary icon.
-
-TextInput also exposes CSSX theme configuration for app-wide visual tuning:
-
-- **$UI.TextInput.iconColor** -- default icon color. It uses `var(--color-text-secondary)` by default.
-- **$UI.TextInput.lineHeights** -- optional per-size line heights. When both `heights[size]` and `lineHeights[size]` are numeric, TextInput uses them to calculate vertical padding and multiline height.
 
 ## Number of lines
 
@@ -164,6 +149,57 @@ return (
   />
 )
 ```
+
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
+
+### Parts
+
+| Part | Description |
+| --- | --- |
+| `icon` | Primary icon. |
+| `input` | Input control. |
+| `inputIconLeft` | Styles the input Icon Left part. |
+| `inputIconRight` | Styles the input Icon Right part. |
+| `left` | Styles the left part. |
+| `right` | Styles the right part. |
+| `secondaryIcon` | Secondary icon. |
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--TextInput-text-color` | `var(--color-foreground)` | Controls the text color. |
+| `--TextInput-color` | `var(--color-foreground)` | Controls the color. |
+| `--TextInput-caret-color` | `var(--TextInput-color)` | Controls the caret color. |
+| `--TextInput-icon-color` | `var(--color-muted-foreground)` | Controls the icon color. |
+| `--TextInput-placeholder-color` | `var(--color-muted-foreground)` | Controls the placeholder color. |
+| `--TextInput-bg` | `var(--color-background)` | Controls the background. |
+| `--TextInput-bg-disabled` | `var(--color-muted)` | Controls the background disabled. |
+| `--TextInput-border-color` | `var(--color-border)` | Controls the border color. |
+| `--TextInput-border-color-focused` | `var(--color-primary)` | Controls the border color focused. |
+| `--TextInput-border-color-error` | `var(--color-error)` | Controls the border color error. |
+| `--TextInput-border-width` | `1px` | Controls the border width. |
+| `--TextInput-radius` | `var(--radius-md)` | Controls the radius. |
+| `--TextInput-min-width` | `4rem` | Controls the min width. |
+| `--TextInput-padding-x` | `calc(var(--spacing) * 2)` | Controls the horizontal padding. |
+| `--TextInput-padding-y-s` | `calc(var(--spacing) * 1)` | Controls the small padding vertical. |
+| `--TextInput-padding-y-m` | `calc(var(--spacing) * 1.5)` | Controls the medium padding vertical. |
+| `--TextInput-padding-y-l` | `calc(var(--spacing) * 2)` | Controls the large padding vertical. |
+| `--TextInput-height-s` | `1rem` | Controls the small height. |
+| `--TextInput-height-m` | `1.25rem` | Controls the medium height. |
+| `--TextInput-height-l` | `1.5rem` | Controls the large height. |
+| `--TextInput-font-size-s` | `var(--text-sm)` | Controls the small font size. |
+| `--TextInput-font-size-m` | `var(--text-sm)` | Controls the medium font size. |
+| `--TextInput-font-size-l` | `var(--text-base)` | Controls the large font size. |
+| `--TextInput-line-height-s` | `initial` | Controls the small line height. |
+| `--TextInput-line-height-m` | `initial` | Controls the medium line height. |
+| `--TextInput-line-height-l` | `initial` | Controls the large line height. |
+| `--TextInput-icon-padding-m` | `2rem` | Controls the medium icon padding. |
+| `--TextInput-icon-padding-l` | `2.5rem` | Controls the large icon padding. |
+| `--TextInput-icon-offset` | `calc(var(--spacing) * 2)` | Controls the icon offset. |
 
 ## Sandbox
 

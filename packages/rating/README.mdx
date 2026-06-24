@@ -51,6 +51,27 @@ return(
 - **readonly** -- disables interaction and shows a compact numeric display (default `false`)
 - **style** -- custom styles for the root container
 
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
+
+### Parts
+
+| Part | Description |
+| --- | --- |
+| `root` | Root element. |
+| `star` | Rating star. |
+| `value` | Displayed value. |
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--Rating-gap` | `0.5rem` | Controls the gap. |
+| `--Rating-star-color` | `var(--color-muted-foreground)` | Controls the star color. |
+| `--Rating-star-active-color` | `var(--color-warning)` | Controls the star active color. |
+
 ## Sandbox
 
 <Sandbox

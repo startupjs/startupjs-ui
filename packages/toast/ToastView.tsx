@@ -1,17 +1,16 @@
 import { useCallback, useEffect, useState, type ReactNode } from 'react'
 import { Animated } from 'react-native'
-import { pug, observer } from 'startupjs'
+import { css, pug, observer, themed } from 'startupjs'
 import Button from '@startupjs-ui/button'
 import Div from '@startupjs-ui/div'
 import Icon, { type IconProps } from '@startupjs-ui/icon'
 import Span from '@startupjs-ui/span'
-import { themed } from '@startupjs-ui/core'
+
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle'
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle'
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle'
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
-import './index.cssx.styl'
 
 const DURATION_OPEN = 300
 const DURATION_CLOSE = 150
@@ -33,6 +32,8 @@ const TITLES = {
 export const _PropsJsonSchema = {/* ToastProps */}
 
 export interface ToastProps {
+  /** Stable key used by ToastProvider when rendering the active toast list */
+  key?: string | number
   /** Visual style variant @default 'info' */
   type?: 'info' | 'error' | 'warning' | 'success'
   /** Y offset used to stack multiple toasts */
@@ -101,6 +102,7 @@ function Toast ({
 
   return pug`
     Animated.View.root(
+      part='root'
       style={
         opacity: showAnimation,
         right: showAnimation.interpolate({
@@ -112,24 +114,26 @@ function Toast ({
       onLayout=e => onLayout(e.nativeEvent.layout)
       testID=testID
     )
-      Div.toast(styleName=[type])
-        Div.header(vAlign='center' row)
-          Div(vAlign='center' row)
+      Div.toast(part='toast' styleName=[type])
+        Div.header(part='header' vAlign='center' row)
+          Div(part='titleWrapper' vAlign='center' row)
             Icon.icon(
+              part='icon'
               icon=icon ?? ICONS[type]
               styleName=[type]
             )
-            Span.title(styleName=[type])
+            Span.title(part='title' styleName=[type])
               = title ? title : TITLES[type]
-          Div(onPress=onHide)
-            Icon(icon=faTimes)
+          Div(part='close' onPress=onHide)
+            Icon(part='closeIcon' icon=faTimes)
 
         if text
-          Span.text= text
+          Span.text(part='text')= text
 
         if onAction
-          Div.actions(row)
+          Div.actions(part='actions' row)
             Button(
+              part='action'
               size='s'
               onPress=() => {
                 onAction()
@@ -139,4 +143,83 @@ function Toast ({
   `
 }
 
-export default observer(themed('Toast', Toast))
+export default themed('Toast', observer(Toast))
+
+css`
+  .root {
+    position: absolute;
+    width: 100%;
+  }
+
+  @media (--breakpoint-tablet) {
+    .root {
+      max-width: var(--Toast-max-width);
+      min-width: var(--Toast-min-width);
+      padding-right: var(--Toast-screen-padding);
+      padding-top: var(--Toast-screen-padding);
+    }
+  }
+
+  .toast {
+    padding: var(--Toast-padding);
+    justify-content: center;
+    border-radius: var(--Toast-radius);
+    background-color: var(--Toast-bg);
+    border-top-width: var(--Toast-border-width);
+    border-top-style: solid;
+    box-shadow: var(--Toast-shadow);
+  }
+
+  .toast.info {
+    border-top-color: var(--Toast-info-color);
+  }
+
+  .toast.error {
+    border-top-color: var(--Toast-error-color);
+  }
+
+  .toast.warning {
+    border-top-color: var(--Toast-warning-color);
+  }
+
+  .toast.success {
+    border-top-color: var(--Toast-success-color);
+  }
+
+  .header {
+    justify-content: space-between;
+  }
+
+  .text {
+    margin-top: var(--Toast-text-gap);
+  }
+
+  .title {
+    margin-left: var(--Toast-title-gap);
+  }
+
+  .title.info,
+  .icon.info {
+    color: var(--Toast-info-color);
+  }
+
+  .title.error,
+  .icon.error {
+    color: var(--Toast-error-color);
+  }
+
+  .title.warning,
+  .icon.warning {
+    color: var(--Toast-warning-color);
+  }
+
+  .title.success,
+  .icon.success {
+    color: var(--Toast-success-color);
+  }
+
+  .actions {
+    margin-top: var(--Toast-actions-gap);
+    justify-content: flex-end;
+  }
+`

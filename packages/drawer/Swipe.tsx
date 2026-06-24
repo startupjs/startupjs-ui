@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { PanResponder, View, StyleSheet, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
-import './index.cssx.styl'
+import { css, pug, observer, themed } from 'startupjs'
+
 import type { DrawerAnimateStates } from './animate'
 
 const RESPONDER_STYLES = {
@@ -103,8 +102,14 @@ function Swipe ({
   ])
 
   return pug`
-    View.responder(..._responder.panHandlers style=_responderStyle)
+    View.responder(part='responder' ..._responder.panHandlers style=_responderStyle)
   `
 }
 
-export default observer(themed('Drawer', Swipe))
+export default themed('Drawer', observer(Swipe))
+
+css`
+  .responder {
+    position: absolute;
+  }
+`

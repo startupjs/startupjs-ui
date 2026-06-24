@@ -8,7 +8,6 @@
   "types": "index.d.ts",
   "type": "module",
   "dependencies": {
-    "@startupjs-ui/core": "^0.3.0",
     "@startupjs-ui/div": "^0.3.7",
     "@startupjs-ui/react-native-multi-slider": "^2.2.2",
     "@startupjs-ui/span": "^0.3.4"

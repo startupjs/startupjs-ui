@@ -1,12 +1,11 @@
 import { type ReactNode } from 'react'
 import { Text, View, TouchableOpacity, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
+import { css, pug, observer, themed } from 'startupjs'
 import Icon from '@startupjs-ui/icon'
 import Menu from '@startupjs-ui/menu'
 import Link from '@startupjs-ui/link'
-import { themed } from '@startupjs-ui/core'
+
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
-import './index.cssx.styl'
 
 export interface DropdownItemProps {
   /** Custom styles applied to the wrapper */
@@ -105,7 +104,7 @@ function DropdownItem ({
     )
       View.item(
         style=(!isPure && _activeValue === value) ? _styleActiveItem : undefined
-        styleName=[!isPure && _variant, {
+        styleName=[!isPure ? _variant : undefined, {
           active: !isPure && (_activeValue === value),
           itemUp: !isPure && (_index === 0),
           itemDown: !isPure && (_index === (_childrenLength || 0) - 1),
@@ -122,4 +121,61 @@ function DropdownItem ({
   `
 }
 
-export default observer(themed('DropdownItem', DropdownItem))
+export default themed('DropdownItem', observer(DropdownItem))
+
+css`
+  .item.list {
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom-width: var(--DropdownItem-border-width);
+    border-bottom-color: var(--DropdownItem-border-color);
+  }
+
+  .item.buttons {
+    justify-content: center;
+    align-items: center;
+    height: var(--DropdownItem-buttons-height);
+    border-bottom-width: var(--DropdownItem-border-width);
+    border-bottom-color: var(--DropdownItem-border-color);
+  }
+
+  .item.popover {
+    padding: var(--DropdownItem-popover-padding);
+  }
+
+  .item.itemDown {
+    border-bottom-width: 0;
+  }
+
+  .itemText.list {
+    padding: var(--DropdownItem-text-padding);
+  }
+
+  .itemText.buttons {
+    padding: var(--DropdownItem-text-padding);
+  }
+
+  .itemText.active {
+    color: var(--DropdownItem-active-color);
+  }
+
+  .iconActive.list {
+    position: absolute;
+    top: var(--DropdownItem-icon-top);
+    right: var(--DropdownItem-icon-inset);
+    width: var(--DropdownItem-icon-size);
+    height: var(--DropdownItem-icon-size);
+  }
+
+  .iconActive.buttons {
+    position: absolute;
+    top: var(--DropdownItem-icon-top);
+    left: var(--DropdownItem-icon-inset);
+    width: var(--DropdownItem-icon-size);
+    height: var(--DropdownItem-icon-size);
+  }
+
+  .selectMenu {
+    background-color: var(--DropdownItem-selected-bg);
+  }
+`

@@ -7,7 +7,6 @@ import Menu from '@startupjs-ui/menu'
 import Span from '@startupjs-ui/span'
 import { $ } from 'startupjs'
 import { Sandbox } from '@startupjs-ui/docs'
-import './index.mdx.cssx.styl'
 
 # DrawerSidebar
 
@@ -147,6 +146,23 @@ return (
 )
 ```
 
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
+
+### Parts
+
+| Part | Description |
+| --- | --- |
+| `root` | Root element. |
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--DrawerSidebar-bg` | `var(--color-background)` | Controls the background. |
+
 ## Sandbox
 
 <Sandbox
@@ -154,12 +170,12 @@ return (
   props={{
     $open: $.session.Sandbox.DrawerSidebar,
     renderContent: () => (
-      <Div styleName='sidebar'>
+      <Div style={{ padding: 16 }}>
         <Span>Sidebar content</Span>
       </Div>
     ),
     children: (
-      <Div styleName='content'>
+      <Div style={{ padding: 16, height: 160 }}>
         <Button
           onPress={()=> {
             const value = $.session.Sandbox.DrawerSidebar.get()
@@ -171,7 +187,7 @@ return (
       </Div>
     )
   }}
-  rendererStyleName='renderer'
+  rendererStyle={{ overflow: 'hidden' }}
   block
   propsJsonSchema={DrawerSidebarPropsJsonSchema}
 />

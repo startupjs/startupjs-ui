@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode, type RefObject } from 'react'
 import { Platform, Text } from 'react-native'
-import { pug, styl, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { css, pug, observer, themed } from 'startupjs'
+
 import Div from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
 import Span from '@startupjs-ui/span'
@@ -282,76 +282,84 @@ export default function wrapInput (Component: any, configuration: InputWrapperCo
   return ObservedInputWrapper
 }
 
-styl`
-  $errorColor = var(--color-text-error)
-  $focusedColor = var(--color-text-primary)
+css`
+  .label {
+    color: var(--InputWrapper-label-color);
+    align-self: flex-start;
+    font-size: var(--InputWrapper-label-font-size);
+    line-height: var(--InputWrapper-label-line-height);
+  }
 
-  // common
-  .label
-    color var(--InputWrapper-label-color)
-    align-self flex-start
-    font(body2)
+  .label.focused {
+    color: var(--InputWrapper-focused-color);
+  }
 
-    &.focused
-      color $focusedColor
+  .label.error {
+    color: var(--InputWrapper-error-color);
+  }
 
-    &.error
-      color $errorColor
+  .description {
+    font-size: var(--InputWrapper-description-font-size);
+    line-height: var(--InputWrapper-description-line-height);
+  }
 
-  .description
-    font(caption)
+  .required {
+    color: var(--InputWrapper-error-color);
+    font-weight: var(--font-weight-bold);
+  }
 
-  .required
-    color $errorColor
-    font-weight bold
+  .errorContainer {
+    margin-top: var(--InputWrapper-error-margin-top);
+    margin-bottom: var(--InputWrapper-error-margin-bottom);
+  }
 
-  .errorContainer
-    margin-top 1u
-    margin-bottom 0.5u
+  .errorContainer-icon {
+    color: var(--InputWrapper-error-color);
+  }
 
-    &-icon
-      color $errorColor
+  .errorContainer-text {
+    font-size: var(--InputWrapper-description-font-size);
+    line-height: var(--InputWrapper-description-line-height);
+    margin-left: var(--InputWrapper-error-text-gap);
+    color: var(--InputWrapper-error-color);
+  }
 
-    &-text
-      font(caption)
-      margin-left 0.5u
-      color $errorColor
+  .label.rows-top {
+    margin-bottom: var(--InputWrapper-label-gap);
+  }
 
-  // rows
-  .rows
-    &-top
-      .label&
-        margin-bottom 0.5u
+  .description.rows-top {
+    margin-bottom: var(--InputWrapper-description-gap);
+  }
 
-      .description&
-        margin-bottom 1u
+  .errorContainer.rows-top {
+    margin-top: 0;
+    margin-bottom: var(--InputWrapper-description-gap);
+  }
 
-      .errorContainer&
-        margin-top 0
-        margin-bottom 1u
+  .label.rows-right {
+    margin-left: var(--InputWrapper-label-gap-inline);
+  }
 
-    &-right
-      .label&
-        margin-left 1u
+  .description.rows-bottom {
+    margin-top: var(--InputWrapper-label-gap);
+  }
 
-    &-bottom
-      .description&
-        margin-top 0.5u
+  .leftBlock,
+  .rightBlock {
+    flex: 1;
+  }
 
-  // columns
-  .leftBlock
-  .rightBlock
-    flex 1
+  .leftBlock {
+    margin-right: var(--InputWrapper-column-gap);
+  }
 
-  .leftBlock
-    margin-right 1.5u
+  .rightBlock {
+    margin-left: var(--InputWrapper-column-gap);
+  }
 
-  .rightBlock
-    margin-left 1.5u
-
-  .columns
-    .root&
-      flex-direction row
-      align-items center
-
+  .root.columns {
+    flex-direction: row;
+    align-items: center;
+  }
 `

@@ -1,12 +1,11 @@
 import { type ReactNode } from 'react'
-import { pug, observer } from 'startupjs'
+import { css, pug, observer, themed } from 'startupjs'
 import Div from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
 import Icon from '@startupjs-ui/icon'
 import Button from '@startupjs-ui/button'
-import { themed } from '@startupjs-ui/core'
+
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons/faAngleDown'
-import './index.cssx.styl'
 
 export interface DropdownCaptionProps {
   /** Caption content (used when `variant='custom'`) */
@@ -30,7 +29,7 @@ function DropdownCaption ({
   if (variant === 'button') {
     return pug`
       Button(
-        variant='flat'
+        variant='default'
         color='primary'
         pointerEvents='box-none'
       )= placeholder
@@ -45,4 +44,28 @@ function DropdownCaption ({
   `
 }
 
-export default observer(themed('DropdownCaption', DropdownCaption))
+export default themed('DropdownCaption', observer(DropdownCaption))
+
+css`
+  .select {
+    background-color: var(--DropdownCaption-bg);
+    height: var(--DropdownCaption-height);
+    border-radius: var(--DropdownCaption-radius);
+    border-style: solid;
+    border-width: var(--DropdownCaption-border-width);
+    border-color: var(--DropdownCaption-border-color);
+    padding-left: var(--DropdownCaption-padding-x);
+    padding-right: var(--DropdownCaption-padding-x);
+    align-items: center;
+    justify-content: space-between;
+    min-width: var(--DropdownCaption-min-width);
+  }
+
+  .placeholder {
+    color: var(--DropdownCaption-placeholder-color);
+  }
+
+  .active {
+    color: var(--DropdownCaption-active-color);
+  }
+`

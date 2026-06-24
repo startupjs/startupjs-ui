@@ -4,7 +4,6 @@
 import { type ReactNode } from 'react';
 import { type GestureResponderEvent, type StyleProp, type TextStyle, type ViewStyle } from 'react-native';
 import { type DivProps } from '@startupjs-ui/div';
-import './index.cssx.styl';
 declare const _default: import("react").ComponentType<TagProps>;
 export default _default;
 export declare const _PropsJsonSchema: {};

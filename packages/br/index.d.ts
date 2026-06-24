@@ -2,7 +2,6 @@
 // DO NOT MODIFY THIS FILE - IT IS AUTOMATICALLY GENERATED ON COMMITS.
 
 import { type StyleProp, type TextStyle } from 'react-native';
-import './index.cssx.styl';
 export declare const _PropsJsonSchema: {};
 export interface BrProps {
     /** Custom styles applied to the spacer */

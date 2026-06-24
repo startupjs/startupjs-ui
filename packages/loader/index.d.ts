@@ -6,7 +6,7 @@ declare const _default: import("react").ComponentType<LoaderProps>;
 export default _default;
 export declare const _PropsJsonSchema: {};
 export interface LoaderProps extends Omit<ActivityIndicatorProps, 'size' | 'color' | 'children'> {
-    /** Color token defined in Colors @default 'text-description' */
+    /** Color token or raw color @default 'muted-foreground' */
     color?: string;
     /** Component size @default 'm' */
     size?: 's' | 'm';

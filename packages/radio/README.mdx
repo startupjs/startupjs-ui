@@ -110,6 +110,44 @@ return (
 - `row` -- when `true`, renders the options horizontally in a row (default `false`)
 - `onChange` -- callback invoked with the selected option's value when the user makes a selection
 
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
+
+### Parts
+
+| Part | Description |
+| --- | --- |
+| `root` | Root element. |
+| `circle` | Inner circle. |
+| `content` | Content container. |
+| `control` | Interactive control. |
+| `description` | Description text. |
+| `input` | Input control. |
+| `label` | Label text. |
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--Radio-option-row-gap` | `1rem` | Controls the option row gap. |
+| `--Radio-input-padding-y` | `0.5rem` | Controls the vertical input padding. |
+| `--Radio-size` | `1rem` | Controls the size. |
+| `--Radio-border-width` | `2px` | Controls the border width. |
+| `--Radio-border-color` | `var(--color-border)` | Controls the border color. |
+| `--Radio-radius` | `9999px` | Controls the radius. |
+| `--Radio-checked-border-color` | `var(--color-primary)` | Controls the checked border color. |
+| `--Radio-error-border-color` | `var(--color-destructive)` | Controls the error border color. |
+| `--Radio-circle-size` | `0.5rem` | Controls the circle size. |
+| `--Radio-circle-radius` | `9999px` | Controls the circle radius. |
+| `--Radio-circle-bg` | `var(--color-primary)` | Controls the circle background. |
+| `--Radio-circle-bg-error` | `var(--color-destructive)` | Controls the circle background error. |
+| `--Radio-label-gap` | `0.5rem` | Controls the label gap. |
+| `--Radio-description-font-size` | `var(--text-xs)` | Controls the description font size. |
+| `--Radio-description-line-height` | `1rem` | Controls the description line height. |
+| `--Radio-description-color` | `var(--color-muted-foreground)` | Controls the description color. |
+
 ## Sandbox
 
 <Sandbox

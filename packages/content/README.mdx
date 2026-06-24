@@ -1,10 +1,8 @@
-import { u } from 'startupjs'
 import { Sandbox } from '@startupjs-ui/docs'
 import Content, { _PropsJsonSchema as ContentPropsJsonSchema } from './index'
 import Br from '@startupjs-ui/br'
 import Div from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
-import './index.mdx.cssx.styl'
 
 # Content
 
@@ -25,7 +23,7 @@ const contentStyle = {
   backgroundColor: '#2962FF'
 }
 const divStyle = {
-  height: u(25),
+  height: 200,
   backgroundColor: '#00AED6',
   alignItems: 'center',
   justifyContent: 'center'
@@ -50,7 +48,7 @@ const contentStyle = {
   backgroundColor: '#2962FF'
 }
 const divStyle = {
-  height: u(25),
+  height: 200,
   backgroundColor: '#00AED6',
   alignItems: 'center',
   justifyContent: 'center'
@@ -73,7 +71,7 @@ const contentStyle = {
   backgroundColor: '#2962FF'
 }
 const divStyle = {
-  height: u(25),
+  height: 200,
   backgroundColor: '#00AED6',
   alignItems: 'center',
   justifyContent: 'center'
@@ -93,7 +91,7 @@ The `full` prop makes the Content expand to fill all available space along the p
 
 ```jsx example
 const divStyle = {
-  height: u(25),
+  height: 200,
   backgroundColor: '#2962FF'
 }
 const contentStyle = {
@@ -122,14 +120,14 @@ return (
 
 By default, Content limits its max-width to `768px` (the `'tablet'` preset). Since the layout is mobile-first, you can scale up to larger screens using the `width` prop. The available presets are: `'mobile'`, `'tablet'` (default), `'desktop'`, `'wide'`, and `'full'`. See the Sandbox section below to try each one.
 
-You can also change the default width for all Content components app-wide by overriding `$UI.Content.defaultWidth` in your styles. **Changing the default width is an advanced setting that affects your entire app -- use with caution.**
+You can also tune the width presets app-wide by overriding `--Content-width-mobile`, `--Content-width-tablet`, `--Content-width-desktop`, or `--Content-width-wide` in your provider style.
 
 ```jsx example
 const contentStyle = {
   backgroundColor: '#2962FF'
 }
 const divStyle = {
-  height: u(25),
+  height: 200,
   backgroundColor: '#00AED6',
   alignItems: 'center',
   justifyContent: 'center'
@@ -178,15 +176,36 @@ return (
 )
 ```
 
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
+
+### Parts
+
+| Part | Description |
+| --- | --- |
+| `root` | Root element. |
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--Content-gutter` | `calc(var(--spacing) * 4)` | Controls the gutter. |
+| `--Content-width-mobile` | `var(--breakpoint-sm)` | Controls the width mobile. |
+| `--Content-width-tablet` | `var(--breakpoint-md)` | Controls the width tablet. |
+| `--Content-width-desktop` | `var(--breakpoint-lg)` | Controls the width desktop. |
+| `--Content-width-wide` | `var(--breakpoint-xl)` | Controls the width wide. |
+
 ## Sandbox
 
 <Sandbox
   Component={Content}
   props={{
     style: { backgroundColor: '#2962FF' },
-    children: <Div styleName='child' />,
+    children: <Div style={{ height: 120, backgroundColor: '#00AED6' }} />,
   }}
   propsJsonSchema={ContentPropsJsonSchema}
-  rendererStyleName='renderer'
+  rendererStyle={{ height: 200 }}
   block
 />

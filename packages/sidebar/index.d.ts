@@ -3,7 +3,6 @@
 
 import { type ReactNode } from 'react';
 import { type StyleProp, type ViewStyle } from 'react-native';
-import './index.cssx.styl';
 declare const _default: import("react").ComponentType<SidebarProps>;
 export default _default;
 export declare const _PropsJsonSchema: {};

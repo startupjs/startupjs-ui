@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, themed } from 'startupjs'
+
 import Div, { type DivProps } from '@startupjs-ui/div'
 
 export const _PropsJsonSchema = {/* TrProps */} // used in docs generation
@@ -16,6 +16,7 @@ export interface TrProps extends DivProps {
 function Tr ({ style, children, ...props }: TrProps): ReactNode {
   return pug`
     Div(
+      part='root'
       ...props
       style=style
       row
@@ -23,4 +24,4 @@ function Tr ({ style, children, ...props }: TrProps): ReactNode {
   `
 }
 
-export default observer(themed('Tr', Tr))
+export default themed('Tr', observer(Tr))

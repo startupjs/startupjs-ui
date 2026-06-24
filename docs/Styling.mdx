@@ -1,0 +1,211 @@
+# Styling and theming
+
+StartupJS UI is styled through CSSX. The UI package provides default theme layers, and your app customizes them by passing CSSX styles to `StartupjsProvider`.
+
+```jsx
+import { css, StartupjsProvider } from 'startupjs'
+
+const appStyle = css`
+  :root {
+    --primary: oklch(0.58 0.22 260);
+    --color-primary: var(--primary);
+    --Button-radius: 9999px;
+  }
+
+  Button {
+    min-width: 10rem;
+  }
+
+  Button:part(text) {
+    font-weight: var(--font-weight-semibold);
+  }
+`
+
+export default function RootLayout ({ children }) {
+  return (
+    <StartupjsProvider style={appStyle}>
+      {children}
+    </StartupjsProvider>
+  )
+}
+```
+
+## Theme layers
+
+When `startupjs-ui` is installed, its plugin adds the UI provider inside `StartupjsProvider`. The effective style order is:
+
+1. CSSX Tailwind token theme
+2. CSSX shadcn semantic theme
+3. StartupJS UI component token theme
+4. your `StartupjsProvider style`
+5. component-local styles
+6. per-instance `style` and `*Style` props
+
+Bare StartupJS does not include UI themes unless `startupjs-ui` is installed.
+
+## Override order
+
+Prefer customization in this order:
+
+1. Change CSS variables in `:root`.
+2. Use component tag selectors such as `Button`, `Item`, or `TextInput`.
+3. Use `:part()` / `::part()` selectors for meaningful inner elements.
+4. Use per-instance `style` and `*Style` props when a single component instance needs an exception.
+
+Component docs include a “Styling reference” section listing the available parts and component-specific variables with their defaults.
+
+## CSS variables
+
+Use CSS variables for theme values that should affect multiple components. StartupJS UI uses semantic color variables first, so brand changes usually start with `--primary`, `--primary-foreground`, and their `--color-*` mappings.
+
+```jsx
+const appStyle = css`
+  :root {
+    --primary: oklch(0.55 0.2 250);
+    --primary-foreground: oklch(0.98 0.02 250);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+  }
+`
+```
+
+Component-specific variables use the component name as a prefix:
+
+```css
+:root {
+  --Button-height-m: 2.25rem;
+  --TextInput-border-color-focused: var(--color-primary);
+  --User-color-online: var(--color-success);
+}
+```
+
+Use the reference files when you need the full token list:
+
+- CSSX Tailwind tokens: `cssxjs/themes/tailwind`
+- CSSX shadcn semantic tokens: `cssxjs/themes/shadcn`
+- StartupJS UI component tokens: `packages/startupjs-ui/startupjsUiTheme.cssx.css`
+
+## Light and dark
+
+`StartupjsProvider theme` is forwarded to CSSX. The default is `auto`, which uses the device color scheme when a dark theme is available.
+
+```jsx
+<StartupjsProvider theme='auto' style={appStyle}>
+  <App />
+</StartupjsProvider>
+```
+
+Define default variables in `:root` and dark overrides in `:root.dark`:
+
+```css
+:root {
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+}
+
+:root.dark {
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+}
+```
+
+Set `theme='default'` or `theme='light'` to disable automatic dark selection. Set `theme='dark'` to force the dark theme.
+
+## Component selectors
+
+Every themable component registers a component tag name. Use that tag in provider styles to change defaults for all instances.
+
+```css
+Button {
+  border-radius: 9999px;
+}
+
+Item {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+```
+
+These selectors apply globally within the provider subtree. They do not require a class on each component instance.
+
+## Parts
+
+Parts expose semantic inner elements. Use `:part()` or `::part()` to customize them from provider styles.
+
+```css
+Button:part(icon) {
+  opacity: 0.8;
+}
+
+TextInput:part(input) {
+  color: var(--color-foreground);
+}
+```
+
+In JSX, the same parts map to regular props:
+
+- `part='root'` maps to `style`
+- `part='icon'` maps to `iconStyle`
+- `part='text'` maps to `textStyle`
+
+Use those props for one-off instance overrides:
+
+```jsx
+<Button textStyle={{ textTransform: 'uppercase' }}>
+  Save
+</Button>
+```
+
+## Color props
+
+Color props accept CSSX color tokens, raw CSS colors, or `var(...)` expressions.
+
+```jsx
+<Button color='primary'>Primary</Button>
+<Tag color='warning'>Warning</Tag>
+<Loader color='var(--color-muted-foreground)' />
+```
+
+Token names resolve through `--color-*` variables. For example, `primary` resolves through `--color-primary`, and `primary-foreground` resolves through `--color-primary-foreground`.
+
+## Media and responsive styles
+
+StartupJS UI uses CSSX custom media aliases. The default breakpoint aliases are:
+
+- `--breakpoint-mobile`
+- `--breakpoint-tablet`
+- `--breakpoint-desktop`
+- `--breakpoint-wide`
+
+```css
+@media (--breakpoint-tablet) {
+  Button {
+    min-width: 12rem;
+  }
+}
+```
+
+Theme-specific styles use CSSX theme media aliases:
+
+```css
+@media (--theme-dark) {
+  Card {
+    box-shadow: none;
+    border-color: var(--color-border);
+  }
+}
+```
+
+## Runtime CSS
+
+Provider `style` can be a single CSSX sheet or an array of sheets. This makes it possible to combine app tokens, feature-level overrides, and generated CSS.
+
+```jsx
+<StartupjsProvider style={[brandStyle, featureStyle]}>
+  <App />
+</StartupjsProvider>
+```
+
+Later entries override earlier entries at the same priority layer.

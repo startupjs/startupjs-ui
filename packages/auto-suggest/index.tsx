@@ -1,14 +1,9 @@
-import { useState, useRef, useEffect, useMemo, type ReactNode } from 'react'
+import { useState, useRef, useEffect, useMemo, type ReactElement, type ReactNode } from 'react'
 import {
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-  type StyleProp,
-  type TextStyle,
-  type ViewStyle
+  TouchableOpacity, TouchableWithoutFeedback, View, type StyleProp, type TextStyle, type ViewStyle
 } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { css, pug, observer, themed } from 'startupjs'
+
 import AbstractPopover from '@startupjs-ui/abstract-popover'
 import Div from '@startupjs-ui/div'
 import FlatList from '@startupjs-ui/flat-list'
@@ -18,7 +13,6 @@ import TextInput from '@startupjs-ui/text-input'
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import escapeRegExp from 'lodash/escapeRegExp'
 import useKeyboard from './useKeyboard'
-import './index.cssx.styl'
 
 const SUPPORT_PLACEMENTS = [
   'bottom-start',
@@ -178,14 +172,14 @@ function AutoSuggest ({
     onClose()
   }
 
-  function _renderItem ({ item, index }: { item: AutoSuggestOption, index: number }): ReactNode {
+  function _renderItem ({ item, index }: { item: AutoSuggestOption, index: number }): ReactElement {
     if (renderItem) {
       return pug`
         TouchableOpacity(
           key=index
           onPress=() => { _onPress(item) }
         )= renderItem(item, index, selectIndexValue)
-      `
+      ` as ReactElement
     }
 
     const optionLabel = getOptionLabel(item)
@@ -201,7 +195,7 @@ function AutoSuggest ({
         aria-selected=isSelected
         aria-label=optionLabel != null ? String(optionLabel) : undefined
       )= optionLabel
-    `
+    ` as ReactElement
   }
 
   function onScroll ({ nativeEvent }: any) {
@@ -269,7 +263,7 @@ function AutoSuggest ({
       durationOpen=200
       durationClose=200
       renderWrapper=renderWrapper
-      onCloseComplete=() => setTextToFilter()
+      onCloseComplete=() => setTextToFilter(undefined)
     )
       if isLoading
         View.loaderCase
@@ -290,4 +284,48 @@ function AutoSuggest ({
   `
 }
 
-export default observer(themed('AutoSuggest', AutoSuggest))
+export default themed('AutoSuggest', observer(AutoSuggest))
+
+css`
+  .root,
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .loaderCase {
+    justify-content: center;
+    align-items: center;
+    min-height: var(--AutoSuggest-loader-min-height);
+  }
+
+  .item {
+    width: 100%;
+  }
+
+  .content {
+    width: 100%;
+    height: 100%;
+  }
+
+  .contentCase {
+    border-radius: var(--AutoSuggest-content-radius);
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .selectMenu {
+    background-color: var(--AutoSuggest-item-bg);
+  }
+
+  .attachment {
+    background-color: var(--AutoSuggest-attachment-bg);
+    border-radius: var(--AutoSuggest-attachment-radius);
+    box-shadow: var(--AutoSuggest-attachment-shadow);
+    overflow: hidden;
+  }
+`

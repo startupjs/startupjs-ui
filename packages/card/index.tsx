@@ -1,10 +1,9 @@
 import { type ReactNode } from 'react'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
-import Div, { type DivProps } from '@startupjs-ui/div'
-import './index.cssx.styl'
+import { css, pug, observer, themed } from 'startupjs'
 
-export default observer(themed('Card', Card))
+import Div, { type DivProps } from '@startupjs-ui/div'
+
+export default themed('Card', observer(Card))
 
 export const _PropsJsonSchema = {/* CardProps */}
 
@@ -29,6 +28,7 @@ function Card ({
 }: CardProps): ReactNode {
   return pug`
     Div.root(
+      part='root'
       style=style
       styleName=[variant]
       onPress=onPress
@@ -38,3 +38,20 @@ function Card ({
       = children
   `
 }
+
+css`
+  .root {
+    padding: var(--Card-padding);
+    border-radius: var(--Card-radius);
+  }
+
+  .root.elevated {
+    background-color: var(--Card-bg);
+  }
+
+  .root.outlined {
+    border-width: var(--Card-border-width);
+    border-color: var(--Card-border-color);
+    background-color: var(--Card-outlined-bg);
+  }
+`

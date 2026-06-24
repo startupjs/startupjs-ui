@@ -81,11 +81,51 @@ return (
 )
 ```
 
-## Theme configuration
+## Styling reference
 
-Dropdown caption exposes CSSX theme configuration for app-wide visual tuning:
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
 
-- **$UI.DropdownCaption.activeColor** -- text color used by the active caption. It uses `var(--color-text-main)` by default.
+### Parts
+
+This component does not expose named parts.
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--Dropdown-list-padding` | `1rem` | Controls the list padding. |
+| `--Dropdown-list-padding-bottom` | `0.5rem` | Controls the list padding bottom. |
+| `--Dropdown-buttons-case-margin` | `0.75rem 0.75rem 1rem` | Controls the buttons case margin. |
+| `--Dropdown-buttons-radius` | `var(--radius-lg)` | Controls the buttons radius. |
+| `--Dropdown-buttons-bg` | `var(--color-popover)` | Controls the buttons background. |
+| `--Dropdown-list-caption-padding` | `0.5rem 1rem 1rem` | Controls the list caption padding. |
+| `--Dropdown-list-caption-font-size` | `21px` | Controls the list caption font size. |
+| `--Dropdown-list-caption-font-family` | `var(--font-sans)` | Controls the list caption font family. |
+| `--Dropdown-list-caption-font-weight` | `var(--font-weight-semibold)` | Controls the list caption font weight. |
+| `--Dropdown-buttons-cancel-margin` | `-0.5rem 0.75rem 0.75rem` | Controls the buttons cancel margin. |
+| `--Dropdown-buttons-cancel-padding` | `1rem` | Controls the buttons cancel padding. |
+| `--Dropdown-popover-radius` | `var(--radius-md)` | Controls the popover radius. |
+| `--Dropdown-popover-shadow` | `var(--shadow-sm)` | Controls the popover shadow. |
+| `--DropdownCaption-bg` | `var(--color-background)` | Controls the background. |
+| `--DropdownCaption-height` | `2rem` | Controls the height. |
+| `--DropdownCaption-radius` | `var(--radius-md)` | Controls the radius. |
+| `--DropdownCaption-border-width` | `1px` | Controls the border width. |
+| `--DropdownCaption-border-color` | `var(--color-border)` | Controls the border color. |
+| `--DropdownCaption-padding-x` | `0.5rem` | Controls the horizontal padding. |
+| `--DropdownCaption-min-width` | `150px` | Controls the min width. |
+| `--DropdownCaption-placeholder-color` | `var(--color-muted-foreground)` | Controls the placeholder color. |
+| `--DropdownCaption-active-color` | `var(--color-foreground)` | Controls the active color. |
+| `--DropdownItem-border-width` | `1px` | Controls the border width. |
+| `--DropdownItem-border-color` | `var(--color-border)` | Controls the border color. |
+| `--DropdownItem-buttons-height` | `3rem` | Controls the buttons height. |
+| `--DropdownItem-popover-padding` | `12px` | Controls the popover padding. |
+| `--DropdownItem-text-padding` | `1rem` | Controls the text padding. |
+| `--DropdownItem-active-color` | `var(--color-primary)` | Controls the active color. |
+| `--DropdownItem-icon-top` | `17px` | Controls the icon top. |
+| `--DropdownItem-icon-inset` | `14px` | Controls the icon inset. |
+| `--DropdownItem-icon-size` | `1rem` | Controls the icon size. |
+| `--DropdownItem-selected-bg` | `var(--color-muted)` | Controls the selected background. |
 
 ## Sandbox
 

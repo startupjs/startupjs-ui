@@ -1,12 +1,11 @@
 import { type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { css, pug, observer, themed } from 'startupjs'
+
 import Div from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
 import CheckboxInput from './checkbox'
 import SwitchInput from './switch'
-import './index.cssx.styl'
 
 const INPUT_COMPONENTS = {
   checkbox: CheckboxInput,
@@ -31,6 +30,8 @@ export interface CheckboxProps {
   value?: boolean
   /** Custom icon for the checkbox variant */
   icon?: any
+  /** Custom styles for the checkbox icon */
+  iconStyle?: any
   /** Custom background color when checked */
   checkedBgColor?: string
   /** Disable interactions @default false */
@@ -70,11 +71,12 @@ function Checkbox ({
   }
 
   return pug`
-    Div(style=style)
+    Div(part='root' style=style)
       if readonly
-        Span.readonly=value ? READONLY_ICONS.TRUE : READONLY_ICONS.FALSE
+        Span.readonly(part='readonly')= value ? READONLY_ICONS.TRUE : READONLY_ICONS.FALSE
       else
         InputComponent(
+          part='input'
           style=inputStyle
           value=value
           onPress=onPress
@@ -91,3 +93,11 @@ function Checkbox ({
 export default observer(
   themed('Checkbox', Checkbox)
 )
+
+css`
+  .readonly {
+    font-weight: var(--Checkbox-readonly-font-weight);
+    font-size: var(--Checkbox-readonly-font-size);
+    line-height: var(--Checkbox-readonly-line-height);
+  }
+`

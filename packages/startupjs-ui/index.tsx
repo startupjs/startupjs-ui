@@ -93,23 +93,10 @@ export { default as H6 } from './exports/_DEPRECATED_H6'
 
 export { default as User } from '@startupjs-ui/user'
 
-// theming
-export {
-  colorToRGBA,
-  CssVariables,
-  palette,
-  generateColors,
-  getCssVariable,
-  Palette,
-  Colors,
-  u,
-  themed,
-  ThemeProvider,
-  ThemeContext
-} from '@startupjs-ui/core'
+// shared types
+export type { UIRole } from '@startupjs-ui/core'
 
 // hooks
-export { useMedia, useColors } from '@startupjs-ui/core'
 export { useFormFields, useFormFields$, useValidate } from '@startupjs-ui/form'
 
 // UiProvider

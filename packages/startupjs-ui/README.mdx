@@ -11,7 +11,7 @@ import Form from 'startupjs-ui/Form'
 
 ## UiProvider
 
-UiProvider wires up theming and shared UI infrastructure (CSS variables, portal, toasts, dialogs). It is plugged in automatically as a plugin into `StartupjsProvider`, so the only thing you need at the root of your app is:
+UiProvider wires up CSSX theming and shared UI infrastructure (portal, toasts, dialogs). Its defaults are layered from CSSX Tailwind tokens, CSSX shadcn semantic tokens, and StartupJS UI component tokens. It is plugged in automatically as a plugin into `StartupjsProvider`, so the only thing you need at the root of your app is:
 
 ```jsx
 import { StartupjsProvider } from 'startupjs'
@@ -26,39 +26,39 @@ export default function RootLayout () {
 }
 ```
 
-You can pass UiProvider options via `StartupjsProvider` props:
+You can pass CSSX theme overrides through `StartupjsProvider style`:
 
 ```jsx
-import styleOverrides from './style.cssx.styl'
+import { css } from 'startupjs'
+
+const style = css`
+  :root {
+    --color-primary: #0000ff;
+    --color-error: #ff0000;
+  }
+
+  Button {
+    border-radius: 12px;
+  }
+
+  Button:hover {
+    background-color: #0000cc;
+  }
+`
 
 <StartupjsProvider
-  style={styleOverrides}
-  palette={palette}
-  colors={colors}
-  componentColors={componentColors}
+  style={style}
   routerPortal
 >
   <Stack />
 </StartupjsProvider>
 ```
 
-```styl
-// style.cssx.styl
-
-:root
-  --color-primary #0000ff
-  --color-error #ff0000
-
-.Button
-  border-radius 12px
-  &:part(hover)
-    background-color #0000cc
-```
-
 ### Options
 
-- `style` -- CSSX style overrides for UI components. You can also override static CSS variables by specifying them inside the `:root` section of `style`.
-- `palette` -- theme palette overrides.
-- `colors` -- theme color overrides.
-- `componentColors` -- component-level color overrides.
+- `style` -- CSSX style overrides for UI components. Use `:root` for theme variables, utility classes for shared styles, and component tag selectors such as `Button` plus `:part()` for component defaults.
 - `routerPortal` -- when `true`, mounts an additional `Portal.Provider` inside the router tree. Use it when portal content can render router-aware components such as links or navigation actions.
+
+Component color props accept CSSX color tokens such as `'primary'`, which map to variables like `--color-primary`. Use `var(--your-variable)` or normal CSS colors when a raw CSS value is clearer.
+
+For the full customization model, see the Styling guide in the docs. Each component page also includes a styling reference table with its parts and component-specific CSS variables.

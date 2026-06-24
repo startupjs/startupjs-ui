@@ -115,6 +115,27 @@ return (
 
 Use `durationOpen` (defaults to `100`ms) and `durationClose` (defaults to `50`ms) to control the animation timing for opening and closing the popover.
 
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
+
+### Parts
+
+| Part | Description |
+| --- | --- |
+| `root` | Root element. |
+| `attachment` | Attached popover content. |
+| `overlay` | Overlay element. |
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--Popover-bg` | `var(--color-popover)` | Controls the background. |
+| `--Popover-radius` | `var(--radius-md)` | Controls the radius. |
+| `--Popover-shadow` | `var(--shadow-md)` | Controls the shadow. |
+
 ## Sandbox
 
 <Sandbox

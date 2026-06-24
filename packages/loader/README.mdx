@@ -35,7 +35,7 @@ return (
 
 ## Colors
 
-By default the loader uses the `'text-description'` color token. You can change it by passing any color name from the theme's color palette to the `color` prop. See the Sandbox section below for all available values.
+By default the loader uses the `'muted-foreground'` color token. You can change it by passing any CSSX color token or raw CSS color to the `color` prop.
 
 ```jsx example
 return (
@@ -47,6 +47,21 @@ return (
   </Div>
 )
 ```
+
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
+
+### Parts
+
+| Part | Description |
+| --- | --- |
+| `root` | Root element. |
+
+### CSS variables
+
+This component does not expose component-specific CSS variables.
 
 ## Sandbox
 

@@ -8,8 +8,8 @@ import {
   type RefObject
 } from 'react'
 import { Platform, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, useDidUpdate } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { css, pug, observer, useDidUpdate, themed } from 'startupjs'
+
 import Div from '@startupjs-ui/div'
 import Drawer from '@startupjs-ui/drawer'
 import Icon from '@startupjs-ui/icon'
@@ -18,11 +18,10 @@ import ScrollView from '@startupjs-ui/scroll-view'
 import Span from '@startupjs-ui/span'
 import Tag from '@startupjs-ui/tag'
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
-import './index.cssx.styl'
 
 const IS_WEB = Platform.OS === 'web'
 
-export default observer(themed('MultiSelect', MultiSelect))
+export default themed('MultiSelect', observer(MultiSelect))
 
 export const _PropsJsonSchema = {/* MultiSelectProps */} // used in docs generation
 
@@ -227,7 +226,7 @@ function MultiSelect ({
       Popover.popover(
         part='root'
         ...props
-        captionStyle=style
+        style=style
         visible=focused
         openOnAnchorPress=false
         matchAnchorWidth=hasWidthCaption
@@ -386,14 +385,12 @@ function MultiSelectInput ({
         - const isLast = index + 1 === values.length
         TagComponent(
           key=value
-          index=index
           isLast=isLast
           record=record
         )
       if hiddenTagsLength
         Span.ellipsis ...
         DefaultTag(
-          index=0
           record={ label: '+' + hiddenTagsLength }
         )
   `
@@ -496,3 +493,131 @@ function DefaultTag ({
     )= record?.label
   `
 }
+
+css`
+  .input {
+    padding-top: var(--MultiSelect-input-padding-y);
+    padding-bottom: var(--MultiSelect-input-padding-y);
+    padding-left: var(--MultiSelect-input-padding-x);
+    padding-right: var(--MultiSelect-input-padding-x);
+    background-color: var(--MultiSelect-input-bg);
+    border-width: var(--MultiSelect-input-border-width);
+    border-style: solid;
+    border-color: var(--MultiSelect-input-border-color);
+    min-height: var(--MultiSelect-input-min-height);
+    min-width: var(--MultiSelect-input-min-width);
+    border-radius: var(--MultiSelect-input-radius);
+    row-gap: var(--MultiSelect-input-row-gap);
+  }
+
+  .input.disabled {
+    background-color: var(--MultiSelect-input-bg-disabled);
+  }
+
+  .input.focused {
+    border-color: var(--MultiSelect-input-focused-border-color);
+  }
+
+  .input.error {
+    border-color: var(--MultiSelect-input-error-border-color);
+  }
+
+  .placeholder {
+    color: var(--MultiSelect-input-placeholder-color);
+  }
+
+  .tag {
+    margin-right: var(--MultiSelect-tag-margin-right);
+  }
+
+  .tag.last {
+    margin-right: 0;
+  }
+
+  .row {
+    padding-right: var(--MultiSelect-row-padding-right);
+    width: 100%;
+  }
+
+  .suggestions-web {
+    padding-left: var(--MultiSelect-suggestions-padding-x);
+    padding-right: var(--MultiSelect-suggestions-padding-x);
+    max-height: var(--MultiSelect-suggestions-max-height);
+  }
+
+  .suggestions-native {
+    padding-top: var(--MultiSelect-suggestions-native-padding-y);
+    padding-bottom: var(--MultiSelect-suggestions-native-padding-y);
+  }
+
+  .nativeListContent {
+    padding-top: var(--MultiSelect-native-list-content-padding-top);
+  }
+
+  .nativeListContent:part(swipe) {
+    background-color: var(--MultiSelect-swipe-bg);
+  }
+
+  .suggestion {
+    cursor: pointer;
+    padding-top: var(--MultiSelect-suggestion-padding-y);
+    padding-bottom: var(--MultiSelect-suggestion-padding-y);
+    padding-left: var(--MultiSelect-suggestion-padding-x);
+    padding-right: var(--MultiSelect-suggestion-padding-x);
+    flex-direction: row;
+    align-items: center;
+  }
+
+  @media (--breakpoint-desktop) {
+    .suggestion {
+      padding: var(--MultiSelect-suggestion-padding-desktop);
+    }
+  }
+
+  .sugText {
+    color: var(--MultiSelect-suggestion-text-color);
+    font-size: var(--MultiSelect-suggestion-text-font-size);
+    line-height: var(--MultiSelect-suggestion-text-line-height);
+  }
+
+  @media (--breakpoint-desktop) {
+    .sugText {
+      font-size: var(--MultiSelect-suggestion-text-font-size-desktop);
+      line-height: var(--MultiSelect-suggestion-text-line-height-desktop);
+    }
+  }
+
+  .backdropStyle {
+    z-index: var(--MultiSelect-backdrop-z-index);
+  }
+
+  .popover {
+    padding-left: var(--MultiSelect-popover-padding-x);
+    padding-right: var(--MultiSelect-popover-padding-x);
+    max-height: var(--MultiSelect-suggestions-max-height);
+    min-width: var(--MultiSelect-popover-min-width);
+  }
+
+  .ellipsis {
+    margin-left: var(--MultiSelect-ellipsis-margin-x);
+    margin-right: var(--MultiSelect-ellipsis-margin-x);
+  }
+
+  .suggestionItem {
+    padding-top: var(--MultiSelect-suggestion-item-padding-y);
+    padding-bottom: var(--MultiSelect-suggestion-item-padding-y);
+  }
+
+  .check {
+    width: var(--MultiSelect-check-width);
+  }
+
+  .checkIcon {
+    color: var(--MultiSelect-check-icon-color);
+  }
+
+  .label {
+    margin-right: var(--MultiSelect-label-margin-right);
+    flex-grow: 1;
+  }
+`

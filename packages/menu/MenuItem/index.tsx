@@ -1,13 +1,11 @@
 import { useContext, type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed, useColors } from '@startupjs-ui/core'
+import { css, pug, observer, useCssColor, themed } from 'startupjs'
 import Div from '@startupjs-ui/div'
 import Icon, { type IconProps } from '@startupjs-ui/icon'
 import Item, { type ItemProps } from '@startupjs-ui/item'
 import Span from '@startupjs-ui/span'
 import MenuContext from '../context'
-import './index.cssx.styl'
 
 export const _PropsJsonSchema = {/* MenuItemProps */} // used in docs generation
 
@@ -54,21 +52,17 @@ function MenuItem ({
   ...props
 }: MenuItemProps): ReactNode {
   const context = useContext(MenuContext)
-  const getColor = useColors()
 
-  // TODO
-  // we should think about a better api
-  // and remove color, activeColor, activeBorder props
-  let color: string | undefined = props.color ?? context.color
-  color = getColor(color) ?? color
-  let activeColor = props.activeColor ?? context.activeColor
-  activeColor = getColor(activeColor) ?? activeColor
+  const colorToken = props.color ?? context.color ?? 'foreground'
+  const activeColorToken = props.activeColor ?? context.activeColor ?? 'primary'
+  const resolvedColor = useCssColor(colorToken) ?? colorToken
+  const resolvedActiveColor = useCssColor(activeColorToken) ?? activeColorToken
   const activeBorder = props.activeBorder ?? context.activeBorder ?? 'none'
   const iconPosition = props.iconPosition ?? context.iconPosition ?? 'left'
 
   // TODO: prevent click if already active (for link and for div)
-  color = active ? (activeColor ?? getColor('text-primary')) : (color ?? getColor('text-main'))
-  const borderStyle: StyleProp<ViewStyle> = { backgroundColor: activeColor ?? getColor('border-primary') }
+  const color = active ? resolvedActiveColor : resolvedColor
+  const borderStyle: StyleProp<ViewStyle> = { backgroundColor: resolvedActiveColor }
 
   const optionLabel = ariaLabel ??
     (typeof children === 'string' || typeof children === 'number' ? String(children) : undefined)
@@ -97,4 +91,40 @@ function MenuItem ({
   `
 }
 
-export default observer(themed('MenuItem', MenuItem))
+export default themed('MenuItem', observer(MenuItem))
+
+css`
+  .border {
+    position: absolute;
+  }
+
+  .border.top,
+  .border.bottom {
+    left: 0;
+    right: 0;
+    height: var(--MenuItem-active-border-size);
+  }
+
+  .border.top {
+    top: 0;
+  }
+
+  .border.bottom {
+    bottom: 0;
+  }
+
+  .border.left,
+  .border.right {
+    top: 0;
+    bottom: 0;
+    width: var(--MenuItem-active-border-size);
+  }
+
+  .border.left {
+    left: 0;
+  }
+
+  .border.right {
+    right: 0;
+  }
+`

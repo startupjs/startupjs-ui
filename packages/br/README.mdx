@@ -4,7 +4,6 @@ import Content from '@startupjs-ui/content'
 import NumberInput from '@startupjs-ui/number-input'
 import Div from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
-import { u } from 'startupjs'
 import { Sandbox } from '@startupjs-ui/docs'
 
 # Br
@@ -29,7 +28,7 @@ You can change the amount of spacing by passing a number to the `lines` prop. Th
 
 ```jsx example
 const itemStyle = {
-  height: u(5),
+  height: 40,
   justifyContent: 'center',
   alignItems: 'center'
 }
@@ -59,7 +58,7 @@ Setting the `half` prop to `true` creates a line break equivalent to a `lines` v
 
 ```jsx example
 const itemStyle = {
-  height: u(5),
+  height: 40,
   justifyContent: 'center',
   alignItems: 'center'
 }
@@ -75,6 +74,23 @@ return (
   </Content>
 )
 ```
+
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
+
+### Parts
+
+| Part | Description |
+| --- | --- |
+| `root` | Root element. |
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--Br-line-height` | `1rem` | Controls the line height. |
 
 ## Sandbox
 

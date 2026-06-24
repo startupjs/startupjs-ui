@@ -1,11 +1,10 @@
 import { type ReactNode } from 'react'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { css, pug, observer, themed } from 'startupjs'
+
 import Icon, { type IconProps } from '@startupjs-ui/icon'
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'
-import './index.cssx.styl'
 
-export default observer(themed('Rating', Star))
+export default themed('Rating', observer(Star))
 
 export interface StarProps {
   /** Custom styles applied to the star icon */
@@ -20,9 +19,20 @@ function Star ({
 }: StarProps): ReactNode {
   return pug`
     Icon.icon(
+      part='root'
       styleName={ active }
       style=style
       icon=faStar
     )
   `
 }
+
+css`
+  .icon {
+    color: var(--Rating-star-color);
+  }
+
+  .icon.active {
+    color: var(--Rating-star-active-color);
+  }
+`

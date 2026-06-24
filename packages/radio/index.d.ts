@@ -3,7 +3,6 @@
 
 import { type StyleProp, type ViewStyle } from 'react-native';
 import { type RadioOption, type RadioValue } from './helpers';
-import './index.cssx.styl';
 declare const _default: import("react").ComponentType<RadioProps>;
 export default _default;
 export declare const _PropsJsonSchema: {};

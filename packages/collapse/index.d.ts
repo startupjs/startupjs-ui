@@ -5,7 +5,6 @@ import { type ReactNode } from 'react';
 import { type StyleProp, type ViewStyle } from 'react-native';
 import { type DivProps } from '@startupjs-ui/div';
 import { type CollapseHeaderProps } from './CollapseHeader';
-import './index.cssx.styl';
 export declare const _PropsJsonSchema: {};
 export interface CollapseProps extends Omit<DivProps, 'style' | 'children' | 'variant' | 'align'> {
     /** Custom styles applied to the root view */

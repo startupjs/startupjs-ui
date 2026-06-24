@@ -1,8 +1,8 @@
 import { useState, type ReactNode } from 'react'
 import { Modal, Platform } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { css, pug, observer, themed } from 'startupjs'
+
 import Div from '@startupjs-ui/div'
 import Span from '@startupjs-ui/span'
 import {
@@ -12,7 +12,31 @@ import {
   PICKER_NULL,
   type SelectOption
 } from './helpers'
-import STYLES from './index.cssx.styl'
+
+const OVERLAY_STYLE: any = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  width: '100%',
+  height: '100%',
+  backgroundColor: 'transparent',
+  padding: 0,
+  margin: 0,
+  zIndex: 10,
+  ...(Platform.OS === 'web'
+    ? {
+        appearance: 'none',
+        borderWidth: 0,
+        cursor: 'pointer',
+        opacity: 0
+      }
+    : null),
+  ...(Platform.OS === 'android'
+    ? { opacity: 0 }
+    : null)
+}
 
 export interface SelectWrapperProps {
   /** Custom styles for wrapper */
@@ -84,7 +108,7 @@ function SelectWrapperWeb ({
       = children
       select(
         id=id
-        style=STYLES.overlay
+        style=OVERLAY_STYLE
         value=selectedKey
         disabled=disabled
         onChange=onSelectChange
@@ -164,7 +188,7 @@ function SelectWrapperIOS ({
       = children
       if !disabled
         Div.overlay(
-          activeOpacity=1
+          feedback=false
           onPress=() => setShowModal(true)
         )
         Modal(
@@ -193,4 +217,53 @@ function SelectWrapperIOS ({
   `
 }
 
-export default observer(themed('Select', SelectWrapper))
+export default themed('Select', observer(SelectWrapper))
+
+css`
+  .root {
+    position: relative;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    z-index: 10;
+    opacity: 0;
+  }
+
+  .modalTop {
+    flex: 1;
+  }
+
+  .modalMiddle {
+    height: var(--Select-modal-middle-height);
+    flex-direction: row;
+    align-items: center;
+    padding-right: var(--Select-modal-middle-padding-right);
+    justify-content: flex-end;
+    background-color: var(--Select-modal-middle-bg);
+    border-top-width: var(--Select-modal-middle-border-width);
+    border-top-color: var(--Select-modal-middle-border-color);
+  }
+
+  .modalBottom {
+    justify-content: center;
+    background-color: var(--Select-modal-bottom-bg);
+  }
+
+  .done {
+    color: var(--Select-done-color);
+    font-family: var(--Select-done-font-family);
+    font-weight: var(--Select-done-font-weight);
+    font-size: var(--Select-done-font-size);
+    line-height: var(--Select-done-line-height);
+  }
+`

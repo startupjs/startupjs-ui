@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback, type ReactNode, type RefObject } from 'react'
 import { Platform, View } from 'react-native'
-import { pug, styl } from 'startupjs'
+import { css, pug } from 'startupjs'
 import Span from '@startupjs-ui/span'
 import AbstractPopover from '@startupjs-ui/abstract-popover'
 
@@ -10,7 +10,7 @@ const DEFAULT_TOOLTIP_PROPS = {
   position: 'top',
   attachment: 'center',
   arrow: true
-}
+} as const
 
 export interface UseTooltipProps {
   style?: any
@@ -66,6 +66,26 @@ export default function useTooltip ({ style, anchorRef, tooltip }: UseTooltipPro
 
   result.tooltipEventHandlers = tooltipEventHandlers
 
+  css`
+    .tooltip {
+      background-color: var(--Div-tooltip-bg);
+      max-width: 260px;
+      border-radius: var(--Div-tooltip-radius);
+      box-shadow: var(--Div-tooltip-shadow);
+      padding: calc(var(--spacing) * 2) calc(var(--spacing) * 4);
+    }
+
+    @media (--breakpoint-tablet) {
+      .tooltip {
+        max-width: 320px;
+      }
+    }
+
+    .tooltip-text {
+      color: var(--Div-tooltip-foreground);
+    }
+  `
+
   if (tooltip) {
     result.tooltipElement = pug`
       AbstractPopover.tooltip(
@@ -87,21 +107,6 @@ export default function useTooltip ({ style, anchorRef, tooltip }: UseTooltipPro
   }
 
   return result
-
-  styl`
-    .tooltip
-      background-color var(--Div-tooltipBg)
-      max-width 260px
-      radius()
-      shadow(3)
-      padding 1u 2u
-
-      +tablet()
-        max-width 320px
-
-      &-text
-        color var(--Div-tooltipText)
-  `
 }
 
 export interface UseDecorateTooltipProps {

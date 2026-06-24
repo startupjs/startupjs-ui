@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useContext, type ReactNode } from 'react'
 import { View, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, themed, useCssVariable } from 'startupjs'
+
 import { DragDropContext } from '../DragDropProvider'
 
 export const _PropsJsonSchema = {/* DroppableProps */}
@@ -34,6 +34,9 @@ function Droppable ({
 }: DroppableProps): ReactNode {
   const ref = useRef<any>(null)
   const $dndContext = useContext(DragDropContext)
+  const placeholderBg = useCssVariable('--Draggable-placeholder-bg', 'var(--color-muted)')
+  const placeholderRadius = Number(useCssVariable('--Draggable-placeholder-radius', 4)) || 4
+  const placeholderMinHeight = Number(useCssVariable('--Draggable-placeholder-min-height', 32)) || 32
 
   useEffect(() => {
     if (!$dndContext) return
@@ -58,7 +61,11 @@ function Droppable ({
   const contextStyle = $dndContext.drops[dropId].style?.get() ?? {}
   const items = $dndContext.drops[dropId].items.get() ?? []
   const isHoverTargetEmpty = $dndContext.activeData.get() && $dndContext.dropHoverId.get() === dropId && items.length === 0
-  const emptyPlaceholderStyle: ViewStyle = { backgroundColor: 'var(--color-bg-main-subtle-alt, #e5e7eb)' as any, minHeight: 32, borderRadius: 4 }
+  const emptyPlaceholderStyle: ViewStyle = {
+    backgroundColor: placeholderBg as any,
+    minHeight: placeholderMinHeight,
+    borderRadius: placeholderRadius
+  }
 
   return pug`
     View(ref=ref style=[style, activeStyle, contextStyle])
@@ -68,4 +75,4 @@ function Droppable ({
   `
 }
 
-export default observer(themed('Droppable', Droppable))
+export default themed('Droppable', observer(Droppable))

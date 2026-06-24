@@ -17,7 +17,6 @@ import {
   DroppableSandbox,
   DraggableSandbox
 } from './README.helpers'
-import './index.mdx.cssx.styl'
 
 # Draggable
 
@@ -182,6 +181,23 @@ return pug`
                 Span= drag.text
 `
 ```
+
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
+
+### Parts
+
+This component does not expose named parts.
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--Draggable-placeholder-bg` | `var(--color-muted)` | Controls the placeholder background. |
+| `--Draggable-placeholder-radius` | `var(--radius-sm)` | Controls the placeholder radius. |
+| `--Draggable-placeholder-min-height` | `2rem` | Controls the placeholder min height. |
 
 ## Sandbox
 

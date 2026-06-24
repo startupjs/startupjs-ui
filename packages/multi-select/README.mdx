@@ -245,6 +245,59 @@ return (
 - **inputStyle** -- custom styles for the input wrapper
 - **ref** -- a ref providing imperative `focus()` and `blur()` methods
 
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
+
+### Parts
+
+| Part | Description |
+| --- | --- |
+| `root` | Root element. |
+| `input` | Input control. |
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--MultiSelect-input-bg` | `var(--color-background)` | Controls the input background. |
+| `--MultiSelect-input-border-width` | `1px` | Controls the input border width. |
+| `--MultiSelect-input-border-color` | `var(--color-border)` | Controls the input border color. |
+| `--MultiSelect-input-bg-disabled` | `var(--color-muted)` | Controls the input background disabled. |
+| `--MultiSelect-input-placeholder-color` | `var(--color-muted-foreground)` | Controls the input placeholder color. |
+| `--MultiSelect-input-focused-border-color` | `var(--color-primary)` | Controls the input focused border color. |
+| `--MultiSelect-input-error-border-color` | `var(--color-destructive)` | Controls the input error border color. |
+| `--MultiSelect-input-padding-y` | `5px` | Controls the vertical input padding. |
+| `--MultiSelect-input-padding-x` | `0.5rem` | Controls the horizontal input padding. |
+| `--MultiSelect-input-min-height` | `2rem` | Controls the input min height. |
+| `--MultiSelect-input-min-width` | `4rem` | Controls the input min width. |
+| `--MultiSelect-input-radius` | `var(--radius-md)` | Controls the input radius. |
+| `--MultiSelect-input-row-gap` | `0.25rem` | Controls the input row gap. |
+| `--MultiSelect-tag-margin-right` | `0.25rem` | Controls the tag margin right. |
+| `--MultiSelect-row-padding-right` | `1.5rem` | Controls the row padding right. |
+| `--MultiSelect-suggestions-max-height` | `12.5rem` | Controls the suggestions max height. |
+| `--MultiSelect-suggestions-padding-x` | `0.5rem` | Controls the horizontal suggestions padding. |
+| `--MultiSelect-suggestions-native-padding-y` | `0.5rem` | Controls the vertical suggestions native padding. |
+| `--MultiSelect-native-list-content-padding-top` | `2.5rem` | Controls the native list content padding top. |
+| `--MultiSelect-swipe-bg` | `var(--color-secondary)` | Controls the swipe background. |
+| `--MultiSelect-suggestion-padding-y` | `0.5rem` | Controls the vertical suggestion padding. |
+| `--MultiSelect-suggestion-padding-x` | `1rem` | Controls the horizontal suggestion padding. |
+| `--MultiSelect-suggestion-padding-desktop` | `0.5rem` | Controls the suggestion padding desktop. |
+| `--MultiSelect-suggestion-text-color` | `var(--color-foreground)` | Controls the suggestion text color. |
+| `--MultiSelect-suggestion-text-font-size` | `var(--text-xl)` | Controls the suggestion text font size. |
+| `--MultiSelect-suggestion-text-line-height` | `1.75rem` | Controls the suggestion text line height. |
+| `--MultiSelect-suggestion-text-font-size-desktop` | `var(--text-sm)` | Controls the suggestion text font size desktop. |
+| `--MultiSelect-suggestion-text-line-height-desktop` | `1.25rem` | Controls the suggestion text line height desktop. |
+| `--MultiSelect-backdrop-z-index` | `1501` | Controls the backdrop z index. |
+| `--MultiSelect-popover-padding-x` | `0.25rem` | Controls the horizontal popover padding. |
+| `--MultiSelect-popover-min-width` | `10rem` | Controls the popover min width. |
+| `--MultiSelect-ellipsis-margin-x` | `0.5rem` | Controls the horizontal ellipsis margin. |
+| `--MultiSelect-suggestion-item-padding-y` | `0.5rem` | Controls the vertical suggestion item padding. |
+| `--MultiSelect-check-width` | `1rem` | Controls the check width. |
+| `--MultiSelect-check-icon-color` | `var(--color-primary)` | Controls the check icon color. |
+| `--MultiSelect-label-margin-right` | `0.5rem` | Controls the label margin right. |
+
 ## Sandbox
 
 <Sandbox

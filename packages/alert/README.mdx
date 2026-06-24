@@ -154,7 +154,7 @@ const renderCustomCloseButton = () => {
   return (
     <Button
       color='success'
-      variant='flat'
+      variant='default'
       size='s'
       onPress={() => setShowSecondAlert(false)}
     >
@@ -182,6 +182,44 @@ return (
   </Div>
 )
 ```
+
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
+
+### Parts
+
+| Part | Description |
+| --- | --- |
+| `root` | Root element. |
+| `actions` | Actions container. |
+| `content` | Content container. |
+| `icon` | Primary icon. |
+| `information` | Information row. |
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--Alert-padding-y` | `0.5rem` | Controls the vertical padding. |
+| `--Alert-padding-x` | `1rem` | Controls the horizontal padding. |
+| `--Alert-border-width` | `1px` | Controls the border width. |
+| `--Alert-radius` | `var(--radius-md)` | Controls the radius. |
+| `--Alert-info-border-color` | `var(--color-border-primary)` | Controls the info border color. |
+| `--Alert-info-bg` | `var(--color-bg-primary-transparent)` | Controls the info background. |
+| `--Alert-info-icon-color` | `var(--color-text-primary)` | Controls the info icon color. |
+| `--Alert-error-border-color` | `var(--color-border-error)` | Controls the error border color. |
+| `--Alert-error-bg` | `var(--color-bg-error-transparent)` | Controls the error background. |
+| `--Alert-error-icon-color` | `var(--color-text-error)` | Controls the error icon color. |
+| `--Alert-warning-border-color` | `var(--color-border-warning)` | Controls the warning border color. |
+| `--Alert-warning-bg` | `var(--color-bg-warning-transparent)` | Controls the warning background. |
+| `--Alert-warning-icon-color` | `var(--color-text-warning)` | Controls the warning icon color. |
+| `--Alert-success-border-color` | `var(--color-border-success)` | Controls the success border color. |
+| `--Alert-success-bg` | `var(--color-bg-success-transparent)` | Controls the success background. |
+| `--Alert-success-icon-color` | `var(--color-text-success)` | Controls the success icon color. |
+| `--Alert-content-indent` | `0.75rem` | Controls the content indent. |
+| `--Alert-actions-gap` | `1rem` | Controls the actions gap. |
 
 ## Sandbox
 

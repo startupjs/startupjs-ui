@@ -1,11 +1,10 @@
 import React, { type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, useBind } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { css, pug, observer, useBind, themed } from 'startupjs'
+
 import Div, { type DivProps } from '@startupjs-ui/div'
 import CollapseHeader, { type CollapseHeaderProps } from './CollapseHeader'
 import CollapseContent from './CollapseContent'
-import './index.cssx.styl'
 
 export const _PropsJsonSchema = {/* CollapseProps */}
 
@@ -105,26 +104,32 @@ function Collapse ({
   }
   content = content
     ? React.cloneElement(content as any, { ...contentProps, ...(content as any).props })
-    : React.createElement(CollapseContent, contentProps, contentChildren)
+    : React.createElement(CollapseContent as any, contentProps, contentChildren)
 
   const headerProps = { open, variant, icon, onPress }
   header = header
     ? React.cloneElement(header as any, { ...headerProps, ...(header as any).props })
-    : React.createElement(CollapseHeader, headerProps, title ?? '')
+    : React.createElement(CollapseHeader as any, headerProps, title ?? '')
 
   function onPress () {
     onChange?.(!open)
   }
 
   return pug`
-    Div.root(style=style ...props)
+    Div.root(part='root' style=style styleName=[variant] ...props)
       = header
       = content
   `
 }
 
-const ObservedCollapse: any = observer(themed('Collapse', Collapse))
+const ObservedCollapse: any = themed('Collapse', observer(Collapse))
 ObservedCollapse.Header = CollapseHeader
 ObservedCollapse.Content = CollapseContent
 
 export default ObservedCollapse
+
+css`
+  .root.full {
+    border-radius: var(--Collapse-radius);
+  }
+`

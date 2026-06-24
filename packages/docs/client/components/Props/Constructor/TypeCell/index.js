@@ -1,13 +1,13 @@
 import React, { useCallback, useMemo } from 'react'
-import { pug, observer, $ } from 'startupjs'
+import { pug, observer, $, themed } from 'startupjs'
 import Button from '@startupjs-ui/button'
 import Span from '@startupjs-ui/span'
-import { themed } from '@startupjs-ui/core'
+
 import '../index.styl'
 
 const MAX_ITEMS = 10
 
-export default observer(themed(function TypeCell ({ possibleValues, theme, type }) {
+export default observer(themed('TypeCell', function TypeCell ({ possibleValues, theme, type }) {
   const $collapsed = $(true)
 
   const values = useMemo(() => {
@@ -26,7 +26,7 @@ export default observer(themed(function TypeCell ({ possibleValues, theme, type 
       Button(
         color='primary'
         size='s'
-        variant='text'
+        variant='ghost'
         onPress=toggleList
       )= $collapsed.get() ? 'More...' : 'Less'
     `

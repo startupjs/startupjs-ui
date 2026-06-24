@@ -2,7 +2,6 @@
 // DO NOT MODIFY THIS FILE - IT IS AUTOMATICALLY GENERATED ON COMMITS.
 
 import { type StyleProp, type ViewStyle } from 'react-native';
-import './index.cssx.styl';
 export declare const _PropsJsonSchema: {};
 export interface CheckboxProps {
     /** Custom styles for the wrapper */
@@ -15,6 +14,8 @@ export interface CheckboxProps {
     value?: boolean;
     /** Custom icon for the checkbox variant */
     icon?: any;
+    /** Custom styles for the checkbox icon */
+    iconStyle?: any;
     /** Custom background color when checked */
     checkedBgColor?: string;
     /** Disable interactions @default false */

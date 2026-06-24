@@ -4,15 +4,17 @@ import {
   useRef,
   useCallback,
   useImperativeHandle,
+  type ReactElement,
   type ReactNode,
   type RefObject
 } from 'react'
-import { pug, observer } from 'startupjs'
+import { css, pug, observer } from 'startupjs'
 import Div from '@startupjs-ui/div'
 import FlatList from '@startupjs-ui/flat-list'
 import Span from '@startupjs-ui/span'
 import { useMoment } from '../../helpers'
-import STYLES from './index.cssx.styl'
+
+const CELL_HEIGHT = 40
 
 export interface TimeSelectRef {
   scrollToIndex: (date?: Date) => void
@@ -89,7 +91,7 @@ function TimeSelect ({
     scrollToIndex()
   }, [scrollToIndex])
 
-  function renderItem ({ item }: { item: any }): ReactNode {
+  function renderItem ({ item }: { item: any }): ReactElement {
     const isActive = +moment(date) === item.value
 
     return pug`
@@ -100,10 +102,10 @@ function TimeSelect ({
       )
         Span.label(styleName={ isActive })
           = item.label
-    `
+    ` as ReactElement
   }
 
-  const length = STYLES.cell.height
+  const length = CELL_HEIGHT
 
   return pug`
     FlatList(
@@ -121,3 +123,35 @@ function TimeSelect ({
 }
 
 export default observer(TimeSelect)
+
+css`
+  .cell {
+    height: var(--DateTimePicker-time-cell-height);
+    width: var(--DateTimePicker-time-cell-width);
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+  }
+
+  .cell:part(hover) {
+    background-color: var(--DateTimePicker-hover-bg);
+  }
+
+  @media (--breakpoint-tablet) {
+    .cell {
+      width: var(--DateTimePicker-time-cell-width-tablet);
+    }
+  }
+
+  .cell.isActive {
+    background-color: var(--DateTimePicker-active-bg);
+  }
+
+  .cell.isActive:part(hover) {
+    background-color: var(--DateTimePicker-active-hover-bg);
+  }
+
+  .label.isActive {
+    color: var(--DateTimePicker-active-color);
+  }
+`

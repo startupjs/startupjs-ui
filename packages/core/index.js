@@ -1,15 +1,2 @@
-export { default as u } from './helpers/u.js'
-export { default as colorToRGBA } from './helpers/colorToRGBA.js'
-export { default as themed } from './theming/themed.js'
-export { default as palette } from './theming/palette.json'
-export { default as generateColors } from './theming/generateColors.js'
-export { default as getCssVariable } from './theming/getCssVariable.js'
-export { default as CssVariables } from './theming/CssVariables.js'
-export { default as useCssVariablesMeta } from './theming/useCssVariablesMeta.js'
-export { default as StyleContext } from './theming/StyleContext.js'
-export { default as Palette } from './theming/Palette.js'
-export { default as Colors } from './theming/Colors.js'
-export { default as ThemeProvider } from './theming/ThemeProvider.js'
-export { default as ThemeContext } from './theming/ThemeContext.js'
-export { default as useColors } from './hooks/useColors.js'
-export { default as useMedia } from './hooks/useMedia.js'
+// Runtime exports intentionally stay empty.
+// This package only provides shared TypeScript types used by startupjs-ui.

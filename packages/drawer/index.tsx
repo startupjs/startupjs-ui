@@ -1,19 +1,12 @@
 import { useState, useEffect, useRef, type ComponentType, type ReactNode } from 'react'
 import {
-  SafeAreaView,
-  Animated,
-  View,
-  TouchableWithoutFeedback,
-  StyleSheet,
-  type StyleProp,
-  type ViewStyle
+  SafeAreaView, Animated, View, TouchableWithoutFeedback, StyleSheet, type StyleProp, type ViewStyle
 } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { css, pug, observer, themed } from 'startupjs'
+
 import Portal from '@startupjs-ui/portal'
 import Swipe from './Swipe'
 import animate, { type DrawerAnimateStates } from './animate'
-import './index.cssx.styl'
 
 export { default as useDrawerDismiss } from './useDrawerDismiss'
 
@@ -42,6 +35,8 @@ export interface DrawerProps {
   ContentComponent?: ComponentType<any>
   /** Custom styles applied to the swipe responder zone */
   swipeStyle?: StyleProp<ViewStyle>
+  /** Custom styles applied to the dimming overlay */
+  overlayStyle?: StyleProp<ViewStyle>
   /** Content rendered inside the drawer */
   children?: ReactNode
   /** Controlled visibility flag @default false */
@@ -69,6 +64,7 @@ function Drawer ({
   AreaComponent = SafeAreaView,
   ContentComponent = View,
   swipeStyle,
+  overlayStyle,
   children,
   visible = false,
   position = 'left',
@@ -160,7 +156,7 @@ function Drawer ({
     { opacity: isShow ? 1 : 0 }
   ])
 
-  const _styleContent = StyleSheet.flatten([
+  const _styleContent: any = StyleSheet.flatten([
     { transform: [{ [POSITION_NAMES[position]]: animateStates.position }] },
     style
   ])
@@ -168,13 +164,14 @@ function Drawer ({
   return pug`
     if isShow
       Portal
-        AreaComponent.area
-          ContentComponent.case(style=_styleCase)
+        AreaComponent.area(part='area')
+          ContentComponent.case(part='case' style=_styleCase)
             if hasOverlay
               TouchableWithoutFeedback.overlayCase(onPress=onDismiss)
-                Animated.View.overlay(style={ opacity: animateStates.opacity })
+                Animated.View.overlay(part='overlay' style=[overlayStyle, { opacity: animateStates.opacity }])
 
             Animated.View(
+              part='root'
               ref=refContent
               testID=testID
               styleName={
@@ -207,4 +204,53 @@ function getValidNode (current: any) {
     : current?.getNode?.()
 }
 
-export default observer(themed('Drawer', Drawer))
+export default themed('Drawer', observer(Drawer))
+
+css`
+  .overlayCase {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--Drawer-overlay-bg);
+  }
+
+  .case {
+    height: 100%;
+    width: 100%;
+  }
+
+  .area {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+  }
+
+  .contentDefault {
+    background-color: var(--Drawer-bg);
+    box-shadow: var(--Drawer-shadow);
+  }
+
+  .fullVertical {
+    height: var(--Drawer-vertical-size);
+    width: 100%;
+  }
+
+  .fullHorizontal {
+    width: var(--Drawer-horizontal-size);
+    height: 100%;
+  }
+
+  .contentBottom {
+    height: var(--Drawer-bottom-height);
+    border-top-left-radius: var(--Drawer-bottom-radius);
+    border-top-right-radius: var(--Drawer-bottom-radius);
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+`

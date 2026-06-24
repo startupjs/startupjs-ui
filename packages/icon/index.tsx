@@ -1,28 +1,19 @@
 import { type ReactNode } from 'react'
 import { StyleSheet, Platform } from 'react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { pug, observer, u } from 'startupjs'
-import { themed, useColors } from '@startupjs-ui/core'
+import { css, pug, observer, useCssVariable, themed } from 'startupjs'
 import { customIcons } from './globalCustomIcons'
-import STYLES from './index.cssx.styl'
-
-const {
-  config: {
-    color: defaultColor,
-    forceWebSize
-  }
-} = STYLES
 
 const SIZES = {
-  xs: u(1),
-  s: u(1.5),
-  m: u(2),
-  l: u(2.5),
-  xl: u(3),
-  xxl: u(3.5)
+  xs: 8,
+  s: 12,
+  m: 16,
+  l: 20,
+  xl: 24,
+  xxl: 28
 }
 
-export default observer(themed('Icon', Icon))
+export default themed('Icon', observer(Icon))
 
 export const _PropsJsonSchema = {/* IconProps */}
 
@@ -47,14 +38,15 @@ function Icon ({
   size = 'm',
   ...props
 }: IconProps): ReactNode {
-  const getColor = useColors()
   const _size = typeof size === 'string' ? SIZES[size] : size
+  const color = useCssVariable('--Icon-color', 'var(--color-muted-foreground, #6b7280)')
+  const forceWebSize = useCssVariable('--Icon-force-web-size', 0)
 
   if (!icon) return null
 
   let CustomIcon
 
-  style = StyleSheet.flatten([{ color: getColor(defaultColor) || defaultColor }, style])
+  style = StyleSheet.flatten([{ color }, style])
 
   if (typeof icon === 'function') {
     CustomIcon = icon
@@ -68,6 +60,7 @@ function Icon ({
     return pug`
       CustomIcon(
         style=iconStyle
+        styleName='root'
         color=fill
         width=width
         height=height
@@ -89,7 +82,8 @@ function Icon ({
     return pug`
       FontAwesomeIcon(
         style=style
-        icon=icon
+        styleName='root'
+        icon=icon as any
         ...props
       )
     `
@@ -97,10 +91,17 @@ function Icon ({
     return pug`
       FontAwesomeIcon(
         style=style
-        icon=icon
+        styleName='root'
+        icon=icon as any
         size=_size
         ...props
       )
     `
   }
 }
+
+css`
+  .root {
+    color: var(--Icon-color);
+  }
+`

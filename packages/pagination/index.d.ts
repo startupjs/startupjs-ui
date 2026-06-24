@@ -3,13 +3,20 @@
 
 import React from 'react';
 import { type StyleProp, type ViewStyle } from 'react-native';
-import './index.cssx.styl';
 declare const _default: React.ComponentType<PaginationProps>;
 export default _default;
 export declare const _PropsJsonSchema: {};
 export interface PaginationProps {
     /** Custom styles applied to the root container */
     style?: StyleProp<ViewStyle>;
+    /** Custom styles applied to each navigation item */
+    itemStyle?: StyleProp<ViewStyle>;
+    /** Custom styles applied to page labels */
+    pageStyle?: StyleProp<any>;
+    /** Custom styles applied to navigation icons */
+    iconStyle?: StyleProp<any>;
+    /** Custom styles applied to the status block */
+    statusStyle?: StyleProp<ViewStyle>;
     /** Display variant controlling layout @default 'full' */
     variant?: 'full' | 'compact';
     /** Zero-based page index */

@@ -4,13 +4,14 @@
 import { type ReactNode } from 'react';
 import { type StyleProp, type ViewStyle } from 'react-native';
 import { type AbstractPopoverAttachment as Attachment, type AbstractPopoverPlacement as Placement, type AbstractPopoverPosition as Position } from './constants';
-import './index.cssx.styl';
 export declare const _PropsJsonSchema: {};
 export interface AbstractPopoverProps {
     /** Additional cssx styleName(s) for the popover root */
     styleName?: any;
     /** Custom styles for popover container */
     style?: StyleProp<ViewStyle>;
+    /** Custom styles for popover arrow */
+    arrowStyle?: StyleProp<ViewStyle>;
     /** Ref to the anchor element (must support `measure`) */
     anchorRef: any;
     /** Show/hide popover */

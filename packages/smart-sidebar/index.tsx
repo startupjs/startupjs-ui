@@ -1,7 +1,7 @@
 import React, { useEffect, type ReactNode } from 'react'
 import { Dimensions, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer, $, useBind } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, $, useBind, themed } from 'startupjs'
+
 import Sidebar from '@startupjs-ui/sidebar'
 import DrawerSidebar from '@startupjs-ui/drawer-sidebar'
 
@@ -120,7 +120,7 @@ function SmartSidebar ({
   `
 }
 
-export default observer(themed('SmartSidebar', SmartSidebar))
+export default themed('SmartSidebar', observer(SmartSidebar))
 
 function isFixedLayout (fixedLayoutBreakpoint: number) {
   const dim = Dimensions.get('window')

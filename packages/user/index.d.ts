@@ -4,13 +4,16 @@
 import { type StyleProp, type TextStyle, type ViewStyle } from 'react-native';
 import { type AvatarProps } from '@startupjs-ui/avatar';
 import { type DivProps } from '@startupjs-ui/div';
-import './index.cssx.styl';
 declare const _default: import("react").ComponentType<UserProps>;
 export default _default;
 export declare const _PropsJsonSchema: {};
 export interface UserProps extends DivProps {
     /** Custom styles applied to the root view */
     style?: StyleProp<ViewStyle>;
+    /** Custom styles applied to the avatar */
+    avatarStyle?: AvatarProps['style'];
+    /** Custom styles applied to the text wrapper */
+    userInfoStyle?: StyleProp<ViewStyle>;
     /** Custom styles applied to the name text */
     nameStyle?: StyleProp<TextStyle>;
     /** Custom styles applied to the description text */

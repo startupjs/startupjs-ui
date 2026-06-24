@@ -22,7 +22,6 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
     "@startupjs-ui/button": "^0.3.7",
-    "@startupjs-ui/core": "^0.3.0",
     "@startupjs-ui/dialogs": "^0.3.8",
     "@startupjs-ui/div": "^0.3.7",
     "busboy": "^1.6.0",

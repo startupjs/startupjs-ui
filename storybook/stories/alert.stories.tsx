@@ -56,8 +56,8 @@ export const States: Story = {
           onClose={() => {}}
           renderActions={() => (
             <InlineRow>
-              <Button size='s' variant='flat' onPress={() => {}}>Save alert</Button>
-              <Button size='s' variant='outlined' onPress={() => {}}>Dismiss alert</Button>
+              <Button size='s' onPress={() => {}}>Save alert</Button>
+              <Button size='s' variant='outline' onPress={() => {}}>Dismiss alert</Button>
             </InlineRow>
           )}
         >

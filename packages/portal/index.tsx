@@ -1,7 +1,27 @@
-import { createContext, Fragment, useContext, useEffect, useId, type ReactNode } from 'react'
-import { pug, $, observer } from 'startupjs'
+import {
+  createContext,
+  Fragment,
+  useCallback,
+  useContext,
+  useEffect,
+  useId,
+  useMemo,
+  useState,
+  type ReactNode
+} from 'react'
+import { observer } from 'startupjs'
 
-const PortalContext = createContext<any>(undefined)
+interface PortalEntry {
+  id: string
+  render: () => ReactNode
+}
+
+interface PortalManager {
+  mount: (id: string, render: () => ReactNode) => void
+  unmount: (id: string) => void
+}
+
+const PortalContext = createContext<PortalManager | undefined>(undefined)
 
 export const _PropsJsonSchema = {/* PortalProps */}
 
@@ -10,44 +30,47 @@ export interface PortalProps {
   children?: ReactNode
 }
 
-const Provider = observer(function Provider ({ children }: { children?: ReactNode }): ReactNode {
-  const $state = $({ order: [], nodes: {} })
-  return pug`
-    PortalContext.Provider(value=$state)
-      = children
-      Host($state=$state)
-  `
-})
+function Provider ({ children }: { children?: ReactNode }): ReactNode {
+  const [entries, setEntries] = useState<PortalEntry[]>([])
 
-const Host = observer(function Host ({ $state }: { $state: any }): ReactNode {
-  const { order, nodes } = $state.get()
+  const mount = useCallback((id: string, render: () => ReactNode) => {
+    setEntries(entries => {
+      const index = entries.findIndex(entry => entry.id === id)
+      if (index === -1) return [...entries, { id, render }]
 
-  return pug`
-    each componentId in order
-      Fragment(key=componentId)
-        = nodes[componentId]?.()
-  `
-})
+      const next = entries.slice()
+      next[index] = { id, render }
+      return next
+    })
+  }, [])
+
+  const unmount = useCallback((id: string) => {
+    setEntries(entries => entries.filter(entry => entry.id !== id))
+  }, [])
+
+  const value = useMemo(() => ({ mount, unmount }), [mount, unmount])
+
+  return (
+    <PortalContext.Provider value={value}>
+      {children}
+      {entries.map(entry => (
+        <Fragment key={entry.id}>
+          {entry.render()}
+        </Fragment>
+      ))}
+    </PortalContext.Provider>
+  )
+}
 
 function Portal ({ children }: PortalProps): ReactNode {
   const componentId = useId()
-  const $state = useContext(PortalContext)
-  if (!$state) throw Error('Portal must be used within a Portal.Provider')
+  const portal = useContext(PortalContext)
+  if (!portal) throw Error('Portal must be used within a Portal.Provider')
 
   useEffect(() => {
-    $state.nodes[componentId].set(() => children)
-    const { $order } = $state
-    if (!$order.get().includes(componentId)) $order.push(componentId)
-  }, [$state, componentId, children])
-
-  useEffect(() => {
-    return () => {
-      $state.nodes[componentId].del()
-      const { $order } = $state
-      const index = $order.get().indexOf(componentId)
-      $order[index].del()
-    }
-  }, [$state, componentId])
+    portal.mount(componentId, () => children)
+    return () => { portal.unmount(componentId) }
+  }, [portal, componentId, children])
 
   return null
 }

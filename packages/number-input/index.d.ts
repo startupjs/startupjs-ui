@@ -3,7 +3,7 @@
 
 import { type RefObject } from 'react';
 import { type StyleProp, type TextStyle, type ViewStyle } from 'react-native';
-import './index.cssx.styl';
+import { type UITextInputProps } from '@startupjs-ui/text-input';
 export declare const _PropsJsonSchema: {};
 export interface NumberInputProps {
     /** Custom styles for the wrapper */
@@ -31,7 +31,7 @@ export interface NumberInputProps {
     /** Units position @default 'left' */
     unitsPosition?: 'left' | 'right';
     /** Return key type for the keyboard @default 'done' */
-    returnKeyType?: string;
+    returnKeyType?: UITextInputProps['returnKeyType'];
     /** Handler triggered when numeric value changes */
     onChangeNumber?: (value?: number) => void;
     /** Ref to access the underlying TextInput */

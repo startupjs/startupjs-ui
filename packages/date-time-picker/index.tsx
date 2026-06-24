@@ -10,8 +10,7 @@ import {
 import { Platform, type StyleProp, type ViewStyle } from 'react-native'
 import RNDateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { pug, observer, useBind, $ } from 'startupjs'
-import { themed, useMedia } from '@startupjs-ui/core'
+import { css, pug, observer, useBind, $, useMedia, themed } from 'startupjs'
 import Button from '@startupjs-ui/button'
 import Div from '@startupjs-ui/div'
 import Divider from '@startupjs-ui/divider'
@@ -21,9 +20,8 @@ import Drawer from '@startupjs-ui/drawer'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { getLocale, useMoment } from './helpers'
 import { Calendar, TimeSelect } from './components'
-import './index.cssx.styl'
 
-export default observer(themed('DateTimePicker', DateTimePicker))
+export default themed('DateTimePicker', observer(DateTimePicker))
 
 export const _PropsJsonSchema = {/* DateTimePickerProps */}
 
@@ -121,7 +119,7 @@ function DateTimePicker ({
   ...props
 }: DateTimePickerProps): ReactNode {
   const moment = useMoment()
-  timezone ??= moment.tz.guess()
+  const timezoneName = timezone ?? moment.tz.guess()
   const media: any = useMedia()
   const [textInput, setTextInput] = useState('')
   const refTimeSelect = useRef<any>(null)
@@ -240,7 +238,7 @@ function DateTimePicker ({
   let { onChangeVisible } = bindProps
   ;({ visible, onChangeVisible } = useBind({ $visible, visible, onChangeVisible }) as any)
 
-  const [tempDate, setTempDate] = useTempDate({ visible: !!visible, date, timezone: timezone as any, moment })
+  const [tempDate, setTempDate] = useTempDate({ visible: !!visible, date, timezone: timezoneName, moment })
 
   useEffect(() => {
     // Prevent crashes when custom renderer passed via props
@@ -275,10 +273,10 @@ function DateTimePicker ({
       return
     }
 
-    const value = +moment.tz(date, timezone).seconds(0).milliseconds(0)
-    setTextInput(moment.tz(value, timezone).format(_dateFormat))
+    const value = +moment.tz(date, timezoneName).seconds(0).milliseconds(0)
+    setTextInput(moment.tz(value, timezoneName).format(_dateFormat))
     setTempDate(new Date(value))
-  }, [date, timezone, _dateFormat, setTempDate, moment])
+  }, [date, timezoneName, _dateFormat, setTempDate, moment])
 
   function _onChangeDate (value: any) {
     const timestamp = getTimestampFromValue(value)
@@ -359,14 +357,13 @@ function DateTimePicker ({
               date=tempDate
               exactLocale=exactLocale
               disabledDays=disabledDays
-              locale=locale
               maxDate=maxDate
               minDate=minDate
               range=range
-              timezone=timezone
+              timezone=timezoneName
               testID=calendarTestID
               onChangeDate=(newDate) => {
-                setTempDate(newDate)
+                setTempDate(new Date(newDate))
                 if (mode === 'date') _onChangeDate(newDate)
               }
             )
@@ -380,7 +377,7 @@ function DateTimePicker ({
               ref=refTimeSelect
               maxDate=maxDate
               minDate=minDate
-              timezone=timezone
+              timezone=timezoneName
               exactLocale=exactLocale
               is24Hour=is24Hour
               timeInterval=timeInterval
@@ -396,7 +393,7 @@ function DateTimePicker ({
             Button(
               size='s'
               color='secondary'
-              variant='text'
+              variant='ghost'
               onPress=() => {
                 onDismiss()
               }
@@ -404,7 +401,7 @@ function DateTimePicker ({
             Button(
               size='s'
               color='primary'
-              variant='text'
+              variant='ghost'
               onPress=() => {
                 _onChangeDate(tempDate)
               }
@@ -419,10 +416,10 @@ function DateTimePicker ({
             textColor='#000000cc'
             maximumDate=maxDate ? new Date(maxDate) : undefined
             minimumDate=minDate ? new Date(minDate) : undefined
-            timeZoneName=timezone
+            timeZoneName=timezoneName
             onChange=(event, selectedDate) => {
               if (event.type !== 'dismissed') {
-                setTempDate(selectedDate)
+                if (selectedDate) setTempDate(selectedDate)
               }
             }
           )
@@ -462,7 +459,6 @@ function DateTimePicker ({
         Drawer.drawer(
           visible=visible
           position='bottom'
-          swipeStyleName='swipe'
           AreaComponent=Div
           onDismiss=onDismiss
         )= renderPopoverContent()
@@ -495,3 +491,71 @@ function getTempDate (date: number | undefined, timezone: string, moment: any) {
     ? new Date(+moment.tz(date, timezone).seconds(0).milliseconds(0))
     : new Date()
 }
+
+css`
+  .content {
+    flex-direction: column;
+    padding: var(--DateTimePicker-content-padding);
+    flex-shrink: 1;
+  }
+
+  @media (--breakpoint-tablet) {
+    .content {
+      flex-direction: row;
+      height: var(--DateTimePicker-content-tablet-height);
+    }
+  }
+
+  .divider {
+    align-self: center;
+    width: var(--DateTimePicker-divider-width);
+    height: var(--DateTimePicker-divider-height);
+    margin-top: var(--DateTimePicker-divider-margin-y);
+    margin-bottom: var(--DateTimePicker-divider-margin-y);
+  }
+
+  @media (--breakpoint-tablet) {
+    .divider {
+      height: var(--DateTimePicker-divider-tablet-height);
+      width: var(--DateTimePicker-divider-tablet-width);
+      margin-top: 0;
+      margin-bottom: 0;
+      margin-left: var(--DateTimePicker-divider-tablet-margin-x);
+      margin-right: var(--DateTimePicker-divider-tablet-margin-x);
+    }
+  }
+
+  .drawer {
+    height: auto;
+    border-radius: 0;
+    padding-top: var(--DateTimePicker-drawer-padding-top);
+  }
+
+  .actions {
+    justify-content: space-between;
+  }
+
+  .rnPicker {
+    margin-top: var(--DateTimePicker-rn-picker-margin-top);
+  }
+
+  .drawer:part(swipe) {
+    height: var(--DateTimePicker-swipe-height);
+  }
+
+  .popoverWrapper,
+  .popoverOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: default;
+  }
+
+  .popover {
+    background-color: var(--DateTimePicker-popover-bg);
+    border-radius: var(--DateTimePicker-popover-radius);
+    box-shadow: var(--DateTimePicker-popover-shadow);
+  }
+`

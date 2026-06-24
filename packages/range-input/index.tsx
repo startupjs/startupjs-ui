@@ -1,11 +1,12 @@
 import { useMemo, type ReactNode } from 'react'
 import MultiSlider, { type MultiSliderProps } from '@startupjs-ui/react-native-multi-slider'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
-import Label from './Label'
-import './index.cssx.styl'
+import { css, pug, observer, themed } from 'startupjs'
 
-export default observer(themed('RangeInput', RangeInput))
+import Label from './Label'
+
+export default themed('RangeInput', observer(RangeInput))
+
+const UIMultiSlider = MultiSlider as any
 
 export const _PropsJsonSchema = {/* RangeInputProps */}
 
@@ -100,7 +101,7 @@ function RangeInput ({
   }
 
   return pug`
-    MultiSlider.root(
+    UIMultiSlider.root(
       ...props
       part='root'
       testID=testID
@@ -123,3 +124,40 @@ function RangeInput ({
     )
   `
 }
+
+css`
+  .root:part(container) {
+    height: var(--Range-container-height);
+  }
+
+  .root:part(track) {
+    height: var(--Range-track-height);
+    background-color: var(--Range-track-bg);
+    border-radius: var(--Range-track-radius);
+  }
+
+  .root:part(selected) {
+    background-color: var(--Range-selected-bg);
+  }
+
+  .root:part(marker) {
+    top: var(--Range-marker-top);
+    width: var(--Range-marker-size);
+    height: var(--Range-marker-size);
+    border-radius: var(--Range-marker-radius);
+    box-shadow: var(--Range-marker-shadow);
+  }
+
+  .root:part(stepLabel) {
+    font-style: normal;
+    font-size: var(--Range-step-label-font-size);
+    line-height: var(--Range-step-label-line-height);
+    color: var(--Range-step-label-color);
+  }
+
+  .root:part(stepMarker) {
+    border-radius: 0;
+    width: var(--Range-step-marker-width);
+    background-color: var(--Range-step-marker-bg);
+  }
+`

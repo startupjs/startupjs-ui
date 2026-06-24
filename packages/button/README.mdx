@@ -7,7 +7,6 @@ import { Sandbox } from '@startupjs-ui/docs'
 import { faHouseUser } from '@fortawesome/free-solid-svg-icons/faHouseUser'
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons/faCoffee'
-import './index.mdx.cssx.styl'
 
 # Button
 
@@ -51,11 +50,16 @@ return (
 
 ## Variants
 
-The `variant` prop controls the button's visual style. It affects the background, border, and text/icon colors. The default value is `outlined`.
+The `variant` prop controls the button's visual style. It affects the background, border, and text/icon colors. The default value is `default`.
 
-- **outlined** -- a bordered button with no background fill (default)
-- **flat** -- a solid, filled button
-- **text** -- a borderless button with no background
+- **default** -- a solid primary button (default)
+- **outline** -- a neutral bordered button with no primary fill
+- **secondary** -- a filled secondary button
+- **ghost** -- a borderless button with subtle hover/active states
+- **destructive** -- a filled destructive button
+- **link** -- a button styled like a link
+
+The old `flat`, `outlined`, and `text` variants are still accepted during migration and print a one-time warning. Use `default`, `outline`, and `ghost` instead.
 
 ```jsx example
 return pug`
@@ -63,42 +67,56 @@ return pug`
     Button(
       onPress=() => console.log('pressed')
       icon=faCoffee
-    ) Outlined
+    ) Default
     Br
     Button(
       onPress=() => console.log('pressed')
-      variant='flat'
+      variant='outline'
       icon=faCoffee
-    ) Flat
+    ) Outline
     Br
     Button(
       onPress=() => console.log('pressed')
-      variant='text'
+      variant='secondary'
       icon=faCoffee
-    ) Text
+    ) Secondary
+    Br
+    Button(
+      onPress=() => console.log('pressed')
+      variant='ghost'
+      icon=faCoffee
+    ) Ghost
+    Br
+    Button(
+      onPress=() => console.log('pressed')
+      variant='destructive'
+      icon=faCoffee
+    ) Destructive
+    Br
+    Button(
+      onPress=() => console.log('pressed')
+      variant='link'
+      icon=faCoffee
+    ) Link
 `
 ```
 
 ## Colors
 
-The default color is `secondary`. You can change it by passing any color name from your theme's color configuration to the `color` prop. See all available values in the Sandbox section at the bottom of the page.
+The default variant uses `primary`, `secondary` uses `secondary`, and `destructive` uses `destructive`. You can pass `color` to use another CSSX color token, such as `success`, `warning`, or `error`. Tokens resolve through variables like `--color-primary`.
 
 ```jsx example
 return (
   <Div>
-    <Button onPress={() => console.log('pressed')} variant='flat'>
-      Default dark
+    <Button onPress={() => console.log('pressed')}>
+      Default
     </Button>
     <Br />
-    <Button onPress={() => console.log('pressed')} color='primary' variant='flat'>
-      Primary
-    </Button>
-    <Br />
-    <Button onPress={() => console.log('pressed')} color='success' variant='flat'>
+    <Button onPress={() => console.log('pressed')} color='success'>
       Success
     </Button>
     <Br />
-    <Button onPress={() => console.log('pressed')} color='error' variant='flat'>
+    <Button onPress={() => console.log('pressed')} color='error'>
       Error
     </Button>
   </Div>
@@ -112,15 +130,15 @@ The `size` prop controls the overall button dimensions, including the icon and l
 ```jsx example
 return (
   <Div>
-    <Button variant='flat' size='s' icon={faCheck}>
+    <Button size='s' icon={faCheck}>
       Small
     </Button>
     <Br />
-    <Button variant='flat' icon={faCheck}>
+    <Button icon={faCheck}>
       Default
     </Button>
     <Br />
-    <Button variant='flat' size='l' icon={faCheck}>
+    <Button size='l' icon={faCheck}>
       Large
     </Button>
   </Div>
@@ -139,16 +157,10 @@ The `shape` prop controls the border radius of the button. The default value is 
 
 You can add an icon using the `icon` prop. To change the icon's position relative to the label, use the `iconPosition` prop (`left` by default).
 
-In your `.styl` file:
-```stylus
-.icon
-  color var(--color-text-success)
-```
-
 ```jsx example
 return (
   <Div>
-    <Button icon={faCoffee} iconStyleName='icon'>
+    <Button icon={faCoffee} iconStyle={{ color: '#16a34a' }}>
       Icon on the left (default) with the changed color
     </Button>
     <Br />
@@ -173,22 +185,15 @@ You can fine-tune the button's appearance using style props:
 - **hoverStyle** -- custom styles applied on hover
 - **activeStyle** -- custom styles applied when pressed
 
-## Theme configuration
-
-Button also exposes CSSX theme configuration for app-wide visual tuning:
-
-- **$UI.Button.outlinedBorderColor** -- override the border color used by the `outlined` variant. By default the border uses the button color with opacity.
-- **$UI.Button.useBgColorForFlat** -- when enabled, the `flat` variant first tries `bg-${color}` before falling back to the regular color token.
-- **$UI.Button.webNativeButton** -- controls whether the web root renders with native button semantics. It is enabled by default.
 
 ## Call to Action
 
 Try to keep the variety of button combinations you use in your app to a minimum.
 
-Use a regular Button without any extra options by default. Whenever you want to emphasize a particular call to action, use a primary flat button.
+Use a regular Button without any extra options for the primary action. Use `variant='outline'`, `variant='secondary'`, or `variant='ghost'` for quieter secondary actions.
 
 ```jsx example
-<Button color='primary' variant='flat'>
+<Button>
   Destroy the Death Star!
 </Button>
 ```
@@ -203,14 +208,64 @@ It is a much better UX practice to use regular buttons by default and decide whi
 
 ```jsx example
 <Div row align='right'>
-  <Button>
+  <Button variant='outline'>
     Cancel
   </Button>
-  <Button pushed color='primary' variant='flat'>
+  <Button pushed>
     OK
   </Button>
 </Div>
 ```
+
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
+
+### Parts
+
+| Part | Description |
+| --- | --- |
+| `root` | Root element. |
+| `icon` | Primary icon. |
+| `loader` | Loading indicator. |
+| `text` | Main text label. |
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--Button-height-xs` | `1rem` | Controls the xs height. |
+| `--Button-height-s` | `1.5rem` | Controls the small height. |
+| `--Button-height-m` | `2rem` | Controls the medium height. |
+| `--Button-height-l` | `2.5rem` | Controls the large height. |
+| `--Button-height-xl` | `3rem` | Controls the xl height. |
+| `--Button-height-xxl` | `3.5rem` | Controls the xxl height. |
+| `--Button-font-size-xs` | `var(--text-xs)` | Controls the xs font size. |
+| `--Button-font-size-s` | `var(--text-xs)` | Controls the small font size. |
+| `--Button-font-size-m` | `var(--text-sm)` | Controls the medium font size. |
+| `--Button-font-size-l` | `var(--text-base)` | Controls the large font size. |
+| `--Button-font-size-xl` | `var(--text-xl)` | Controls the xl font size. |
+| `--Button-font-size-xxl` | `var(--text-2xl)` | Controls the xxl font size. |
+| `--Button-line-height-xs` | `0.875rem` | Controls the xs line height. |
+| `--Button-line-height-s` | `1rem` | Controls the small line height. |
+| `--Button-line-height-m` | `1.25rem` | Controls the medium line height. |
+| `--Button-line-height-l` | `1.5rem` | Controls the large line height. |
+| `--Button-line-height-xl` | `1.75rem` | Controls the xl line height. |
+| `--Button-line-height-xxl` | `2rem` | Controls the xxl line height. |
+| `--Button-font-weight` | `var(--font-weight-medium)` | Controls the font weight. |
+| `--Button-outline-border-width` | `1px` | Controls the outline border width. |
+| `--Button-outline-border-color` | `transparent` | Controls the outline border color. |
+| `--Button-outlined-border-width` | `var(--Button-outline-border-width)` | Controls the outlined border width. |
+| `--Button-outlined-border-color` | `var(--Button-outline-border-color)` | Controls the outlined border color. |
+| `--Button-web-native-button` | `1` | Controls the web native button. |
+| `--Button-disabled-opacity` | `0.25` | Controls the disabled opacity. |
+| `--Button-icon-margin-xs` | `calc(var(--spacing) * 1)` | Controls the xs icon margin. |
+| `--Button-icon-margin-s` | `calc(var(--spacing) * 1)` | Controls the small icon margin. |
+| `--Button-icon-margin-m` | `calc(var(--spacing) * 2)` | Controls the medium icon margin. |
+| `--Button-icon-margin-l` | `calc(var(--spacing) * 2)` | Controls the large icon margin. |
+| `--Button-icon-margin-xl` | `calc(var(--spacing) * 3)` | Controls the xl icon margin. |
+| `--Button-icon-margin-xxl` | `calc(var(--spacing) * 3)` | Controls the xxl icon margin. |
 
 ## Sandbox
 

@@ -1,11 +1,9 @@
 import { type ReactNode } from 'react'
 import { ScrollView, View, StyleSheet, type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed, useColors } from '@startupjs-ui/core'
+import { css, pug, observer, useCssColor, themed } from 'startupjs'
 import Div from '@startupjs-ui/div'
-import './index.cssx.styl'
 
-export default observer(themed('Sidebar', Sidebar))
+export default themed('Sidebar', observer(Sidebar))
 
 export const _PropsJsonSchema = {/* SidebarProps */}
 
@@ -35,7 +33,7 @@ export interface SidebarProps {
 }
 
 function Sidebar ({
-  style = [],
+  style,
   sidebarStyle,
   contentStyle,
   children,
@@ -47,10 +45,10 @@ function Sidebar ({
   renderContent,
   testID
 }: SidebarProps): ReactNode {
-  const getColor = useColors()
+  const defaultBackgroundColor = useCssColor('var(--Sidebar-bg, var(--color-background))')
 
   const flattenedStyle = StyleSheet.flatten(style) || {}
-  const { backgroundColor = getColor('bg-main-strong'), ...restStyle } = flattenedStyle
+  const { backgroundColor = defaultBackgroundColor, ...restStyle } = flattenedStyle
 
   const open = disabled ? false : $open?.get()
 
@@ -61,12 +59,39 @@ function Sidebar ({
   }
 
   return pug`
-    Div.root(style=restStyle styleName=[position] testID=testID)
+    Div.root(part='root' style=restStyle styleName=[position] testID=testID)
       ScrollView.sidebar(
         contentContainerStyle=[{ flex: 1 }, sidebarStyle]
         styleName={ open }
         style={ width, backgroundColor }
       )= renderSidebarContent()
-      View.main(style=contentStyle)= children
+      View.main(part='content' style=contentStyle)= children
   `
 }
+
+css`
+  .root {
+    height: 100%;
+    flex-direction: row;
+    flex-shrink: 1;
+  }
+
+  .root.right {
+    flex-direction: row-reverse;
+  }
+
+  .sidebar {
+    flex-direction: column;
+    display: none;
+    flex-grow: 0;
+  }
+
+  .sidebar.open {
+    display: flex;
+  }
+
+  .main {
+    flex-direction: column;
+    flex: 1;
+  }
+`

@@ -1,5 +1,5 @@
-import { useCallback, useMemo, type ReactNode } from 'react'
-import { pug, observer, $ } from 'startupjs'
+import { useCallback, useMemo, type ReactElement, type ReactNode } from 'react'
+import { css, pug, observer, $ } from 'startupjs'
 import Button from '@startupjs-ui/button'
 import Div from '@startupjs-ui/div'
 import FlatList from '@startupjs-ui/flat-list'
@@ -10,10 +10,8 @@ import { faAngleLeft } from '@fortawesome/free-solid-svg-icons/faAngleLeft'
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons/faAngleRight'
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons/faCaretDown'
 import { useMoment } from '../../../helpers'
-import STYLES from './index.cssx.styl'
 
-const yearsItemStyle = STYLES['years-item']
-const YEAR_ITEM_HEIGHT = yearsItemStyle.height
+const YEAR_ITEM_HEIGHT = 36
 
 interface HeaderProps {
   uiDate: number
@@ -61,14 +59,14 @@ function Header ({
       Div.actions(row)
         Button.button(
           color='text-description'
-          variant='text'
+          variant='ghost'
           disabled=isPrevDisabled
           icon=faAngleLeft
           onPress=() => onChangeMonth(-1)
         )
         Button.button(
           color='text-description'
-          variant='text'
+          variant='ghost'
           disabled=isNextDisabled
           icon=faAngleRight
           onPress=() => onChangeMonth(1)
@@ -131,31 +129,90 @@ const Years = observer(function YearsComponent ({
       FlatList(
         data=years
         renderItem=renderYear
-        keyExtractor=item => item
+        keyExtractor=item => String(item)
         getItemLayout=getItemLayout
       )
     `
   }
 
-  function renderYear ({ item }: { item: number }): ReactNode {
+  function renderYear ({ item }: { item: number }): ReactElement {
     return pug`
       Div.years-item(
-        variant='higlight'
+        variant='highlight'
         onPress=() => onChangeYear(item)
       )
         Span= item
-    `
+    ` as ReactElement
   }
 
   return pug`
     Div(style=style)
-      Popover(
+      Popover.yearsPopover(
         $visible=$visible
         renderContent=renderYears
-        attachmentStyleName='years-popover'
       )
         Div(vAlign='center' row)
           Span.year(bold)= moment.tz($uiDate.get(), timezone).year()
           Icon(icon=faCaretDown)
   `
 })
+
+css`
+  .header {
+    align-items: center;
+    justify-content: center;
+    margin-left: var(--DateTimePicker-header-margin-left);
+    margin-bottom: var(--DateTimePicker-header-margin-bottom);
+  }
+
+  @media (--breakpoint-tablet) {
+    .header {
+      justify-content: space-between;
+    }
+  }
+
+  .month {
+    font-size: var(--DateTimePicker-heading-font-size);
+    line-height: var(--DateTimePicker-heading-line-height);
+  }
+
+  .yearText {
+    color: var(--DateTimePicker-primary-text-color);
+    font-size: var(--DateTimePicker-heading-font-size);
+    line-height: var(--DateTimePicker-heading-line-height);
+  }
+
+  .actions {
+    justify-content: flex-end;
+    margin-left: var(--DateTimePicker-header-actions-margin-left);
+  }
+
+  @media (--breakpoint-tablet) {
+    .actions {
+      margin-left: 0;
+    }
+  }
+
+  .button,
+  .years {
+    margin-left: var(--DateTimePicker-header-button-margin-left);
+  }
+
+  .yearsPopover:part(attachment) {
+    padding: 0;
+    max-height: var(--DateTimePicker-years-popover-max-height);
+  }
+
+  .years-item {
+    height: var(--DateTimePicker-years-item-height);
+    align-items: center;
+    justify-content: center;
+    padding-left: var(--DateTimePicker-years-item-padding-x);
+    padding-right: var(--DateTimePicker-years-item-padding-x);
+  }
+
+  .year {
+    font-size: var(--DateTimePicker-heading-font-size);
+    line-height: var(--DateTimePicker-heading-line-height);
+  }
+`

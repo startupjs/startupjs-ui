@@ -1,32 +1,37 @@
 import { type ReactNode } from 'react'
 import { ActivityIndicator, type ActivityIndicatorProps } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { Colors, themed, useColors } from '@startupjs-ui/core'
+import { pug, observer, useCssColor, themed } from 'startupjs'
 
-const SIZES = { s: 'small', m: 'large' }
+const SIZES = { s: 'small', m: 'large' } as const
+const COLOR_TOKEN_RE = /^[A-Za-z][A-Za-z0-9_-]*$/
 
-export default observer(themed('Loader', Loader))
+function isSemanticColorToken (value: string): boolean {
+  return COLOR_TOKEN_RE.test(value.trim())
+}
+
+export default themed('Loader', observer(Loader))
 
 export const _PropsJsonSchema = {/* LoaderProps */}
 
 export interface LoaderProps extends Omit<ActivityIndicatorProps, 'size' | 'color' | 'children'> {
-  /** Color token defined in Colors @default 'text-description' */
+  /** Color token or raw color @default 'muted-foreground' */
   color?: string
   /** Component size @default 'm' */
   size?: 's' | 'm'
 }
 
 function Loader ({
-  color = Colors['text-description'],
+  color = 'muted-foreground',
   size = 'm',
   ...props
 }: LoaderProps): ReactNode {
-  const getColor = useColors()
-  const _color = getColor(color)
-  if (!_color) console.error('Loader component: Color for color property is incorrect. Use colors from Colors')
+  const resolvedColor = useCssColor(color)
+  const _color = resolvedColor ?? color
+  if (!resolvedColor && isSemanticColorToken(color)) console.error(`Loader component: Unknown color token "${color}"`)
 
   return pug`
     ActivityIndicator(
+      part='root'
       color=_color
       size=SIZES[size]
       ...props

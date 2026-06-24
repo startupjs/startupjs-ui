@@ -1,8 +1,8 @@
 import { useImperativeHandle, type ReactNode } from 'react'
-import { pug, observer } from 'startupjs'
+import { pug, observer, themed } from 'startupjs'
 import Button from '@startupjs-ui/button'
 import Div from '@startupjs-ui/div'
-import { themed } from '@startupjs-ui/core'
+
 import confirm from '@startupjs-ui/dialogs/confirm'
 import * as DocumentPicker from 'expo-document-picker'
 import * as ImagePicker from 'expo-image-picker'
@@ -11,7 +11,7 @@ import deleteFileApi from './deleteFile'
 import uploadFileApi from './uploadFile'
 import type { FileInputProps, FileInputRef } from './index'
 
-export default observer(themed('FileInput', FileInput))
+export default themed('FileInput', observer(FileInput))
 
 function FileInput ({
   value: initialFileId,
@@ -89,7 +89,7 @@ function FileInput ({
       if fileId
         Div(row)
           Button(testID=testID onPress=pickFile) Change
-          Button(testID=deleteTestID pushed onPress=handleDeleteFile variant='text' icon=faTrashAlt)
+          Button(testID=deleteTestID pushed onPress=handleDeleteFile variant='ghost' icon=faTrashAlt)
       else
         Button(testID=testID onPress=pickFile) Upload file
     `

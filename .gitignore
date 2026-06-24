@@ -26,6 +26,8 @@ yarn-error.log
 # documentation
 doc_build
 docs/dist
+docs/teamplay-env.d.ts
+teamplay-env.d.ts
 storybook/dist
 storybook/storybook-static
 storybook/test-results

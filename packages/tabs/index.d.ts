@@ -28,7 +28,7 @@ export interface TabsProps {
     /** Initial layout configuration passed to TabView */
     initialLayout?: any;
     /** Controls keyboard dismiss mode for TabView */
-    keyboardDismissMode?: string;
+    keyboardDismissMode?: 'none' | 'auto' | 'on-drag';
     /** Enable lazy rendering for scenes */
     lazy?: boolean;
     /** Distance of routes to preload while lazy loading */
@@ -73,7 +73,7 @@ export interface TabsProps {
     onTabLongPress?: (props: any) => void;
     /** Active label color @default 'primary' */
     activeColor?: string;
-    /** Inactive label color @default 'text-description' */
+    /** Inactive label color @default 'muted-foreground' */
     inactiveColor?: string;
     /** Ripple color for pressed tab */
     pressColor?: string;

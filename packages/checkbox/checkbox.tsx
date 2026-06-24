@@ -1,18 +1,18 @@
 import { useState, useRef, type ReactNode } from 'react'
 import { Animated, Easing } from 'react-native'
-import { pug, observer, useDidUpdate } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { css, pug, observer, useDidUpdate, themed } from 'startupjs'
+
 import Div from '@startupjs-ui/div'
 import Icon from '@startupjs-ui/icon'
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
-import STYLES from './index.cssx.styl'
 
-const { config: { checkbox: { iconSize } } } = STYLES
+const CHECKBOX_ICON_SIZE = 12
 const AnimatedView = Animated.View
 
 interface CheckboxInputProps {
   value?: boolean
   icon?: any
+  iconStyle?: any
   checkedBgColor?: string
   _hasError?: boolean
   [key: string]: any
@@ -21,6 +21,7 @@ interface CheckboxInputProps {
 function CheckboxInput ({
   value,
   icon,
+  iconStyle,
   checkedBgColor,
   _hasError,
   style,
@@ -56,6 +57,7 @@ function CheckboxInput ({
 
   return pug`
     Div.checkbox(
+      part='root'
       styleName=[checkedStyleName, { error: _hasError }]
       role='checkbox'
       style=style
@@ -64,9 +66,11 @@ function CheckboxInput ({
     )
       Div.checkbox-bg(style=checkedBgStyle)
       Icon.checkbox-icon(
+        part='icon'
+        style=iconStyle
         styleName=[checkedStyleName]
         icon= icon || faCheck
-        size=iconSize
+        size=CHECKBOX_ICON_SIZE
       )
       AnimatedView.checkbox-animation(
         styleName=[{ animated }]
@@ -82,4 +86,58 @@ function CheckboxInput ({
   `
 }
 
-export default observer(themed('Checkbox', CheckboxInput))
+export default themed('Checkbox', observer(CheckboxInput))
+
+css`
+  .checkbox {
+    height: var(--Checkbox-size);
+    width: var(--Checkbox-size);
+    border-width: var(--Checkbox-border-width);
+    border-color: var(--Checkbox-border-color);
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--Checkbox-radius);
+    overflow: hidden;
+  }
+
+  .checkbox.error {
+    border-color: var(--Checkbox-error-border-color);
+  }
+
+  .checkbox.checked {
+    background-color: var(--Checkbox-checked-bg);
+    border-color: var(--Checkbox-checked-border-color);
+  }
+
+  .checkbox-bg {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: var(--Checkbox-radius);
+  }
+
+  .checkbox-icon {
+    display: none;
+    color: var(--Checkbox-checked-icon-color);
+  }
+
+  .checkbox-icon.checked {
+    display: flex;
+  }
+
+  .checkbox-animation {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: var(--Checkbox-checked-bg);
+  }
+
+  .checkbox-animation.animated {
+    opacity: 1;
+  }
+`

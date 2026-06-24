@@ -1,6 +1,5 @@
 import { pug } from 'startupjs'
 import { Image } from 'react-native'
-import { u } from 'startupjs'
 import Icon from '@startupjs-ui/icon'
 import Item, { _PropsJsonSchema as ItemPropsJsonSchema } from './index'
 import Span from '@startupjs-ui/span'
@@ -77,7 +76,7 @@ return pug`
   Item(onPress=()=> alert('click'))
     Item.Left
       Image(
-        style={ width: u(3), height: u(3) }
+        style={ width: 24, height: 24 }
         source={ uri: 'https://i.pinimg.com/736x/95/30/41/953041070f000d45c05c912005f63724.jpg' }
       )
     Item.Content
@@ -86,6 +85,27 @@ return pug`
       Icon(icon=faShareAlt)
 `
 ```
+
+## Styling reference
+
+Use these names from `StartupjsProvider style` or another CSSX provider style layer for app-wide overrides.
+For the full theming model, see the [Styling and theming](/docs/Styling) guide.
+
+### Parts
+
+| Part | Description |
+| --- | --- |
+| `root` | Root element. |
+
+### CSS variables
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `--Item-padding-y` | `0.5rem` | Controls the vertical padding. |
+| `--Item-padding-x` | `1rem` | Controls the horizontal padding. |
+| `--Item-image-size` | `2rem` | Controls the image size. |
+| `--Item-image-radius` | `9999px` | Controls the image radius. |
+| `--Item-part-gap` | `0.5rem` | Controls the part gap. |
 
 ## Sandbox
 

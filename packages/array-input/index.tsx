@@ -1,12 +1,11 @@
 import { type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed, type UIRole } from '@startupjs-ui/core'
+import { css, pug, observer, themed } from 'startupjs'
+import { type UIRole } from '@startupjs-ui/core'
 import Div from '@startupjs-ui/div'
 import Button from '@startupjs-ui/button'
 import Input from '@startupjs-ui/input'
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
-import './index.cssx.styl'
 
 type ArrayInputWrapperProps = {
   style?: any
@@ -115,6 +114,7 @@ function ArrayInput ({
     }, children): ReactNode => {
       return pug`
         Div(
+          part='root'
           style=style
           testID=testID
           id=id
@@ -153,18 +153,37 @@ function ArrayInput ({
     'aria-readonly': ariaReadonly
   }, pug`
     each inputProps, index in inputs
-      Div.item(key=index styleName={ pushTop: index !== 0 })
-        Div.input
+      Div.item(part='item' key=index styleName={ pushTop: index !== 0 })
+        Div.input(part='input')
           Input(...inputProps)
-        Div.actions(vAlign='center' align='right')
+        Div.actions(part='actions' vAlign='center' align='right')
           if index < arrayLength
             Button.remove(
+              part='remove'
               tabIndex=-1
               size='s'
-              variant='text'
+              variant='ghost'
               icon=faTimes
               onPress=() => $value[index].del()
               color='text-subtle'
             )
   `)
 }
+
+css`
+  .item {
+    flex-direction: row;
+  }
+
+  .input {
+    flex: 1;
+  }
+
+  .actions {
+    width: var(--ArrayInput-actions-width);
+  }
+
+  .pushTop {
+    margin-top: var(--ArrayInput-item-gap);
+  }
+`

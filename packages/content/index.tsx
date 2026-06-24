@@ -1,14 +1,12 @@
 import { type ReactNode } from 'react'
-import { pug, observer, u } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { css, pug, observer, themed } from 'startupjs'
+
 import Div, { type DivProps } from '@startupjs-ui/div'
-import STYLES from './index.cssx.styl'
 
-const {
-  config: { defaultWidth }
-} = STYLES
+const DEFAULT_WIDTH = 'tablet'
+const LEGACY_UNIT = 8
 
-export default observer(themed('Content', Content))
+export default themed('Content', observer(Content))
 
 export const _PropsJsonSchema = {/* ContentProps */}
 
@@ -31,15 +29,15 @@ function Content ({
   children,
   padding = false,
   pure,
-  width = defaultWidth,
+  width = DEFAULT_WIDTH,
   full = false,
   ...props
 }: ContentProps): ReactNode {
   const _rootStyle: Record<string, any> = {}
   if (padding === true) padding = 2
   if (typeof padding === 'number') {
-    _rootStyle.paddingTop = u(padding)
-    _rootStyle.paddingBottom = u(padding)
+    _rootStyle.paddingTop = padding * LEGACY_UNIT
+    _rootStyle.paddingBottom = padding * LEGACY_UNIT
   }
 
   return pug`
@@ -52,3 +50,33 @@ function Content ({
     )= children
   `
 }
+
+css`
+  .root {
+    padding-left: var(--Content-gutter);
+    padding-right: var(--Content-gutter);
+    align-self: center;
+    width: 100%;
+  }
+
+  .root.pure {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .root.width-mobile {
+    max-width: var(--Content-width-mobile);
+  }
+
+  .root.width-tablet {
+    max-width: var(--Content-width-tablet);
+  }
+
+  .root.width-desktop {
+    max-width: var(--Content-width-desktop);
+  }
+
+  .root.width-wide {
+    max-width: var(--Content-width-wide);
+  }
+`

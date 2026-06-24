@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
 import { type StyleProp, type ViewStyle } from 'react-native'
-import { pug, observer } from 'startupjs'
-import { themed } from '@startupjs-ui/core'
+import { pug, observer, themed } from 'startupjs'
+
 import Div, { type DivProps } from '@startupjs-ui/div'
 
 export const _PropsJsonSchema = {/* TbodyProps */} // used in docs generation
@@ -16,10 +16,11 @@ export interface TbodyProps extends DivProps {
 function Tbody ({ style, children, ...props }: TbodyProps): ReactNode {
   return pug`
     Div(
+      part='root'
       ...props
       style=style
     )= children
   `
 }
 
-export default observer(themed('Tbody', Tbody))
+export default themed('Tbody', observer(Tbody))
