@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.0](https://github.com/startupjs/startupjs-ui/compare/v0.3.9...v0.4.0-alpha.0) (2026-06-24)
+
+
+### Features
+
+* Move StartupJS UI theme system to CSSX ([#41](https://github.com/startupjs/startupjs-ui/issues/41)) ([3f1e4b9](https://github.com/startupjs/startupjs-ui/commit/3f1e4b9ed73c7af0de577e8f47ec8ea042c5080e)), closes [startupjs/cssx#5](https://github.com/startupjs/cssx/issues/5) [startupjs/startupjs#1327](https://github.com/startupjs/startupjs/issues/1327)
+
+
+
+
+
 # [0.3.0](https://github.com/startupjs/startupjs-ui/compare/v0.2.3...v0.3.0) (2026-05-27)
 
 **Note:** Version bump only for package @startupjs-ui/loader

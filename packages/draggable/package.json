@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/draggable",
-  "version": "0.3.0",
+  "version": "0.4.0-alpha.0",
   "publishConfig": {
     "access": "public"
   },
@@ -8,7 +8,7 @@
   "types": "index.d.ts",
   "type": "module",
   "dependencies": {
-    "@startupjs-ui/portal": "^0.3.0"
+    "@startupjs-ui/portal": "^0.4.0-alpha.0"
   },
   "peerDependencies": {
     "react": "*",
