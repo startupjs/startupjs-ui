@@ -96,7 +96,10 @@ Use the reference files when you need the full token list:
 
 ## Light and dark
 
-`StartupjsProvider theme` is forwarded to CSSX. The default is `auto`, which uses the device color scheme when a dark theme is available.
+`StartupjsProvider theme` is forwarded to CSSX. When no saved user preference
+exists, the root provider starts with the default `:root` values.
+
+Use `theme='auto'` when the app is ready to follow the OS color scheme:
 
 ```jsx
 <StartupjsProvider theme='auto' style={appStyle}>
@@ -120,7 +123,11 @@ Define default variables in `:root` and dark overrides in `:root.dark`:
 }
 ```
 
-Set `theme='default'` or `theme='light'` to disable automatic dark selection. Set `theme='dark'` to force the dark theme.
+At the root, `theme='auto'` is an initial/system preference. A saved preference
+from `useTheme()` or `DarkMode` takes priority after the user chooses one.
+
+Set `theme='default'`, `theme='light'`, `theme='dark'`, or another named theme
+only when you want to force that provider subtree.
 
 ## Component selectors
 

@@ -9,6 +9,131 @@ A small theme toggle button for apps that use the CSSX theme provider. It switch
 import { DarkMode } from 'startupjs-ui'
 ```
 
+`DarkMode` changes the CSSX theme preference. On web the preference is stored
+in `localStorage`; on React Native it is stored with
+`@react-native-async-storage/async-storage`.
+
+For React Native apps, install the storage package:
+
+```sh
+npx expo install @react-native-async-storage/async-storage
+```
+
+## Expo Router dark mode recipe
+
+StartupJS UI styles and Expo Router / React Navigation are separate layers. If
+you enable dark mode but leave React Navigation on its defaults, StartupJS UI
+components can render with dark tokens while headers, tabs, and scene
+backgrounds stay light.
+
+Without `theme='auto'`, a fresh app starts with the default light theme unless a
+user preference was already saved. Add `theme='auto'` when you want the app to
+follow the system color scheme before the user makes a manual choice.
+
+Opt into automatic light/dark selection at the root:
+
+```tsx
+// app/_layout.tsx
+import React from 'react'
+import { Slot } from 'expo-router'
+import { StartupjsProvider } from 'startupjs'
+
+export default function RootLayout () {
+  return (
+    <StartupjsProvider theme='auto'>
+      <Slot />
+    </StartupjsProvider>
+  )
+}
+```
+
+Then wire Stack colors to CSSX and put `DarkMode` into the standard header:
+
+```tsx
+// app/(app)/_layout.tsx
+import React from 'react'
+import { Stack } from 'expo-router'
+import { observer, useCssColor } from 'startupjs'
+import { DarkMode } from 'startupjs-ui'
+
+export default observer(function AppLayout () {
+  const backgroundColor = useCssColor('background')
+  const foregroundColor = useCssColor('foreground')
+
+  return (
+    <Stack
+      screenOptions={{
+        contentStyle: { backgroundColor },
+        headerStyle: { backgroundColor },
+        headerTintColor: foregroundColor,
+        headerTitleStyle: { color: foregroundColor },
+        headerShadowVisible: false,
+        headerRight: () => <DarkMode variant='ghost' size='s' />
+      }}
+    />
+  )
+})
+```
+
+For tabs, also wire the tab bar:
+
+```tsx
+// app/(tabs)/_layout.tsx
+import React from 'react'
+import { Tabs } from 'expo-router'
+import { observer, useCssColor } from 'startupjs'
+import { DarkMode } from 'startupjs-ui'
+
+export default observer(function TabsLayout () {
+  const backgroundColor = useCssColor('background')
+  const foregroundColor = useCssColor('foreground')
+  const borderColor = useCssColor('border')
+  const primaryColor = useCssColor('primary')
+  const mutedForegroundColor = useCssColor('muted-foreground')
+  const activeBackgroundColor = useCssColor('primary', 0.08)
+
+  return (
+    <Tabs
+      screenOptions={{
+        sceneStyle: { backgroundColor },
+        headerStyle: { backgroundColor },
+        headerTintColor: foregroundColor,
+        headerTitleStyle: { color: foregroundColor },
+        headerShadowVisible: false,
+        headerRight: () => <DarkMode variant='ghost' size='s' />,
+        tabBarStyle: { backgroundColor, borderColor },
+        tabBarActiveTintColor: primaryColor,
+        tabBarActiveBackgroundColor: activeBackgroundColor,
+        tabBarInactiveTintColor: mutedForegroundColor
+      }}
+    />
+  )
+})
+```
+
+If a screen already has header actions, render `DarkMode` next to them:
+
+```tsx
+import React from 'react'
+import { Stack } from 'expo-router'
+import { Button, DarkMode, Div } from 'startupjs-ui'
+
+export default function DetailsScreen () {
+  return (
+    <Stack.Screen
+      options={{
+        headerRight: () => (
+          <Div row vAlign='center' gap={1}>
+            <Button variant='ghost'>Edit</Button>
+            <DarkMode variant='ghost' size='s' />
+          </Div>
+        )
+      }}
+    />
+  )
+}
+```
+
 ## Simple example
 
 ```jsx example
