@@ -24,6 +24,9 @@ const useCommitEffect = typeof window === 'undefined'
   ? useEffect
   : useLayoutEffect
 
+const UNSUPPORTED_LEGACY_PROPS = ['palette', 'colors', 'componentColors'] as const
+const reportedUnsupportedLegacyProps = new Set<string>()
+
 export interface UiProviderProps {
   /** App content rendered inside the provider */
   children?: ReactNode
@@ -36,8 +39,11 @@ export interface UiProviderProps {
 function UiProvider ({
   children,
   style,
-  theme
+  theme,
+  ...props
 }: UiProviderProps): ReactNode {
+  reportUnsupportedLegacyProps(props)
+
   const providerStyle = useMemo(
     () => [tailwindTheme, shadcnTheme, startupjsUiTheme, style],
     [style]
@@ -51,6 +57,18 @@ function UiProvider ({
         = children
       DialogsProvider
   `
+}
+
+function reportUnsupportedLegacyProps (props: Record<string, unknown>): void {
+  for (const prop of UNSUPPORTED_LEGACY_PROPS) {
+    if (props[prop] == null || reportedUnsupportedLegacyProps.has(prop)) continue
+
+    reportedUnsupportedLegacyProps.add(prop)
+    console.error(
+      `[@startupjs/ui] UiProvider: "${prop}" is no longer supported. ` +
+      'Move theme overrides to CSSX variables in StartupjsProvider style.'
+    )
+  }
 }
 
 function ColorSchemeSync (): null {
