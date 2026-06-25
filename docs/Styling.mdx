@@ -32,22 +32,25 @@ export default function RootLayout ({ children }) {
 
 ## Theme layers
 
-When `startupjs-ui` is installed, its plugin adds the UI provider inside `StartupjsProvider`. The effective style order is:
+When `startupjs-ui` is installed, its plugin adds the UI provider inside
+`StartupjsProvider`. The effective style order is:
 
-1. CSSX Tailwind token theme
-2. CSSX shadcn semantic theme
-3. StartupJS UI component token theme
+1. CSSX Tailwind token variables
+2. CSSX shadcn semantic variables
+3. StartupJS UI component variables
 4. your `StartupjsProvider style`
 5. component-local styles
 6. per-instance `style` and `*Style` props
 
-Bare StartupJS does not include UI themes unless `startupjs-ui` is installed.
+These built-in layers are token/theme sheets, not the optional Tailwind utility
+runtime. Bare StartupJS does not include UI themes unless `startupjs-ui` is
+installed.
 
 ## Override order
 
 Prefer customization in this order:
 
-1. Change CSS variables in `:root`.
+1. Change CSS variables in `:root` or `:root.<theme>`.
 2. Use component tag selectors such as `Button`, `Item`, or `TextInput`.
 3. Use `:part()` / `::part()` selectors for meaningful inner elements.
 4. Use per-instance `style` and `*Style` props when a single component instance needs an exception.
@@ -56,7 +59,13 @@ Component docs include a “Styling reference” section listing the available p
 
 ## CSS variables
 
-Use CSS variables for theme values that should affect multiple components. StartupJS UI uses semantic color variables first, so brand changes usually start with `--primary`, `--primary-foreground`, and their `--color-*` mappings.
+Use CSS variables for theme values that should affect multiple components.
+StartupJS UI uses semantic color variables first, so brand changes usually start
+with `--primary`, `--primary-foreground`, and their `--color-*` mappings.
+
+Declare variable overrides only in provider root blocks: `:root`,
+`:root.dark`, or another `:root.<theme>`. Component selectors are for normal
+style declarations.
 
 ```jsx
 const appStyle = css`
