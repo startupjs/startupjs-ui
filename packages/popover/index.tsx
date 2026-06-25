@@ -1,5 +1,5 @@
 import { Children, isValidElement, useMemo, useRef, useCallback, useImperativeHandle, useState, type ReactNode, type RefObject } from 'react'
-import { View, TouchableWithoutFeedback, type StyleProp, type ViewStyle } from 'react-native'
+import { StyleSheet, View, TouchableWithoutFeedback, type StyleProp, type ViewStyle } from 'react-native'
 import { css, pug, observer, themed } from 'startupjs'
 
 import AbstractPopover, { type AbstractPopoverProps } from '@startupjs-ui/abstract-popover'
@@ -95,9 +95,9 @@ function Popover ({
   const renderOverlayWrapper = (node: ReactNode): ReactNode => {
     const wrappedNode = renderWrapper ? renderWrapper(node) : node
     return pug`
-      View.root
+      View(style=styles.portalRoot)
         TouchableWithoutFeedback(onPress=setVisibleFalse)
-          View.overlay(part='overlay' style=overlayStyle)
+          View.overlay(part='overlay' style=[styles.overlay, overlayStyle])
         = wrappedNode
     `
   }
@@ -123,15 +123,24 @@ function Popover ({
 
 export default themed('Popover', observer(Popover))
 
-css`
-  .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+const styles = StyleSheet.create({
+  portalRoot: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0
+  },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0
   }
+})
 
+css`
   .attachment {
     background-color: var(--Popover-bg);
     border-radius: var(--Popover-radius);

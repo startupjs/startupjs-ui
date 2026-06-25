@@ -68,7 +68,7 @@ Since `Tr`, `Th`, and `Td` extend `Div` props, you can apply custom hover and ac
 
 ```jsx example
 const tableStyle = {
-  backgroundColor: '#fff'
+  backgroundColor: 'var(--color-card)'
 }
 
 const hoverOptions = {
@@ -76,11 +76,11 @@ const hoverOptions = {
     cursor: 'default'
   },
   hoverStyle: {
-    backgroundColor: '#ebf8fd'
+    backgroundColor: 'var(--color-accent)'
   },
   activeStyle: {
     opacity: 1,
-    backgroundColor: '#ebf8fd'
+    backgroundColor: 'var(--color-accent)'
   },
   onPress: () => undefined
 }

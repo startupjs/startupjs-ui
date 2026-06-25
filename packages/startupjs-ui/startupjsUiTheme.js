@@ -417,6 +417,7 @@ export default css`
   --Rank-item-bg-disabled: var(--color-muted);
   --Rank-item-border-color: var(--color-border);
   --Rank-icon-disabled-color: var(--color-muted-foreground);
+  --Rank-select-width: 12rem;
   --Rank-span-offset: 1.25rem;
   --Rank-right-offset: 2rem;
   --Rank-readonly-index-width: 1.25rem;

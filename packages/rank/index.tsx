@@ -140,6 +140,7 @@ const RankInput = observer(function RankInput ({
       )
         Div(row)
           Select(
+            styleName='select'
             size='s'
             disabled=disabled
             showEmptyValue=false
@@ -203,6 +204,11 @@ css`
     flex-grow: 1;
     margin-left: var(--Rank-span-offset);
     justify-content: center;
+  }
+
+  .select {
+    width: var(--Rank-select-width);
+    flex-shrink: 0;
   }
 
   .readonly-index {

@@ -73,8 +73,8 @@ export default observer(({ children }) => {
                 each item in cat.items
                   Item(key=getItemPath(item) path=getItemPath(item) setShowSidebar=setShowSidebar)= getItemName(item)
         ScrollView.contentWrapper
+          DarkMode.pageDarkMode(size='m' variant='outline')
           View.content
-            DarkMode.pageDarkMode(size='m' variant='outline')
             Slot
   `
   styl`
@@ -141,6 +141,7 @@ export default observer(({ children }) => {
     .contentWrapper
       flex: 1
       background-color: var(--color-background)
+      position: relative
       @media (max-width: 767px)
         padding-top: 20px
     .content
@@ -149,7 +150,6 @@ export default observer(({ children }) => {
       width: 100%
       align-self: center
       padding: 20px 20px 0 20px
-      position: relative
     .pageDarkMode
       position: absolute
       top: 12px
