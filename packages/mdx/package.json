@@ -1,7 +1,7 @@
 {
   "name": "@startupjs-ui/mdx",
   "description": "MDX provider with a set of custom components for react-native support and syntax highlighting",
-  "version": "0.4.0-alpha.0",
+  "version": "0.4.0-alpha.2",
   "publishConfig": {
     "access": "public"
   },
@@ -21,7 +21,7 @@
     "@startupjs-ui/link": "^0.4.0-alpha.0",
     "@startupjs-ui/scroll-view": "^0.4.0-alpha.0",
     "@startupjs-ui/span": "^0.4.0-alpha.0",
-    "@startupjs-ui/table": "^0.4.0-alpha.0",
+    "@startupjs-ui/table": "^0.4.0-alpha.2",
     "refractor": "^3.0.0"
   },
   "peerDependencies": {

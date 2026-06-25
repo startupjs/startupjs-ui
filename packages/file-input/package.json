@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/file-input",
-  "version": "0.4.0-alpha.0",
+  "version": "0.4.0-alpha.2",
   "publishConfig": {
     "access": "public"
   },
@@ -22,7 +22,7 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
     "@startupjs-ui/button": "^0.4.0-alpha.0",
-    "@startupjs-ui/dialogs": "^0.4.0-alpha.0",
+    "@startupjs-ui/dialogs": "^0.4.0-alpha.2",
     "@startupjs-ui/div": "^0.4.0-alpha.0",
     "busboy": "^1.6.0",
     "sharp": "^0.34.5"

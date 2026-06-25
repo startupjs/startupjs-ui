@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/input",
-  "version": "0.4.0-alpha.0",
+  "version": "0.4.0-alpha.2",
   "publishConfig": {
     "access": "public"
   },
@@ -13,25 +13,25 @@
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
-    "@startupjs-ui/array-input": "^0.4.0-alpha.0",
+    "@startupjs-ui/array-input": "^0.4.0-alpha.2",
     "@startupjs-ui/card": "^0.4.0-alpha.0",
     "@startupjs-ui/checkbox": "^0.4.0-alpha.0",
     "@startupjs-ui/color-picker": "^0.4.0-alpha.0",
     "@startupjs-ui/core": "^0.4.0-alpha.0",
-    "@startupjs-ui/date-time-picker": "^0.4.0-alpha.0",
+    "@startupjs-ui/date-time-picker": "^0.4.0-alpha.2",
     "@startupjs-ui/div": "^0.4.0-alpha.0",
-    "@startupjs-ui/file-input": "^0.4.0-alpha.0",
+    "@startupjs-ui/file-input": "^0.4.0-alpha.2",
     "@startupjs-ui/icon": "^0.4.0-alpha.0",
-    "@startupjs-ui/multi-select": "^0.4.0-alpha.0",
-    "@startupjs-ui/number-input": "^0.4.0-alpha.0",
-    "@startupjs-ui/object-input": "^0.4.0-alpha.0",
-    "@startupjs-ui/password-input": "^0.4.0-alpha.0",
+    "@startupjs-ui/multi-select": "^0.4.0-alpha.2",
+    "@startupjs-ui/number-input": "^0.4.0-alpha.2",
+    "@startupjs-ui/object-input": "^0.4.0-alpha.2",
+    "@startupjs-ui/password-input": "^0.4.0-alpha.2",
     "@startupjs-ui/radio": "^0.4.0-alpha.0",
     "@startupjs-ui/range-input": "^0.4.0-alpha.0",
-    "@startupjs-ui/rank": "^0.4.0-alpha.0",
-    "@startupjs-ui/select": "^0.4.0-alpha.0",
+    "@startupjs-ui/rank": "^0.4.0-alpha.2",
+    "@startupjs-ui/select": "^0.4.0-alpha.2",
     "@startupjs-ui/span": "^0.4.0-alpha.0",
-    "@startupjs-ui/text-input": "^0.4.0-alpha.0",
+    "@startupjs-ui/text-input": "^0.4.0-alpha.2",
     "lodash": "^4.17.20"
   },
   "peerDependencies": {

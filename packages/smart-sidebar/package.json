@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/smart-sidebar",
-  "version": "0.4.0-alpha.0",
+  "version": "0.4.0-alpha.2",
   "publishConfig": {
     "access": "public"
   },
@@ -8,7 +8,7 @@
   "types": "index.d.ts",
   "type": "module",
   "dependencies": {
-    "@startupjs-ui/drawer-sidebar": "^0.4.0-alpha.0",
+    "@startupjs-ui/drawer-sidebar": "^0.4.0-alpha.2",
     "@startupjs-ui/sidebar": "^0.4.0-alpha.0"
   },
   "peerDependencies": {
