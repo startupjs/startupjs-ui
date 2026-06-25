@@ -6543,7 +6543,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/dark-mode@npm:^0.4.0-alpha.2, @startupjs-ui/dark-mode@workspace:packages/dark-mode":
+"@startupjs-ui/dark-mode@npm:^0.4.0-alpha.3, @startupjs-ui/dark-mode@workspace:packages/dark-mode":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/dark-mode@workspace:packages/dark-mode"
   dependencies:
@@ -22541,7 +22541,7 @@ __metadata:
     "@startupjs-ui/color-picker": "npm:^0.4.0-alpha.0"
     "@startupjs-ui/content": "npm:^0.4.0-alpha.0"
     "@startupjs-ui/core": "npm:^0.4.0-alpha.0"
-    "@startupjs-ui/dark-mode": "npm:^0.4.0-alpha.2"
+    "@startupjs-ui/dark-mode": "npm:^0.4.0-alpha.3"
     "@startupjs-ui/date-time-picker": "npm:^0.4.0-alpha.2"
     "@startupjs-ui/dialogs": "npm:^0.4.0-alpha.2"
     "@startupjs-ui/div": "npm:^0.4.0-alpha.0"

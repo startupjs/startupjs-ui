@@ -1,7 +1,7 @@
 {
   "name": "startupjs-ui",
   "description": "Universal React-Native and Web UI components",
-  "version": "0.4.0-alpha.2",
+  "version": "0.4.0-alpha.3",
   "publishConfig": {
     "access": "public"
   },
@@ -116,7 +116,7 @@
     "@startupjs-ui/color-picker": "^0.4.0-alpha.0",
     "@startupjs-ui/content": "^0.4.0-alpha.0",
     "@startupjs-ui/core": "^0.4.0-alpha.0",
-    "@startupjs-ui/dark-mode": "^0.4.0-alpha.2",
+    "@startupjs-ui/dark-mode": "^0.4.0-alpha.3",
     "@startupjs-ui/date-time-picker": "^0.4.0-alpha.2",
     "@startupjs-ui/dialogs": "^0.4.0-alpha.2",
     "@startupjs-ui/div": "^0.4.0-alpha.0",
