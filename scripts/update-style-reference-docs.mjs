@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const root = path.resolve(__dirname, '..')
 const packagesDir = path.join(root, 'packages')
-const themePath = path.join(packagesDir, 'startupjs-ui', 'startupjsUiTheme.cssx.css')
+const themePath = path.join(packagesDir, 'startupjs-ui', 'startupjsUiTheme.js')
 
 const STYLE_REFERENCE_HEADING = 'Styling reference'
 const START = '{/* CSSX_STYLE_REFERENCE_START */}'
@@ -307,6 +307,9 @@ function describePart (part) {
 function describeVariable (prefix, suffix) {
   if (!suffix) return `${prefix} component token.`
   const words = humanizeWords(suffix)
+  if (prefix === 'Span' && words.at(-2) === 'line' && words.at(-1) === 'height') {
+    return `Controls the ${words.join(' ')} multiplier.`
+  }
   const last = words.at(-1)
   if (words.length > 1 && TRAILING_MODIFIERS.has(last)) {
     return `Controls the ${last} ${words.slice(0, -1).join(' ')}.`
