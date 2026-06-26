@@ -36,8 +36,6 @@ export interface SpanProps extends Omit<TextProps, 'role'> {
    * while still applying inherited text styles and animation handling. Useful
    * when the surrounding stylesheet fully controls typography. @default false */
   pure?: boolean
-  /** theme name */
-  theme?: string
   /** h1 header */
   h1?: boolean
   /** h2 header */
@@ -64,7 +62,6 @@ function Span ({
   full,
   description,
   pure,
-  theme,
   h1,
   h2,
   h3,
@@ -105,7 +102,6 @@ function Span ({
       style=style
       styleName=[
         pure ? undefined : 'root',
-        theme,
         variant,
         tag,
         { bold, italic, full, description }

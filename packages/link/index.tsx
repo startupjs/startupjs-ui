@@ -31,8 +31,6 @@ export interface LinkProps extends Omit<DivProps, 'style'> {
   display?: 'inline' | 'block'
   /** Color variant for inline links @default 'default' */
   color?: 'default' | 'primary'
-  /** Theme name used for styling */
-  theme?: string
   /** Render text in bold style when inline @default false */
   bold?: boolean
   /** Render text in italic style when inline @default false */
@@ -46,7 +44,6 @@ function Link ({
   to,
   href,
   color = DEFAULT_COLOR,
-  theme,
   display,
   push,
   replace = false,
@@ -146,7 +143,7 @@ function Link ({
     Component.root(
       part='root'
       style=style
-      styleName=[theme, color, resolvedDisplay]
+      styleName=[color, resolvedDisplay]
       ...restProps
       ...extraProps
     )= children

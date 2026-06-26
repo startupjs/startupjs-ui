@@ -30,8 +30,6 @@ export interface SpanProps extends Omit<TextProps, 'role'> {
      * while still applying inherited text styles and animation handling. Useful
      * when the surrounding stylesheet fully controls typography. @default false */
     pure?: boolean;
-    /** theme name */
-    theme?: string;
     /** h1 header */
     h1?: boolean;
     /** h2 header */

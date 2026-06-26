@@ -24,8 +24,6 @@ export interface LinkProps extends Omit<DivProps, 'style'> {
     display?: 'inline' | 'block';
     /** Color variant for inline links @default 'default' */
     color?: 'default' | 'primary';
-    /** Theme name used for styling */
-    theme?: string;
     /** Render text in bold style when inline @default false */
     bold?: boolean;
     /** Render text in italic style when inline @default false */
