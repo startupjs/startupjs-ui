@@ -3,12 +3,17 @@
 
 import { type ReactNode, type RefObject } from 'react';
 import { type TextStyle, type StyleProp, type TextProps } from 'react-native';
+import { type UIRole } from '@startupjs-ui/core';
 declare const _default: import("react").ComponentType<SpanProps>;
 export default _default;
 export declare const _PropsJsonSchema: {};
-export interface SpanProps extends TextProps {
+export interface SpanProps extends Omit<TextProps, 'role'> {
     /** Ref to access underlying <Text> */
     ref?: RefObject<any>;
+    /** Accessibility role. Includes RN roles plus web-only ARIA roles used by RNW. */
+    role?: UIRole;
+    /** Web-only target input id when role='label'. */
+    htmlFor?: string;
     /** Custom styles applied to the root view */
     style?: StyleProp<TextStyle>;
     /** Content rendered inside Span */

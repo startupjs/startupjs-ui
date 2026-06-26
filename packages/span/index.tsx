@@ -2,6 +2,7 @@ import { type ReactNode, type RefObject, useContext } from 'react'
 import { StyleSheet, Text, type TextStyle, type StyleProp, type TextProps } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { css, pug, observer, themed } from 'startupjs'
+import { type UIRole } from '@startupjs-ui/core'
 
 import {
   TextStyleContext,
@@ -12,9 +13,13 @@ export default themed('Span', observer(Span))
 
 export const _PropsJsonSchema = {/* SpanProps */}
 
-export interface SpanProps extends TextProps {
+export interface SpanProps extends Omit<TextProps, 'role'> {
   /** Ref to access underlying <Text> */
   ref?: RefObject<any>
+  /** Accessibility role. Includes RN roles plus web-only ARIA roles used by RNW. */
+  role?: UIRole
+  /** Web-only target input id when role='label'. */
+  htmlFor?: string
   /** Custom styles applied to the root view */
   style?: StyleProp<TextStyle>
   /** Content rendered inside Span */
