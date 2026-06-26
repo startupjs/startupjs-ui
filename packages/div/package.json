@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/div",
-  "version": "0.4.0-alpha.0",
+  "version": "0.4.0-alpha.4",
   "publishConfig": {
     "access": "public"
   },
@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "@startupjs-ui/abstract-popover": "^0.4.0-alpha.0",
-    "@startupjs-ui/core": "^0.4.0-alpha.0",
-    "@startupjs-ui/span": "^0.4.0-alpha.0"
+    "@startupjs-ui/core": "^0.4.0-alpha.4",
+    "@startupjs-ui/span": "^0.4.0-alpha.4"
   },
   "peerDependencies": {
     "react": "*",

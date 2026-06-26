@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.4](https://github.com/startupjs/startupjs-ui/compare/v0.4.0-alpha.3...v0.4.0-alpha.4) (2026-06-26)
+
+
+### Bug Fixes
+
+* render input labels through Span ([e396bb3](https://github.com/startupjs/startupjs-ui/commit/e396bb33b8ce3aa458f301c48bf3740bc1e75413))
+* simplify Span typography theming ([cac62d6](https://github.com/startupjs/startupjs-ui/commit/cac62d6ba0d9f94e3155c31290db800ee3fe2203))
+* use sans font for input labels ([0b2aae0](https://github.com/startupjs/startupjs-ui/commit/0b2aae03ece3139e3b892eaf3b0480bd112ba2d5))
+
+
+
+
+
 # [0.4.0-alpha.3](https://github.com/startupjs/startupjs-ui/compare/v0.4.0-alpha.2...v0.4.0-alpha.3) (2026-06-25)
 
 **Note:** Version bump only for package startupjs-ui

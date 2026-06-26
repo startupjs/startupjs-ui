@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.4](https://github.com/startupjs/startupjs-ui/compare/v0.4.0-alpha.3...v0.4.0-alpha.4) (2026-06-26)
+
+
+### Bug Fixes
+
+* simplify Span typography theming ([cac62d6](https://github.com/startupjs/startupjs-ui/commit/cac62d6ba0d9f94e3155c31290db800ee3fe2203))
+
+
+
+
+
 # [0.4.0-alpha.0](https://github.com/startupjs/startupjs-ui/compare/v0.3.9...v0.4.0-alpha.0) (2026-06-24)
 
 

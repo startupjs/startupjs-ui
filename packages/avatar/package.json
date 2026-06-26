@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/avatar",
-  "version": "0.4.0-alpha.0",
+  "version": "0.4.0-alpha.4",
   "publishConfig": {
     "access": "public"
   },
@@ -8,8 +8,8 @@
   "types": "index.d.ts",
   "type": "module",
   "dependencies": {
-    "@startupjs-ui/div": "^0.4.0-alpha.0",
-    "@startupjs-ui/span": "^0.4.0-alpha.0",
+    "@startupjs-ui/div": "^0.4.0-alpha.4",
+    "@startupjs-ui/span": "^0.4.0-alpha.4",
     "randomcolor": "^0.5.4"
   },
   "peerDependencies": {
