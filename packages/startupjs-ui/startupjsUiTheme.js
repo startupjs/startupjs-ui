@@ -129,10 +129,13 @@ export default css`
   --InputWrapper-label-color: var(--color-foreground);
   --InputWrapper-focused-color: var(--color-primary);
   --InputWrapper-error-color: var(--color-error);
+  --InputWrapper-label-font-family: var(--font-sans);
   --InputWrapper-label-font-size: var(--text-sm);
   --InputWrapper-label-line-height: 1.25rem;
+  --InputWrapper-description-font-family: var(--font-sans);
   --InputWrapper-description-font-size: var(--text-xs);
   --InputWrapper-description-line-height: 1rem;
+  --InputWrapper-error-font-family: var(--font-sans);
   --InputWrapper-label-gap: calc(var(--spacing) * 1);
   --InputWrapper-label-gap-inline: calc(var(--spacing) * 2);
   --InputWrapper-description-gap: calc(var(--spacing) * 2);

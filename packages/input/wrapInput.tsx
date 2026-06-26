@@ -292,6 +292,7 @@ css`
   .label {
     color: var(--InputWrapper-label-color);
     align-self: flex-start;
+    font-family: var(--InputWrapper-label-font-family);
     font-size: var(--InputWrapper-label-font-size);
     line-height: var(--InputWrapper-label-line-height);
   }
@@ -305,11 +306,13 @@ css`
   }
 
   .description {
+    font-family: var(--InputWrapper-description-font-family);
     font-size: var(--InputWrapper-description-font-size);
     line-height: var(--InputWrapper-description-line-height);
   }
 
   .required {
+    font-family: var(--InputWrapper-label-font-family);
     color: var(--InputWrapper-error-color);
     font-weight: var(--font-weight-bold);
   }
@@ -324,6 +327,7 @@ css`
   }
 
   .errorContainer-text {
+    font-family: var(--InputWrapper-error-font-family);
     font-size: var(--InputWrapper-description-font-size);
     line-height: var(--InputWrapper-description-line-height);
     margin-left: var(--InputWrapper-error-text-gap);
