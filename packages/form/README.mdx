@@ -103,7 +103,7 @@ const CustomAgeInput = observer(({ $value, ...props }) => {
 
 ### Adding custom inputs globally
 
-You can add custom inputs globally by creating a plugin that uses the client's `customFormInputs` hook.
+You can add custom inputs globally by creating a plugin that uses the client's `customInputs` hook.
 
 Return an object with the custom inputs from this hook.
 
@@ -125,7 +125,7 @@ export default {
 createPlugin({
   name: 'myCustomInputs',
   client: ({ minAge }) => ({
-    customFormInputs: () => ({
+    customInputs: () => ({
       age: observer(({ $value }) => {
         function setAge (age) {
           if (age < minAge) age = minAge

@@ -79,7 +79,7 @@ function Input ({
     throw Error(`
       Input component for '${inputType}' not found.
       Make sure you have passed it to 'customInputs' in your Form
-      or connected it as a plugin in the 'customFormInputs' hook.
+      or connected it as a plugin in the 'customInputs' hook.
     `)
   }
 
