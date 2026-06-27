@@ -8,8 +8,11 @@ wiring, docs, Storybook, and package exports.
 
 ## Required App-Level Context
 
-StartupJS UI is used inside StartupJS apps. Before writing app-level examples,
-debugging end-project behavior, or adding E2E tests, run:
+StartupJS UI is used inside StartupJS apps. Before maintaining this repo, read
+the app-level StartupJS concepts. They describe how users consume StartupJS UI,
+how Teamplay/ORM code is written around it, and how E2E tests are expected to
+work. Without this context, component or provider changes are easy to make in a
+way that breaks real apps. Run:
 
 ```sh
 npx startupjs skills
