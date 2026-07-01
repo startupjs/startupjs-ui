@@ -12,6 +12,16 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
+function getStyle (element: Element): CSSStyleDeclaration {
+  const view = element.ownerDocument.defaultView
+  if (!view) throw Error('Expected element to have a window')
+  return view.getComputedStyle(element)
+}
+
+function expectPx (value: string, expected: number) {
+  expect(Math.round(parseFloat(value))).toBe(expected)
+}
+
 export const States: Story = {
   tags: ['interaction'],
   render: () => (
@@ -30,12 +40,20 @@ export const States: Story = {
     </StoryStack>
   ),
   play: async ({ canvas }) => {
-    await expect(canvas.getByRole('heading', { name: 'Large heading' })).toHaveAttribute('aria-level', '1')
-    await expect(canvas.getByRole('heading', { name: 'Medium heading' })).toHaveAttribute('aria-level', '2')
-    await expect(canvas.getByRole('heading', { name: 'Small heading' })).toHaveAttribute('aria-level', '4')
+    const largeHeading = canvas.getByRole('heading', { name: 'Large heading' })
+    const mediumHeading = canvas.getByRole('heading', { name: 'Medium heading' })
+    const smallHeading = canvas.getByRole('heading', { name: 'Small heading' })
+
+    await expect(largeHeading).toHaveAttribute('aria-level', '1')
+    await expect(mediumHeading).toHaveAttribute('aria-level', '2')
+    await expect(smallHeading).toHaveAttribute('aria-level', '4')
     await expect(canvas.getByText('Bold text', { exact: true })).toBeVisible()
     await expect(canvas.getByText('Italic text', { exact: true })).toBeVisible()
     await expect(canvas.getByText('Description text', { exact: true })).toBeVisible()
     expect(canvas.queryByRole('button', { name: 'Bold text' })).toBeNull()
+
+    expectPx(getStyle(largeHeading).lineHeight, 96)
+    expectPx(getStyle(mediumHeading).lineHeight, 64)
+    expectPx(getStyle(smallHeading).lineHeight, 32)
   }
 }

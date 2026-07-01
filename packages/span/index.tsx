@@ -93,19 +93,19 @@ function Span ({
       ...style
     }
   }
-  style = resolveSpanLineHeight(style)
+  style = css([
+    pure ? undefined : 'root',
+    variant,
+    tag,
+    { bold, italic, full, description }
+  ], style as any).style as StyleProp<TextStyle>
+  style = resolveSpanLineHeight(style as TextStyle)
   const Component = hasAnimatedProperty(style) ? Animated.Text : Text
 
   const spanElement = pug`
     Component(
       ref=ref
       style=style
-      styleName=[
-        pure ? undefined : 'root',
-        variant,
-        tag,
-        { bold, italic, full, description }
-      ]
       ...semanticProps
       ...props
     )= children
