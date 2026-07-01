@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.5](https://github.com/startupjs/startupjs-ui/compare/v0.4.0-alpha.4...v0.4.0-alpha.5) (2026-07-01)
+
+
+### Bug Fixes
+
+* **span:** fix line-height relative values resolution ([4278a44](https://github.com/startupjs/startupjs-ui/commit/4278a4427173ed883c71603e5c6fea881b5e86e3))
+
+
+
+
+
 # [0.4.0-alpha.4](https://github.com/startupjs/startupjs-ui/compare/v0.4.0-alpha.3...v0.4.0-alpha.4) (2026-06-26)
 
 **Note:** Version bump only for package startupjs-ui-storybook

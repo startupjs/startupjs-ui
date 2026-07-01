@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/array-input",
-  "version": "0.4.0-alpha.4",
+  "version": "0.4.0-alpha.5",
   "publishConfig": {
     "access": "public"
   },
@@ -8,10 +8,10 @@
   "types": "index.d.ts",
   "type": "module",
   "dependencies": {
-    "@startupjs-ui/button": "^0.4.0-alpha.4",
+    "@startupjs-ui/button": "^0.4.0-alpha.5",
     "@startupjs-ui/core": "^0.4.0-alpha.4",
-    "@startupjs-ui/div": "^0.4.0-alpha.4",
-    "@startupjs-ui/input": "^0.4.0-alpha.4"
+    "@startupjs-ui/div": "^0.4.0-alpha.5",
+    "@startupjs-ui/input": "^0.4.0-alpha.5"
   },
   "peerDependencies": {
     "react": "*",

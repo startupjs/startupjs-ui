@@ -1,6 +1,6 @@
 {
   "name": "@startupjs-ui/smart-sidebar",
-  "version": "0.4.0-alpha.4",
+  "version": "0.4.0-alpha.5",
   "publishConfig": {
     "access": "public"
   },
@@ -9,7 +9,7 @@
   "type": "module",
   "dependencies": {
     "@startupjs-ui/drawer-sidebar": "^0.4.0-alpha.2",
-    "@startupjs-ui/sidebar": "^0.4.0-alpha.4"
+    "@startupjs-ui/sidebar": "^0.4.0-alpha.5"
   },
   "peerDependencies": {
     "react": "*",
