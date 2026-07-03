@@ -251,6 +251,14 @@ export default createPlugin({
           stream.on('data', data => buffers.push(data))
 
           stream.on('end', async () => {
+            // a stream 'error' (e.g. sharp rejecting a forged image) may have
+            // already responded (onStreamError sent 400), but the source
+            // busboy stream still fires 'end' — bail before double-sending,
+            // otherwise the res.json below throws ERR_HTTP_HEADERS_SENT and,
+            // being an unhandled async error, crashes the whole server process.
+            // A single forged "image/*" upload with garbage bytes would
+            // otherwise take the server down.
+            if (res.headersSent) return
             let blob = Buffer.concat(buffers)
             meta = { filename, mimeType, encoding, storageType }
             if (!blob) return res.status(500).send('No file was uploaded')
