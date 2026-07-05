@@ -2,7 +2,11 @@ import { $, sub } from 'startupjs'
 import { deleteFile, getDefaultStorageType, saveFileBlob } from '../providers/index.js'
 
 export default async function uploadBuffer (buff, options = {}) {
-  let { fileId, meta = {} } = options
+  // collection: the collection holding the file METADATA doc (blobs go to the
+  // storage provider keyed by fileId regardless of collection). Defaults to
+  // 'files'; pass a custom collection to keep special-purpose uploads out of
+  // the user-facing files listing.
+  let { fileId, meta = {}, collection = 'files' } = options
 
   let storageType = meta.storageType
   try {
@@ -29,9 +33,17 @@ export default async function uploadBuffer (buff, options = {}) {
     for (const key in meta) {
       if (meta[key] == null) delete doc[key]
     }
-    await $.files.addNew(doc)
+    if (collection === 'files') {
+      await $.files.addNew(doc)
+    } else {
+      // custom collections have no FilesModel — add with the same timestamps.
+      // (NOT feature-detected via `$col.addNew`: signals are callable proxies,
+      // so that property is a child signal with typeof 'function' everywhere.)
+      const now = Date.now()
+      await $[collection].add({ createdAt: now, updatedAt: now, ...doc })
+    }
   } else {
-    const $file = await sub($.files[fileId])
+    const $file = await sub($[collection][fileId])
 
     // when changing storageType we should delete the file from the old storageType
     const oldStorageType = $file.storageType.get()
