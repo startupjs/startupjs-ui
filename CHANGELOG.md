@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-alpha.6](https://github.com/startupjs/startupjs-ui/compare/v0.4.0-alpha.5...v0.4.0-alpha.6) (2026-07-05)
+
+
+### Bug Fixes
+
+* **file-input:** double-send crash guard + uploadBuffer({ collection }) ([#43](https://github.com/startupjs/startupjs-ui/issues/43)) ([ef0c8de](https://github.com/startupjs/startupjs-ui/commit/ef0c8de7f1ec89be5e9c22af2c8620f2544aabe0))
+
+
+
+
+
 # [0.4.0-alpha.5](https://github.com/startupjs/startupjs-ui/compare/v0.4.0-alpha.4...v0.4.0-alpha.5) (2026-07-01)
 
 
