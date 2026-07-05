@@ -1,3 +1,9 @@
+export const FILES_PLUGIN_NAME = 'files'
+// collections allowed to hold file metadata docs (uploadBuffer's `collection`
+// option). Overridable through the plugin's isomorphic options:
+//   plugins: { files: { isomorphic: { collections: ['files', 'chatImages'] } } }
+export const DEFAULT_FILE_COLLECTIONS = ['files']
+
 export const GET_FILE_URL = '/api/__ui__/files/get/:fileId'
 export const getFileUrl = (id, extension) => {
   if (!id) throw Error('[ui/FileInput] getFileUrl: fileId is required')

@@ -1,16 +1,27 @@
 import { $, sub } from 'startupjs'
+import { getPlugin } from 'startupjs/registry'
 import { deleteFile, getDefaultStorageType, saveFileBlob } from '../providers/index.js'
+import { DEFAULT_FILE_COLLECTIONS, FILES_PLUGIN_NAME } from '../constants.js'
 
 export default async function uploadBuffer (buff, options = {}) {
   // collection: the collection holding the file METADATA doc (blobs go to the
   // storage provider keyed by fileId regardless of collection). Defaults to
   // 'files'; pass a custom collection to keep special-purpose uploads out of
   // the user-facing files listing.
-  // SECURITY: server-side writes bypass access control, so `collection` (like
-  // `meta`) must be a server-chosen constant — NEVER derive it from request
-  // data, or any client could write docs into arbitrary collections. The
-  // built-in upload route always writes to 'files'.
+  // SECURITY: server-side writes bypass access control, so `collection` must be
+  // declared in the files plugin's `collections` isomorphic allowlist -- even a
+  // careless passthrough of request data can then only ever reach collections
+  // explicitly registered as file collections. The built-in upload route
+  // always writes to 'files'.
   let { fileId, meta = {}, collection = 'files' } = options
+  const allowedCollections = getAllowedCollections()
+  if (!allowedCollections.includes(collection)) {
+    throw new Error(
+      `[ui/files] uploadBuffer: collection '${collection}' is not registered as a file collection. ` +
+      'Declare it in startupjs.config.js: ' +
+      `plugins: { files: { isomorphic: { collections: [${[...allowedCollections, collection].map(c => `'${c}'`).join(', ')}] } } }`
+    )
+  }
 
   let storageType = meta.storageType
   try {
@@ -68,4 +79,17 @@ export default async function uploadBuffer (buff, options = {}) {
     await $file.set(doc)
   }
   return fileId
+}
+
+// the files plugin's `collections` isomorphic option. Falls back to just
+// ['files'] when the plugin options aren't readable (e.g. registry not
+// initialized in a standalone script) -- strict in the right direction:
+// the default collection keeps working, custom ones require the declared
+// allowlist.
+function getAllowedCollections () {
+  try {
+    const { collections } = getPlugin(FILES_PLUGIN_NAME).optionsByEnv.isomorphic || {}
+    if (Array.isArray(collections)) return collections
+  } catch {}
+  return DEFAULT_FILE_COLLECTIONS
 }

@@ -2,42 +2,53 @@ import { $, BASE_URL, accessControl, serverOnly, Signal, sub } from 'startupjs'
 import { createPlugin } from 'startupjs/registry'
 import busboy from 'busboy'
 import sharp from 'sharp'
-import { DELETE_FILE_URL, GET_FILE_URL, getDeleteFileUrl, getFileUrl, getUploadFileUrl, UPLOAD_SINGLE_FILE_URL } from './constants.js'
+import { DEFAULT_FILE_COLLECTIONS, DELETE_FILE_URL, FILES_PLUGIN_NAME, GET_FILE_URL, getDeleteFileUrl, getFileUrl, getUploadFileUrl, UPLOAD_SINGLE_FILE_URL } from './constants.js'
 import { deleteFile, getDefaultStorageType, getFileBlob, getFileSize } from './providers/index.js'
 import { uploadBuffer } from './server/index.js'
 
 export default createPlugin({
-  name: 'files',
+  name: FILES_PLUGIN_NAME,
   enabled: true,
   order: 'system ui',
-  isomorphic: (_options, plugin) => ({
-    models: models => {
-      return {
-        ...models,
-        files: {
-          default: FilesModel,
-          schema,
-          ...models.files,
-          access: accessControl(models.files?.access || {
-            read: ({ session, docId, doc }) => {
-              const canRead = getServerOptions(plugin).canRead
-              if (!canRead) return true
-              return canRead({
-                source: 'model',
-                session,
-                fileId: docId,
-                file: doc
-              })
-            }
-          }, { force: true })
-        },
-        'files.*': {
-          default: FileModel,
-          ...models['files.*']
+  // collections: allowlist of collections which may hold file metadata docs --
+  // the ONLY collections uploadBuffer's `collection` option accepts. Default
+  // ['files']. If you override it, keep 'files' in the list, otherwise the
+  // built-in upload route (which always writes to 'files') stops working.
+  isomorphic: ({ collections = DEFAULT_FILE_COLLECTIONS } = {}, plugin) => {
+    if (!collections.includes('files')) {
+      console.warn('[ui/files] the `collections` isomorphic option does not include \'files\' -- ' +
+        'the built-in upload route always writes to \'files\' and will error. ' +
+        'Did you mean to APPEND your collection instead of replacing the list?')
+    }
+    return {
+      models: models => {
+        return {
+          ...models,
+          files: {
+            default: FilesModel,
+            schema,
+            ...models.files,
+            access: accessControl(models.files?.access || {
+              read: ({ session, docId, doc }) => {
+                const canRead = getServerOptions(plugin).canRead
+                if (!canRead) return true
+                return canRead({
+                  source: 'model',
+                  session,
+                  fileId: docId,
+                  file: doc
+                })
+              }
+            }, { force: true })
+          },
+          'files.*': {
+            default: FileModel,
+            ...models['files.*']
+          }
         }
       }
     }
-  }),
+  },
   server: (options = {}) => ({
     serverRoutes: expressApp => {
       expressApp.get(GET_FILE_URL, async (req, res) => {
