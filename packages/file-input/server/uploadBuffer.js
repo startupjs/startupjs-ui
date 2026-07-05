@@ -6,6 +6,10 @@ export default async function uploadBuffer (buff, options = {}) {
   // storage provider keyed by fileId regardless of collection). Defaults to
   // 'files'; pass a custom collection to keep special-purpose uploads out of
   // the user-facing files listing.
+  // SECURITY: server-side writes bypass access control, so `collection` (like
+  // `meta`) must be a server-chosen constant — NEVER derive it from request
+  // data, or any client could write docs into arbitrary collections. The
+  // built-in upload route always writes to 'files'.
   let { fileId, meta = {}, collection = 'files' } = options
 
   let storageType = meta.storageType
