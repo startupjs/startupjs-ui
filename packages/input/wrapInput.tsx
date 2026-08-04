@@ -286,6 +286,9 @@ styl`
   $errorColor = var(--color-text-error)
   $focusedColor = var(--color-text-primary)
 
+  .root
+    flex-shrink 1
+
   // common
   .label
     color var(--InputWrapper-label-color)
