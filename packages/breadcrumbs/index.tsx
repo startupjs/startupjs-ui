@@ -112,7 +112,7 @@ function Breadcrumbs ({
                 = renderItem({ icon, color: resolvedLinkColor, children: name })
               if typeof separator === 'string'
                 Span.separator(style={ color: resolvedSeparatorColor } styleName=[size])
-                  | &nbsp#{separator}&nbsp
+                  | &nbsp;#{separator}&nbsp;
               else
                 = separator
   `
