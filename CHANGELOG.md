@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.10](https://github.com/startupjs/startupjs-ui/compare/v0.3.9...v0.3.10) (2026-08-25)
+
+
+### Bug Fixes
+
+* **packages/breadcrumbs/index.tsx:** fixed spacer for separator ([#45](https://github.com/startupjs/startupjs-ui/issues/45)) ([4f78c63](https://github.com/startupjs/startupjs-ui/commit/4f78c637574c9bc2813883f26494e925a2e1fe1e))
+
+
+
+
+
 ## [0.3.9](https://github.com/startupjs/startupjs-ui/compare/v0.3.8...v0.3.9) (2026-06-21)
 
 

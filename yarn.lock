@@ -6287,7 +6287,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/breadcrumbs@npm:^0.3.7, @startupjs-ui/breadcrumbs@workspace:packages/breadcrumbs":
+"@startupjs-ui/breadcrumbs@npm:^0.3.10, @startupjs-ui/breadcrumbs@workspace:packages/breadcrumbs":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/breadcrumbs@workspace:packages/breadcrumbs"
   dependencies:
@@ -22428,7 +22428,7 @@ __metadata:
     "@startupjs-ui/avatar": "npm:^0.3.7"
     "@startupjs-ui/badge": "npm:^0.3.7"
     "@startupjs-ui/br": "npm:^0.3.0"
-    "@startupjs-ui/breadcrumbs": "npm:^0.3.7"
+    "@startupjs-ui/breadcrumbs": "npm:^0.3.10"
     "@startupjs-ui/button": "npm:^0.3.7"
     "@startupjs-ui/card": "npm:^0.3.7"
     "@startupjs-ui/carousel": "npm:^0.3.7"
