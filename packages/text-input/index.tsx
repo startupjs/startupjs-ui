@@ -141,9 +141,7 @@ function TextInput ({
   useIsomorphicLayoutEffect(() => {
     if (readonly || !resize) return
     const numberOfLinesInValue = value.split('\n').length
-    if (numberOfLinesInValue >= numberOfLines) {
-      setCurrentNumberOfLines(numberOfLinesInValue)
-    }
+    setCurrentNumberOfLines(Math.max(numberOfLines, numberOfLinesInValue))
   }, [value, resize, numberOfLines, readonly])
 
   if (IS_WEB) {
@@ -159,22 +157,7 @@ function TextInput ({
         setFocused(false)
       }
     }, [disabled, focused, readonly])
-    // fix minWidth on web
-    // ref: https://stackoverflow.com/a/29990524/1930491
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useIsomorphicLayoutEffect(() => {
-      if (readonly) return
-      // TODO: looks like it's not available anymore on new versions of react-native-web
-      inputRef.current?.setNativeProps?.({ size: '1' })
-    }, [readonly])
   }
-
-  // useDidUpdate(() => {
-  //   if (readonly) return
-  //   if (numberOfLines !== currentNumberOfLines) {
-  //     setCurrentNumberOfLines(numberOfLines)
-  //   }
-  // }, [numberOfLines, currentNumberOfLines, readonly])
 
   const multiline = useMemo(() => {
     return resize || numberOfLines > 1
@@ -213,8 +196,15 @@ function TextInput ({
 
   const inputExtraProps: Record<string, any> = {}
   if (IS_ANDROID && multiline) inputExtraProps.textAlignVertical = 'top'
-  const inputMinHeightStyle = legacySizing ? null : { minHeight: fullHeight }
+  const inputHeightStyle = { height: fullHeight }
   const resolvedIconColor = getColor(iconColor) || iconColor
+  // Fill the space allocated to the TextInput wrapper by flex layout to match RNTextInput behavior.
+  const nativeInputStyle = [
+    inputHeightStyle,
+    { flexGrow: 1, flexShrink: 1 },
+    legacySizing?.inputStyle,
+    inputStyle
+  ]
 
   const inputStyleName = [
     size,
@@ -234,7 +224,11 @@ function TextInput ({
   }
 
   return _renderWrapper({
-    style: legacySizing ? [{ minHeight: fullHeight }, style] : [style]
+    style: [
+      { flexShrink: 1 },
+      legacySizing ? inputHeightStyle : null,
+      style
+    ]
   }, pug`
     RNTextInput.input-input(
       part=['input', {
@@ -242,7 +236,7 @@ function TextInput ({
         inputIconRight: icon && iconPosition === 'right'
       }]
       ref=inputRef
-      style=[inputMinHeightStyle, legacySizing?.inputStyle, inputStyle]
+      style=nativeInputStyle
       styleName=inputStyleName
       selectionColor=caretColor
       placeholder=placeholder
