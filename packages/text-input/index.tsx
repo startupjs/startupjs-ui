@@ -146,6 +146,17 @@ function TextInput ({
     }
   }, [value, resize, numberOfLines, readonly])
 
+  // useDidUpdate(() => {
+  //   if (readonly) return
+  //   if (numberOfLines !== currentNumberOfLines) {
+  //     setCurrentNumberOfLines(numberOfLines)
+  //   }
+  // }, [numberOfLines, currentNumberOfLines, readonly])
+
+  const multiline = useMemo(() => {
+    return resize || numberOfLines > 1
+  }, [resize, numberOfLines])
+
   if (IS_WEB) {
     // repeat mobile behaviour on the web
     // TODO
@@ -164,21 +175,15 @@ function TextInput ({
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useIsomorphicLayoutEffect(() => {
       if (readonly) return
-      // TODO: looks like it's not available anymore on new versions of react-native-web
-      inputRef.current?.setNativeProps?.({ size: '1' })
-    }, [readonly])
+
+      const shrinkToFitProp = multiline ? { cols: '1' } : { size: '1' }
+      inputRef.current?.setNativeProps?.(shrinkToFitProp)
+
+      // setNativeProps is not available in some react-native-web versions.
+      const attribute = multiline ? 'cols' : 'size'
+      inputRef.current?.setAttribute?.(attribute, '1')
+    }, [readonly, multiline])
   }
-
-  // useDidUpdate(() => {
-  //   if (readonly) return
-  //   if (numberOfLines !== currentNumberOfLines) {
-  //     setCurrentNumberOfLines(numberOfLines)
-  //   }
-  // }, [numberOfLines, currentNumberOfLines, readonly])
-
-  const multiline = useMemo(() => {
-    return resize || numberOfLines > 1
-  }, [resize, numberOfLines])
 
   const legacySizing = useMemo(() => {
     const inputHeight = heights[size]
