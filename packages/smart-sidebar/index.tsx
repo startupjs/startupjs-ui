@@ -1,4 +1,4 @@
-import React, { useEffect, type ReactNode } from 'react'
+import React, { useEffect, useRef, type ReactNode } from 'react'
 import { Dimensions, type StyleProp, type ViewStyle } from 'react-native'
 import { pug, observer, $, useBind } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
@@ -58,9 +58,15 @@ function SmartSidebar ({
 
   const $fixedLayout = $(isFixedLayout(fixedLayoutBreakpoint))
   const fixedLayout = $fixedLayout.get()
+  const didMountDisabledEffectRef = useRef(false)
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
+    if (!didMountDisabledEffectRef.current) {
+      didMountDisabledEffectRef.current = true
+      return
+    }
+
     if (!$fixedLayout.get()) return
     // or we can save open state before disabling
     // to open it with this state when enabling
