@@ -272,6 +272,7 @@ const useTextProps = ({
   value,
   $value,
   onChangeText,
+  wrapperStyle,
   ...props
 }: Record<string, any>, ref?: RefObject<any>): Record<string, any> => {
   ;({ value, onChangeText } = useBoundProps({ value, $value, onChangeText }))
@@ -280,6 +281,8 @@ const useTextProps = ({
     configuration: getLabelableConfiguration(props),
     onChangeText,
     _onLabelPress: () => ref?.current?.focus(),
+    // Make the nested TextInput fill the space allocated to Input.
+    wrapperStyle: [{ flexGrow: 1, flexShrink: 1 }, wrapperStyle],
     ...props
   }
 }

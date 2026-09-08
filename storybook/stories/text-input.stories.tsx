@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { useState } from 'react'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import type { Meta, StoryObj } from '@storybook/react-native'
