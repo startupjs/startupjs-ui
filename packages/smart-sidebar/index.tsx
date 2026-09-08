@@ -58,14 +58,13 @@ function SmartSidebar ({
 
   const $fixedLayout = $(isFixedLayout(fixedLayoutBreakpoint))
   const fixedLayout = $fixedLayout.get()
-  const didMountDisabledEffectRef = useRef(false)
+  const prevDisabledRef = useRef(disabled)
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    if (!didMountDisabledEffectRef.current) {
-      didMountDisabledEffectRef.current = true
-      return
-    }
+    if (prevDisabledRef.current === disabled) return
+
+    prevDisabledRef.current = disabled
 
     if (!$fixedLayout.get()) return
     // or we can save open state before disabling
