@@ -7022,7 +7022,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@startupjs-ui/smart-sidebar@npm:^0.3.7, @startupjs-ui/smart-sidebar@workspace:packages/smart-sidebar":
+"@startupjs-ui/smart-sidebar@npm:^0.3.11, @startupjs-ui/smart-sidebar@workspace:packages/smart-sidebar":
   version: 0.0.0-use.local
   resolution: "@startupjs-ui/smart-sidebar@workspace:packages/smart-sidebar"
   dependencies:
@@ -22471,7 +22471,7 @@ __metadata:
     "@startupjs-ui/scroll-view": "npm:^0.3.0"
     "@startupjs-ui/select": "npm:^0.3.7"
     "@startupjs-ui/sidebar": "npm:^0.3.7"
-    "@startupjs-ui/smart-sidebar": "npm:^0.3.7"
+    "@startupjs-ui/smart-sidebar": "npm:^0.3.11"
     "@startupjs-ui/span": "npm:^0.3.4"
     "@startupjs-ui/table": "npm:^0.3.7"
     "@startupjs-ui/tabs": "npm:^0.3.0"

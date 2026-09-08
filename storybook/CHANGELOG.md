@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.11](https://github.com/startupjs/startupjs-ui/compare/v0.3.10...v0.3.11) (2026-09-08)
+
+
+### Bug Fixes
+
+* **smart-sidebar/index.tsx:** fix set binded value for change dimensions ([#46](https://github.com/startupjs/startupjs-ui/issues/46)) ([e13f072](https://github.com/startupjs/startupjs-ui/commit/e13f072cc320fed372dba8686bd858144208dd56))
+
+
+
+
+
 ## [0.3.10](https://github.com/startupjs/startupjs-ui/compare/v0.3.9...v0.3.10) (2026-08-25)
 
 **Note:** Version bump only for package startupjs-ui-storybook

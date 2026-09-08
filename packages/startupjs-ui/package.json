@@ -1,7 +1,7 @@
 {
   "name": "startupjs-ui",
   "description": "Universal React-Native and Web UI components",
-  "version": "0.3.10",
+  "version": "0.3.11",
   "publishConfig": {
     "access": "public"
   },
@@ -162,7 +162,7 @@
     "@startupjs-ui/scroll-view": "^0.3.0",
     "@startupjs-ui/select": "^0.3.7",
     "@startupjs-ui/sidebar": "^0.3.7",
-    "@startupjs-ui/smart-sidebar": "^0.3.7",
+    "@startupjs-ui/smart-sidebar": "^0.3.11",
     "@startupjs-ui/span": "^0.3.4",
     "@startupjs-ui/table": "^0.3.7",
     "@startupjs-ui/tabs": "^0.3.0",
