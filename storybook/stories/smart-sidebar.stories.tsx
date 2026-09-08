@@ -7,13 +7,15 @@ import { StorySection, StoryStack } from './helpers'
 const SmartSidebarDemo = observer(function SmartSidebarDemo ({
   title,
   breakpoint,
-  defaultOpen
+  defaultOpen,
+  initialOpen = false
 }: {
   title: string
   breakpoint: number
   defaultOpen: boolean
+  initialOpen?: boolean
 }) {
-  const $open = $(false)
+  const $open = $(initialOpen)
 
   return (
     <StorySection
@@ -65,6 +67,7 @@ const SmartSidebarStates = observer(function SmartSidebarStates () {
     <StoryStack>
       <SmartSidebarDemo title='Fixed layout branch' breakpoint={1} defaultOpen />
       <SmartSidebarDemo title='Drawer branch' breakpoint={99999} defaultOpen={false} />
+      <SmartSidebarDemo title='Controlled open on mount' breakpoint={1} defaultOpen={false} initialOpen />
     </StoryStack>
   )
 })
@@ -95,6 +98,8 @@ export const Branches: Story = {
     await expect(canvas.getByText('Fixed layout branch navigation')).toBeVisible()
     await expect(canvas.getByText('Fixed layout branch workspace')).toBeVisible()
     await expect(canvas.getByText('Drawer branch workspace')).toBeVisible()
+    await expect(canvas.getByText('Controlled open on mount navigation')).toBeVisible()
+    await expect(canvas.getByText('Controlled open on mount workspace')).toBeVisible()
 
     const closeButtons = canvas.getAllByRole('button', { name: 'Close' })
     const openButtons = canvas.getAllByRole('button', { name: 'Open' })

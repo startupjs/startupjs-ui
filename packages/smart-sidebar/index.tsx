@@ -1,4 +1,4 @@
-import React, { useEffect, type ReactNode } from 'react'
+import React, { useEffect, useRef, type ReactNode } from 'react'
 import { Dimensions, type StyleProp, type ViewStyle } from 'react-native'
 import { pug, observer, $, useBind } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
@@ -58,9 +58,14 @@ function SmartSidebar ({
 
   const $fixedLayout = $(isFixedLayout(fixedLayoutBreakpoint))
   const fixedLayout = $fixedLayout.get()
+  const prevDisabledRef = useRef(disabled)
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
+    if (prevDisabledRef.current === disabled) return
+
+    prevDisabledRef.current = disabled
+
     if (!$fixedLayout.get()) return
     // or we can save open state before disabling
     // to open it with this state when enabling
@@ -73,7 +78,8 @@ function SmartSidebar ({
       // when change dimensions from mobile
       // to desktop resolution or when rendering happen on desktop resolution
       // we open sidebar if it was opened on mobile resolution or default value
-      $open.set(open || defaultOpen)
+      const currentOpen = $open.get()
+      $open.set(currentOpen || defaultOpen)
     } else {
       // when change dimensions from desktop
       // to mobile resolution or when rendering heppen for mobile resolution
