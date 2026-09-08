@@ -73,7 +73,8 @@ function SmartSidebar ({
       // when change dimensions from mobile
       // to desktop resolution or when rendering happen on desktop resolution
       // we open sidebar if it was opened on mobile resolution or default value
-      $open.set(open || defaultOpen)
+      const currentOpen = $open.get()
+      $open.set(currentOpen || defaultOpen)
     } else {
       // when change dimensions from desktop
       // to mobile resolution or when rendering heppen for mobile resolution
