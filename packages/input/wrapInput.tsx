@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode, type RefObject } from 'react'
+import { Fragment, useEffect, useState, type ReactNode, type RefObject } from 'react'
 import { Platform, Text } from 'react-native'
 import { pug, styl, observer } from 'startupjs'
 import { themed } from '@startupjs-ui/core'
@@ -231,9 +231,10 @@ export default function wrapInput (Component: any, configuration: InputWrapperCo
           Icon.errorContainer-icon(icon=faExclamationCircle)
           Span.errorContainer-text
             each _error, index in (Array.isArray(error) ? error : [error])
-              if index
-                Text= ' '
-              = _error
+              Fragment(key=index)
+                if index
+                  Text= ' '
+                = _error
     `
 
     return pug`
