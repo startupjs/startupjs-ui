@@ -1,4 +1,8 @@
 $gutter = $UI.gutters.m
+$closeGap = 2u
+$closeIconSize = 3u // Icon size 'xl'
+$closeTouchTarget = 5.5u // 44px: WCAG 2.5.5 and Apple's HIG minimum for touch screens
+$closeHitPadding = (($closeTouchTarget - $closeIconSize) / 2)
 
 .root
   padding $gutter
@@ -13,8 +17,25 @@ $gutter = $UI.gutters.m
   font(h5)
   flex 1
 
+// On touch screens the close button is a 44x44 tap area around its icon.
+// The padding grows the pressable area and equal negative margins cancel it,
+// so the header's height, the title's width and the icon's position stay the same.
+// (hitSlop would cover native only: react-native-web ignores it.)
 .close
-  margin-left 2u
+  padding $closeHitPadding
+  margin-top (- $closeHitPadding)
+  margin-right (- $closeHitPadding)
+  margin-bottom (- $closeHitPadding)
+  margin-left ($closeGap - $closeHitPadding)
+
+  // Desktop web keeps the original 24x24 target and focus ring
+  +desktop()
+    +web()
+      padding 0
+      margin-top 0
+      margin-right 0
+      margin-bottom 0
+      margin-left $closeGap
 
 .icon
   color: var(--color-text-description)
